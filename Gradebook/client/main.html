@@ -1,0 +1,32 @@
+<head>
+  <title>Gradebook</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+  {{> nav}}
+  
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal">
+      <div class="modal-content">
+          <h4>Modal Header</h4>
+          <p>A bunch of text</p>
+      </div>
+      <div class="modal-footer">
+          <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+      </div>
+  </div>
+</body>
+
+
+<template name="nav">
+  <nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo">GradeBook</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <!-- Modal Trigger -->
+        <li><a class="waves-effect waves-light btn modal-trigger" href="#modal1">Login</a></li>
+      </ul>
+    </div>
+  </nav>
+</template>

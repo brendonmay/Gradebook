@@ -6,14 +6,26 @@
 
 <body>
   {{> nav}}
-  {{> add}}
+  {{> sideNav}}
+
+
+  <!--Site Content Here-->
+  <main>
+    {{> addCourse}}
+  </main>
+ 
+  <script>
+    $('.button-collapse').sideNav({
+      menuWidth: 200, // Default is 300
+      }
+    );
+  </script>
   <script>
     $(document).ready(function(){
       $('.modal').modal();
     });
   </script>
 </body>
-
 
 <template name="nav">
   <nav>
@@ -37,7 +49,7 @@
 </template>
 
 <!-- Modal Structure -->
-<template name="add">
+<template name="addCourse">
   <div id="addModal" class="modal">
     <div class="modal-content">
         <h4>Add Course</h4>
@@ -50,3 +62,36 @@
     </div>
   </div>
 </template> 
+
+<!--SideNav Structure-->
+<template name="sideNav" class="sideNav">
+  <ul id="slide-out" class="side-nav fixed">
+      <li class="no-padding">
+        <ul class="collapsible collapsible-accordion">
+          <li>
+            <a class="collapsible-header">Dropdown 1</a>
+            <div class="collapsible-body">
+              <ul>
+                <li><a href="#!">First</a></li>
+                <li><a href="#!">Second</a></li>
+                <li><a href="#!">Third</a></li>
+                <li><a href="#!">Fourth</a></li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <a class="collapsible-header">Dropdown 2</a>
+            <div class="collapsible-body">
+              <ul>
+                <li><a href="#!">First</a></li>
+                <li><a href="#!">Second</a></li>
+                <li><a href="#!">Third</a></li>
+                <li><a href="#!">Fourth</a></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+</template>

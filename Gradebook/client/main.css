@@ -1,6 +1,5 @@
 /* CSS declarations go here */
 body{
-    
 }
 
 .nav-wrapper{
@@ -8,9 +7,26 @@ body{
     
 }
 
+ .tabs .indicator{
+    background-color:#26a498
+} 
+
+.tabs .tab a.active{
+    color:#26a498
+}
+
+.tabs .tab a:hover{
+    color:#26a498
+}
+
+.tabs .tab a{
+    color:#42a5f5
+}
+
 main{
     padding-left: 200px;
   }
+
 
 @media only screen and (max-width : 992px) {
     main{
@@ -26,5 +42,6 @@ main{
 }
 
 .collapsible-body{
-    font-style: italic
+    font-family: GillSans, Calibri, Trebuchet, sans-serif;
+    
 }

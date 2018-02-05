@@ -8,12 +8,12 @@ Template.hello.onCreated(function helloOnCreated() {
   this.counter = new ReactiveVar(0);
 });
 
+
 Template.hello.helpers({
   counter() {
     return Template.instance().counter.get();
   },
 });
-
 
 
 Template.hello.events({
@@ -22,6 +22,7 @@ Template.hello.events({
     instance.counter.set(instance.counter.get() + 1);
   },
 });
+
 
 $(document).ready(function(){
   $('.modal').modal();

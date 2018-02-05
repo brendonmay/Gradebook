@@ -1,6 +1,10 @@
 <!--SideNav Structure-->
 <template name="sideNav" class="sideNav">
     <ul id="slide-out" class="side-nav fixed">
+        <div class="container">
+            <h5>My Courses</h5>
+        </div>
+    {{#if currentUser}}
         <li class="no-padding">
             <ul class="collapsible collapsible-accordion">
                 <li>
@@ -26,7 +30,12 @@
                     </div>
                 </li>
             </ul>
-        </li>
+        </li>    
+    {{else}}
+        <div class="paragraph">
+            <p>Please login to begin creating courses.</p>
+        </div>
+    {{/if}}
     </ul>
     <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
 </template>

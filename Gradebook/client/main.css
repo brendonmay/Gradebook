@@ -1,12 +1,10 @@
-/* CSS declarations go here */
-body{
-}
-
+/* nav-template */
 .nav-wrapper{
     background-color:#42a5f5
     
 }
 
+/* tabs-template */
  .tabs .indicator{
     background-color:#26a498
 } 
@@ -23,6 +21,7 @@ body{
     color:#42a5f5
 }
 
+/* Site Content */
 main{
     padding-left: 200px;
   }
@@ -34,14 +33,16 @@ main{
     }
   }
 
+/* sideNav-template */
 .side-nav{
     top: 68px; 
-}
-
-.collapsible-header{
 }
 
 .collapsible-body{
     font-family: GillSans, Calibri, Trebuchet, sans-serif;
     
+}
+
+.paragraph{
+    padding-left: 1em;
 }

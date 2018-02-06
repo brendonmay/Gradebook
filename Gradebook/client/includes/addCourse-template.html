@@ -2,14 +2,23 @@
 <template name="addCourse">
     <div id="addModal" class="modal">
         <div class="modal-content">
-            <h4>Add Course</h4>
+            <div class='modal-title'>
+                <h4>Add Course</h4>
+            </div>
             <form class="add-form">
-                <div class="row">
+                <div class="col">
                     <div class='input-field col s6'>
-                        <input type="text" id = "coursename" name="courseName">
-                        <label for="coursename">Course</label>
+                        <input type="text" name="courseName" placeholder="Example: MCR3U-01">
+                        <label>Course Name</label>
                     </div>
                 </div>
+                <div class="col">
+                    <div class='input-field col s6'>
+                        <input type="text" name="courseYear" placeholder="Example: 2017-2018">
+                        <label>Course Year</label>
+                    </div>
+                </div>
+                <input type="submit" style="display: none;"/>
             </form>
         </div>
         <div class="modal-footer">

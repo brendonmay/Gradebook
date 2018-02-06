@@ -1,41 +1,45 @@
+<!--Note: sideNav functionality break with #if currentUser-->
+
 <!--SideNav Structure-->
 <template name="sideNav" class="sideNav">
     <ul id="slide-out" class="side-nav fixed">
-        <div class="container">
+        <div class="center-label">
             <h5>My Courses</h5>
         </div>
-    {{#if currentUser}}
+        <!-- {{#if currentUser}} -->
         <li class="no-padding">
             <ul class="collapsible collapsible-accordion">
                 <li>
-                    <a class="collapsible-header">2016-2017</a>
+                    <a class="collapsible-header">Dropdown 1<i class="material-icons">arrow_drop_down</i></a>
                     <div class="collapsible-body">
                         <ul>
-                            <li><a href="#!">SNC2D</a></li>
-                            <li><a href="#!">MCF3M</a></li>
-                            <li><a href="#!">MCR3U</a></li>
-                            <li><a href="#!">MCV4U</a></li>
+                            <li><a href="#!">First</a></li>
+                            <li><a href="#!">Second</a></li>
+                            <li><a href="#!">Third</a></li>
+                            <li><a href="#!">Fourth</a></li>
                         </ul>
                     </div>
                 </li>
-                <li>
-                    <a class="collapsible-header">2017-2018</a>
-                    <div class="collapsible-body">
-                        <ul>
-                            <li><a href="#!">SNC2D</a></li>
-                            <li><a href="#!">MCF3M</a></li>
-                            <li><a href="#!">MCR3U</a></li>
-                            <li><a href="#!">MCV4U</a></li>
-                        </ul>
-                    </div>
-                </li>
+                {{#each courses}}
+                    <li>
+                        <a class="collapsible-header">{{course}}<i class="material-icons">arrow_drop_down</i></a>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li><a href="#!">First</a></li>
+                                <li><a href="#!">Second</a></li>
+                                <li><a href="#!">Third</a></li>
+                                <li><a href="#!">Fourth</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                {{/each}}
             </ul>
-        </li>    
-    {{else}}
-        <div class="paragraph">
-            <p>Please login to begin creating courses.</p>
-        </div>
-    {{/if}}
+        </li>
+        <!-- {{else}}
+            <div class="paragraph">
+                <p>Please login to begin creating courses.</p>
+            </div>
+        {{/if}} -->
     </ul>
     <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
 </template>

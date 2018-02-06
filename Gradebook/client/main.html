@@ -1,20 +1,27 @@
 
 <head>
   <title>Gradebook</title>
-  <link rel="stylesheet" href="main.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
 <body>
   {{> nav}}
   {{> sideNav}}
+  {{> addCourse}}
 
 
   <!--Site Content Here-->
   <main>
-    {{> addCourse}}
     {{> courseTabs}}
+
   </main>
- 
+  
+  <!--Footer Content-->
+  <footer>
+    {{> footer}}
+  </footer>
+
+  <!--Scripts Here-->
   <script>
     //Initialize Collapse Button
     $('.button-collapse').sideNav({
@@ -29,5 +36,11 @@
     $(document).ready(function(){
       $('.modal').modal();
     });
+
+    //Select dropdown Menu
+    $(document).ready(function() {
+    $('select').material_select();
+  });
   </script>
 </body> 
+

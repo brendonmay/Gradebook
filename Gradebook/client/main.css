@@ -4,6 +4,11 @@
     
 }
 
+/* addCourse-template */
+.modal-title{
+    padding-bottom: .5em
+}
+
 /* tabs-template */
  .tabs .indicator{
     background-color:#26a498
@@ -36,6 +41,11 @@ main{
 /* sideNav-template */
 .side-nav{
     top: 68px; 
+    padding-bottom: 8em;
+}
+
+.center-label{
+    padding-left: 1.5em;
 }
 
 .collapsible-body{
@@ -45,4 +55,13 @@ main{
 
 .paragraph{
     padding-left: 1em;
+}
+
+/* footer-template */
+.page-footer{
+    background-color:#42a5f5
+}
+
+.footer-copyright{
+
 }

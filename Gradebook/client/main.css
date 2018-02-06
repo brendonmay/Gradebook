@@ -1,12 +1,15 @@
-/* CSS declarations go here */
-body{
-}
-
+/* nav-template */
 .nav-wrapper{
     background-color:#42a5f5
     
 }
 
+/* addCourse-template */
+.modal-title{
+    padding-bottom: .5em
+}
+
+/* tabs-template */
  .tabs .indicator{
     background-color:#26a498
 } 
@@ -23,6 +26,7 @@ body{
     color:#42a5f5
 }
 
+/* Site Content */
 main{
     padding-left: 200px;
   }
@@ -34,14 +38,30 @@ main{
     }
   }
 
+/* sideNav-template */
 .side-nav{
     top: 68px; 
+    padding-bottom: 8em;
 }
 
-.collapsible-header{
+.center-label{
+    padding-left: 1.5em;
 }
 
 .collapsible-body{
     font-family: GillSans, Calibri, Trebuchet, sans-serif;
     
+}
+
+.paragraph{
+    padding-left: 1em;
+}
+
+/* footer-template */
+.page-footer{
+    background-color:#42a5f5
+}
+
+.footer-copyright{
+
 }

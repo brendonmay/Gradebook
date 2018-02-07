@@ -10,23 +10,6 @@ import './main.html';
 //   this.counter = new ReactiveVar(0);
 // });
 
-function coursesCursor(){
-  return Courses.find();
-}
-
-Template.dropdown.helpers({
-  // courses:[
-  //   {course: "Math"},
-  //   {course: "Science"},
-  //   {course: "History"}
-  // ],
-
-  courses(){
-    return Courses.find({});
-  },
-
-});
-
 Template.addCourse.events({
   //type of event is a submit, the element is a form with class add-form, when its called run a function
   'submit .add-form': function(){
@@ -56,18 +39,23 @@ Template.addCourse.events({
 
 });
 
-Template.dropdown.onRendered(function(){
-  this.autorun(function(){
-    var coursesCount = coursesCursor().count();
-    console.log(coursesCount);
-    Tracker.afterFlush(function(){
-      this.$(".collapsible").collapsible({
-        accordion: false
-      });
-    }.bind(this));
-  }.bind(this));
+Template.sideNavDropDown.onRendered(function() {
+  this.$('.collapsible').collapsible();
 });
 
-//Template.removeCourse.events({
+Template.sideNavDropDown.helpers({
+  // courses:[
+  //   {course: "Math"},
+  //   {course: "Science"},
+  //   {course: "History"}
+  // ],
 
-//});
+  courses(){
+    return Courses.find({});
+  },
+
+});
+
+Template.tabsContent.onRendered(function() {
+  this.$('.tabs').tabs();
+});

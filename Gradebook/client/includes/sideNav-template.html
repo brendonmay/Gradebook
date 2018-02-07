@@ -6,32 +6,20 @@
         <div class="center-label">
             <h5>My Courses</h5>
         </div>
-        {{#unless currentUser}}
+        {{#if currentUser}} 
+            {{> sideNavDropDown}}
+        {{else}}
             <div class="paragraph">
                 <p>Please login to begin creating courses.</p>
             </div>
-        {{else}}
-            {{> dropdown}}
-        {{/unless}}
+        {{/if}}
     </ul>
     <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
 </template>
 
-<template name="dropdown">
-    <li class="no-padding">
-        <ul class="collapsible collapsible-accordion">
-            <!--<li>
-                <a class="collapsible-header">Dropdown 1<i class="material-icons">arrow_drop_down</i></a>
-                <div class="collapsible-body">
-                    <ul>
-                        <li><a href="#!">First</a></li>
-                        <li><a href="#!">Second</a></li>
-                        <li><a href="#!">Third</a></li>
-                        <li><a href="#!">Fourth</a></li>
-                    </ul>
-                </div>
-            </li>-->
-            {{#each courses}}
+<template name="sideNavDropDown">
+     <li class="no-padding">
+            <ul class="collapsible collapsible-accordion">
                 <li>
                     <a class="collapsible-header">{{course}}<i class="material-icons">arrow_drop_down</i></a>
                     <div class="collapsible-body">
@@ -43,7 +31,19 @@
                         </ul>
                     </div>
                 </li>
-            {{/each}}
-        </ul>
-    </li>
+                {{#each courses}}
+                    <li>
+                        <a class="collapsible-header">{{course}}<i class="material-icons">arrow_drop_down</i></a>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li><a href="#!">First</a></li>
+                                <li><a href="#!">Second</a></li>
+                                <li><a href="#!">Third</a></li>
+                                <li><a href="#!">Fourth</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                {{/each}}
+            </ul>
+        </li>
 </template>

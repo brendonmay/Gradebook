@@ -5,10 +5,9 @@ import { Accounts } from 'meteor/accounts-base';
 
 import './main.html';
 
-Template.addCourse.onCreated(function addCourseOnCreated() {
-  // counter starts at 0
-  let counter = 0;
-});
+// Template.addCourse.onCreated(function addCourseOnCreated() {
+//  
+// });
 
 Template.addCourse.events({
   //type of event is a submit, the element is a form with class add-form, when its called run a function
@@ -20,26 +19,45 @@ Template.addCourse.events({
     const target = event.target;
     const course = target.courseName.value;
     const year = target.courseYear.value;
+    const courseId = 3;
+    //const id = i where i = 0
     console.log(year);
 
     //check if user has ever created a course
-    if (Courses.find({owner: Meteor.userId}) == null)
+    //if user has not created a course,
+    if (Courses.findOne({ownerId: Meteor.userId()}) == null) {
+      Courses.insert({
+        ownerId: Meteor.userId(),
+        courses:[
+          {courseId: 1, courseName: course, courseYear: year} //change courseId so that it increases by 1 each time.
+        ]
+      });  
+    } 
+    else {
+      //determine courseID, previous courseId + 1
+      let newCourseId = 0;
+      Courses.find(
+        {ownerId: Meteor.userId()},
+        {_id: 0, ownerId: 0}).forEach(
+          function(doc){
+            const docLength = doc.courses.length;
+            const lastCourseId = doc.courses[docLength-1].courseId;
+            newCourseId = lastCourseId + 1;
+            console.log("new course id: " + newCourseId)
+          }
+        );
 
+      //check if course year exists
+        //create new dropdown
+      
+      //add to dropdown 
+    }
 
-    //if user has created a course, insert course into their object in Mongo
+  
 
-    //if user has not created a course, 
-
-    //Generate unique courseId
-
-
-    //insert course and year into collection Courses
-    Courses.insert({
-      ownerId: Meteor.userId(),
-      courses:[
-        {courseId: 1, courseName: course, courseYear: year} //change courseId so that it increases by 1 each time.
-      ]
-    });
+    //console test
+    const courseSorting = Courses.find({ownerId: Meteor.userId()}, {_id: 0, ownerId: 0, 'courses.courseId':0}).fetch();
+    console.log(courseSorting);
 
     //Clear form
     target.courseName.value="";
@@ -63,7 +81,8 @@ Template.sideNavDropDown.helpers({
   // ],
 
   courses(){
-    return Courses.find({});
+    //const courseSorting = Courses.find({ownerId: Meteor.userId});
+  
   },
 
 });

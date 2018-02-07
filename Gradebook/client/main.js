@@ -5,10 +5,10 @@ import { Accounts } from 'meteor/accounts-base';
 
 import './main.html';
 
-// Template.hello.onCreated(function helloOnCreated() {
-//   // counter starts at 0
-//   this.counter = new ReactiveVar(0);
-// });
+Template.addCourse.onCreated(function addCourseOnCreated() {
+  // counter starts at 0
+  let counter = 0;
+});
 
 Template.sideNav.helpers({
   // courses:[
@@ -35,11 +35,23 @@ Template.addCourse.events({
     const year = target.courseYear.value;
     console.log(year);
 
+    //check if user has ever created a course
+    if (Courses.find({owner: Meteor.userId}) == null)
+
+
+    //if user has created a course, insert course into their object in Mongo
+
+    //if user has not created a course, 
+
+    //Generate unique courseId
+
+
     //insert course and year into collection Courses
     Courses.insert({
-      course,
-      year,
-      owner: Meteor.userId(),
+      ownerId: Meteor.userId(),
+      courses:[
+        {courseId: 1, courseName: course, courseYear: year} //change courseId so that it increases by 1 each time.
+      ]
     });
 
     //Clear form

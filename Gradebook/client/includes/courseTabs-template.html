@@ -1,0 +1,25 @@
+<!--#if currentUser breaks functionality-->
+
+<!--Tabs Structure-->
+<template name="courseTabs">
+    <!-- {{#if currentUser}} -->
+        <div class="row">
+            <div class="col s12">
+                <ul class="tabs">
+                    <li class="tab col s3"><a href="#test1">Grade Book</a></li>
+                    <li class="tab col s3"><a class="active" href="#test2">Student Reports</a></li>
+                    <li class="tab col s3"><a href="#test3">Class Statistics</a></li>
+                    <li class="tab col s3"><a href="#test4">Course Settings</a></li>
+                </ul>
+            </div>
+                <div id="test1" class="col s12">Test 1</div>
+                <div id="test2" class="col s12">Test 2</div>
+                <div id="test3" class="col s12">Test 3</div>
+            <div id="test4" class="col s12">Test 4</div>
+        </div>
+    <!-- {{else}}
+        <div class="container">
+            <h3>Welcome to Gradebook. Login to get started!</h3>
+        </div>
+    {{/if}} -->
+</template>

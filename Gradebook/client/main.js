@@ -10,19 +10,6 @@ Template.addCourse.onCreated(function addCourseOnCreated() {
   let counter = 0;
 });
 
-Template.sideNav.helpers({
-  // courses:[
-  //   {course: "Math"},
-  //   {course: "Science"},
-  //   {course: "History"}
-  // ],
-
-  courses(){
-    return Courses.find({});
-  },
-
-});
-
 Template.addCourse.events({
   //type of event is a submit, the element is a form with class add-form, when its called run a function
   'submit .add-form': function(){
@@ -62,4 +49,25 @@ Template.addCourse.events({
     $('#addModal').modal('close');
   }
 
+});
+
+Template.sideNavDropDown.onRendered(function() {
+  this.$('.collapsible').collapsible();
+});
+
+Template.sideNavDropDown.helpers({
+  // courses:[
+  //   {course: "Math"},
+  //   {course: "Science"},
+  //   {course: "History"}
+  // ],
+
+  courses(){
+    return Courses.find({});
+  },
+
+});
+
+Template.tabsContent.onRendered(function() {
+  this.$('.tabs').tabs();
 });

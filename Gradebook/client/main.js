@@ -10,7 +10,11 @@ import './main.html';
 //   this.counter = new ReactiveVar(0);
 // });
 
-Template.sideNav.helpers({
+function coursesCursor(){
+  return Courses.find();
+}
+
+Template.dropdown.helpers({
   // courses:[
   //   {course: "Math"},
   //   {course: "Science"},
@@ -51,3 +55,19 @@ Template.addCourse.events({
   }
 
 });
+
+Template.dropdown.onRendered(function(){
+  this.autorun(function(){
+    var coursesCount = coursesCursor().count();
+    console.log(coursesCount);
+    Tracker.afterFlush(function(){
+      this.$(".collapsible").collapsible({
+        accordion: false
+      });
+    }.bind(this));
+  }.bind(this));
+});
+
+//Template.removeCourse.events({
+
+//});

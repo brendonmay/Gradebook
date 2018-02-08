@@ -90,6 +90,12 @@ Template.addCourse.events({
 
 });
 
+Template.sideNav.helpers({
+  hasNoCourses: function(){
+    return Courses.findOne({ownerId: Meteor.userId()}) == null
+  },
+});
+
 Template.sideNavDropDown.onRendered(function() {
   this.$('.collapsible').collapsible();
 });

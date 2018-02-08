@@ -7,7 +7,13 @@
             <h5>My Courses</h5>
         </div>
         {{#if currentUser}} 
-            {{> sideNavDropDown}}
+            {{#if hasNoCourses}}
+                <div class="paragraph">
+                    <p>Thank you for logging in. You can now create a course.</p>
+                </div>
+            {{else}}
+                {{> sideNavDropDown}}
+            {{/if}}
         {{else}}
             <div class="paragraph">
                 <p>Please login to begin creating courses.</p>
@@ -37,7 +43,7 @@
                         <div class="collapsible-body">
                             <ul>
                                 {{#each courses courseYear}}
-                                <li><a href="#!">{{courseName}}</a></li>
+                                    <li><a href="#!">{{courseName}}</a></li>
                                 {{/each}}
                             </ul>
                         </div>

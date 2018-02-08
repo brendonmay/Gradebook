@@ -20,22 +20,11 @@
 <template name="sideNavDropDown">
      <li class="no-padding">
             <ul class="collapsible collapsible-accordion">
-                <li>
-                    <a class="collapsible-header">{{course}}<i class="material-icons">arrow_drop_down</i></a>
-                    <div class="collapsible-body">
-                        <ul>
-                            <li><a href="#!">First</a></li>
-                            <li><a href="#!">Second</a></li>
-                            <li><a href="#!">Third</a></li>
-                            <li><a href="#!">Fourth</a></li>
-                        </ul>
-                    </div>
-                </li>
                 {{#each courses}}
                     <li>
                         <a class="collapsible-header">{{course}}<i class="material-icons">arrow_drop_down</i></a>
                         <div class="collapsible-body">
-                            <ul>
+                            <ul class="sections">
                                 <li><a href="#!">First</a></li>
                                 <li><a href="#!">Second</a></li>
                                 <li><a href="#!">Third</a></li>

@@ -44,11 +44,11 @@ Template.sideNavDropDown.onRendered(function() {
 });
 
 Template.sideNavDropDown.helpers({
-  // courses:[
-  //   {course: "Math"},
-  //   {course: "Science"},
-  //   {course: "History"}
-  // ],
+  /* courses:[
+    {course: "Math"},
+    {course: "Science"},
+    {course: "History"}
+  ],*/
 
   courses(){
     return Courses.find({});
@@ -59,3 +59,20 @@ Template.sideNavDropDown.helpers({
 Template.tabsContent.onRendered(function() {
   this.$('.tabs').tabs();
 });
+
+Template.sideNavDropDown.events({
+  //event allows the main page to change as you click the side bar
+  'click .sections': function(){
+    event.preventDefault();
+
+    
+
+    console.log("This works");
+  }
+});
+
+/*Template.testContent.helpers({
+  courses(){
+    return Courses.find({});
+  },
+});*/

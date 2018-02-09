@@ -105,3 +105,13 @@ body {
 .testColumns{
     border-bottom: 1px solid black;
 }
+
+/*To override tab scrolling on x*/
+.tabs{
+    overflow-x: hidden;
+}
+
+/*To fix clickable sideNav above tabs*/
+.button-collapse{
+    width: 50px;
+}

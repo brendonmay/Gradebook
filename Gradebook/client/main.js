@@ -93,9 +93,14 @@ Template.sideNavDropDown.onRendered(function() {
 });
 
 Template.sideNavDropDown.helpers({
+  // idGen: function(){
+  //   return [{id:1}, {id:2}, {id:3}];
+  // },
+
   courses: function(year){
     //need to put all courses with the courseYear == year into object and return that
     let coursesWithSameYear = [];
+
     //console.log("year: " + year);
     const teacherInfo = Courses.find({ownerId: Meteor.userId()}, {_id: 0, ownerId: 0});
     teacherInfo.forEach(
@@ -153,9 +158,19 @@ Template.sideNavDropDown.events({
   'click .sections': function(){
     event.preventDefault();
 
-    
+    const target = event.target;
+    var testName = document.getElementById(target.id).innerText;
 
-    console.log("This works");
+    Session.set('courseNameDisplay', testName);
+    var testing = Session.get('courseNameDisplay');
+
+    console.log(testing);
+  }
+});
+
+Template.testContent.helpers({
+  display: function(){
+    return Session.get('courseNameDisplay');
   }
 });
 

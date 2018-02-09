@@ -2,145 +2,40 @@
 
 <!--Tabs Structure-->
 <template name="courseTabs">
-     {{#if currentUser}} 
-        <div class="row">
-            {{> tabsContent}}
-            {{> courseContent}}
-        </div>
-     {{else}}
-        <div class="container">
-            <h3>Welcome to Gradebook. Login to get started!</h3>
-        </div>
-    {{/if}} 
+    {{#if currentUser}}
+    <div class="row">
+        {{> tabsContent}} {{> courseContent}}
+    </div>
+    {{else}}
+    <div class="container">
+        <h3>Welcome to Gradebook. Login to get started!</h3>
+    </div>
+    {{/if}}
 </template>
 
 <template name="tabsContent">
     <div class="col s12">
         <ul class="tabs">
-            <li class="tab col s3"><a href="#test1">Grade Book</a></li>
-            <li class="tab col s3"><a class="active" href="#test2">Student Reports</a></li>
-            <li class="tab col s3"><a href="#test3">Class Statistics</a></li>
-            <li class="tab col s3"><a href="#test4">Course Settings</a></li>
+            <li class="tab col s3">
+                <a href="#gradeBookChartHolder">Grade Book</a>
+            </li>
+            <li class="tab col s3">
+                <a class="active" href="#test2">Student Reports</a>
+            </li>
+            <li class="tab col s3">
+                <a href="#test3">Class Statistics</a>
+            </li>
+            <li class="tab col s3">
+                <a href="#test4">Course Settings</a>
+            </li>
         </ul>
     </div>
 </template>
 
 <template name="courseContent">
-    <div id="test1" class="col s12"><table class="striped centered">
-        <thead>
-            <tr>
-                <th></th>
-                <th colspan="4" style="border-bottom: 1px solid black">Test 1</th>
-                <th colspan="4" style="border-bottom: 1px solid black">Test 2</th>
-                <th colspan="4" style="border-bottom: 1px solid black">Test 3</th>
-            </tr>
-            <tr>
-                <td style="font-weight: bold; text-align:center">Student</td>
-                <td style="text-align:center; background-color: red">K/20</td>
-                <td style="text-align:center; background-color: lightblue">A/20</td>
-                <td style="text-align:center; background-color: green">T/15</td>
-                <td style="text-align:center; background-color: pink">C/20</td>
-
-                <td style="text-align:center; background-color: red">K/20</td>
-                <td style="text-align:center; background-color: lightblue">A/20</td>
-                <td style="text-align:center; background-color: green">T/15</td>
-                <td style="text-align:center; background-color: pink">C/20</td>
-
-                <td style="text-align:center; background-color: red">K/20</td>
-                <td style="text-align:center; background-color: lightblue">A/20</td>
-                <td style="text-align:center; background-color: green">T/15</td>
-                <td style="text-align:center; background-color: pink">C/20</td>
-            </tr>
-        </thead>
-
-        <tbody>
-            <tr>
-            <td>Jason Haddad</td>
-            <td>15</td>
-            <td>15</td>
-            <td>15</td>
-            <td>15</td>
-
-            <td>20</td>
-            <td>20</td>
-            <td>20</td>
-            <td>20</td>
-
-            <td>20</td>
-            <td>20</td>
-            <td>20</td>
-            <td>20</td>
-            </tr>
-            <tr>
-            <td>Christopher Haddad</td>
-            <td>15</td>
-            <td>15</td>
-            <td>15</td>
-            <td>15</td>
-
-            <td>20</td>
-            <td>20</td>
-            <td>20</td>
-            <td>20</td>
-
-            <td>20</td>
-            <td>20</td>
-            <td>20</td>
-            <td>20</td>
-            </tr>
-            <tr>
-            <td>Brendon May</td>
-            <td>15</td>
-            <td>15</td>
-            <td>15</td>
-            <td>15</td>
-
-            <td>20</td>
-            <td>20</td>
-            <td>20</td>
-            <td>20</td>
-
-            <td>20</td>
-            <td>20</td>
-            <td>20</td>
-            <td>20</td>
-            </tr>
-            <tr>
-            <td>Joshua Currie</td>
-            <td>15</td>
-            <td>15</td>
-            <td>15</td>
-            <td>15</td>
-
-            <td>20</td>
-            <td>20</td>
-            <td>20</td>
-            <td>20</td>
-
-            <td>20</td>
-            <td>20</td>
-            <td>20</td>
-            <td>20</td>
-        </tr>
-        <tr>
-            <td>Adam May</td>
-            <td>15</td>
-            <td>15</td>
-            <td>15</td>
-            <td>15</td>
-
-            <td>20</td>
-            <td>20</td>
-            <td>20</td>
-            <td>20</td>
-
-            <td>20</td>
-            <td>20</td>
-            <td>20</td>
-            <td>20</td>
-            </tr>
-        </tbody>
-        </table></div>
+    <div id="gradeBookChartHolder" class="col s12">
+        {{> gradeBookChart}}
+    </div>
     <div id="test2" class="col s12">{{> testContent}}</div>
     <div id="test3" class="col s12">Test 3</div>
     <div id="test4" class="col s12">Test 4</div>

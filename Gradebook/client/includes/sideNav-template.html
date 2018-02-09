@@ -7,7 +7,13 @@
             <h5>My Courses</h5>
         </div>
         {{#if currentUser}} 
-            {{> sideNavDropDown}}
+            {{#if hasNoCourses}}
+                <div class="paragraph">
+                    <p>Thank you for logging in. You can now create a course.</p>
+                </div>
+            {{else}}
+                {{> sideNavDropDown}}
+            {{/if}}
         {{else}}
             <div class="paragraph">
                 <p>Please login to begin creating courses.</p>
@@ -20,9 +26,32 @@
 <template name="sideNavDropDown">
      <li class="no-padding">
             <ul class="collapsible collapsible-accordion">
-                {{#each courses}}
+                <!--<li>
+                    <a class="collapsible-header">Dropdown 1<i class="material-icons">arrow_drop_down</i></a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li><a href="#!">First</a></li>
+                            <li><a href="#!">Second</a></li>
+                            <li><a href="#!">Third</a></li>
+                            <li><a href="#!">Fourth</a></li>
+                        </ul>
+                    </div>
+                </li>-->
+                {{#each years}}
                     <li>
-                        <a class="collapsible-header">{{course}}<i class="material-icons">arrow_drop_down</i></a>
+                        <a class="collapsible-header">{{courseYear}}<i class="material-icons">arrow_drop_down</i></a>
+                        <div class="collapsible-body">
+                            <ul>
+                                {{#each courses courseYear}}
+                                    <li><a href="#!">{{courseName}}</a></li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                    </li>
+                {{/each}}
+                <!--{{#each courses "2017-2018"}}
+                    <li>
+                        <a class="collapsible-header">{{courseName}}<i class="material-icons">arrow_drop_down</i></a>
                         <div class="collapsible-body">
                             <ul class="sections">
                                 <li><a href="#!">First</a></li>
@@ -32,7 +61,7 @@
                             </ul>
                         </div>
                     </li>
-                {{/each}}
+                {{/each}}-->
             </ul>
         </li>
 </template>

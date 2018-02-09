@@ -75,3 +75,33 @@ body {
   main {
     flex: 1 0 auto;
   }
+
+  /* grade book chart CSS */
+  .studName{
+    background-color: rgba(0, 0, 0, 0);
+    color: black;
+    text-transform: capitalize;
+    box-shadow: none;
+}
+
+.studName:focus{
+    background-color: #c1c1c1;
+}
+
+.studName:hover{
+    background-color: #c1c1c1;
+}
+
+.studMarkTableCell{
+    min-width: 100px;
+}
+
+#gradeBookChartHolder{
+    width: 100%;
+    overflow-x:scroll;
+    overflow-y:scroll;
+}
+
+.testColumns{
+    border-bottom: 1px solid black;
+}

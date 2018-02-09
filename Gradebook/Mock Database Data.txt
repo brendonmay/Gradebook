@@ -1,0 +1,51 @@
+//insert Mock Data into Courses Collection. Run command meteor mongo in project dir
+//to clear database data, first run use [Courses] then run db.dropDatabase()
+
+//object 1
+db.Courses.insert({
+	ownerId: "bmay", 
+	courses:[
+		{courseId: 1, courseName: "Math", courseYear: "2017-2018"},
+		{courseId: 2, courseName: "Science", courseYear: "2018-2019"}
+	]
+})
+
+//object 2
+db.Courses.insert({
+	ownerId: "jcurrie", 
+	courses:[
+		{courseId: 1, courseName: "History", courseYear: "2018-2019"},
+		{courseId: 2, courseName: "English", courseYear: "2019-2020"}
+	]
+})
+
+//-----------------------------------------------------------------------------------
+
+//This search will find object 1
+
+db.Courses.find(
+	{ownerId: "bmay"}
+)
+
+
+
+//-----------------------------------------------------------------------------------
+
+//This search will return all objects that have a courseYear of 2017-2018
+//In this case it will find object 1
+
+db.Courses.find(
+	{'courses.courseYear': "2017-2018"}
+)
+
+
+//-------------------------------------------------------------------------------------
+
+//2 Conditions
+//1. Find all objects that have an ownerId of "bmay"
+//2. Exclude the _id, and ownerId fields from the returned result
+db.Courses.find(
+	{ownerId: "bmay"},
+	{_id: 0, ownerId: 0}
+)
+

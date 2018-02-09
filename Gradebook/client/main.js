@@ -44,22 +44,22 @@ Template.addCourse.events({
           const docLength = doc.courses.length;
           const lastCourseId = doc.courses[docLength-1].courseId;
           newCourseId = lastCourseId + 1;
-          console.log("new course id: " + newCourseId)
+          //console.log("new course id: " + newCourseId)
         });
       
       //insert new course into collection
 
       //determine courses they currently have
       let currentCourses = Courses.findOne({ownerId: Meteor.userId()}, {_id: 0, ownerId: 0}).courses; //array of course objects
-      console.log("current courses: " + currentCourses);
+      //console.log("current courses: " + currentCourses);
 
       //create a new course object to be inserted
       const newCourse = {courseId: newCourseId, courseName: course, courseYear: year};
-      console.log("new course: " + newCourse);
+      //console.log("new course: " + newCourse);
 
       //create updated array of course objects
       currentCourses[newCourseId - 1] = newCourse;
-      console.log("updated courses" + currentCourses);
+      //console.log("updated courses" + currentCourses);
 
       //update document in collection to include the new course
       // Courses.update( //won't work until you change this to a method since its considered insecure, to make it temp. work, query {"_id": "SqfkSQWNpEmjosBia"}

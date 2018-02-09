@@ -93,16 +93,55 @@ Template.sideNavDropDown.onRendered(function() {
 });
 
 Template.sideNavDropDown.helpers({
-  /* courses:[
-    {course: "Math"},
-    {course: "Science"},
-    {course: "History"}
-  ],*/
-
-  courses(){
-    return Courses.find({});
+  courses: function(year){
+    //need to put all courses with the courseYear == year into object and return that
+    let coursesWithSameYear = [];
+    //console.log("year: " + year);
+    const teacherInfo = Courses.find({ownerId: Meteor.userId()}, {_id: 0, ownerId: 0});
+    teacherInfo.forEach(
+      function(doc) {
+        let index = 0;
+        for (var i = 0; i < doc.courses.length; i++) {
+          const entryYear = doc.courses[i].courseYear;
+          if (year == entryYear) {
+            coursesWithSameYear[index] = doc.courses[i];
+            index++;
+          }
+        }
+      });
+      //console.log("coursesWithSameYear: " + coursesWithSameYear);
+    return coursesWithSameYear;
   },
 
+  years: function() {
+    //creates an array of courseYear objects, where each courseYear is a unique year from the collection
+    //Ex: [{courseYear: "2017-2018"}, {courseYear: "2018-2019"}]
+
+    let uniqueYears = [];
+    const teacherInfo = Courses.find({ownerId: Meteor.userId()}, {_id: 0, ownerId: 0});
+    teacherInfo.forEach(
+      function(doc) {
+        for (var i = 0; i < doc.courses.length; i++) {
+          const entryYear = doc.courses[i].courseYear;
+          let counter = 0;
+          for (index = 0; index < uniqueYears.length; index++){
+            if (entryYear != uniqueYears[index].courseYear){
+              counter++;
+            }
+          }
+          if (counter == uniqueYears.length){
+            uniqueYears[uniqueYears.length]={"courseYear": entryYear}
+          }
+        }
+      });
+      //console.log("uniqueYears: " + uniqueYears);
+    return uniqueYears;
+  },
+
+});
+
+Template.tabsContent.onRendered(function() {
+  this.$('.tabs').tabs();
 });
 
 Template.tabsContent.onRendered(function() {

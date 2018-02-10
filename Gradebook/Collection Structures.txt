@@ -1,0 +1,34 @@
+Collection 1 - Courses - Structure (example)
+{
+	ownerId: "bmay", 
+	courses:[
+		{courseId: 1, courseName: "Math", courseYear: "2017-2018"},
+		{courseId: 2, courseName: "Science", courseYear: "2018-2019"},
+		{courseId: 3, courseName: "Science", courseYear: "2018-2019"}	
+	]
+}
+
+//------------------------------------------------------------------------------------
+//insert Mock Data into Courses Collection. Run command meteor mongo in project dir
+//to clear database data, first run use [Courses] then run db.dropDatabase()
+
+//object 1
+db.Courses.insert({
+	ownerId: "bmay", 
+	courses:[
+		{courseId: 1, courseName: "Math", courseYear: "2017-2018"},
+		{courseId: 2, courseName: "Science", courseYear: "2018-2019"},
+		{courseId: 3, courseName: "Science", courseYear: "2018-2019"}	
+	]
+})
+
+//object 2
+db.Courses.insert({
+	ownerId: "jcurrie", 
+	courses:[
+		{courseId: 1, courseName: "History", courseYear: "2018-2019"},
+		{courseId: 2, courseName: "English", courseYear: "2019-2020"}
+	]
+})
+
+//-----------------------------------------------------------------------------------

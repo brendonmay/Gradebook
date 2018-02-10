@@ -8,10 +8,10 @@ import './main.html';
 
 Template.addCourse.events({
   //type of event is a submit, the element is a form with class add-form, when its called run a function
-  'submit .add-form': function(){
+  'submit .add-form': function () {
 
-  //after form is submitted, this will update the Users document in the collection to include the newly registered course
-    
+    //after form is submitted, this will update the Users document in the collection to include the newly registered course
+
     //prevent from being submitted into another file
     event.preventDefault();
 
@@ -26,16 +26,16 @@ Template.addCourse.events({
       Meteor.call('courses.createFirstCourse', course, year);  
     } 
     else {
-      var teacherInfo = Courses.find({ownerId: Meteor.userId()}, {_id: 0, ownerId: 0});
+      var teacherInfo = Courses.find({ ownerId: Meteor.userId() }, { _id: 0, ownerId: 0 });
       //first determine courseID, previous courseId + 1
       let newCourseId = 0;
       teacherInfo.forEach(
-        function(doc){
+        function (doc) {
           const docLength = doc.courses.length;
-          const lastCourseId = doc.courses[docLength-1].courseId;
+          const lastCourseId = doc.courses[docLength - 1].courseId;
           newCourseId = lastCourseId + 1;
         });
-      
+
       //insert new course into collection
 
       //determine courses they currently have
@@ -51,8 +51,8 @@ Template.addCourse.events({
     }
 
     //Clear form
-    target.courseName.value="";
-    target.courseYear.value="";
+    target.courseName.value = "";
+    target.courseYear.value = "";
 
     //Close Modal
     $('#addModal').modal('close');
@@ -61,13 +61,13 @@ Template.addCourse.events({
 });
 
 Template.sideNav.helpers({
-  hasNoCourses: function(){
-    return Courses.findOne({ownerId: Meteor.userId()}) == null
+  hasNoCourses: function () {
+    return Courses.findOne({ ownerId: Meteor.userId() }) == null
   },
 
 });
 
-Template.sideNavDropDown.onRendered(function() {
+Template.sideNavDropDown.onRendered(function () {
   this.$('.collapsible').collapsible();
 });
 
@@ -79,7 +79,7 @@ Template.sideNavDropDown.helpers({
 
     const teacherInfo = Courses.find({ownerId: Meteor.userId()}, {_id: 0, ownerId: 0});
     teacherInfo.forEach(
-      function(doc) {
+      function (doc) {
         let index = 0;
         for (var i = 0; i < doc.courses.length; i++) {
           const entryYear = doc.courses[i].courseYear;
@@ -89,36 +89,40 @@ Template.sideNavDropDown.helpers({
           }
         }
       });
+
     return coursesWithSameYear;
   },
 
-  years: function() {
+  years: function () {
     //creates an array of courseYear objects, where each courseYear is a unique year from the collection
     //Ex: [{courseYear: "2017-2018"}, {courseYear: "2018-2019"}]
 
     let uniqueYears = [];
-    const teacherInfo = Courses.find({ownerId: Meteor.userId()}, {_id: 0, ownerId: 0});
+    const teacherInfo = Courses.find({ ownerId: Meteor.userId() }, { _id: 0, ownerId: 0 });
     teacherInfo.forEach(
-      function(doc) {
+      function (doc) {
         for (var i = 0; i < doc.courses.length; i++) {
           const entryYear = doc.courses[i].courseYear;
           let counter = 0;
-          for (index = 0; index < uniqueYears.length; index++){
-            if (entryYear != uniqueYears[index].courseYear){
-              counter++;
+          let uniqueYear = true;
+          for (index = 0; index < uniqueYears.length; index++) {
+            if (entryYear == uniqueYears[index].courseYear) {
+              uniqueYear = false;
+              break;
             }
           }
-          if (counter == uniqueYears.length){
-            uniqueYears[uniqueYears.length]={"courseYear": entryYear}
+          if (uniqueYear) {
+            uniqueYears[uniqueYears.length] = { "courseYear": entryYear }
           }
         }
       });
+
     return uniqueYears;
   },
 
 });
 
-Template.tabsContent.onRendered(function() {
+Template.tabsContent.onRendered(function () {
   this.$('.tabs').tabs();
 });
 

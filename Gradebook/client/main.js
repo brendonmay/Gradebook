@@ -144,10 +144,54 @@ Template.sideNavDropDown.events({
   }
 });
 
-Template.testContent.helpers({
-  display: function(){
-    return Session.get('courseIdDisplay');
+Template.courseSettingsSideNav.events({
+  //function that changes the body display based off of settings side bar click.
+  'click .side-nav': function(){
+    event.preventDefault();
+
+    const target = event.target;
+    var settingId = target.id;
+    var settingScreen;
+
+    if(settingId=="CW"){
+      settingScreen="Catagory Weightings";
+    } else if(settingId=="AT"){
+      settingScreen= "Assessment Types";
+    } else if(settingId=="AW"){
+      settingScreen= "Assessment Weightings";
+    } else{
+      settingScreen = "General Settings"
+    }
+
+    console.log(settingScreen);
+    Session.set('settingScreenText', settingScreen);
   }
 });
 
+Template.displayContent.helpers({
+  display: function(){
+    //grabs the courseId variable from the session.
+    //since the index is the id subtracted by 1 I subtract it.
+    var courseId = (Session.get('courseIdDisplay')) - 1;
 
+    //accesses the database and uses the courseId variable to display the courseName
+    const teacherInfo = Courses.find({ ownerId: Meteor.userId() }, { _id: 0, ownerId: 0 });
+    teacherInfo.forEach(
+      function (doc) {
+        const courseName = doc.courses[courseId].courseName;
+        Session.set('displayContentHelper', courseName); //using a Session method to bring the information from outside of the function and into the return result
+      });
+
+    var courseNameDisplay = Session.get('displayContentHelper');
+    return courseNameDisplay;
+  },
+});
+
+//helper that grabs the setting display ID
+Template.courseContent.helpers({
+  displaySettings: function(){
+    var setting = (Session.get('settingScreenText'));
+
+    return setting;
+  }
+});

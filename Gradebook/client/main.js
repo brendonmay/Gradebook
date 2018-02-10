@@ -159,12 +159,12 @@ Template.sideNavDropDown.events({
     event.preventDefault();
 
     const target = event.target;
-    var testName = document.getElementById(target.id).innerText;
+    var courseId = document.getElementById(target.id).innerText;
 
-    Session.set('courseNameDisplay', testName);
-    var testing = Session.get('courseNameDisplay');
+    Session.set('courseNameDisplay', courseId);
+    //var testing = Session.get('courseNameDisplay');
 
-    console.log(testing);
+    //console.log(testing);
   }
 });
 

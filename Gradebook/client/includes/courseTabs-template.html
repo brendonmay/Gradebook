@@ -36,11 +36,15 @@
     <div id="gradeBookChartHolder" class="col s12">
         {{> gradeBookChart}}
     </div>
-    <div id="studentReports" class="col s12">{{> testContent}} works on page 2</div>
-    <div id="classStatistics" class="col s12">{{> testContent}} works on page 3</div>
-    <div id="courseSettings" class="col s12">{{> testContent}} works on page 4</div>
+    <div id="studentReports" class="col s12">{{> displayContent}} works on Student Reports</div>
+    <div id="classStatistics" class="col s12">{{> displayContent}} works on Class Statistics</div>
+    <div id="courseSettings" class="col s12">
+        <!--Settings sideNav implementation-->
+        {{> courseSettingsSideNav}}
+
+        {{> displayContent}} works on {{displaySettings}}</div>
 </template>
 
-<template name="testContent">
+<template name="displayContent">
     {{display}}
 </template>

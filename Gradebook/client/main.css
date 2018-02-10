@@ -76,7 +76,7 @@ body {
     flex: 1 0 auto;
   }
 
-  /* grade book chart CSS */
+  /*************** grade book chart CSS ***********/
   .studName{
     background-color: rgba(0, 0, 0, 0);
     color: black;
@@ -92,6 +92,16 @@ body {
     background-color: #c1c1c1;
 }
 
+/* To add a border to every chunk of 4 mark categories */
+#marksCategoriesAndStudent td:nth-child(4n+1){
+    border-right:1px solid black;
+}
+
+/* To add a border to every 4 columns of marks (corresponding to above css writeup) */
+tbody tr td:nth-child(4n+1){
+    border-right:1px solid black;
+}
+
 .studMarkTableCell{
     min-width: 100px;
 }
@@ -104,4 +114,14 @@ body {
 
 .testColumns{
     border-bottom: 1px solid black;
+}
+
+/*To override tab scrolling on x*/
+.tabs{
+    overflow-x: hidden;
+}
+
+/*To fix clickable sideNav above tabs*/
+.button-collapse{
+    width: 50px;
 }

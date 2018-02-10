@@ -26,6 +26,11 @@
     color:#42a5f5
 }
 
+/*To override tab scrolling on x*/
+.tabs{
+    overflow-x: hidden;
+}
+
 /* Site Content */
 main{
     padding-left: 200px;
@@ -114,11 +119,6 @@ tbody tr td:nth-child(4n+1){
 
 .testColumns{
     border-bottom: 1px solid black;
-}
-
-/*To override tab scrolling on x*/
-.tabs{
-    overflow-x: hidden;
 }
 
 /*To fix clickable sideNav above tabs*/

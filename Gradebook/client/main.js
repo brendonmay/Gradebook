@@ -22,9 +22,9 @@ Template.addCourse.events({
 
     //check if user has ever created a course
     //if user has not created a course,
-    if (Courses.findOne({ownerId: Meteor.userId()}) == null) {
-      Meteor.call('courses.createFirstCourse', course, year);  
-    } 
+    if (Courses.findOne({ ownerId: Meteor.userId() }) == null) {
+      Meteor.call('courses.createFirstCourse', course, year);
+    }
     else {
       var teacherInfo = Courses.find({ ownerId: Meteor.userId() }, { _id: 0, ownerId: 0 });
       //first determine courseID, previous courseId + 1
@@ -39,10 +39,10 @@ Template.addCourse.events({
       //insert new course into collection
 
       //determine courses they currently have
-      let currentCourses = Courses.findOne({ownerId: Meteor.userId()}, {_id: 0, ownerId: 0}).courses; //array of course objects
+      let currentCourses = Courses.findOne({ ownerId: Meteor.userId() }, { _id: 0, ownerId: 0 }).courses; //array of course objects
 
       //create a new course object to be inserted
-      const newCourse = {courseId: newCourseId, courseName: course, courseYear: year};
+      const newCourse = { courseId: newCourseId, courseName: course, courseYear: year };
 
       //create updated array of course objects
       currentCourses[newCourseId - 1] = newCourse;
@@ -67,17 +67,27 @@ Template.sideNav.helpers({
 
 });
 
+
+Template.sideNav.onRendered(function() {
+  this.$("[data-activates=slide-out-l]").sideNav({
+  // this.$('.button-collapse').sideNav({
+       menuWidth: 200, // Default is 300 // Choose the horizontal origin
+      edge: 'left',
+    }
+  );
+});
+
 Template.sideNavDropDown.onRendered(function () {
   this.$('.collapsible').collapsible();
 });
 
 Template.sideNavDropDown.helpers({
 
-  courses: function(year){
+  courses: function (year) {
     //need to put all courses with the courseYear == year into object and return that
     let coursesWithSameYear = [];
 
-    const teacherInfo = Courses.find({ownerId: Meteor.userId()}, {_id: 0, ownerId: 0});
+    const teacherInfo = Courses.find({ ownerId: Meteor.userId() }, { _id: 0, ownerId: 0 });
     teacherInfo.forEach(
       function (doc) {
         let index = 0;
@@ -126,13 +136,9 @@ Template.tabsContent.onRendered(function () {
   this.$('.tabs').tabs();
 });
 
-Template.tabsContent.onRendered(function() {
-  this.$('.tabs').tabs();
-});
-
 Template.sideNavDropDown.events({
   //event allows the main page to change as you click the side bar
-  'click .sections': function(){
+  'click .sections': function () {
     event.preventDefault();
 
     const target = event.target;
@@ -144,32 +150,45 @@ Template.sideNavDropDown.events({
   }
 });
 
-Template.courseSettingsSideNav.events({
+Template.courseSettingsNavBar.events({
   //function that changes the body display based off of settings side bar click.
-  'click .side-nav': function(){
+  'click .settings-nav': function () {
     event.preventDefault();
 
     const target = event.target;
     var settingId = target.id;
     var settingScreen;
 
-    if(settingId=="CW"){
-      settingScreen="Catagory Weightings";
-    } else if(settingId=="AT"){
-      settingScreen= "Assessment Types";
-    } else if(settingId=="AW"){
-      settingScreen= "Assessment Weightings";
-    } else{
+    if (settingId == "CW") {
+      settingScreen = "Catagory Weightings";
+    } else if (settingId == "AT") {
+      settingScreen = "Assessment Types";
+    } else if (settingId == "AW") {
+      settingScreen = "Assessment Weightings";
+    } else {
       settingScreen = "General Settings"
     }
 
     console.log(settingScreen);
     Session.set('settingScreenText', settingScreen);
+  },
+
+  'click .pag-click': function() {
+    if(!element.classList.contains('active')) {
+      //$(this).addClass("active");
+      console.log('here"0');
+    }
+      
+    
   }
 });
 
+Template.courseSettingsNavBar.onRendered(function() {
+  Session.set('settingScreenText', "General Settings");
+});
+
 Template.displayContent.helpers({
-  display: function(){
+  display: function () {
     //grabs the courseId variable from the session.
     //since the index is the id subtracted by 1 I subtract it.
     var courseId = (Session.get('courseIdDisplay')) - 1;
@@ -189,7 +208,7 @@ Template.displayContent.helpers({
 
 //helper that grabs the setting display ID
 Template.courseContent.helpers({
-  displaySettings: function(){
+  displaySettings: function () {
     var setting = (Session.get('settingScreenText'));
 
     return setting;

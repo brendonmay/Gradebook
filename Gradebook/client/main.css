@@ -26,15 +26,18 @@
     color:#42a5f5
 }
 
-/*To override tab scrolling on x*/
-.tabs{
-    overflow-x: hidden;
-}
-
 /* Site Content */
 main{
     padding-left: 200px;
   }
+.courseSettings {
+    padding-right: 200px;
+}
+
+.courseSettingsSideNav {
+    margin-top: 100px;
+    margin-bottom: 500px !important;
+}
 
 
 @media only screen and (max-width : 992px) {
@@ -121,7 +124,27 @@ tbody tr td:nth-child(4n+1){
     border-bottom: 1px solid black;
 }
 
+/*To override tab scrolling on x*/
+.tabs{
+    overflow-x: hidden;
+    height: 3em;
+    padding-top: 0em;
+}
+
 /*To fix clickable sideNav above tabs*/
 .button-collapse{
     width: 50px;
+}
+
+.settings-nav-wrapper {
+    margin-top: 1em;
+    height: 1em;
+}
+
+.settings {
+    background-color: white;
+}
+
+.settings-nav{
+    color: black;
 }

@@ -133,7 +133,7 @@ tbody tr td:nth-child(4n+1){
 
 /*To fix clickable sideNav above tabs*/
 .button-collapse{
-    width: 50px;
+    width: 25px;
 }
 
 .settings-nav-wrapper {

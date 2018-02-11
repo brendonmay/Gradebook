@@ -17,10 +17,10 @@
     <div class="col s12">
         <ul class="tabs">
             <li class="tab col s3">
-                <a href="#gradeBookChartHolder">Grade Book</a>
+                <a class="active" href="#gradeBookChartHolder">Grade Book</a>
             </li>
             <li class="tab col s3">
-                <a class="active" href="#studentReports">Student Reports</a>
+                <a href="#studentReports">Student Reports</a>
             </li>
             <li class="tab col s3">
                 <a href="#classStatistics">Class Statistics</a>
@@ -38,9 +38,9 @@
     </div>
     <div id="studentReports" class="col s12">{{> displayContent}} works on Student Reports</div>
     <div id="classStatistics" class="col s12">{{> displayContent}} works on Class Statistics</div>
-    <div id="courseSettings" class="col s12">
+    <div id="courseSettings" class="col s12 courseSettings">
         <!--Settings sideNav implementation-->
-        {{> courseSettingsSideNav}}
+        {{> courseSettingsNavBar}}
 
         {{> displayContent}} works on {{displaySettings}}</div>
 </template>

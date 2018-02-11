@@ -177,7 +177,7 @@ Template.courseSettingsNavBar.events({
     var settingScreen;
 
     if (settingId == "CW") {
-      settingScreen = "Catagory Weightings";
+      settingScreen = "Category Weightings";
     } else if (settingId == "AS") {
       settingScreen = "Assessments";
     } else if (settingId == "AW") {

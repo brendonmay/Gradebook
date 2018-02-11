@@ -68,12 +68,12 @@ Template.sideNav.helpers({
 });
 
 
-Template.sideNav.onRendered(function() {
+Template.sideNav.onRendered(function () {
   this.$("[data-activates=slide-out-l]").sideNav({
-  // this.$('.button-collapse').sideNav({
-       menuWidth: 200, // Default is 300 // Choose the horizontal origin
-      edge: 'left',
-    }
+    // this.$('.button-collapse').sideNav({
+    menuWidth: 200, // Default is 300 // Choose the horizontal origin
+    edge: 'left',
+  }
   );
 });
 
@@ -146,8 +146,25 @@ Template.sideNavDropDown.events({
 
     Session.set('courseIdDisplay', courseId);
     //Use Session.get('courseIdDisplay'); to grab the courseId from sessions
+  },
 
+  'click .course-dropdown': function () {
+    var element = event.target.parentElement; //why do we need to access the parentElement??
+    if (!element.classList.contains('active')) {
+      var activeElement = document.getElementsByClassName('course-dropdown active blue lighten-2')[0];
+      console.log(activeElement);
+      if (activeElement != null) {
+        activeElement.classList.remove("active");
+        activeElement.classList.remove("blue");
+        activeElement.classList.remove("lighten-2");
+      }
+      console.log(element);
+      element.classList.add("active");
+      element.classList.add("blue");
+      element.classList.add("lighten-2");
+    }
   }
+
 });
 
 Template.courseSettingsNavBar.events({
@@ -161,8 +178,8 @@ Template.courseSettingsNavBar.events({
 
     if (settingId == "CW") {
       settingScreen = "Catagory Weightings";
-    } else if (settingId == "AT") {
-      settingScreen = "Assessment Types";
+    } else if (settingId == "AS") {
+      settingScreen = "Assessments";
     } else if (settingId == "AW") {
       settingScreen = "Assessment Weightings";
     } else {
@@ -173,17 +190,22 @@ Template.courseSettingsNavBar.events({
     Session.set('settingScreenText', settingScreen);
   },
 
-  'click .pag-click': function() {
-    if(!element.classList.contains('active')) {
-      //$(this).addClass("active");
-      console.log('here"0');
+  'click .pag-click': function () {
+    var element = event.target.parentElement; //why do we need to access the parentElement??
+    if (!element.classList.contains('active')) {
+      var activeElement = document.getElementsByClassName('pag-click active teal lighten-1')[0];
+      activeElement.classList.remove("active");
+      activeElement.classList.remove("teal");
+      activeElement.classList.remove("lighten-1");
+
+      element.classList.add("active");
+      element.classList.add("teal");
+      element.classList.add("lighten-1");
     }
-      
-    
   }
 });
 
-Template.courseSettingsNavBar.onRendered(function() {
+Template.courseSettingsNavBar.onRendered(function () {
   Session.set('settingScreenText', "General Settings");
 });
 

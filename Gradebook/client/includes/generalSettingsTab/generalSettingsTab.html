@@ -6,7 +6,7 @@
                 <div class="col s12">
                     Course Name:
                     <div class="input-field inline">
-                        <input disabled id="courseName" type="text" value = {{currentCourse}}>
+                        <input disabled id="generalSettings-courseName" type="text" value = {{currentCourse}}>
                     </div>
                 </div>
             </div>
@@ -14,11 +14,16 @@
                 <div class="col s12">
                     School Year:
                     <div class="input-field inline">
-                        <input disabled id="courseYear" type="text" value= {{currentYear}}>
+                        <input disabled id="generalSettings-courseYear" type="text" value= {{currentYear}}>
                     </div>
                 </div>
             </div>
-            <div class="save-general-settings">
+            <div class="save-general-settings" id="generalSettings-SaveButton">
+                <a href="#!" class="waves-effect waves-green btn">Save
+                    <input type="submit" style="display: none"/>
+                </a>
+            </div>
+            <div class="edit-general-settings" id="generalSettings-EditButton">
                 <a href="#!" class="waves-effect waves-green btn">Edit
                     <input type="submit" style="display: none"/>
                 </a>

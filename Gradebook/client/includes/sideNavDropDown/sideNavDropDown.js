@@ -67,8 +67,10 @@ Template.sideNavDropDown.events({
 
         const target = event.target;
         var courseId = target.id;
+        var courseYear = target.name;
 
         Session.set('courseIdDisplay', courseId);
+        Session.set('courseYearDisplay', courseYear);
         //Use Session.get('courseIdDisplay'); to grab the courseId from sessions
     },
 

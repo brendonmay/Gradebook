@@ -16,10 +16,10 @@ Template.uniqueDisplayContent.helpers({ //seems to be displaying a template erro
         teacherInfo.forEach(
             function (doc) {
                 const courseName = doc.courses[courseId].courseName;
-                Session.set('uniqueDisplayContentHelper', courseName); //using a Session method to bring the information from outside of the function and into the return result
+                Session.set('courseNameDisplay', courseName); //using a Session method to bring the information from outside of the function and into the return result
             });
 
-        var courseNameDisplay = Session.get('uniqueDisplayContentHelper');
+        var courseNameDisplay = Session.get('courseNameDisplay');
         return courseNameDisplay;
     },
 });

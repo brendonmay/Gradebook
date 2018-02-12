@@ -13,5 +13,24 @@ Template.generalSettingsTab.helpers({
     currentYear: function(){
         return Session.get('courseYearDisplay');
     }
+});
 
+Template.generalSettingsTab.events({
+    'click .edit-general-settings': function() {
+        let editButtonElement = document.getElementById("generalSettings-EditButton");
+        editButtonElement.style.display = "none";
+        let saveButtonElement = document.getElementById("generalSettings-SaveButton");
+        saveButtonElement.style.display = "block";
+        //initialize edit settings
+        
+    },
+    'click .save-general-settings': function() {
+        let saveButtonElement = document.getElementById("generalSettings-SaveButton");
+        saveButtonElement.style.display = "none";
+        let editButtonElement = document.getElementById("generalSettings-EditButton");
+        editButtonElement.style.display = "block";
+        
+        //save dirty modals to db
+    },
+    
 });

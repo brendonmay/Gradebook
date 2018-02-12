@@ -47,6 +47,7 @@ Template.addCourse.events({
             currentCourses[newCourseId - 1] = newCourse;
 
             Meteor.call('courses.updateCourses', currentCourses);
+            Meteor.call('courseInformation.defaultSettings', newCourseId);
         }
 
         //Clear form

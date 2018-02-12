@@ -68,12 +68,12 @@ Template.sideNav.helpers({
 });
 
 
-Template.sideNav.onRendered(function() {
-  this.$("[data-activates=slide-out-l]").sideNav({
-  // this.$('.button-collapse').sideNav({
-       menuWidth: 200, // Default is 300 // Choose the horizontal origin
-      edge: 'left',
-    }
+Template.sideNav.onRendered(function () {
+  this.$("[data-activates = slide-out-l]").sideNav({
+    // this.$('.button-collapse').sideNav({
+    menuWidth: 200, // Default is 300 // Choose the horizontal origin
+    edge: 'left',
+  }
   );
 });
 
@@ -132,7 +132,7 @@ Template.sideNavDropDown.helpers({
 
 });
 
-Template.tabsContent.onRendered(function () {
+Template.courseTabsTitles.onRendered(function () {
   this.$('.tabs').tabs();
 });
 
@@ -173,17 +173,17 @@ Template.courseSettingsNavBar.events({
     Session.set('settingScreenText', settingScreen);
   },
 
-  'click .pag-click': function() {
-    if(!element.classList.contains('active')) {
+  'click .pag-click': function () {
+    if (!element.classList.contains('active')) {
       //$(this).addClass("active");
       console.log('here"0');
     }
-      
-    
+
+
   }
 });
 
-Template.courseSettingsNavBar.onRendered(function() {
+Template.courseSettingsNavBar.onRendered(function () {
   Session.set('settingScreenText', "General Settings");
 });
 
@@ -207,7 +207,7 @@ Template.displayContent.helpers({
 });
 
 //helper that grabs the setting display ID
-Template.courseContent.helpers({
+Template.courseTabsContent.helpers({
   displaySettings: function () {
     var setting = (Session.get('settingScreenText'));
 

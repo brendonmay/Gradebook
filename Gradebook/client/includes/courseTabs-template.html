@@ -4,7 +4,7 @@
 <template name="courseTabs">
     {{#if currentUser}}
     <div class="row">
-        {{> tabsContent}} {{> courseContent}}
+        {{> courseTabsTitles}} {{> courseTabsContent}}
     </div>
     {{else}}
     <div class="container">
@@ -13,7 +13,7 @@
     {{/if}}
 </template>
 
-<template name="tabsContent">
+<template name="courseTabsTitles">
     <div class="col s12">
         <ul class="tabs">
             <li class="tab col s3">
@@ -32,7 +32,7 @@
     </div>
 </template>
 
-<template name="courseContent">
+<template name="courseTabsContent">
     <div id="gradeBookChartHolder" class="col s12">
         {{> gradeBookChart}}
     </div>

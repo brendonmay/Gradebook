@@ -68,7 +68,7 @@ Template.sideNav.helpers({
 });
 
 
-Template.sideNav.onRendered(function () {
+Template.nav.onRendered(function () {
   this.$("[data-activates=slide-out-l]").sideNav({
     // this.$('.button-collapse').sideNav({
     menuWidth: 200, // Default is 300 // Choose the horizontal origin

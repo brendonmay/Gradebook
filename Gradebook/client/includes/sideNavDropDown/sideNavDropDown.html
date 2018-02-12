@@ -1,0 +1,18 @@
+<template name="sideNavDropDown">
+    <li class="no-padding">
+           <ul class="collapsible collapsible-accordion">
+               {{#each years}}
+                   <li>
+                       <a class="collapsible-header">{{courseYear}}<i class="material-icons">arrow_drop_down</i></a>
+                       <div class="collapsible-body">
+                           <ul class="sections">
+                               {{#each courses courseYear}}
+                                   <li class="course-dropdown"><a href="#!" id={{courseId}}>{{courseName}}</a></li>
+                               {{/each}}
+                           </ul>
+                       </div>
+                   </li>
+               {{/each}}
+           </ul>
+       </li>
+</template>

@@ -1,0 +1,9 @@
+.nav-wrapper{
+    background-color:#42a5f5
+    
+}
+
+/*To fix clickable sideNav above tabs*/
+.button-collapse{
+    width: 25px;
+}

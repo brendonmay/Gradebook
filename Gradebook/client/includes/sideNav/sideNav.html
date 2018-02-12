@@ -1,0 +1,20 @@
+<template name="sideNav" class="sideNav">
+    <ul id="slide-out-l" class="side-nav fixed" style='position: absolute!important'>
+        <div class="center-label">
+            <h5>My Courses</h5>
+        </div>
+        {{#if currentUser}} 
+            {{#if hasNoCourses}}
+                <div class="paragraph">
+                    <p>Thank you for logging in. You can now create a course.</p>
+                </div>
+            {{else}}
+                {{> sideNavDropDown}}
+            {{/if}}
+        {{else}}
+            <div class="paragraph">
+                <p>Please login to begin creating courses.</p>
+            </div>
+        {{/if}}
+    </ul>
+</template>

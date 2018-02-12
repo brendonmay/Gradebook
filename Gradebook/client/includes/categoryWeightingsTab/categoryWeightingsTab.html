@@ -1,3 +1,44 @@
-<template name = "categoryWeightingsTab">
-    <p>categoryWeightingsTab Template is working</p>
+<template name="categoryWeightingsTab">
+    <h3 class="teal lighten-1 settings-header">Category Weightings</h3>
+    <div class="row center">
+        <form class="col s12">
+            <div class="row">
+                <div class="col s12">
+                    Knowledge % :
+                    <div class="input-field inline">
+                        <input id="knowledge" type="text" placeholder="currentKnowledge">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    Application % :
+                    <div class="input-field inline">
+                        <input id="application" type="text" placeholder="currentApplication">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    Thinking % :
+                    <div class="input-field inline">
+                        <input id="thinking" type="text" placeholder="currentThinking">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    Communication % :
+                    <div class="input-field inline">
+                        <input id="communication" type="text" placeholder="currentCommunication">
+                    </div>
+                </div>
+            </div>
+            <div class="save-category-weightings">
+                <a href="#!" class="waves-effect waves-green btn">Save Changes
+                    <input type="submit" style="display: none" />
+                </a>
+            </div>
+        </form>
+    </div>
 </template>

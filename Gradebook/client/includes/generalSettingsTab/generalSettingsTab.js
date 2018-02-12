@@ -22,13 +22,28 @@ Template.generalSettingsTab.events({
         let saveButtonElement = document.getElementById("generalSettings-SaveButton");
         saveButtonElement.style.display = "block";
         //initialize edit settings
-        
+
+        let courseName = document.getElementById("generalSettings-courseName");
+        let courseYear = document.getElementById("generalSettings-courseYear");
+
+        courseName.removeAttribute("disabled");
+        courseYear.removeAttribute("disabled");
+
     },
     'click .save-general-settings': function() {
         let saveButtonElement = document.getElementById("generalSettings-SaveButton");
         saveButtonElement.style.display = "none";
         let editButtonElement = document.getElementById("generalSettings-EditButton");
         editButtonElement.style.display = "block";
+        
+        let newCourseName = document.getElementById("generalSettings-courseName").value;
+        let newCourseYear = document.getElementById("generalSettings-courseYear").value;
+
+        let courseName = document.getElementById("generalSettings-courseName");
+        let courseYear = document.getElementById("generalSettings-courseYear");
+        courseName.disabled = true;
+        courseYear.disabled = true;
+
         
         //save dirty modals to db
     },

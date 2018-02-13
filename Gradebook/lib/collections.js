@@ -61,4 +61,13 @@ Meteor.methods({
             ]
         });
     },
+    'courseInformation.updateCategories'(currentCourseId, newCategoryWeighting){
+        CourseWeighting.update(
+            { "ownerId": Meteor.userId(), courseId: currentCourseId },
+            {
+                $set:
+                    { "categoryWeighting": newCategoryWeighting }
+            }
+        );
+    },
 });

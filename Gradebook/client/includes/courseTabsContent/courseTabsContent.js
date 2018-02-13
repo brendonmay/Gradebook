@@ -14,16 +14,13 @@ Template.courseTabsContent.helpers({
 
     generalSettingsSelected: function(){
       return  Session.get('settingScreenText') == "General Settings";
-      console.log("General Settings is selected")
     },
 
     categoryWeightingsSelected: function(){
       return Session.get('settingScreenText') == "Category Weightings";
-      console.log("Category Weightings is selected")
     },
 
     assessmentsSelected: function(){
       return Session.get('settingScreenText') == "Assessments";
-      console.log("Assessments is selected")
     },
   });

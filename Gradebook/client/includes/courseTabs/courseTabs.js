@@ -7,7 +7,7 @@ import '../../main.html';
 
 Template.courseTabs.helpers({
     courseSelected: function () {
-      let courseId = Session.get('courseIdDisplay');
+      let courseId = Session.get('courseId');
       return courseId != 0;
     }
   });

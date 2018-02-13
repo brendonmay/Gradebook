@@ -2,6 +2,7 @@ import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Courses } from '../../../lib/collections.js';
 import { Accounts } from 'meteor/accounts-base';
+import { CourseWeighting } from '../../../lib/collections.js';
 
 import '../../main.html';
 
@@ -66,25 +67,37 @@ Template.sideNavDropDown.events({
         event.preventDefault();
 
         const target = event.target;
-        var courseId = target.id;
+        var courseId = Number(target.id);
         var courseYear = target.name;
+        const categoryWeighting = CourseWeighting.findOne({ownerId: Meteor.userId(), courseId: courseId}).categoryWeighting;
+        var knowledgeWeight = categoryWeighting.K;
+        var applicationWeight = categoryWeighting.A;
+        var thinkingWeight = categoryWeighting.T;
+        var communicationWeight = categoryWeighting.C;
+        var courseworkWeight = CourseWeighting.findOne({ownerId: Meteor.userId(), courseId: courseId}).courseworkWeight;
+        var finalWeight = CourseWeighting.findOne({ownerId: Meteor.userId(), courseId: courseId}).finalWeight;
 
-        Session.set('courseIdDisplay', courseId);
-        Session.set('courseYearDisplay', courseYear);
-        //Use Session.get('courseIdDisplay'); to grab the courseId from sessions
+        //Set Session Variables for Selected Course
+        Session.set('courseId', courseId);
+        Session.set('courseYear', courseYear);
+        Session.set('knowledgeWeight', knowledgeWeight);
+        Session.set('applicationWeight', applicationWeight);
+        Session.set('thinkingWeight', thinkingWeight);
+        Session.set('communicationWeight', communicationWeight);
+        Session.set('courseworkWeight', courseworkWeight);
+        Session.set('finalWeight', finalWeight);
+
     },
 
     'click .course-dropdown': function () {
         var element = event.target.parentElement; //why do we need to access the parentElement??
         if (!element.classList.contains('active')) {
             var activeElement = document.getElementsByClassName('course-dropdown active blue lighten-2')[0];
-            console.log(activeElement);
             if (activeElement != null) {
                 activeElement.classList.remove("active");
                 activeElement.classList.remove("blue");
                 activeElement.classList.remove("lighten-2");
             }
-            console.log(element);
             element.classList.add("active");
             element.classList.add("blue");
             element.classList.add("lighten-2");

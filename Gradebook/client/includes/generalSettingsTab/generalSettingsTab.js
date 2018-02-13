@@ -7,11 +7,11 @@ import '../../main.html';
 
 Template.generalSettingsTab.helpers({
     currentCourse: function(){
-        return Session.get('courseNameDisplay');
+        return Session.get('courseName');
     },
 
     currentYear: function(){
-        return Session.get('courseYearDisplay');
+        return Session.get('courseYear');
     }
 });
 

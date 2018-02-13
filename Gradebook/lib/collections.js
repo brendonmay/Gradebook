@@ -21,7 +21,7 @@ Meteor.methods({
             courseId: 1,
             categoryWeighting: { K: 25, A: 25, T: 25, C: 25 },
             courseworkWeight: 70,
-            finalWeighting: 30,
+            finalWeight: 30,
             courseworkAssessmentTypes: [
                 { assessmentType: "Quiz", assessmentWeight: 10 },
                 { assessmentType: "Assignment", assessmentWeight: 25 },
@@ -49,7 +49,7 @@ Meteor.methods({
             courseId: newCourseId,
             categoryWeighting: { K: 25, A: 25, T: 25, C: 25 },
             courseworkWeight: 70,
-            finalWeighting: 30,
+            finalWeight: 30,
             courseworkAssessmentTypes: [
                 { assessmentType: "Quiz", assessmentWeight: 10 },
                 { assessmentType: "Assignment", assessmentWeight: 25 },

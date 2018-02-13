@@ -40,8 +40,7 @@ Template.sideNavDropDown.helpers({
         teacherInfo.forEach(
             function (doc) {
                 for (var i = 0; i < doc.courses.length; i++) {
-                    const entryYear = doc.courses[i].courseYear;
-                    let counter = 0;
+                    var entryYear = doc.courses[i].courseYear;
                     let uniqueYear = true;
                     for (index = 0; index < uniqueYears.length; index++) {
                         if (entryYear == uniqueYears[index].courseYear) {
@@ -50,6 +49,20 @@ Template.sideNavDropDown.helpers({
                         }
                     }
                     if (uniqueYear) {
+                        var splitYear = entryYear.split("-"); //splits the year so it may be compared
+                        for (index = 0; index < uniqueYears.length; index++){
+                            var grabYear = uniqueYears[index].courseYear; //grabs the year to compare with
+                            var comparisonYear = grabYear.split("-"); //splits off the first part for comparison
+                            if (splitYear[0] > comparisonYear[0]){
+                                /*if the new entry is a more recent year than the old entry it will trade places
+                                 with that entry in the array */
+                                var newEntryYear = grabYear;
+                                uniqueYears[index] = { "courseYear": entryYear }
+                                entryYear = newEntryYear;
+                                splitYear = entryYear.split("-");
+                            }                            
+                        }
+                        //otherwise it is inserted as normal
                         uniqueYears[uniqueYears.length] = { "courseYear": entryYear }
                     }
                 }

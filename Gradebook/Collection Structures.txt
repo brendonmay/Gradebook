@@ -33,20 +33,25 @@ db.Courses.insert({
 
 //-----------------------------------------------------------------------------------
 Collection 2 - CourseInformation - Structure (example)
-{
-	ownerId: "bmay",
-	courseId: 1,
-	categoryWeighting: {K: 25, A: 25, T:25, C:25},
-	courseworkSummativeWeight: {coursework: 70, summative: 30},
-	assessmentWeighting: [
-		{assessmentName: "Quiz", assessmentWeight: 10},
-		{assessmentName: "Assignment", assessmentWeight: 25},
-		{assessmentName: "Test", assessmentWeight: 35}
+{	
+	ownerId: Meteor.userId(),
+	courseId: courseId,
+	categoryWeighting: {K: 25, A:25, T:25, C:25},
+	courseworkWeight: 70,
+	finalWeight: 30,
+	courseworkAssessmentTypes:[
+		{assessmentType: "Quiz", assessmentWeight: 10},
+		{assessmentType: "Assignment", assessmentWeight: 25},
+		{assessmentType: "Test", assessmentWeight: 35}
+	],
+	finalAssessmentTypes:[
+		{assessmentType: "Culminating Task", assessmentWeight: 15},
+		{assessmentType: "Final Exam", assessmentWeight: 15}
 	]
 }
-	
-	
-	
+
+
+
 
 
 

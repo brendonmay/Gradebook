@@ -28,7 +28,7 @@ Template.courseSettingsNavBar.events({
             settingScreen = "General Settings"
         }
 
-        console.log(settingScreen);
+        //console.log(settingScreen);
         Session.set('settingScreenText', settingScreen);
     },
 

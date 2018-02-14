@@ -51,6 +51,15 @@ Meteor.methods({
                     { "courses": courseObj }
             }
         );
+    },
+    'courses.deleteCourse'(currentCourseId, courseObj) {
+        Courses.update(
+            { "ownerId": Meteor.userId() },
+            {
+                $set:
+                    { "courses": courseObj }
+            }
+        );
         //remove from courseWeightings DB
         var courses = Courses.findOne({"ownerId": Meteor.userId() }).courses;
         if (courses.length == 0) {

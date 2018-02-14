@@ -1,0 +1,68 @@
+<template name="categoryWeightingsTab">
+    <h4 class="teal lighten-1 settings-header">Category Weightings</h4>
+    <div class="row center">
+        <form class="col s12 categoryWeightingsForm">
+            <div class="row">
+                <div class = "col s3 category offset-s3">
+                    <h5>Categories</h5>
+                </div>
+                <div class = "col s3 percentage">
+                    <h5>Percentage (%)</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class = "col s3 offset-s3">
+                    <h6>Knowledge</h6>
+                </div>
+                <div class="col s1 offset-s1 center inline">
+                    <!-- <div class="input-field inline"> -->
+                        <input disabled id="knowledge" type="text" value={{fetchKnowledge}}>
+                    <!-- </div> -->
+                </div>
+            </div>
+            <div class="row">
+                <div class = "col s3 offset-s3">
+                    <h6>Application</h6>
+                </div>
+                <div class="col s1 offset-s1 center inline">
+                    <!-- <div class="input-field inline"> -->
+                        <input disabled id="application" type="text" value={{fetchApplication}}>
+                    <!-- </div> -->
+                </div>
+            </div>
+            <div class="row">
+                <div class = "col s3 offset-s3">
+                    <h6>Thinking</h6>
+                </div>
+                <div class="col s1 offset-s1 center inline">
+                    <!-- <div class="input-field inline"> -->
+                        <input disabled id="thinking" type="text" value={{fetchThinking}}>
+                    <!-- </div> -->
+                </div>
+            </div>
+            <div class="row">
+                <div class = "col s3 offset-s3">
+                    <h6>Communication</h6>
+                </div>
+                <div class="col s1 offset-s1 center inline">
+                    <!-- <div class="input-field inline"> -->
+                        <input disabled id="communication" type="text" value={{fetchCommunication}}>
+                    <!-- </div> -->
+                </div>
+            </div>
+            <div class = "row">
+                <div class="save-category-weightings col s1 offset-s4">
+                    <button id = "save-button" class="waves-effect waves-green btn hide" type="submit">Save</button>
+                </div>
+                <div class="cancel-category-weightings col s1 offset-s1">
+                    <a href="#!" id = "cancel-button" class="waves-effect waves-green btn hide">Cancel</a>
+                </div>
+            </div>
+            <div class="edit-category-weightings">
+                <a href="#!" id = "edit-button" class="waves-effect waves-green btn">Edit
+                </a>
+            </div>
+            <input type="submit" style="display: none"/>
+        </form>
+    </div>
+</template>

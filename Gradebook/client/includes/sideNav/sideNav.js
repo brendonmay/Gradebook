@@ -6,7 +6,7 @@ import { Accounts } from 'meteor/accounts-base';
 import '../../main.html';
 
 Template.sideNav.onCreated(function () {
-    Session.set('courseIdDisplay', 0);
+    Session.set('courseId', 0);
   });
   
   Template.sideNav.helpers({

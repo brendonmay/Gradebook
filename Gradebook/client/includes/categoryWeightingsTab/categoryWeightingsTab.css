@@ -1,0 +1,13 @@
+.category{
+    background-color:#42a5f5;
+    color: white;
+}
+
+.percentage{
+    background-color:black;
+    color: white;
+}
+
+.top-adjust{
+    padding-top: 0em !important;
+}

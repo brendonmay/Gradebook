@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Courses } from '../../../lib/collections.js';
+import { CourseWeighting } from '../../../lib/collections.js'; 
 import { Accounts } from 'meteor/accounts-base';
 
 import '../../main.html';
@@ -46,7 +47,8 @@ Template.addCourse.events({
             //create updated array of course objects
             currentCourses[newCourseId - 1] = newCourse;
 
-            Meteor.call('courses.updateCourses', currentCourses);
+            Meteor.call('courses.addNewCourse', currentCourses);
+            Meteor.call('courseInformation.defaultSettings', newCourseId);
         }
 
         //Clear form

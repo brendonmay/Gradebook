@@ -69,6 +69,7 @@ Template.sideNavDropDown.events({
         const target = event.target;
         var courseId = Number(target.id);
         var courseYear = target.name;
+        const courseName = target.innerText;
         const categoryWeighting = CourseWeighting.findOne({ownerId: Meteor.userId(), courseId: courseId}).categoryWeighting;
         var knowledgeWeight = categoryWeighting.K;
         var applicationWeight = categoryWeighting.A;
@@ -80,6 +81,7 @@ Template.sideNavDropDown.events({
         //Set Session Variables for Selected Course
         Session.set('courseId', courseId);
         Session.set('courseYear', courseYear);
+        Session.set('courseName', courseName);
         Session.set('knowledgeWeight', knowledgeWeight);
         Session.set('applicationWeight', applicationWeight);
         Session.set('thinkingWeight', thinkingWeight);

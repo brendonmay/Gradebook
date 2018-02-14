@@ -4,23 +4,27 @@
 
 input{
     margin: 0!important;
-    height: 1.65rem!important;
+    height: 1.536rem!important;
 }
 
 .weightingList{
-    box-shadow: none;
-    border: none;
     cursor: initial;
+    box-shadow: none;
 }
 
 .weightingListContainer{
     margin-top: 2.76em;
     cursor: initial;
+    padding-left: 0!important;
 }
 
 .weightingInput{
-    border: 0;
     cursor: initial;
+    background-color: aliceblue;
+}
+
+.assessmentContainer{
+    padding-right: 0!important;
 }
 
 .addAssessmentButton{

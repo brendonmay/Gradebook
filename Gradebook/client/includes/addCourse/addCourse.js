@@ -1,7 +1,7 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Courses } from '../../../lib/collections.js';
-import { CourseWeighting } from '../../../lib/collections.js'; 
+import { CourseWeighting } from '../../../lib/collections.js';
 import { Accounts } from 'meteor/accounts-base';
 
 import '../../main.html';
@@ -36,16 +36,24 @@ Template.addCourse.events({
                     newCourseId = lastCourseId + 1;
                 });
 
+            console.log("new course Id: " + newCourseId);
+
             //insert new course into collection
 
             //determine courses they currently have
-            let currentCourses = Courses.findOne({ ownerId: Meteor.userId() }, { _id: 0, ownerId: 0 }).courses; //array of course objects
+            let currentCourses = Courses.findOne({ ownerId: Meteor.userId() }, { _id: 0, ownerId: 0 }).courses; //array of course objects    
 
             //create a new course object to be inserted
             const newCourse = { courseId: newCourseId, courseName: course, courseYear: year };
 
             //create updated array of course objects
             currentCourses[newCourseId - 1] = newCourse;
+
+            for (var i = 0; i < currentCourses.length; i++) { //error checking for null value
+                if (currentCourses[i] == null) {
+                    currentCourses.splice(i,1);
+                }
+            }
 
             Meteor.call('courses.addNewCourse', currentCourses);
             Meteor.call('courseInformation.defaultSettings', newCourseId);

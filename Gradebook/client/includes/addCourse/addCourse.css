@@ -2,3 +2,8 @@
 .modal-title{
     padding-bottom: .5em
 }
+
+.addCourseModal{
+    width: 30% !important ; 
+    height: 35% !important;
+}

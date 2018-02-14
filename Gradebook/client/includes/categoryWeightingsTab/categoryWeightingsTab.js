@@ -91,10 +91,10 @@ Template.categoryWeightingsTab.events({
 
         const currentCourseId = Session.get('courseId');
         const target = event.target;
-        const knowledgeWeight = target.knowledge.value;
-        const applicationWeight = target.application.value;
-        const thinkingWeight = target.thinking.value;
-        const communicationWeight = target.communication.value;
+        const knowledgeWeight = Number(target.knowledge.value);
+        const applicationWeight = Number(target.application.value);
+        const thinkingWeight = Number(target.thinking.value);
+        const communicationWeight = Number(target.communication.value);
 
         //check that sum is 100
         let totalWeight = +knowledgeWeight + +applicationWeight + +thinkingWeight + +communicationWeight;

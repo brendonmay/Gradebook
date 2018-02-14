@@ -38,3 +38,4 @@ Template.assessmentsTab.onRendered(function() {
 });
 
 //assessments-courseWorkWeight -> CourseWork % weight 
+//still need types of course work

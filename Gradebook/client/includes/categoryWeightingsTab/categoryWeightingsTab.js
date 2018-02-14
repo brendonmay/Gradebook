@@ -77,7 +77,6 @@ Template.categoryWeightingsTab.events({
     },
 
     'submit .categoryWeightingsForm': function(){ //include check that they add to 100,  disable forms
-        console.log("save button works");
 
         const currentCourseId = Session.get('courseId');
         const target = event.target;
@@ -85,7 +84,6 @@ Template.categoryWeightingsTab.events({
         const applicationWeight = target.application.value;
         const thinkingWeight = target.thinking.value;
         const communicationWeight = target.communication.value;
-        console.log(knowledgeWeight);
 
         //check that sum is 100
         let totalWeight = +knowledgeWeight + +applicationWeight + +thinkingWeight + +communicationWeight;

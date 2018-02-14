@@ -74,6 +74,17 @@ Template.categoryWeightingsTab.events({
     'click .cancel-category-weightings': function(){
         finishedEditing();
 
+        let knowledgeWeight = document.getElementById("knowledge");
+        let applicationWeight = document.getElementById("application");
+        let thinkingWeight = document.getElementById("thinking");
+        let communicationWeight = document.getElementById("communication");
+
+        knowledgeWeight.value = Session.get("knowledgeWeight");
+        applicationWeight.value = Session.get("applicationWeight");
+        thinkingWeight.value = Session.get("thinkingWeight");
+        communicationWeight.value = Session.get("communicationWeight");
+
+
     },
 
     'submit .categoryWeightingsForm': function(){ //include check that they add to 100,  disable forms

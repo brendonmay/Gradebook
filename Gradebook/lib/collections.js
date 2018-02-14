@@ -34,7 +34,7 @@ Meteor.methods({
         });
 
     },
-    'courses.updateCourses'(currentCourses) {
+    'courses.addNewCourse'(currentCourses) { //add new course
         Courses.update(
             { "ownerId": Meteor.userId() },
             {
@@ -42,6 +42,21 @@ Meteor.methods({
                     { "courses": currentCourses }
             }
         );
+    },
+    'courses.updateCourseNameAndYear'(currentCourseId, courseObj) {
+        Courses.update(
+            { "ownerId": Meteor.userId() },
+            {
+                $set:
+                    { "courses": courseObj }
+            }
+        );
+        //remove from courseWeightings DB
+        var courses = Courses.findOne({"ownerId": Meteor.userId() }).courses;
+        if (courses.length == 0) {
+            Courses.remove( { "ownerId": Meteor.userId() } );
+        }
+        CourseWeighting.remove( { "ownerId": Meteor.userId(), "courseId": currentCourseId});
     },
     'courseInformation.defaultSettings'(newCourseId) {
         CourseWeighting.insert({
@@ -70,4 +85,5 @@ Meteor.methods({
             }
         );
     },
+    
 });

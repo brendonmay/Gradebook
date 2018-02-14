@@ -84,12 +84,20 @@ Template.generalSettingsTab.events({
         let courseName = document.getElementById("generalSettings-courseName");
         let courseYear = document.getElementById("generalSettings-courseYear");
         
+<<<<<<< HEAD
+        courseName.value = Session.get('courseName');
+        courseYear.value = Session.get('courseYear');
+
+=======
+>>>>>>> origin/master
         editButtonElement.classList.remove("hide");
         saveButtonElement.classList.add("hide");
         cancelButtonElement.classList.add("hide");
 
         courseName.disabled = true;
         courseYear.disabled = true;
+<<<<<<< HEAD
+=======
     },
     'click .delete-general-settings': function() {
         const currentCourseId = Session.get('courseId');
@@ -125,6 +133,6 @@ Template.generalSettingsTab.events({
 
         Meteor.call('courses.updateCourseNameAndYear', currentCourseId, courseObj);
        
+>>>>>>> origin/master
     },
-    
 });

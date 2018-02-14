@@ -12,11 +12,19 @@
                         <label for = "courseName">Course Name</label>
                     </div>
                 </div>
-                <br>
-                <div class="row">
-                    <div class='input-field col s12'>
-                        <input type="text" name="courseYear" placeholder="Example: 2017-2018">
-                        <label for="courseYear">Course Year</label>
+                <div class="col">
+                    <div class="input-field">
+                        <select id="courseYear">
+                            <option value="" disabled selected>Choose School Year</option>
+                            <option value="2015-2016">2015-2016</option>
+                            <option value="2016-2017">2016-2017</option>
+                            <option value="2017-2018">2017-2018</option>
+                            <option value="2018-2019">2018-2019</option>
+                            <option value="2019-2020">2019-2020</option>
+                            <option value="2020-2021">2020-2021</option>
+                            <option value="2021-2022">2021-2022</option>
+                        </select>
+                        <label>Course Year</label>
                     </div>
                 </div>
                 <input type="submit" style="display: none;"/>

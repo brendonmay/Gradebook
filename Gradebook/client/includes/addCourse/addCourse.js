@@ -18,7 +18,7 @@ Template.addCourse.events({
         //Get input value
         const target = event.target;
         const course = target.courseName.value;
-        const year = target.courseYear.value;
+        const year = document.getElementById("courseYear").value;
 
         //check if user has ever created a course
         //if user has not created a course,

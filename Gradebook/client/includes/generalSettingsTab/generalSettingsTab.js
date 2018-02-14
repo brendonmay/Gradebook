@@ -30,7 +30,7 @@ Template.generalSettingsTab.events({
         courseYear.disabled = false;
 
     },
-    'click .save-general-settings': function() {
+    'submit .generalSettingsForm': function() {
         let saveButtonElement = document.getElementById("generalSettings-SaveButton");
         let editButtonElement = document.getElementById("generalSettings-EditButton");
         let cancelButtonElement = document.getElementById("generalSettings-CancelButton");

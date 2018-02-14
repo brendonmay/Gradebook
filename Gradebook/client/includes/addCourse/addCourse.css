@@ -1,4 +1,8 @@
 /* addCourse-template */
+.modal{
+    overflow: visible;
+}
+
 .modal-title{
     padding-bottom: .5em
 }

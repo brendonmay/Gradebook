@@ -47,7 +47,7 @@ Template.addCourse.events({
             //create updated array of course objects
             currentCourses[newCourseId - 1] = newCourse;
 
-            Meteor.call('courses.updateCourses', currentCourses);
+            Meteor.call('courses.addNewCourse', currentCourses);
             Meteor.call('courseInformation.defaultSettings', newCourseId);
         }
 

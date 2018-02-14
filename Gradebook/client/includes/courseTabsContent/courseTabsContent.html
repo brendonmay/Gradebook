@@ -1,0 +1,18 @@
+<template name="courseTabsContent">
+    <div id="gradeBookChartHolder" class="col s12">
+        {{> gradeBookChart}}
+    </div>
+    <div id="studentReports" class="col s12">{{> uniqueDisplayContent}} works on Student Reports</div>
+    <div id="classStatistics" class="col s12">{{> uniqueDisplayContent}} works on Class Statistics</div>
+    <div id="courseSettings" class="col s12 courseSettings">
+        <!--Settings sideNav implementation-->
+        {{> courseSettingsNavBar}}
+        {{#if generalSettingsSelected}}
+            {{> generalSettingsTab}}
+        {{else if categoryWeightingsSelected}}
+            {{> categoryWeightingsTab}}
+        {{else if assessmentsSelected}}
+            {{> assessmentsTab}}
+        {{/if}} 
+        </div>
+</template>

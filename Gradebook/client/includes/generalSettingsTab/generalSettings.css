@@ -1,0 +1,12 @@
+.settings-header{
+    color:white;
+    padding: .5em;
+}
+
+.save-general-settings {
+    display: none;
+}
+
+.edit-general-settings {
+    display: block;
+}

@@ -1,31 +1,3 @@
-/* nav-template */
-.nav-wrapper{
-    background-color:#42a5f5
-    
-}
-
-/* addCourse-template */
-.modal-title{
-    padding-bottom: .5em
-}
-
-/* tabs-template */
- .tabs .indicator{
-    background-color:#26a498
-} 
-
-.tabs .tab a.active{
-    color:#26a498
-}
-
-.tabs .tab a:hover{
-    color:#26a498
-}
-
-.tabs .tab a{
-    color:#42a5f5
-}
-
 /* Site Content */
 main{
     padding-left: 200px;
@@ -44,34 +16,6 @@ main{
     main{
         padding-left: 0;
     }
-  }
-
-/* sideNav-template */
-.side-nav{
-    top: 68px; 
-    padding-bottom: 8em;
-}
-
-.center-label{
-    padding-left: 1.5em;
-}
-
-.collapsible-body{
-    font-family: GillSans, Calibri, Trebuchet, sans-serif;
-    
-}
-
-.paragraph{
-    padding-left: 1em;
-}
-
-/* footer-template */
-.page-footer{
-    background-color:#42a5f5
-}
-
-.footer-copyright{
-
 }
 
 body {
@@ -90,61 +34,4 @@ body {
     color: black;
     text-transform: capitalize;
     box-shadow: none;
-}
-
-.studName:focus{
-    background-color: #c1c1c1;
-}
-
-.studName:hover{
-    background-color: #c1c1c1;
-}
-
-/* To add a border to every chunk of 4 mark categories */
-#marksCategoriesAndStudent td:nth-child(4n+1){
-    border-right:1px solid black;
-}
-
-/* To add a border to every 4 columns of marks (corresponding to above css writeup) */
-tbody tr td:nth-child(4n+1){
-    border-right:1px solid black;
-}
-
-.studMarkTableCell{
-    min-width: 100px;
-}
-
-#gradeBookChartHolder{
-    width: 100%;
-    overflow-x:scroll;
-    overflow-y:scroll;
-}
-
-.testColumns{
-    border-bottom: 1px solid black;
-}
-
-/*To override tab scrolling on x*/
-.tabs{
-    overflow-x: hidden;
-    height: 3em;
-    padding-top: 0em;
-}
-
-/*To fix clickable sideNav above tabs*/
-.button-collapse{
-    width: 50px;
-}
-
-.settings-nav-wrapper {
-    margin-top: 1em;
-    height: 1em;
-}
-
-.settings {
-    background-color: white;
-}
-
-.settings-nav{
-    color: black;
 }

@@ -1,0 +1,37 @@
+<template name="generalSettingsTab">
+    <h4 class="teal lighten-1 settings-header">General Settings</h4>
+    <div class="row center">
+        <form class="col s12">
+            <div class="row">
+                <div class="col s12">
+                    Course Name:
+                    <div class="input-field inline">
+                        <input disabled id="generalSettings-courseName" type="text" value = {{currentCourse}}>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    School Year:
+                    <div class="input-field inline">
+                        <input disabled id="generalSettings-courseYear" type="text" value= {{currentYear}}>
+                    </div>
+                </div>
+            </div>
+            <div class="save-general-settings" id="generalSettings-SaveButton">
+                <a href="#!" class="waves-effect waves-green btn">Save
+                    <input type="submit" style="display: none"/>
+                </a>
+            </div>
+            <div class="edit-general-settings" id="generalSettings-EditButton">
+                <a href="#!" class="waves-effect waves-green btn">Edit
+                    <input type="submit" style="display: none"/>
+                </a>
+            </div>
+        </form>
+    </div>
+    <br>
+    <div class = "center">
+        <a class="waves-effect waves-light btn red">Delete Course</a>
+    </div>
+</template>

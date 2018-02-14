@@ -18,24 +18,26 @@ Template.generalSettingsTab.helpers({
 Template.generalSettingsTab.events({
     'click .edit-general-settings': function() {
         let editButtonElement = document.getElementById("generalSettings-EditButton");
-        editButtonElement.style.display = "none";
         let saveButtonElement = document.getElementById("generalSettings-SaveButton");
-        saveButtonElement.style.display = "block";
-        //initialize edit settings
-
+        let cancelButtonElement = document.getElementById("generalSettings-CancelButton");
         let courseName = document.getElementById("generalSettings-courseName");
         let courseYear = document.getElementById("generalSettings-courseYear");
 
-        courseName.removeAttribute("disabled");
-        courseYear.removeAttribute("disabled");
+        editButtonElement.classList.add("hide");
+        saveButtonElement.classList.remove("hide");
+        cancelButtonElement.classList.remove("hide");
+        courseName.disabled = false;
+        courseYear.disabled = false;
 
     },
     'click .save-general-settings': function() {
         let saveButtonElement = document.getElementById("generalSettings-SaveButton");
-        saveButtonElement.style.display = "none";
         let editButtonElement = document.getElementById("generalSettings-EditButton");
-        editButtonElement.style.display = "block";
-        
+        let cancelButtonElement = document.getElementById("generalSettings-CancelButton");
+        editButtonElement.classList.remove("hide");
+        saveButtonElement.classList.add("hide");
+        cancelButtonElement.classList.add("hide");
+
         let newCourseName = document.getElementById("generalSettings-courseName").value;
         let newCourseYear = document.getElementById("generalSettings-courseYear").value;
 
@@ -44,8 +46,85 @@ Template.generalSettingsTab.events({
         courseName.disabled = true;
         courseYear.disabled = true;
 
+        const currentCourseId = Session.get('courseId');
+
+        var courseInfo = Courses.find({ ownerId: Meteor.userId()}, { _id: 0, ownerId: 0 });
+        var courseObj = [];
+
+        courseInfo.forEach( 
+            function(doc) {
+                const docLength = doc.courses.length;
+                let courses = doc.courses;
+                for (var i = 0; i < docLength; i++)
+                {
+                    if (courses[i].courseId == currentCourseId) {
+                        const newCourseInfo = { 
+                            courseId: currentCourseId, 
+                            courseName: newCourseName,
+                            courseYear: newCourseYear
+                        };
+                        courseObj.push(newCourseInfo);
+                    }
+                    else {
+                        courseObj.push(courses[i]);
+                    }
+                }
+            }
+        );
+        Session.set('courseName', newCourseName);
+        Session.set('courseYear', newCourseYear);
+
+        Meteor.call('courses.updateCourseNameAndYear', currentCourseId, courseObj);
+    },
+    'click .cancel-general-settings': function() {
+
+        let editButtonElement = document.getElementById("generalSettings-EditButton");
+        let saveButtonElement = document.getElementById("generalSettings-SaveButton");
+        let cancelButtonElement = document.getElementById("generalSettings-CancelButton");
+        let courseName = document.getElementById("generalSettings-courseName");
+        let courseYear = document.getElementById("generalSettings-courseYear");
         
-        //save dirty modals to db
+        editButtonElement.classList.remove("hide");
+        saveButtonElement.classList.add("hide");
+        cancelButtonElement.classList.add("hide");
+
+        courseName.disabled = true;
+        courseYear.disabled = true;
+    },
+    'click .delete-general-settings': function() {
+        const currentCourseId = Session.get('courseId');
+
+        var courseInfo = Courses.find({ ownerId: Meteor.userId()}, { _id: 0, ownerId: 0 });
+        var courseObj = [];
+
+        courseInfo.forEach( 
+            function(doc) {
+                const docLength = doc.courses.length;
+                let courses = doc.courses;
+                var index = 0;
+                for (var i = 0; i < docLength; i++)
+                {
+                    if (courses[i].courseId == currentCourseId) { }
+                    else {
+                        courseObj.push(courses[index]);
+                        index++;
+                    }
+                }
+            }
+        );
+        Session.set('courseName', "");
+        Session.set('courseYear', "");
+        Session.set('courseId', 0);
+        Session.set('knowledgeWeight', "");
+        Session.set('applicationWeight', "");
+        Session.set('thinkingWeight', "");
+        Session.set('communicationWeight', "");
+        Session.set('courseworkWeight', "");
+        Session.set('finalWeight', "");
+
+
+        Meteor.call('courses.updateCourseNameAndYear', currentCourseId, courseObj);
+       
     },
     
 });

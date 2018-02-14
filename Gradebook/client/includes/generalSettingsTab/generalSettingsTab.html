@@ -6,7 +6,7 @@
                 <div class="col s12">
                     Course Name:
                     <div class="input-field inline">
-                        <input disabled id="generalSettings-courseName" type="text" value = {{currentCourse}}>
+                        <input disabled id="generalSettings-courseName" type="text" value={{currentCourse}}>
                     </div>
                 </div>
             </div>
@@ -14,24 +14,25 @@
                 <div class="col s12">
                     School Year:
                     <div class="input-field inline">
-                        <input disabled id="generalSettings-courseYear" type="text" value= {{currentYear}}>
+                        <input disabled id="generalSettings-courseYear" type="text" value={{currentYear}}>
                     </div>
                 </div>
             </div>
-            <div class="save-general-settings" id="generalSettings-SaveButton">
-                <a href="#!" class="waves-effect waves-green btn">Save
-                    <input type="submit" style="display: none"/>
-                </a>
+            <div class="edit-general-settings" >
+                <a id="generalSettings-EditButton" class="waves-effect waves-green btn">Edit</a>
             </div>
-            <div class="edit-general-settings" id="generalSettings-EditButton">
-                <a href="#!" class="waves-effect waves-green btn">Edit
-                    <input type="submit" style="display: none"/>
-                </a>
+            <div class="row">
+                <div class="save-general-settings" >
+                    <button id="generalSettings-SaveButton" class="waves-effect waves-green btn hide">Save</button>
+                </div>
+                <div class="cancel-general-settings" >
+                    <a id="generalSettings-CancelButton" class="waves-effect waves-green btn hide">Cancel</a>
+                </div>
             </div>
         </form>
     </div>
     <br>
-    <div class = "center">
-        <a class="waves-effect waves-light btn red">Delete Course</a>
+    <div class="center delete-general-settings">
+        <button id="generalSettings-DeleteButton" class="waves-effect waves-light btn red">Delete Course</button>
     </div>
 </template>

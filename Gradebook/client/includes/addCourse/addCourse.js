@@ -36,8 +36,6 @@ Template.addCourse.events({
                     newCourseId = lastCourseId + 1;
                 });
 
-            console.log("new course Id: " + newCourseId);
-
             //insert new course into collection
 
             //determine courses they currently have

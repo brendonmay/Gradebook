@@ -22,13 +22,11 @@ Template.deleteCourse.events({
             function(doc) {
                 const docLength = doc.courses.length;
                 let courses = doc.courses;
-                var index = 0;
                 for (var i = 0; i < docLength; i++)
                 {
                     if (courses[i].courseId == currentCourseId) { }
                     else {
-                        courseObj.push(courses[index]);
-                        index++;
+                        courseObj.push(courses[i]);
                     }
                 }
             }

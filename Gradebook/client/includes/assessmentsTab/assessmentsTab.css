@@ -1,0 +1,38 @@
+.toRight{
+    margin-left: auto;
+}
+
+input{
+    margin: 0!important;
+    height: 1.65rem!important;
+}
+
+.weightingList{
+    box-shadow: none;
+    border: none;
+    cursor: initial;
+}
+
+.weightingListContainer{
+    margin-top: 2.76em;
+    cursor: initial;
+}
+
+.weightingInput{
+    border: 0;
+    cursor: initial;
+}
+
+.addAssessmentButton{
+    height: auto;
+    text-transform: none;
+    line-height: 1.5;
+    padding: 0;
+    font-style: italic;
+    margin-top: 2px;
+    width: 73%;
+}
+
+i.material-icons.toRight:hover{
+    color: red;
+}

@@ -3,11 +3,15 @@
     <form class="col s12">
         <div class="row">
             <div class="col s4 assessmentContainer">
-                <h5>Coursework (<span contenteditable="true"><u>70</u></span>%)</h5>
+                <h5>Coursework (
+                    <span contenteditable="true">
+                        <u id="assessments-courseWorkWeight">{{courseWorkWeight}}</u>
+                    </span>%)</h5>
                 <ul class="collapsible" data-collapsible="expandable">
+                    {{#each courseAssessmentTypes}}
                     <li>
                         <div class="collapsible-header">
-                            <i class="material-icons">book</i>Quizzes
+                            <i class="material-icons">book</i>{{assessmentType}}
                             <i class="material-icons toRight" onClick="alert('Where delete stuff will go')">clear</i>
                         </div>
                         <div class="collapsible-body">
@@ -18,26 +22,7 @@
                             <span>Quiz 3 - Alternative Math</span>
                         </div>
                     </li>
-                    <li>
-                        <div class="collapsible-header">
-                            <i class="material-icons">book</i>Tests
-                            <i class="material-icons toRight" onClick="alert('Where delete stuff will go')">clear</i>
-                        </div>
-                        <div class="collapsible-body">
-                            <span>Test 1 - Chapters 2/3</span>
-                            <br>
-                            <span>Test 2 - Chapters 4/6</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="collapsible-header">
-                            <i class="material-icons">book</i>Assignments
-                            <i class="material-icons toRight" onClick="alert('Where delete stuff will go')">clear</i>
-                        </div>
-                        <div class="collapsible-body">
-                            <span>Assignment 1 - Super Math</span>
-                        </div>
-                    </li>
+                    {{/each}}
                     <li>
                         <div class="collapsible-header" style="cursor: initial">
                             <i class="material-icons">add_box</i>
@@ -49,49 +34,34 @@
             </div>
             <div class="col s1 weightingListContainer">
                 <ul class="collapsible weightingList" data-collapsible="accordion">
+                    {{#each courseAssessmentTypes}}
                     <li>
                         <div class="collapsible-header weightingInput">
-                            <input id="quizWeight" type="text" value="20">%
+                            <input id="quizWeight" type="text" value={{assessmentWeight}}>%
                         </div>
                     </li>
-                    <li>
-                        <div class="collapsible-header weightingInput">
-                            <input id="testWeight" type="text" value="30">%
-                        </div>
-                    </li>
-                    <li>
-                        <div class="collapsible-header weightingInput">
-                            <input id="assignmentWeight" type="text" value="20">%
-                        </div>
-                    </li>
+                    {{/each}}
                 </ul>
             </div>
             <div class="col s2">
             </div>
             <div class="col s4 assessmentContainer">
-                <h5>Final Evaluations (<span contenteditable="true"><u>30</u></span>%)</h5>
+                <h5>Final Evaluations (
+                    <span contenteditable="true">
+                        <u>30</u>
+                    </span>%)</h5>
                 <ul class="collapsible" data-collapsible="Expandable">
+                    {{#each finalAssessmentTypes}}
                     <li>
                         <div class="collapsible-header">
-                            <i class="material-icons">book</i>Final Exam
+                            <i class="material-icons">book</i>{{assessmentType}}
                             <i class="material-icons toRight" onClick="alert('Where delete stuff will go')">clear</i>
                         </div>
                         <div class="collapsible-body">
                             <span>Super Final Exam</span>
                         </div>
                     </li>
-                    <li>
-                        <div class="collapsible-header">
-                            <i class="material-icons">book</i>Culminating
-                            <i class="material-icons toRight" onClick="alert('Where delete stuff will go')">clear</i>
-                        </div>
-                        <div class="collapsible-body">
-                            <span>Part 1 - Design</span>
-                            <br>
-                            <span>Part 2 - Functionality</span>
-                            <br>
-                        </div>
-                    </li>
+                    {{/each}}
                     <li>
                         <div class="collapsible-header" style="cursor: initial">
                             <i class="material-icons">add_box</i>
@@ -103,30 +73,21 @@
             </div>
             <div class="col s1 weightingListContainer">
                 <ul class="collapsible weightingList" data-collapsible="accordion">
+                    {{#each finalAssessmentTypes}}
                     <li>
                         <div class="collapsible-header weightingInput">
-                            <input id="examWeight" type="text" value="20">%
+                            <input id="examWeight" type="text" value={{assessmentWeight}}>%
                         </div>
                     </li>
-                    <li>
-                        <div class="collapsible-header weightingInput">
-                            <input id="cptWeight" type="text" value="10">%
-                        </div>
-                    </li>
+                    {{/each}}
                 </ul>
             </div>
         </div>
-        
+
         <div class="save-category-weightings" style="padding-left: 0.75rem">
             <a href="#!" class="waves-effect waves-green btn">Save Changes
                 <input type="submit" style="display: none" />
             </a>
         </div>
     </form>
-
-    <script>
-        $(document).ready(function () {
-            $('.collapsible').collapsible();
-        });
-    </script>
 </template>

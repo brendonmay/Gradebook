@@ -66,3 +66,12 @@ Template.addCourse.events({
     }
 
 });
+
+Template.addCourse.helpers({
+    getYear: function(){
+        yearlist = []
+        //return yearList = [{year: "2017-2018"}, {year:"2018-2019"}];
+        currentYear = new Date().getFullYear();
+        option1 = currentYear + "-" + (Number(currentYear) + 1);
+    }
+});

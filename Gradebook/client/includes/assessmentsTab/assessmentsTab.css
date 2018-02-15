@@ -2,9 +2,11 @@
     margin-left: auto;
 }
 
-input{
+.weightInput{
     margin: 0!important;
-    height: 1.536rem!important;
+    margin-left: auto!important;
+    width: 6%!important;
+    height: 1.5rem!important;
 }
 
 .weightingList{
@@ -25,6 +27,7 @@ input{
 
 .assessmentContainer{
     padding-right: 0!important;
+    padding-left: 0!important;
 }
 
 .addAssessmentButton{
@@ -35,8 +38,4 @@ input{
     font-style: italic;
     margin-top: 2px;
     width: 73%;
-}
-
-i.material-icons.toRight:hover{
-    color: red;
 }

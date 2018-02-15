@@ -30,6 +30,9 @@ Template.addAssessmentType.events({
         finalAssessmentTypes.push(newAssessmentType);
 
         Meteor.call('courseInformation.addNewFinalWork', currentCourseId, finalAssessmentTypes);
+        
+        //Close Modal
+        $('#addFinalWork').modal('close');
     },
     'submit .add-coursework-form': function () {
 
@@ -52,5 +55,8 @@ Template.addAssessmentType.events({
         courseWorkAssessmentType.push(newAssessmentType);
 
         Meteor.call('courseInformation.addNewCourseWork', currentCourseId, courseWorkAssessmentType);
+
+        //Close Modal
+        $('#addCourseWork').modal('close');
     }
 });

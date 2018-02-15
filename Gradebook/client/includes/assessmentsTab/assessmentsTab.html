@@ -14,8 +14,8 @@
                     {{#each courseAssessmentTypes}}
                     <li>
                         <div class="collapsible-header">
-                            <i class="material-icons">book</i>{{assessmentType}}
-                            <input id="assessmentTypeWeightCourse" class="weightInput" type="text" value={{assessmentWeight}}>%
+                            <i class="material-icons">close</i>{{assessmentType}}
+                            <input disabled id="assessmentTypeWeightCourse" class="weightInput" type="text" value={{assessmentWeight}}>%
                         </div>
                         <div class="collapsible-body">
                             <span>Quiz 1 - Functions</span>
@@ -40,7 +40,7 @@
             <div class="col s1"></div>
 
             <div class="col s5 assessmentContainer">
-                <ul class="collapsible" data-collapsible="expandable">
+                <ul class="collection" data-collapsible="expandable">
                     <div class="collapsible-header blue-grey lighten-2">
                         <h5 class="header-text">Final Evaluations (
                             <span contenteditable="true">
@@ -51,7 +51,7 @@
                     <li>
                         <div class="collapsible-header">
                             <i class="material-icons">book</i>{{assessmentType}}
-                            <input id="assessmentTypeWeightFinal" class="weightInput" type="text" value={{assessmentWeight}}>%
+                            <input disabled id="assessmentTypeWeightFinal" class="weightInput" type="text" value={{assessmentWeight}}>%
                         </div>
                         <div class="collapsible-body">
                             <span>Super Final Exam</span>
@@ -71,9 +71,9 @@
 
         <div class="col s12">
             <div class = "row">
-                <button class="waves-effect waves-green btn blue-grey darken-1 col s1 offset-s4" type="submit">Save</button>
-                <button class="waves-effect waves-grey btn blue-grey darken-1 col s1" type="submit">Edit</button>
-                <button class="waves-effect waves-grey btn blue-grey darken-1 col s1" type="submit">Cancel</button>
+                <button class="waves-effect waves-green btn blue-grey darken-1 col s1 offset-s4 submit-button" type="submit">Save</button>
+                <button class="waves-effect waves-grey btn blue-grey darken-1 col s1 edit-button" type="submit">Edit</button>
+                <button class="waves-effect waves-grey btn blue-grey darken-1 col s1 cancel-button" type="submit">Cancel</button>
              </div>
 
             <!-- <div class="col s2"></div> -->

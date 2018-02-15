@@ -1,0 +1,40 @@
+<template name="addAssessmentType">
+    <div id="addCourseWork" class="modal addCourseworkModal">
+        <div class="modal-content">
+            <div class='modal-title'>
+                <h4>Add Course Work</h4>
+            </div>
+            <form class="add-coursework-form col s12" onsubmit="return false">
+                <div class="row">
+                    <div class='input-field col s12'>
+                        <input id="add-coursework-type" type="text" name="courseWorkName" placeholder="Example: Homework">
+                        <label for="courseWorkName">Assessment Name</label>
+                    </div>
+                </div>
+                <input type="submit" style="display: none;" />
+                <div class="modal-footer">
+                    <button class="add-coursework-form modal-action modal-close waves-effect waves-grey btn-flat" type="submit">Create Assessment Type</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="addFinalWork" class="modal addFinalWorkModal">
+        <div class="modal-content">
+            <div class='modal-title'>
+                <h4>Add Final Evaluation Work</h4>
+            </div>
+            <form class="add-final-form col s12" onsubmit="return false">
+                <div class="row">
+                    <div class='input-field col s12'>
+                        <input id="add-final-type" type="text" name="courseName" placeholder="Example: Final Essay">
+                        <label for="courseName">Assessment Name</label>
+                    </div>
+                </div>
+                <input type="submit" style="display: none;" />
+                <div class="modal-footer">
+                    <button class="add-final-form modal-action modal-close waves-effect waves-grey btn-flat" type="submit">Create Assessment Type</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</template>

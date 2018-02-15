@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col s5 assessmentContainer">
                 <ul class="collapsible" data-collapsible="expandable">
-                    <div class="collapsible-header blue-grey lighten-2">
+                    <div class="collapsible-header blue-grey lighten-2" style="cursor: initial">
                         <h5 class="header-text">Coursework (
                             <span contenteditable="true">
                                 <u id="assessments-courseWorkWeight">{{courseWorkWeight}}</u>
@@ -13,23 +13,16 @@
 
                     {{#each courseAssessmentTypes}}
                     <li>
-                        <div class="collapsible-header">
+                        <div class="collapsible-header" style="cursor: initial">
                             <i class="material-icons">book</i>{{assessmentType}}
                             <input id="assessmentTypeWeightCourse" class="weightInput" type="text" value={{assessmentWeight}}>%
-                        </div>
-                        <div class="collapsible-body">
-                            <span>Quiz 1 - Functions</span>
-                            <br>
-                            <span>Quiz 2 - Vectors</span>
-                            <br>
-                            <span>Quiz 3 - Alternative Math</span>
                         </div>
                     </li>
                     {{/each}}
                     <li>
                         <div class="collapsible-header" style="cursor: initial">
                             <i class="material-icons">add_box</i>
-                            <a class="waves-effect waves-teal btn-flat addAssessmentButton">Add assessment type</a>
+                            <a id="addCourseworkAssessmentType" href="#addCourseWork" class="modal-trigger waves-effect waves-teal btn-flat addAssessmentButton">Add assessment type</a>
                         </div>
                     </li>
                 </ul>
@@ -41,7 +34,7 @@
 
             <div class="col s5 assessmentContainer">
                 <ul class="collapsible" data-collapsible="expandable">
-                    <div class="collapsible-header blue-grey lighten-2">
+                    <div class="collapsible-header blue-grey lighten-2" style="cursor: initial">
                         <h5 class="header-text">Final Evaluations (
                             <span contenteditable="true">
                                 <u id="assessments-courseWorkWeight">30</u>
@@ -49,19 +42,16 @@
                     </div>
                     {{#each finalAssessmentTypes}}
                     <li>
-                        <div class="collapsible-header">
+                        <div class="collapsible-header"  style="cursor: initial">
                             <i class="material-icons">book</i>{{assessmentType}}
                             <input id="assessmentTypeWeightFinal" class="weightInput" type="text" value={{assessmentWeight}}>%
-                        </div>
-                        <div class="collapsible-body">
-                            <span>Super Final Exam</span>
                         </div>
                     </li>
                     {{/each}}
                     <li>
                         <div class="collapsible-header" style="cursor: initial">
                             <i class="material-icons">add_box</i>
-                            <a class="waves-effect waves-teal btn-flat addAssessmentButton">Add assessment type</a>
+                            <a id="addFinalAssessmentType" href="#addFinalWork" class="modal-trigger waves-effect waves-teal btn-flat addAssessmentButton">Add assessment type</a>
                         </div>
                     </li>
 

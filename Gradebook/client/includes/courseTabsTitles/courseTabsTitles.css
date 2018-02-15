@@ -1,17 +1,17 @@
 .tabs .indicator{
-    background-color:#26a498
+    background-color:#4caf50
 } 
 
 .tabs .tab a.active{
-    color:#26a498
+    color:#4caf50
 }
 
 .tabs .tab a:hover{
-    color:#26a498
+    color:#4caf50
 }
 
 .tabs .tab a{
-    color:#42a5f5
+    color:#616161
 }
 
 /*To override tab scrolling on x*/

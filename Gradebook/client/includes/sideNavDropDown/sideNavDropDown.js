@@ -107,15 +107,15 @@ Template.sideNavDropDown.events({
     'click .course-dropdown': function () {
         var element = event.target.parentElement; //why do we need to access the parentElement??
         if (!element.classList.contains('active')) {
-            var activeElement = document.getElementsByClassName('course-dropdown active blue lighten-2')[0];
+            var activeElement = document.getElementsByClassName('course-dropdown active green')[0];
             if (activeElement != null) {
                 activeElement.classList.remove("active");
-                activeElement.classList.remove("blue");
-                activeElement.classList.remove("lighten-2");
+                activeElement.classList.remove("green");
+                //activeElement.classList.remove("lighten-2");
             }
             element.classList.add("active");
-            element.classList.add("blue");
-            element.classList.add("lighten-2");
+            element.classList.add("green");
+            //element.classList.add("lighten-2");
         }
     }
 

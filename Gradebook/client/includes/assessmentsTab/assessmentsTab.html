@@ -2,17 +2,20 @@
     <h4 class="light-blue lighten-4 settings-header">Assessments</h4>
     <form class="col s12">
         <div class="row">
-            <div class="col s4 assessmentContainer">
-                <h5>Coursework (
-                    <span contenteditable="true">
-                        <u id="assessments-courseWorkWeight">{{courseWorkWeight}}</u>
-                    </span>%)</h5>
+            <div class="col s5 assessmentContainer">
                 <ul class="collapsible" data-collapsible="expandable">
+                    <div style="background-color: lightgreen" class="collapsible-header">
+                        <h5>Coursework (
+                            <span contenteditable="true">
+                                <u id="assessments-courseWorkWeight">{{courseWorkWeight}}</u>
+                            </span>%)</h5>
+                    </div>
+
                     {{#each courseAssessmentTypes}}
                     <li>
                         <div class="collapsible-header">
                             <i class="material-icons">book</i>{{assessmentType}}
-                            <i class="material-icons toRight" onClick="alert('Where delete stuff will go')">clear</i>
+                            <input id="assessmentTypeWeightCourse" class="weightInput" type="text" value={{assessmentWeight}}>%
                         </div>
                         <div class="collapsible-body">
                             <span>Quiz 1 - Functions</span>
@@ -32,30 +35,23 @@
                 </ul>
 
             </div>
-            <div class="col s1 weightingListContainer">
-                <ul class="collapsible weightingList" data-collapsible="accordion">
-                    {{#each courseAssessmentTypes}}
-                    <li>
-                        <div class="collapsible-header weightingInput">
-                            <input id="quizWeight" type="text" value={{assessmentWeight}}>%
-                        </div>
-                    </li>
-                    {{/each}}
-                </ul>
-            </div>
-            <div class="col s2">
-            </div>
-            <div class="col s4 assessmentContainer">
-                <h5>Final Evaluations (
-                    <span contenteditable="true">
-                        <u>30</u>
-                    </span>%)</h5>
-                <ul class="collapsible" data-collapsible="Expandable">
+
+            <div class="col s1"></div>
+            <div class="col s1"></div>
+            
+            <div class="col s5 assessmentContainer">
+                <ul class="collapsible" data-collapsible="expandable">
+                    <div style="background-color: lightgreen" class="collapsible-header">
+                        <h5>Final Evaluations (
+                            <span contenteditable="true">
+                                <u id="assessments-courseWorkWeight">30</u>
+                            </span>%)</h5>
+                    </div>
                     {{#each finalAssessmentTypes}}
                     <li>
                         <div class="collapsible-header">
                             <i class="material-icons">book</i>{{assessmentType}}
-                            <i class="material-icons toRight" onClick="alert('Where delete stuff will go')">clear</i>
+                            <input id="assessmentTypeWeightFinal" class="weightInput" type="text" value={{assessmentWeight}}>%
                         </div>
                         <div class="collapsible-body">
                             <span>Super Final Exam</span>
@@ -71,23 +67,18 @@
 
                 </ul>
             </div>
-            <div class="col s1 weightingListContainer">
-                <ul class="collapsible weightingList" data-collapsible="accordion">
-                    {{#each finalAssessmentTypes}}
-                    <li>
-                        <div class="collapsible-header weightingInput">
-                            <input id="examWeight" type="text" value={{assessmentWeight}}>%
-                        </div>
-                    </li>
-                    {{/each}}
-                </ul>
-            </div>
         </div>
 
-        <div class="save-category-weightings" style="padding-left: 0.75rem">
-            <a href="#!" class="waves-effect waves-green btn grey">Save Changes
-                <input type="submit" style="display: none" />
-            </a>
+        <div class="row">
+                <button class="waves-effect waves-green btn grey col s1" type="submit">Edit</button>
+                <button class="waves-effect waves-green btn grey col s1 offset-s1" type="submit">Save</button>
+                <button class="waves-effect waves-green btn grey col s1 offset-s1" type="submit">Cancel</button>
+
+                <div class="col s2"></div>
+
+                <button class="waves-effect waves-green btn grey col s1" type="submit">Edit</button>
+                <button class="waves-effect waves-green btn grey col s1 offset-s1" type="submit">Save</button>
+                <button class="waves-effect waves-green btn grey col s1 offset-s1" type="submit">Cancel</button>
         </div>
     </form>
 </template>

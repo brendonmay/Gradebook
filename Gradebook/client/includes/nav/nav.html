@@ -11,10 +11,13 @@
                     <li class="nav-item">
                         <a class="waves-effect waves-grey btn modal-trigger blue-grey darken-1" href="#addModal">Add Course</a>
                     </li>
-                {{/if}}
+                    <button class="logout">Logout</button>
+                {{else}}
                     <li class="nav-item">
-                        {{> loginButtons}}
+                        <a class="waves-effect waves-grey btn modal-trigger blue-grey darken-1" href="#customLoginModal">Login</a>
                     </li>
+                {{/if}}
+                <!-- {{> loginButtons}} -->
                 </ul>
             </div>
         </div>

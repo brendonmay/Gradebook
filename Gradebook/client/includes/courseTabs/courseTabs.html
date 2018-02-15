@@ -6,9 +6,15 @@
             {{> courseTabsTitles}} {{> courseTabsContent}}
         </div>
         {{else}}
-            <div class="container">
-                <h3>Welcome back! Select a course to get started!</h3>
-            </div>
+            {{#if hasCourse}}
+                <div class="container">
+                    <h3>Welcome back! Select a course to get started!</h3>
+                </div>
+            {{else}}
+                <div class="container">
+                    <h3>Thanks for signing in! Add a course to get started!</h3>
+                </div>
+            {{/if}}
         {{/if}}
     {{else}}
         <div class="container">

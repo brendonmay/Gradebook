@@ -1,0 +1,13 @@
+- If you have multiple courses, and delete course with courseId1, the Session variable for courseName no longer works.
+
+-Fix styling of the following:
+	-"Thanks for signing in! Add a course to get started!
+	-"Welcome Back! Select a course to get started!"
+
+-When you click the login button and the window appears, it can only be closed if you click the "close" button. Make it close if you click outside the window.
+
+- fix styling of addCourse and deleteCourse Modals
+
+-if you logout, and log back inot a new account, set courseId to 0. I.e. whenever you login, set courseId to 0.
+
+

@@ -35,14 +35,14 @@ Template.courseSettingsNavBar.events({
     'click .pag-click': function () {
         var element = event.target.parentElement; //why do we need to access the parentElement??
         if (!element.classList.contains('active')) {
-            var activeElement = document.getElementsByClassName('pag-click active teal lighten-1')[0];
+            var activeElement = document.getElementsByClassName('pag-click active green')[0];
             activeElement.classList.remove("active");
-            activeElement.classList.remove("teal");
-            activeElement.classList.remove("lighten-1");
+            activeElement.classList.remove("green");
+            // activeElement.classList.remove("lighten-1");
 
             element.classList.add("active");
-            element.classList.add("teal");
-            element.classList.add("lighten-1");
+            element.classList.add("green");
+            // element.classList.add("lighten-1");
         }
     }
 });

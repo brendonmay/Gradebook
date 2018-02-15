@@ -20,6 +20,10 @@
     padding-left: 0!important;
 }
 
+.header-text{
+    color: white;
+}
+
 .weightingInput{
     cursor: initial;
     background-color: aliceblue;

@@ -23,18 +23,22 @@ Template.addAssessmentType.events({
         var newAssessmentWeight = 0;
 
         if (courseWorkLength > 0) {
-            const newAssessmentTypeId = finalAssessmentTypes[courseWorkLength - 1].assessmentTypeId;
+            newAssessmentTypeId = finalAssessmentTypes[courseWorkLength - 1].assessmentTypeId;
+            var reg = /[0-9]/;
+            var found = newAssessmentTypeId.match(reg);
+            foundNumber = Number(found[0])
+            newAssessmentTypeId = newAssessmentTypeId.replace(foundNumber, foundNumber + 1);
         }
         else {
             courseWorkAssessmentType = [];
-            newAssessmentTypeId = 1;
-            newAssessmentWeight = courseInfo.finalWeight;;
+            newAssessmentTypeId = "f1";
+            newAssessmentWeight = courseInfo.finalWeight;
         }
 
         const newAssessmentType = {
             assessmentType: newAssessment,
             assessmentWeight: newAssessmentWeight,
-            assessmentTypeId: newAssessmentTypeId + 1
+            assessmentTypeId: newAssessmentTypeId
         };
 
         finalAssessmentTypes.push(newAssessmentType);
@@ -58,17 +62,21 @@ Template.addAssessmentType.events({
         var newAssessmentWeight = 0;
         if (courseWorkLength > 0) {
             newAssessmentTypeId = courseWorkAssessmentType[courseWorkLength - 1].assessmentTypeId;
+            var reg = /[0-9]/;
+            var found = newAssessmentTypeId.match(reg);
+            foundNumber = Number(found[0])
+            newAssessmentTypeId = newAssessmentTypeId.replace(foundNumber, foundNumber + 1);
         }
         else {
             courseWorkAssessmentType = [];
-            newAssessmentTypeId= 1;
+            newAssessmentTypeId = "c1";
             newAssessmentWeight = courseInfo.courseworkWeight;
         }
 
         const newAssessmentType = {
             assessmentType: newAssessment,
             assessmentWeight: newAssessmentWeight,
-            assessmentTypeId: newAssessmentTypeId + 1
+            assessmentTypeId: newAssessmentTypeId
         };
 
         courseWorkAssessmentType.push(newAssessmentType);

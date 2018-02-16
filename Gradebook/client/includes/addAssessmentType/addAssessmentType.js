@@ -19,11 +19,21 @@ Template.addAssessmentType.events({
         let finalAssessmentTypes = courseInfo.finalAssessmentTypes;
         
         const courseWorkLength = finalAssessmentTypes.length;
-        const newAssessmentTypeId = finalAssessmentTypes[courseWorkLength - 1].assessmentTypeId;
+        var newAssessmentTypeId = 0;
+        var newAssessmentWeight = 0;
+
+        if (courseWorkLength > 0) {
+            const newAssessmentTypeId = finalAssessmentTypes[courseWorkLength - 1].assessmentTypeId;
+        }
+        else {
+            courseWorkAssessmentType = [];
+            newAssessmentTypeId = 1;
+            newAssessmentWeight = courseInfo.finalWeight;;
+        }
 
         const newAssessmentType = {
             assessmentType: newAssessment,
-            assessmentWeight: 0,
+            assessmentWeight: newAssessmentWeight,
             assessmentTypeId: newAssessmentTypeId + 1
         };
 
@@ -44,11 +54,20 @@ Template.addAssessmentType.events({
         let courseWorkAssessmentType = courseInfo.courseworkAssessmentTypes;
         
         const courseWorkLength = courseWorkAssessmentType.length;
-        const newAssessmentTypeId = courseWorkAssessmentType[courseWorkLength - 1].assessmentTypeId;
+        var newAssessmentType = 0;
+        var newAssessmentWeight = 0;
+        if (courseWorkLength > 0) {
+            newAssessmentTypeId = courseWorkAssessmentType[courseWorkLength - 1].assessmentTypeId;
+        }
+        else {
+            courseWorkAssessmentType = [];
+            newAssessmentTypeId= 1;
+            newAssessmentWeight = courseInfo.courseworkWeight;
+        }
 
         const newAssessmentType = {
             assessmentType: newAssessment,
-            assessmentWeight: 0,
+            assessmentWeight: newAssessmentWeight,
             assessmentTypeId: newAssessmentTypeId + 1
         };
 

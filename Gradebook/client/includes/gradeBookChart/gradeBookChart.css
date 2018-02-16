@@ -6,18 +6,13 @@
     background-color: #c1c1c1;
 }
 
-/* To add a border to every chunk of 4 mark categories */
-#marksCategoriesAndStudent td:nth-child(4n+1){
-    border-right:1px solid black;
-}
-
-/* To add a border to every 4 columns of marks (corresponding to above css writeup) */
-tbody tr td:nth-child(4n+1){
-    border-right:1px solid black;
+.studNameCell{
+    border-right: 2px solid black;
 }
 
 .studMarkTableCell{
-    min-width: 100px;
+    min-width: 70px;
+    border: 1px dashed green;
 }
 
 #gradeBookChartHolder{
@@ -28,4 +23,8 @@ tbody tr td:nth-child(4n+1){
 
 .testColumns{
     border-bottom: 1px solid black;
+}
+
+.tableCell{
+    padding: 5px 5px;
 }

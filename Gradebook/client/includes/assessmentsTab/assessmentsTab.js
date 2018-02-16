@@ -69,6 +69,10 @@ Template.assessmentsTab.onRendered(function() {
 });
 
 Template.assessmentsTab.events({
+    'click .delete-courseworkAssessmentType': function(){
+        //here I need a way to find the assessmentTypeId of the assessmentType you wish to delete.
+    },
+
     'click .edit-button':function(){ //include the fields to modify the courseWeight and finalWeight
         let editButtonElement = document.getElementById("edit-button");
         let saveButtonElement = document.getElementById("save-button");

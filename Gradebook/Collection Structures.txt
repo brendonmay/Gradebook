@@ -40,13 +40,13 @@ Collection 2 - CourseInformation - Structure (example)
 	courseworkWeight: 70,
 	finalWeight: 30,
 	courseworkAssessmentTypes:[
-		{assessmentType: "Quiz", assessmentWeight: 10, assessmentTypeId: 1},
-		{assessmentType: "Assignment", assessmentWeight: 25, assessmentTypeId: 2},
-		{assessmentType: "Test", assessmentWeight: 35, assessmentTypeId: 3}
+		{assessmentType: "Quiz", assessmentWeight: 10, assessmentTypeId: c1},
+		{assessmentType: "Assignment", assessmentWeight: 25, assessmentTypeId: c2},
+		{assessmentType: "Test", assessmentWeight: 35, assessmentTypeId: c3}
 	],
 	finalAssessmentTypes:[
-		{assessmentType: "Culminating Task", assessmentWeight: 15, assessmentTypeId: 1},
-		{assessmentType: "Final Exam", assessmentWeight: 15, assessmentTypeId: 2}
+		{assessmentType: "Culminating Task", assessmentWeight: 15, assessmentTypeId: f1},
+		{assessmentType: "Final Exam", assessmentWeight: 15, assessmentTypeId: f2}
 	]
 }
 

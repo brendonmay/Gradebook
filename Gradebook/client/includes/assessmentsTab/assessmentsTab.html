@@ -1,27 +1,27 @@
 <template name="assessmentsTab">
     <h4 class="light-blue lighten-4 settings-header">Assessments</h4>
-    <form class="col s12">
+    <form class="col s12 assessmentsTabForm" onsubmit="return false">
         <div class="row">
             <div class="col s5 assessmentContainer">
                 <ul class="collapsible" data-collapsible="expandable">
                     <div class="collapsible-header blue-grey lighten-2" style="cursor: initial">
                         <h5 class="header-text">Coursework (
                             <span contenteditable="true">
-                                <u id="assessments-courseWorkWeight">{{courseWorkWeight}}</u>
+                                <input disabled id="assessments-courseWorkWeight" type="text" value={{courseWorkWeight}}>
                             </span>%)</h5>
                     </div>
 
                     {{#each courseAssessmentTypes}}
                     <li>
                         <div class="collapsible-header" style="cursor: initial">
-                            <i class="material-icons">book</i>{{assessmentType}}
-                            <input id="assessmentTypeWeightCourse" class="weightInput" type="text" value={{assessmentWeight}}>%
+                            <i class="material-icons">close</i>{{assessmentType}}
+                            <input disabled id="assessmentTypeWeightCourse{{assessmentTypeId}}" class="weightInput" type="text" value={{assessmentWeight}} name={{assessmentType}}>%
                         </div>
                     </li>
                     {{/each}}
                     <li>
                         <div class="collapsible-header" style="cursor: initial">
-                            <i class="material-icons">add_box</i>
+                            <i class="material-icons icon-green">add_box</i>
                             <a id="addCourseworkAssessmentType" href="#addCourseWork" class="modal-trigger waves-effect waves-teal btn-flat addAssessmentButton">Add assessment type</a>
                         </div>
                     </li>
@@ -37,20 +37,20 @@
                     <div class="collapsible-header blue-grey lighten-2" style="cursor: initial">
                         <h5 class="header-text">Final Evaluations (
                             <span contenteditable="true">
-                                <u id="assessments-courseWorkWeight">30</u>
+                                <input disabled id="assessments-finalWeight" value={{finalWeight}}>
                             </span>%)</h5>
                     </div>
                     {{#each finalAssessmentTypes}}
                     <li>
                         <div class="collapsible-header"  style="cursor: initial">
-                            <i class="material-icons">book</i>{{assessmentType}}
-                            <input id="assessmentTypeWeightFinal" class="weightInput" type="text" value={{assessmentWeight}}>%
+                            <i class="material-icons">close</i>{{assessmentType}}
+                            <input disabled id="assessmentTypeWeightFinal{{assessmentTypeId}}" class="weightInput" type="text" value={{assessmentWeight}} name={{assessmentType}}>%
                         </div>
                     </li>
                     {{/each}}
                     <li>
                         <div class="collapsible-header" style="cursor: initial">
-                            <i class="material-icons">add_box</i>
+                            <i class="material-icons icon-green">add_box</i>
                             <a id="addFinalAssessmentType" href="#addFinalWork" class="modal-trigger waves-effect waves-teal btn-flat addAssessmentButton">Add assessment type</a>
                         </div>
                     </li>
@@ -61,9 +61,9 @@
 
         <div class="col s12">
             <div class = "row">
-                <button class="waves-effect waves-green btn blue-grey darken-1 col s1 offset-s4" type="submit">Save</button>
-                <button class="waves-effect waves-grey btn blue-grey darken-1 col s1" type="submit">Edit</button>
-                <button class="waves-effect waves-grey btn blue-grey darken-1 col s1" type="submit">Cancel</button>
+                <button id = "save-button" class="waves-effect waves-green btn blue-grey darken-1 col s1 offset-s4 save-button hide" type="submit">Save</button>
+                <a id = "edit-button" href="#!" class="waves-effect waves-grey btn blue-grey darken-1 col s1 edit-button">Edit</a>
+                <a id = "cancel-button" href="#!" class="waves-effect waves-grey btn blue-grey darken-1 col s1 cancel-button hide">Cancel</a>
              </div>
 
             <!-- <div class="col s2"></div> -->

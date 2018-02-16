@@ -47,5 +47,5 @@ body {
   }
 
   ul.dropdown-content.select-dropdown li span{
-      color: #4caf50;
+      color: #4caf50 !important;
   }

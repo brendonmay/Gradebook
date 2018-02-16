@@ -7,20 +7,20 @@
             </div>
             <form class="add-form col s12">
                 <div class="row">
-                    <div class='input-field col s12'>
-                        <input type="text" name="courseName" placeholder="Example: MCR3U-01">
-                        <label for = "courseName">Course Name</label>
+                    <div class='input-field col s12' style="padding: 0">
+                        <input type="text" name="courseName" placeholder="Example: MCR3U-01" required>
+                        <label for = "courseName" style="left: 0">Course Name</label>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col s12">
                     <div class="input-field">
-                        <select id="courseYear">
+                        <select id="courseYear" name='courseYearSelect' required>
                             <option value="" disabled selected>Choose School Year</option>
                             {{#each getYear}}
                                 <option value={{year}}>{{year}}</option>
                             {{/each}}
                         </select>
-                        <label>Course Year</label>
+                        <label for='courseYearSelect'>Course Year</label>
                     </div>
                 </div>
                 <input type="submit" style="display: none;"/>

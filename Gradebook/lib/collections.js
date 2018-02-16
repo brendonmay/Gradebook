@@ -111,5 +111,23 @@ Meteor.methods({
                     { "finalAssessmentTypes": newfinalAssessmentTypes }
             }
         );
-    }
+    },
+    'courseInformation.updateCourseworkWeight'(currentCourseId, newCourseWorkWeight) {
+        CourseWeighting.update(
+            { "ownerId": Meteor.userId(), courseId: currentCourseId },
+            {
+                $set:
+                    { "courseworkWeight": newCourseWorkWeight }
+            }
+        );
+    },
+    'courseInformation.updateFinalWeight'(currentCourseId, newFinalWeight) {
+        CourseWeighting.update(
+            { "ownerId": Meteor.userId(), courseId: currentCourseId },
+            {
+                $set:
+                    { "finalWeight": newFinalWeight }
+            }
+        );
+    },
 });

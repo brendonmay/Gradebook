@@ -72,10 +72,29 @@ Template.assessmentsTab.events({
     'click .delete-courseworkAssessmentType': function(){
         target = event.target;
         assessmentTypeId = target.parentElement.id;
+        assessmentTypeName = target.parentElement.name;
 
-        Session.set('assessmentType', 'courseworkAssessmentTypes');
+        let sessionObject = {
+            type:'courseworkAssessmentTypes', 
+            assessmentTypeName: assessmentTypeName, 
+            assessmentTypeId: assessmentTypeId
+        };
 
-        console.log(assessmentTypeId);
+        Session.set('selectedAssessmentType', sessionObject);
+    },
+
+    'click .delete-finalAssessmentType': function(){
+        target = event.target;
+        assessmentTypeId = target.parentElement.id;
+        assessmentTypeName = target.parentElement.name;
+
+        let sessionObject = {
+            type:'finalAssessmentTypes', 
+            assessmentTypeName: assessmentTypeName, 
+            assessmentTypeId: assessmentTypeId
+        };
+
+        Session.set('selectedAssessmentType', sessionObject);
     },
 
     'click .edit-button':function(){ //include the fields to modify the courseWeight and finalWeight

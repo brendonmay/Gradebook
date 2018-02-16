@@ -20,4 +20,9 @@
 
 -in settings>assessment, change hover color of the "X" to red to delete assessment type
 
+-in settings>assessment, make it so the "x" only appears after you click edit
+
+-in settings>assessment, if you currently have no coursework(or final) assessmenttypes, you are unable to add a new one.
+
+
 

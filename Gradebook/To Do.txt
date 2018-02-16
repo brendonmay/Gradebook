@@ -28,4 +28,6 @@
 
 
 
-
+-------------
+Good web documents:
+	Using Dynamic Templates in Meteor: https://themeteorchef.com/tutorials/using-dynamic-templates

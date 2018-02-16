@@ -14,8 +14,8 @@
                     {{#each courseAssessmentTypes}}
                     <li>
                         <div class="collapsible-header" style="cursor: initial">
-                            <a href='#deleteCourseworkAssessmentTypeModal' class="delete-courseworkAssessmentType modal-trigger" name ={{assessmentType}} id={{assessmentTypeId}}><i class="material-icons hide" id="delete-icon-coursework{{assessmentTypeId}}">close</i></a>{{assessmentType}}
-                            <input disabled id="assessmentTypeWeightCourse{{assessmentTypeId}}" class="weightInput" type="text" value={{assessmentWeight}} name={{assessmentType}}>%
+                            <a href='#!' class="delete-courseworkAssessmentType" name ={{assessmentType}} id={{assessmentTypeId}}><i id="deletec{{assessmentTypeId}}" class="material-icons">close</i></a>{{assessmentType}}
+                            <input disabled id ="inputc{{assessmentTypeId}}" class="weightInput" type="text" name={{assessmentType}} value={{assessmentWeight}}>%
                         </div>
                     </li>
                     {{/each}}
@@ -43,8 +43,9 @@
                     {{#each finalAssessmentTypes}}
                     <li>
                         <div class="collapsible-header"  style="cursor: initial">
-                                <a href='#deleteFinalAssessmentTypeModal' class="delete-finalAssessmentType modal-trigger" name ={{assessmentType}} id={{assessmentTypeId}}><i class="material-icons hide" id="delete-icon-final{{assessmentTypeId}}">close</i></a>{{assessmentType}}
-                            <input disabled id="assessmentTypeWeightFinal{{assessmentTypeId}}" class="weightInput" type="text" value={{assessmentWeight}} name={{assessmentType}}>%
+                                <a href='#!' class="delete-finalAssessmentType" name ={{assessmentType}} id={{assessmentTypeId}}>
+                                    <i class="material-icons" id="deletef{{assessmentTypeId}}">close</i></a>{{assessmentType}}
+                            <input disabled id ="inputf{{assessmentTypeId}}" class="weightInput" type="text" name={{assessmentType}} value={{assessmentWeight}}>%
                         </div>
                     </li>
                     {{/each}}

@@ -2,8 +2,6 @@
 	-"Thanks for signing in! Add a course to get started!
 	-"Welcome Back! Select a course to get started!"
 
--When you click the login button and the window appears, it can only be closed if you click the "close" button. Make it close if you click outside the window.
-
 - fix styling of addCourse Modal
 
 - register/login/logout looks
@@ -18,14 +16,16 @@
 
 -when you select a new course from the sidenav, you should be forced to the gradebook view
 
--in settings>assessment, if you click edit, and then add a new assessment the input field will be disabled on creation.
-
 -in settings>assessment, change hover color of the "X" to red to delete assessment type
 
--in settings>assessment, if you currently have no coursework(or final) assessmenttypes, you are unable to add a new one.
+-in settings>assessment, adding a new assessment type is broken
 
-in settings>assessment, edit button assumes if you have 4 assessmentTypes, their IDs will be 1, 2, 3, 4 respectively, which isnt always the case.
-	-this will need to be done by ensuring each typeID has a unique identifier. Refer to collection structures.txt for new design.
+-in settings>assessment, if you click edit, and then add a new assessment the input field will be disabled on creation.
+
+- create proper error messages in settings>assessment if the weights dont add up properly
+
+- when you edit weights in settings>assessments, and click cancel, they value doesnt revert back when disabled
+
 
 
 

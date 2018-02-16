@@ -28,7 +28,7 @@ Template.addAssessmentType.events({
         else {
             courseWorkAssessmentType = [];
             newAssessmentTypeId = 1;
-            newAssessmentWeight = 100;
+            newAssessmentWeight = courseInfo.finalWeight;;
         }
 
         const newAssessmentType = {
@@ -62,7 +62,7 @@ Template.addAssessmentType.events({
         else {
             courseWorkAssessmentType = [];
             newAssessmentTypeId= 1;
-            newAssessmentWeight = 100;
+            newAssessmentWeight = courseInfo.courseworkWeight;
         }
 
         const newAssessmentType = {

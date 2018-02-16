@@ -14,7 +14,7 @@
                     {{#each courseAssessmentTypes}}
                     <li>
                         <div class="collapsible-header" style="cursor: initial">
-                            <a href='#deleteCourseworkAssessmentTypeModal' class="delete-courseworkAssessmentType modal-trigger" name ={{assessmentType}} id={{assessmentTypeId}}><i class="material-icons">close</i></a>{{assessmentType}}
+                            <a href='#deleteCourseworkAssessmentTypeModal' class="delete-courseworkAssessmentType modal-trigger" name ={{assessmentType}} id={{assessmentTypeId}}><i class="material-icons hide" id="delete-icon-coursework{{assessmentTypeId}}">close</i></a>{{assessmentType}}
                             <input disabled id="assessmentTypeWeightCourse{{assessmentTypeId}}" class="weightInput" type="text" value={{assessmentWeight}} name={{assessmentType}}>%
                         </div>
                     </li>
@@ -43,7 +43,7 @@
                     {{#each finalAssessmentTypes}}
                     <li>
                         <div class="collapsible-header"  style="cursor: initial">
-                                <a href='#deleteFinalAssessmentTypeModal' class="delete-finalAssessmentType modal-trigger" name ={{assessmentType}} id={{assessmentTypeId}}><i class="material-icons">close</i></a>{{assessmentType}}
+                                <a href='#deleteFinalAssessmentTypeModal' class="delete-finalAssessmentType modal-trigger" name ={{assessmentType}} id={{assessmentTypeId}}><i class="material-icons hide" id="delete-icon-final{{assessmentTypeId}}">close</i></a>{{assessmentType}}
                             <input disabled id="assessmentTypeWeightFinal{{assessmentTypeId}}" class="weightInput" type="text" value={{assessmentWeight}} name={{assessmentType}}>%
                         </div>
                     </li>

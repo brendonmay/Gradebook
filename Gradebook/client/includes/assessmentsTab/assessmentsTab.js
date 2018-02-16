@@ -31,6 +31,20 @@ function doneEditing(){
         assessmentTypeWeightFinal.disabled = true;
     };
 
+    //hide coursework Delete Icons
+    for(i=0; i<courseworkAssessmentTypes.length; i++){
+        let id = "delete-icon-coursework" + Number(i+1);
+        let deleteIcon = document.getElementById(id);
+        deleteIcon.classList.add('hide');
+    };
+
+    //hide final Delete icons
+    for(i=0; i<finalAssessmentTypes.length; i++){
+        let id = "delete-icon-final" + Number(i+1);
+        let deleteIcon = document.getElementById(id);
+        deleteIcon.classList.add('hide');
+    };
+
     let courseWeight = document.getElementById('assessments-courseWorkWeight');
     let finalWeight = document.getElementById('assessments-finalWeight');
 
@@ -110,12 +124,28 @@ Template.assessmentsTab.events({
         const courseworkAssessmentTypes = CourseWeighting.findOne({ownerId: Meteor.userId(), courseId: currentCourseId}).courseworkAssessmentTypes;
         const finalAssessmentTypes = CourseWeighting.findOne({ownerId: Meteor.userId(), courseId: currentCourseId}).finalAssessmentTypes;
 
+        //show coursework Delete Icons
+        for(i=0; i<courseworkAssessmentTypes.length; i++){
+            let id = "delete-icon-coursework" + Number(i+1);
+            let deleteIcon = document.getElementById(id);
+            deleteIcon.classList.remove('hide');
+        };
+
+        //show final Delete icons
+        for(i=0; i<finalAssessmentTypes.length; i++){
+            let id = "delete-icon-final" + Number(i+1);
+            let deleteIcon = document.getElementById(id);
+            deleteIcon.classList.remove('hide');
+        };
+
+        //coursework Assessment type weights remove disabled
         for(i=0; i<courseworkAssessmentTypes.length; i++){
             let id = "assessmentTypeWeightCourse" + Number(i+1);
             let assessmentTypeWeightCourse = document.getElementById(id);
             assessmentTypeWeightCourse.removeAttribute('disabled');
         };
 
+        //final assessment type weights remove disabled
         for(i=0; i<finalAssessmentTypes.length; i++){
             let id = "assessmentTypeWeightFinal" + Number(i+1);
             let assessmentTypeWeightFinal = document.getElementById(id);

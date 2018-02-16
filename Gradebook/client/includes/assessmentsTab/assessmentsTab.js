@@ -70,7 +70,31 @@ Template.assessmentsTab.onRendered(function() {
 
 Template.assessmentsTab.events({
     'click .delete-courseworkAssessmentType': function(){
-        //here I need a way to find the assessmentTypeId of the assessmentType you wish to delete.
+        target = event.target;
+        assessmentTypeId = target.parentElement.id;
+        assessmentTypeName = target.parentElement.name;
+
+        let sessionObject = {
+            type:'courseworkAssessmentTypes', 
+            assessmentTypeName: assessmentTypeName, 
+            assessmentTypeId: assessmentTypeId
+        };
+
+        Session.set('selectedAssessmentType', sessionObject);
+    },
+
+    'click .delete-finalAssessmentType': function(){
+        target = event.target;
+        assessmentTypeId = target.parentElement.id;
+        assessmentTypeName = target.parentElement.name;
+
+        let sessionObject = {
+            type:'finalAssessmentTypes', 
+            assessmentTypeName: assessmentTypeName, 
+            assessmentTypeId: assessmentTypeId
+        };
+
+        Session.set('selectedAssessmentType', sessionObject);
     },
 
     'click .edit-button':function(){ //include the fields to modify the courseWeight and finalWeight

@@ -14,8 +14,6 @@
 
 -Fix buttons placements in each of the settings tabs
 
--Add delete Assessmenttype functionality to Settings>Assessment
-
 -some input fields dont have the correct green underline when typing in them, whereas some do
 
 -when you select a new course from the sidenav, you should be forced to the gradebook view
@@ -23,5 +21,10 @@
 -in settings>assessment, if you click edit, and then add a new assessment the input field will be disabled on creation.
 
 -in settings>assessment, change hover color of the "X" to red to delete assessment type
+
+-in settings>assessment, make it so the "x" only appears after you click edit
+
+-in settings>assessment, if you currently have no coursework(or final) assessmenttypes, you are unable to add a new one.
+
 
 

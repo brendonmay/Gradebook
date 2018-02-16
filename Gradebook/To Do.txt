@@ -10,8 +10,6 @@
 
 -Fix buttons placements in each of the settings tabs
 
--Add delete Assessmenttype functionality to Settings>Assessment
-
 -some input fields dont have the correct green underline when typing in them, whereas some do
 
 -when you select a new course from the sidenav, you should be forced to the gradebook view

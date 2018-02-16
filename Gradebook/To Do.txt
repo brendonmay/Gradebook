@@ -6,6 +6,10 @@
 
 - fix styling of addCourse Modal
 
+- register/login/logout looks
+
+- limit the number of characters in the courses sideNav
+
 -fix styling of Settings>Assessment
 
 -Fix buttons placements in each of the settings tabs

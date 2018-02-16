@@ -15,9 +15,11 @@
                         <input type="password" id="password" name="userPassword">
                         <label for = "userPassword">Password</label>
                     </div>
-                    <h8>
-                        Not a user yet? <button class="register" type=" ">Register here!</button>
-                    </h8>
+                    <div class="register">
+                        <h7>
+                            Not a user yet? <a class="waves-effect waves-grey btn-flat modal-trigger blue-grey darken-1" href="#customRegisterModal">Register here!</a>
+                        </h7>
+                    </div>
                     <input type="submit" style="display: none;"/>
                     <div class="login">
                         <div class="modal-footer right">
@@ -39,11 +41,11 @@
                 <form class="add-form col s12">
                     <div class="row">
                         <div class='input-field col s12'>
-                            <input type="email" id="email" name="userEmail" placeholder="teacher@address.com">
+                            <input type="email" id="regEmail" name="registerEmail" placeholder="teacher@address.com">
                             <label for = "userEmail">E-mail</label>
                         </div>
                         <div class='input-field col s12'>
-                            <input type="password" id="password" name="userPassword">
+                            <input type="password" id="regPassword" name="registerPassword">
                             <label for = "userPassword">Password</label>
                         </div>
                         <input type="submit" style="display: none;"/>

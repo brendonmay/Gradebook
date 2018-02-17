@@ -256,8 +256,8 @@ Template.assessmentsTab.events({
         }
         else{
             //update assessmentTypeWeights
-            Meteor.call('courseInformation.addNewCourseWork', currentCourseId, newcourseworkAssessmentTypes);
-            Meteor.call('courseInformation.addNewFinalWork', currentCourseId, newfinalAssessmentTypes);
+            Meteor.call('courseInformation.updateCourseWork', currentCourseId, newcourseworkAssessmentTypes);
+            Meteor.call('courseInformation.updateFinalWork', currentCourseId, newfinalAssessmentTypes);
             //update courseWeight and finalWeight
             Meteor.call('courseInformation.updateCourseworkWeight', currentCourseId, newCourseWorkWeight);
             Meteor.call('courseInformation.updateFinalWeight', currentCourseId, newFinalWeight);

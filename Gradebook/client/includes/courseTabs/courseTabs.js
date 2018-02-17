@@ -12,7 +12,13 @@ Template.courseTabs.helpers({
     },
 
     hasCourse: function() {
-      return Courses.findOne({ownerId: Meteor.userId()}).courses.length != 0;
+      var courses = Courses.findOne({ownerId: Meteor.userId()});
+      if (courses.courses) {
+        return courses.courses.length != 0
+      } 
+      else {
+        return false;
+      }
     },
   });
   

@@ -3,6 +3,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Courses } from '../../../lib/collections.js';
 import { CourseWeighting } from '../../../lib/collections.js';
 import { Accounts } from 'meteor/accounts-base';
+import { Assessments } from '../../../lib/collections.js';
 
 import '../../main.html';
 
@@ -22,6 +23,7 @@ Template.addCourse.events({
 
         //check if user has ever created a course
         //if user has not created a course,
+
         if (Courses.findOne({ ownerId: Meteor.userId() }) == null) {
             Meteor.call('courses.createFirstCourse', course, year);
         }
@@ -52,14 +54,12 @@ Template.addCourse.events({
                     currentCourses.splice(i,1);
                 }
             }
-
             Meteor.call('courses.addNewCourse', currentCourses);
             Meteor.call('courseInformation.defaultSettings', newCourseId);
         }
 
         //Clear form
         target.courseName.value = "";
-        target.courseYear.value = "";
 
         //Close Modal
         $('#addModal').modal('close');

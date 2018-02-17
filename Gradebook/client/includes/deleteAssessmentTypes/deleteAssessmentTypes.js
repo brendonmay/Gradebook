@@ -7,6 +7,7 @@ import { CourseWeighting } from '../../../lib/collections.js';
 import '../../main.html';
 
 function getSelectedAssessmentType(){
+    //run a null check as selectedAssessmentType isn't always available
     return Session.get("selectedAssessmentType")
 }
 

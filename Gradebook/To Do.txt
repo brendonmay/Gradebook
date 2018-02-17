@@ -2,8 +2,6 @@
 	-"Thanks for signing in! Add a course to get started!
 	-"Welcome Back! Select a course to get started!"
 
-- fix styling of addCourse Modal
-
 - register/login/logout looks
 
 - limit the number of characters in the courses sideNav
@@ -16,16 +14,7 @@
 
 -when you select a new course from the sidenav, you should be forced to the gradebook view
 
--in settings>assessment, change hover color of the "X" to red to delete assessment type
-
--in settings>assessment, adding a new assessment type is broken
-
--in settings>assessment, if you click edit, and then add a new assessment the input field will be disabled on creation.
-
-- create proper error messages in settings>assessment if the weights dont add up properly
-
-- when you edit weights in settings>assessments, and click cancel, they value doesnt revert back when disabled
-
+-in Settings>General Settings, change Course Year to a dropdown menu
 
 
 -------------

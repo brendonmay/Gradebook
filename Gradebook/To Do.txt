@@ -10,11 +10,11 @@
 
 -Fix buttons placements in each of the settings tabs
 
--some input fields dont have the correct green underline when typing in them, whereas some do
-
 -when you select a new course from the sidenav, you should be forced to the gradebook view
 
 -in Settings>General Settings, change Course Year to a dropdown menu
+
+-introduce rename functionality to Settings>assessments
 
 
 -------------

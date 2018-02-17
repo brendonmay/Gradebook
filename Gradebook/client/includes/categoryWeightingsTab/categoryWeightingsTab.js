@@ -115,6 +115,7 @@ Template.categoryWeightingsTab.events({
             finishedEditing();
         }
         else{
+            Materialize.toast('Your Category Weightings must add up to 100%. They currently add up to ' + totalWeight + '%.', 5000, 'amber darken-3');
             console.log("they must add to 100");
         }
         

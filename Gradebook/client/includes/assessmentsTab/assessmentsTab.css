@@ -47,3 +47,25 @@
 .icon-green{
     color: #4caf50
 }
+
+.icon-bluegrey{
+    color:#455a64
+}
+
+.icon-bluegrey:hover{
+    color:#ff5252
+}
+
+#assessments-courseWorkWeight, #assessments-finalWeight{
+    width: 10%;
+    margin-bottom: 0;
+    font-size: 1.64rem;
+    text-align: center;
+}
+
+#toast-container {
+    top: 21% !important;
+    right: 2% !important;
+    bottom: auto!important;
+    left: auto!important;
+  }

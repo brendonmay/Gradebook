@@ -6,50 +6,62 @@ import { CourseWeighting } from '../../../lib/collections.js';
 
 import '../../main.html';
 
-function doneEditing(){
+function doneEditing(){ //works
     let editButtonElement = document.getElementById("edit-button");
     let saveButtonElement = document.getElementById("save-button");
     let cancelButtonElement = document.getElementById("cancel-button");
+
+    let addFinalAssessmentType = document.getElementById('finalAddAssessment');
+    let addCourseAssessmentType = document.getElementById('courseAddAssessment');
 
     editButtonElement.classList.remove("hide");
     saveButtonElement.classList.add("hide");
     cancelButtonElement.classList.add("hide");
 
+    addFinalAssessmentType.classList.remove("hide");
+    addCourseAssessmentType.classList.remove('hide');
+
     let currentCourseId = Session.get('courseId');
     const courseworkAssessmentTypes = CourseWeighting.findOne({ownerId: Meteor.userId(), courseId: currentCourseId}).courseworkAssessmentTypes;
     const finalAssessmentTypes = CourseWeighting.findOne({ownerId: Meteor.userId(), courseId: currentCourseId}).finalAssessmentTypes;
 
+    //coursework AssessmentType Weights Inputs Disabled
     for(i=0; i<courseworkAssessmentTypes.length; i++){
-        let id = "assessmentTypeWeightCourse" + Number(i+1);
+        let id = "inputc" + courseworkAssessmentTypes[i].assessmentTypeId;
         let assessmentTypeWeightCourse = document.getElementById(id);
         assessmentTypeWeightCourse.disabled = true;
+        assessmentTypeWeightCourse.value = courseworkAssessmentTypes[i].assessmentWeight;
     };
 
-    for(i=0; i<finalAssessmentTypes.length; i++){
-        let id = "assessmentTypeWeightFinal" + Number(i+1);
+     //final Assessment type weights remove disabled
+     for(i=0; i<finalAssessmentTypes.length; i++){
+        let id = "inputf" + finalAssessmentTypes[i].assessmentTypeId;
         let assessmentTypeWeightFinal = document.getElementById(id);
         assessmentTypeWeightFinal.disabled = true;
+        assessmentTypeWeightFinal.value = finalAssessmentTypes[i].assessmentWeight;
     };
 
-    //hide coursework Delete Icons
+    //unhide coursework Delete Icons
     for(i=0; i<courseworkAssessmentTypes.length; i++){
-        let id = "delete-icon-coursework" + Number(i+1);
+        let id = "deletec" + courseworkAssessmentTypes[i].assessmentTypeId;
         let deleteIcon = document.getElementById(id);
-        deleteIcon.classList.add('hide');
+        deleteIcon.classList.remove('hide');
     };
 
-    //hide final Delete icons
+    //unhide final Delete icons
     for(i=0; i<finalAssessmentTypes.length; i++){
-        let id = "delete-icon-final" + Number(i+1);
+        let id = "deletef" + finalAssessmentTypes[i].assessmentTypeId;
         let deleteIcon = document.getElementById(id);
-        deleteIcon.classList.add('hide');
+        deleteIcon.classList.remove('hide');
     };
 
     let courseWeight = document.getElementById('assessments-courseWorkWeight');
     let finalWeight = document.getElementById('assessments-finalWeight');
 
     courseWeight.disabled = true;
+    courseWeight.value = CourseWeighting.findOne({ownerId: Meteor.userId(), courseId: currentCourseId}).courseworkWeight;
     finalWeight.disabled = true;
+    finalWeight.value = CourseWeighting.findOne({ownerId: Meteor.userId(), courseId: currentCourseId}).finalWeight;
 }
 
 Template.assessmentsTab.helpers({
@@ -83,74 +95,98 @@ Template.assessmentsTab.onRendered(function() {
 });
 
 Template.assessmentsTab.events({
-    'click .delete-courseworkAssessmentType': function(){
+    'click .delete-courseworkAssessmentType': function(){ //works
+        //check that weight is 0
         target = event.target;
         assessmentTypeId = target.parentElement.id;
         assessmentTypeName = target.parentElement.name;
+        assessmentTypeWeight = document.getElementById("inputc" + assessmentTypeId).value;
+        
 
-        let sessionObject = {
-            type:'courseworkAssessmentTypes', 
-            assessmentTypeName: assessmentTypeName, 
-            assessmentTypeId: assessmentTypeId
-        };
+        if (Number(assessmentTypeWeight) == 0){
+            let sessionObject = {
+                type:'courseworkAssessmentTypes', 
+                assessmentTypeName: assessmentTypeName, 
+                assessmentTypeId: assessmentTypeId
+            };
 
-        Session.set('selectedAssessmentType', sessionObject);
+            Session.set('selectedAssessmentType', sessionObject);
+            $('#deleteCourseworkAssessmentTypeModal').modal('open');
+        }
+        else{
+            Materialize.toast('Set the weight of ' + assessmentTypeName + ' to 0% before deleting it.', 5000, 'amber darken-3');
+            //console.log("set your weight to 0 before deleting");
+        }
     },
 
-    'click .delete-finalAssessmentType': function(){
+    'click .delete-finalAssessmentType': function(){ //works
         target = event.target;
         assessmentTypeId = target.parentElement.id;
         assessmentTypeName = target.parentElement.name;
+        assessmentTypeWeight = document.getElementById("inputf" + assessmentTypeId).value;
 
-        let sessionObject = {
-            type:'finalAssessmentTypes', 
-            assessmentTypeName: assessmentTypeName, 
-            assessmentTypeId: assessmentTypeId
-        };
+        if (Number(assessmentTypeWeight) == 0){
+            let sessionObject = {
+                type:'finalAssessmentTypes', 
+                assessmentTypeName: assessmentTypeName, 
+                assessmentTypeId: assessmentTypeId
+            };
 
-        Session.set('selectedAssessmentType', sessionObject);
+            Session.set('selectedAssessmentType', sessionObject);
+            $('#deleteFinalAssessmentTypeModal').modal('open');
+        }
+        else{
+            //console.log("set your weight to 0 before deleting")
+            Materialize.toast('Set the weight of ' + assessmentTypeName + ' to 0% before deleting it.', 5000, 'amber darken-3');
+        }
     },
 
-    'click .edit-button':function(){ //include the fields to modify the courseWeight and finalWeight
+    'click .edit-button':function(){ //working
         let editButtonElement = document.getElementById("edit-button");
         let saveButtonElement = document.getElementById("save-button");
         let cancelButtonElement = document.getElementById("cancel-button");
+
+        let addFinalAssessmentType = document.getElementById('finalAddAssessment');
+        let addCourseAssessmentType = document.getElementById('courseAddAssessment');
 
         editButtonElement.classList.add("hide");
         saveButtonElement.classList.remove("hide");
         cancelButtonElement.classList.remove("hide");
 
+        addFinalAssessmentType.classList.add('hide');
+        addCourseAssessmentType.classList.add('hide');
+
         let currentCourseId = Session.get('courseId');
         const courseworkAssessmentTypes = CourseWeighting.findOne({ownerId: Meteor.userId(), courseId: currentCourseId}).courseworkAssessmentTypes;
         const finalAssessmentTypes = CourseWeighting.findOne({ownerId: Meteor.userId(), courseId: currentCourseId}).finalAssessmentTypes;
 
-        //show coursework Delete Icons
+        //hide coursework Delete Icons
         for(i=0; i<courseworkAssessmentTypes.length; i++){
-            let id = "delete-icon-coursework" + Number(i+1);
+            let id = "deletec" + courseworkAssessmentTypes[i].assessmentTypeId;
             let deleteIcon = document.getElementById(id);
-            deleteIcon.classList.remove('hide');
+            deleteIcon.classList.add('hide');
         };
 
-        //show final Delete icons
+        //hide final Delete icons
         for(i=0; i<finalAssessmentTypes.length; i++){
-            let id = "delete-icon-final" + Number(i+1);
+            let id = "deletef" + finalAssessmentTypes[i].assessmentTypeId;
             let deleteIcon = document.getElementById(id);
-            deleteIcon.classList.remove('hide');
+            deleteIcon.classList.add('hide');
         };
 
         //coursework Assessment type weights remove disabled
         for(i=0; i<courseworkAssessmentTypes.length; i++){
-            let id = "assessmentTypeWeightCourse" + Number(i+1);
+            let id = "inputc" + courseworkAssessmentTypes[i].assessmentTypeId;
             let assessmentTypeWeightCourse = document.getElementById(id);
             assessmentTypeWeightCourse.removeAttribute('disabled');
         };
 
-        //final assessment type weights remove disabled
+        //final Assessment type weights remove disabled
         for(i=0; i<finalAssessmentTypes.length; i++){
-            let id = "assessmentTypeWeightFinal" + Number(i+1);
+            let id = "inputf" + finalAssessmentTypes[i].assessmentTypeId;
             let assessmentTypeWeightFinal = document.getElementById(id);
             assessmentTypeWeightFinal.removeAttribute('disabled');
-        }
+        };
 
         let courseWeight = document.getElementById('assessments-courseWorkWeight');
         let finalWeight = document.getElementById('assessments-finalWeight');
@@ -159,12 +195,11 @@ Template.assessmentsTab.events({
         courseWeight.removeAttribute('disabled');
     },
 
-    'click .cancel-button':function(){
+    'click .cancel-button':function(){ //working
         doneEditing();
-        //include the fields to modify the courseWeight and finalWeight
     },
 
-    'submit .assessmentsTabForm':function(){
+    'submit .assessmentsTabForm':function(){ //working
         const currentCourseId = Session.get('courseId');
         const target = event.target;
 
@@ -178,13 +213,14 @@ Template.assessmentsTab.events({
         //console.log("newCourseWorkWeight: " + newCourseWorkWeight);
 
         for(i = 0; i < courseworkAssessmentTypes.length; i++){
-            let currentId = "assessmentTypeWeightCourse" + Number(i+1);
+            let currentId = "inputc" + courseworkAssessmentTypes[i].assessmentTypeId;
             let courseAssessmentTypeWeight = Number(document.getElementById(currentId).value);
             let courseAssessmentTypeName = document.getElementById(currentId).name;
             courseWorkWeightTotal = courseWorkWeightTotal + courseAssessmentTypeWeight;
-            let courseAssessmentTypeObject = {assessmentType: courseAssessmentTypeName, assessmentWeight: courseAssessmentTypeWeight, assessmentTypeId: Number(i+1)};
+            let courseAssessmentTypeObject = {assessmentType: courseAssessmentTypeName, assessmentWeight: courseAssessmentTypeWeight, assessmentTypeId: courseworkAssessmentTypes[i].assessmentTypeId};
             newcourseworkAssessmentTypes[newcourseworkAssessmentTypes.length] = courseAssessmentTypeObject;
         };
+        //console.log(newcourseworkAssessmentTypes);
 
         //assessmentTypeWeightFinal
         let newfinalAssessmentTypes = [];
@@ -193,43 +229,41 @@ Template.assessmentsTab.events({
         //console.log("newFinalWeight: " + newFinalWeight);
 
         for(i = 0; i < finalAssessmentTypes.length; i++){
-            let currentId = "assessmentTypeWeightFinal" + Number(i+1);
+            let currentId = "inputf" + finalAssessmentTypes[i].assessmentTypeId;
             let finalAssessmentTypeWeight = Number(document.getElementById(currentId).value);
             let finalAssessmentTypeName = document.getElementById(currentId).name;
             finalWeightTotal = finalWeightTotal + finalAssessmentTypeWeight;
-            let finalAssessmentTypeObject = {assessmentType: finalAssessmentTypeName, assessmentWeight: finalAssessmentTypeWeight, assessmentTypeId: Number(i+1)};
+            let finalAssessmentTypeObject = {assessmentType: finalAssessmentTypeName, assessmentWeight: finalAssessmentTypeWeight, assessmentTypeId: finalAssessmentTypes[i].assessmentTypeId};
             newfinalAssessmentTypes[newfinalAssessmentTypes.length] = finalAssessmentTypeObject;
         };
         //console.log(newfinalAssessmentTypes);
 
         //run a check that the courseworkweights add up to courseworkWeight
         if (newCourseWorkWeight + newFinalWeight != 100){
-            console.log("Course Weight + Final Weight must add up to 100! They currently add to " + (newCourseWorkWeight + newFinalWeight))
+            //console.log("Course Weight + Final Weight must add up to 100! They currently add to " + (newCourseWorkWeight + newFinalWeight))
+            Materialize.toast("Coursework Weight and Final Evaluation Weight must add up to 100%. They currently add to " + (newCourseWorkWeight + newFinalWeight) + "%.", 5000, 'amber darken-3');
         }
         //run a check that courseWeights add up to newCourseWeight
         else if (courseWorkWeightTotal != newCourseWorkWeight){
-            console.log("Your coursework Weights should add up to " + newCourseWorkWeight + ". They currently add up to " + courseWorkWeightTotal)
-            
+            //console.log("Your coursework Weights should add up to " + newCourseWorkWeight + ". They currently add up to " + courseWorkWeightTotal)
+            Materialize.toast("Your Coursework Weights should add up to " + newCourseWorkWeight + ". They currently add up to " + courseWorkWeightTotal + '%.', 5000, 'amber darken-3');
 
         }
         //run a check that finalWeights add up to newFinalWeight
         else if (finalWeightTotal != newFinalWeight){
-            console.log("Your final evaluation weights should add up to " + newFinalWeight + ". They currently add up to " + finalWeightTotal)
-
+            //console.log("Your final evaluation weights should add up to " + newFinalWeight + ". They currently add up to " + finalWeightTotal)
+            Materialize.toast("Your final evaluation weights should add up to " + newFinalWeight + "%. They currently add up to " + finalWeightTotal + '%.', 5000, 'amber darken-3');
         }
         else{
             //update assessmentTypeWeights
             Meteor.call('courseInformation.addNewCourseWork', currentCourseId, newcourseworkAssessmentTypes);
             Meteor.call('courseInformation.addNewFinalWork', currentCourseId, newfinalAssessmentTypes);
             //update courseWeight and finalWeight
-            Meteor.call('courseInformation.updateCourseworkWeight', currentCourseId, newCourseWorkWeight)
-            Meteor.call('courseInformation.updateFinalWeight', currentCourseId, newFinalWeight)
+            Meteor.call('courseInformation.updateCourseworkWeight', currentCourseId, newCourseWorkWeight);
+            Meteor.call('courseInformation.updateFinalWeight', currentCourseId, newFinalWeight);
 
             //doneEditing
             doneEditing();
         }
     }
 });
-
-//assessments-courseWorkWeight -> CourseWork % weight 
-//still need types of course work

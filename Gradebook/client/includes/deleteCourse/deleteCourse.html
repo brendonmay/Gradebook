@@ -1,13 +1,13 @@
 <template name="deleteCourse">
-    <div id="deleteModal" class="modal">
+    <div id="deleteModal" class="modal delete-course-modal">
         <div class="modal-content">
-            <div class='modal-title center'>
-                <h4>Are you sure you want to delete {{CurrentCourseName}}</h4>
-            </div>
-            <div class="modal-footer">
-                <button id="deleteModal-yes" class="yes-delete-modal add-form modal-action modal-close waves-effect waves-green btn-flat" type="submit">Yes</button>
-                <button id="deleteModal-no" class="no-delete-modaladd-form modal-action modal-close waves-effect waves-green btn-flat" type="submit">No</button>
-            </div>
+            <h4>Delete Course</h4>
+            <p>Are you sure you want to delete <u>{{CurrentCourseName}}</u>? This action is irreversable.</p>
+        </div>
+        <div class="modal-footer">
+            <button id="deleteModal-yes" class="yes-delete-modal add-form modal-action modal-close waves-effect waves-grey btn-flat"
+                type="submit">Yes</button>
+            <button id="deleteModal-no" class="no-delete-modaladd-form modal-action modal-close waves-effect waves-grey btn-flat" type="submit">No</button>
         </div>
     </div>
 </template>

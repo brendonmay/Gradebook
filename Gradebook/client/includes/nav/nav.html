@@ -4,17 +4,20 @@
         <div class="nav-wrapper">
             <div class="container">
                 <a href="#" data-activates="slide-out-l" class="button-collapse left"><i class="material-icons">menu</i></a>
-                <a href="#" class="brand-logo">GradeBook</a>
-                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <a href="#" class="left-align">GradeBook</a>
+                <ul id="nav-mobile" class="right">
                 <!-- Modal Trigger -->
                 {{#if currentUser}}
                     <li class="nav-item">
-                        <a class="waves-effect waves-light btn modal-trigger" href="#addModal">Add Course</a>
+                        <a class="waves-effect waves-grey btn modal-trigger blue-grey darken-1" href="#addModal">Add Course</a>
+                        <a class="waves-effect waves-red red darken-2 btn logout">Logout</a>
+                    </li>
+                {{else}}
+                    <li class="nav-item">
+                        <a class="waves-effect waves-green btn modal-trigger green darken-1" href="#customLoginModal">Login</a>
                     </li>
                 {{/if}}
-                    <li class="nav-item">
-                        {{> loginButtons}}
-                    </li>
+                <!-- {{> loginButtons}} -->
                 </ul>
             </div>
         </div>

@@ -41,8 +41,7 @@ Template.sideNavDropDown.helpers({
         teacherInfo.forEach(
             function (doc) {
                 for (var i = 0; i < doc.courses.length; i++) {
-                    const entryYear = doc.courses[i].courseYear;
-                    let counter = 0;
+                    var entryYear = doc.courses[i].courseYear;
                     let uniqueYear = true;
                     for (index = 0; index < uniqueYears.length; index++) {
                         if (entryYear == uniqueYears[index].courseYear) {
@@ -51,6 +50,20 @@ Template.sideNavDropDown.helpers({
                         }
                     }
                     if (uniqueYear) {
+                        var splitYear = entryYear.split("-"); //splits the year so it may be compared
+                        for (index = 0; index < uniqueYears.length; index++){
+                            var grabYear = uniqueYears[index].courseYear; //grabs the year to compare with
+                            var comparisonYear = grabYear.split("-"); //splits off the first part for comparison
+                            if (splitYear[0] > comparisonYear[0]){
+                                /*if the new entry is a more recent year than the old entry it will trade places
+                                 with that entry in the array */
+                                var newEntryYear = grabYear;
+                                uniqueYears[index] = { "courseYear": entryYear }
+                                entryYear = newEntryYear;
+                                splitYear = entryYear.split("-");
+                            }                            
+                        }
+                        //otherwise it is inserted as normal
                         uniqueYears[uniqueYears.length] = { "courseYear": entryYear }
                     }
                 }
@@ -69,6 +82,7 @@ Template.sideNavDropDown.events({
         const target = event.target;
         var courseId = Number(target.id);
         var courseYear = target.name;
+        const courseName = target.innerText;
         const categoryWeighting = CourseWeighting.findOne({ownerId: Meteor.userId(), courseId: courseId}).categoryWeighting;
         var knowledgeWeight = categoryWeighting.K;
         var applicationWeight = categoryWeighting.A;
@@ -80,6 +94,7 @@ Template.sideNavDropDown.events({
         //Set Session Variables for Selected Course
         Session.set('courseId', courseId);
         Session.set('courseYear', courseYear);
+        Session.set('courseName', courseName);
         Session.set('knowledgeWeight', knowledgeWeight);
         Session.set('applicationWeight', applicationWeight);
         Session.set('thinkingWeight', thinkingWeight);
@@ -92,15 +107,15 @@ Template.sideNavDropDown.events({
     'click .course-dropdown': function () {
         var element = event.target.parentElement; //why do we need to access the parentElement??
         if (!element.classList.contains('active')) {
-            var activeElement = document.getElementsByClassName('course-dropdown active blue lighten-2')[0];
+            var activeElement = document.getElementsByClassName('course-dropdown active green')[0];
             if (activeElement != null) {
                 activeElement.classList.remove("active");
-                activeElement.classList.remove("blue");
-                activeElement.classList.remove("lighten-2");
+                activeElement.classList.remove("green");
+                //activeElement.classList.remove("lighten-2");
             }
             element.classList.add("active");
-            element.classList.add("blue");
-            element.classList.add("lighten-2");
+            element.classList.add("green");
+            //element.classList.add("lighten-2");
         }
     }
 

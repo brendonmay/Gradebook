@@ -2,6 +2,9 @@
     <div id="gradeBookChartHolder" class="col s12">
         {{> gradeBookChart}}
     </div>
+    <div id="assessments" class="col s12">
+        {{> assessments}}
+    </div>
     <div id="studentReports" class="col s12">{{> uniqueDisplayContent}} works on Student Reports</div>
     <div id="classStatistics" class="col s12">{{> uniqueDisplayContent}} works on Class Statistics</div>
     <div id="courseSettings" class="col s12 courseSettings">
@@ -14,5 +17,5 @@
         {{else if assessmentsSelected}}
             {{> assessmentsTab}}
         {{/if}} 
-        </div>
+    </div>
 </template>

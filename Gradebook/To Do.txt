@@ -1,0 +1,22 @@
+-Fix styling of the following:
+	-"Thanks for signing in! Add a course to get started!
+	-"Welcome Back! Select a course to get started!"
+
+- register/login/logout looks
+
+- limit the number of characters in the courses sideNav
+
+-fix styling of Settings>Assessment
+
+-Fix buttons placements in each of the settings tabs
+
+-when you select a new course from the sidenav, you should be forced to the gradebook view
+
+-in Settings>General Settings, change Course Year to a dropdown menu
+
+-introduce rename functionality to Settings>assessments
+
+
+-------------
+Good web documents:
+	Using Dynamic Templates in Meteor: https://themeteorchef.com/tutorials/using-dynamic-templates

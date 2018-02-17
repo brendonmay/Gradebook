@@ -23,13 +23,13 @@ Meteor.methods({
             courseworkWeight: 70,
             finalWeight: 30,
             courseworkAssessmentTypes: [
-                { assessmentType: "Quiz", assessmentWeight: 10 },
-                { assessmentType: "Assignment", assessmentWeight: 25 },
-                { assessmentType: "Test", assessmentWeight: 35 }
+                { assessmentType: "Quiz", assessmentWeight: 10, assessmentTypeId: "c1" },
+                { assessmentType: "Assignment", assessmentWeight: 25, assessmentTypeId: "c2" },
+                { assessmentType: "Test", assessmentWeight: 35, assessmentTypeId: "c3" }
             ],
             finalAssessmentTypes: [
-                { assessmentType: "Culminating Task", assessmentWeight: 15 },
-                { assessmentType: "Final Exam", assessmentWeight: 15 }
+                { assessmentType: "Culminating Task", assessmentWeight: 15, assessmentTypeId: "f1" },
+                { assessmentType: "Final Exam", assessmentWeight: 15, assessmentTypeId: "f2" }
             ]
         });
 
@@ -61,11 +61,11 @@ Meteor.methods({
             }
         );
         //remove from courseWeightings DB
-        var courses = Courses.findOne({"ownerId": Meteor.userId() }).courses;
+        var courses = Courses.findOne({ "ownerId": Meteor.userId() }).courses;
         if (courses.length == 0) {
-            Courses.remove( { "ownerId": Meteor.userId() } );
+            Courses.remove({ "ownerId": Meteor.userId() });
         }
-        CourseWeighting.remove( { "ownerId": Meteor.userId(), "courseId": currentCourseId});
+        CourseWeighting.remove({ "ownerId": Meteor.userId(), "courseId": currentCourseId });
     },
     'courseInformation.defaultSettings'(newCourseId) {
         CourseWeighting.insert({
@@ -75,17 +75,17 @@ Meteor.methods({
             courseworkWeight: 70,
             finalWeight: 30,
             courseworkAssessmentTypes: [
-                { assessmentType: "Quiz", assessmentWeight: 10 },
-                { assessmentType: "Assignment", assessmentWeight: 25 },
-                { assessmentType: "Test", assessmentWeight: 35 }
+                { assessmentType: "Quiz", assessmentWeight: 10, assessmentTypeId: "c1" },
+                { assessmentType: "Assignment", assessmentWeight: 25, assessmentTypeId: "c2" },
+                { assessmentType: "Test", assessmentWeight: 35, assessmentTypeId: "c3" }
             ],
             finalAssessmentTypes: [
-                { assessmentType: "Culminating Task", assessmentWeight: 15 },
-                { assessmentType: "Final Exam", assessmentWeight: 15 }
+                { assessmentType: "Culminating Task", assessmentWeight: 15, assessmentTypeId: 'f1' },
+                { assessmentType: "Final Exam", assessmentWeight: 15, assessmentTypeId: 'f2' }
             ]
         });
     },
-    'courseInformation.updateCategories'(currentCourseId, newCategoryWeighting){
+    'courseInformation.updateCategories'(currentCourseId, newCategoryWeighting) {
         CourseWeighting.update(
             { "ownerId": Meteor.userId(), courseId: currentCourseId },
             {
@@ -94,5 +94,40 @@ Meteor.methods({
             }
         );
     },
-    
+    'courseInformation.addNewCourseWork'(currentCourseId, newcourseworkAssessmentTypes) {
+        CourseWeighting.update(
+            { "ownerId": Meteor.userId(), courseId: currentCourseId },
+            {
+                $set:
+                    { "courseworkAssessmentTypes": newcourseworkAssessmentTypes }
+            }
+        );
+    },
+    'courseInformation.addNewFinalWork'(currentCourseId, newfinalAssessmentTypes) {
+        CourseWeighting.update(
+            { "ownerId": Meteor.userId(), courseId: currentCourseId },
+            {
+                $set:
+                    { "finalAssessmentTypes": newfinalAssessmentTypes }
+            }
+        );
+    },
+    'courseInformation.updateCourseworkWeight'(currentCourseId, newCourseWorkWeight) {
+        CourseWeighting.update(
+            { "ownerId": Meteor.userId(), courseId: currentCourseId },
+            {
+                $set:
+                    { "courseworkWeight": newCourseWorkWeight }
+            }
+        );
+    },
+    'courseInformation.updateFinalWeight'(currentCourseId, newFinalWeight) {
+        CourseWeighting.update(
+            { "ownerId": Meteor.userId(), courseId: currentCourseId },
+            {
+                $set:
+                    { "finalWeight": newFinalWeight }
+            }
+        );
+    },
 });

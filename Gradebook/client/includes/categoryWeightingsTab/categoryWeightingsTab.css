@@ -11,3 +11,21 @@
 .top-adjust{
     padding-top: 0em !important;
 }
+
+.containerDiv{
+    display: flex;
+    justify-content: space-around;
+}
+
+#knowledge, #application, #thinking, #communication{
+    width: 20%;
+    text-align: center;
+}
+
+.categoryWeightingsForm{
+    width: 50%;
+}
+
+.weightingHeadings{
+    font-size: 2em;
+}

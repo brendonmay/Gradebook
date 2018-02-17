@@ -5,7 +5,8 @@
 </head>
 
 <body>
-  {{> nav}} {{> sideNav}} {{> addCourse}} {{> deleteCourse}}
+  {{> nav}} {{> sideNav}} {{> addCourse}} {{> deleteCourse}} {{> addAssessmentType}} {{> deleteCourseworkAssessmentType}}
+  {{> deleteFinalAssessmentType}} {{> customLogin}} {{> customRegister}}
 
 
   <!--Site Content Here-->
@@ -26,7 +27,9 @@
     // });
 
     // Initialize collapsible
-    $('.collapsible').collapsible();
+    $(document).ready(function(){
+      $('.collapsible').collapsible();
+    });    
 
     //Open Modal Using Trigger
     $(document).ready(function () {

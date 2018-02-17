@@ -1,0 +1,16 @@
+.assessments-collapsible {
+    padding: 0 !important;
+}
+
+.icon-bluegrey{
+    color:#455a64
+}
+
+.icon-bluegrey:hover{
+    color:#ff5252
+}
+
+.assessment-icon {
+    padding-top: 3px;
+    padding-right: 10px
+}

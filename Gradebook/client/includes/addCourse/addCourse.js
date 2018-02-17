@@ -1,7 +1,7 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Courses } from '../../../lib/collections.js';
-import { CourseWeighting } from '../../../lib/collections.js'; 
+import { CourseWeighting } from '../../../lib/collections.js';
 import { Accounts } from 'meteor/accounts-base';
 
 import '../../main.html';
@@ -18,7 +18,7 @@ Template.addCourse.events({
         //Get input value
         const target = event.target;
         const course = target.courseName.value;
-        const year = target.courseYear.value;
+        const year = document.getElementById("courseYear").value;
 
         //check if user has ever created a course
         //if user has not created a course,
@@ -39,13 +39,19 @@ Template.addCourse.events({
             //insert new course into collection
 
             //determine courses they currently have
-            let currentCourses = Courses.findOne({ ownerId: Meteor.userId() }, { _id: 0, ownerId: 0 }).courses; //array of course objects
+            let currentCourses = Courses.findOne({ ownerId: Meteor.userId() }, { _id: 0, ownerId: 0 }).courses; //array of course objects    
 
             //create a new course object to be inserted
             const newCourse = { courseId: newCourseId, courseName: course, courseYear: year };
 
             //create updated array of course objects
             currentCourses[newCourseId - 1] = newCourse;
+
+            for (var i = 0; i < currentCourses.length; i++) { //error checking for null value
+                if (currentCourses[i] == null) {
+                    currentCourses.splice(i,1);
+                }
+            }
 
             Meteor.call('courses.addNewCourse', currentCourses);
             Meteor.call('courseInformation.defaultSettings', newCourseId);
@@ -59,4 +65,16 @@ Template.addCourse.events({
         $('#addModal').modal('close');
     }
 
+});
+
+Template.addCourse.helpers({
+    getYear: function(){
+        //return yearList = [{year: "2017-2018"}, {year:"2018-2019"}];
+        currentYear = new Date().getFullYear();
+        option1 = (Number(currentYear) - 1) + "-" + currentYear;
+        option2 = currentYear + "-" + (Number(currentYear) + 1);
+        option3 = (Number(currentYear) + 1) + "-" + (Number(currentYear) + 2);
+        yearlist = [{year: option1}, {year: option2}, {year: option3}];
+        return yearlist
+    }
 });

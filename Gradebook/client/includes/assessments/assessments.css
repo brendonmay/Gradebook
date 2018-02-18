@@ -17,6 +17,9 @@
 }
 
 .assessments-collapsible-nested {
-    /* padding: 0; */
-    height: 80px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    /* height: 80px !important; */
+    padding-left: 50px;
+    line-height: 1px!important;
 }

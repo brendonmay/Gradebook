@@ -1,5 +1,6 @@
 .assessments-collapsible {
     padding: 0 !important;
+    
 }
 
 .icon-bluegrey{
@@ -13,4 +14,9 @@
 .assessment-icon {
     padding-top: 3px;
     padding-right: 10px
+}
+
+.assessments-collapsible-nested {
+    /* padding: 0; */
+    height: 80px !important;
 }

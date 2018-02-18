@@ -16,7 +16,9 @@
 
 -introduce rename functionality to Settings>assessments
 
-
+-Course Settings: 
+	-issue: when on a tab other then general settings, click to the right and left of the courseSettingsNavBar and general settings will pop up on screen.
+	-fix: need to make sure we stay in correct tab
 -------------
 Good web documents:
 	Using Dynamic Templates in Meteor: https://themeteorchef.com/tutorials/using-dynamic-templates

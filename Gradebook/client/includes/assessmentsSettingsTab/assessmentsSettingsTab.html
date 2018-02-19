@@ -1,0 +1,80 @@
+<template name="assessmentsTab">
+    <h4 class="light-blue lighten-4 settings-header">Assessments</h4>
+    <form class="col s12 assessmentsTabForm" onsubmit="return false">
+        <div class="row">
+            <div class="col s5 assessmentContainer">
+                <ul class="collapsible" data-collapsible="expandable">
+                    <div class="collapsible-header blue-grey lighten-2" style="cursor: initial">
+                        <h5 class="header-text">Coursework -
+                            <input disabled id="assessments-courseWorkWeight" type="text" value={{courseWorkWeight}}>%</h5>
+                    </div>
+
+                    {{#each courseAssessmentTypes}}
+                    <li>
+                        <div class="collapsible-header input-field" style="cursor: initial">
+                            <a href='#!' class="delete-courseworkAssessmentType" name={{assessmentType}} id={{assessmentTypeId}}>
+                                <i id="deletec{{assessmentTypeId}}" class="material-icons icon-bluegrey">close</i>
+                            </a>
+                            <i id="editc{{assessmentTypeId}}" class="material-icons icon-bluegrey hide">edit</i>
+                            <p class="assessment-type-listing" id="displayc{{assessmentTypeId}}">{{assessmentType}}</p>
+                            <input class="assessment-type-input hide" id ="changeNamec{{assessmentTypeId}}" value={{assessmentType}}>
+                            <input disabled id="inputc{{assessmentTypeId}}" class="weightInput" type="text" name={{assessmentType}} value={{assessmentWeight}}>%
+                        </div>
+                    </li>
+                    {{/each}}
+                    <li>
+                        <div class="collapsible-header" id="courseAddAssessment" style="cursor: initial">
+                            <a href="#addCourseWork" class='modal-trigger'>
+                                <i class="material-icons icon-green">add_box</i>
+                            </a>
+                            <a id="addCourseworkAssessmentType" href="#addCourseWork" class="modal-trigger waves-effect waves-light btn-flat addAssessmentButton">Add assessment type</a>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+
+            <div class="col s1"></div>
+            <div class="col s1"></div>
+
+            <div class="col s5 assessmentContainer">
+                <ul class="collapsible" data-collapsible="expandable">
+                    <div class="collapsible-header blue-grey lighten-2" style="cursor: initial">
+                        <h5 class="header-text">Final Evaluations -
+                            <input disabled id="assessments-finalWeight" value={{finalWeight}}>%</h5>
+                    </div>
+                    {{#each finalAssessmentTypes}}
+                    <li>
+                        <div class="collapsible-header input-field" style="cursor: initial">
+                            <a href='#!' class="delete-finalAssessmentType close-icon" name={{assessmentType}} id={{assessmentTypeId}}>
+                                <i class="material-icons icon-bluegrey" id="deletef{{assessmentTypeId}}">close</i>
+                            </a>
+                            <i id="editf{{assessmentTypeId}}" class="material-icons icon-bluegrey hide">edit</i>
+                            <p class="assessment-type-listing" id="displayf{{assessmentTypeId}}">{{assessmentType}}</p>
+                            <input class="assessment-type-input hide" id ="changeNamef{{assessmentTypeId}}" value={{assessmentType}}>
+                            <input disabled id="inputf{{assessmentTypeId}}" class="weightInput" type="text" name={{assessmentType}} value={{assessmentWeight}}>%
+                        </div>
+                    </li>
+                    {{/each}}
+                    <li>
+                        <div class="collapsible-header" id="finalAddAssessment" style="cursor: initial">
+                            <a href="#addFinalWork" class='modal-trigger'>
+                                <i class="material-icons icon-green">add_box</i>
+                            </a>
+                            <a id="addFinalAssessmentType" href="#addFinalWork" class="modal-trigger waves-effect waves-light btn-flat addAssessmentButton">Add assessment type</a>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+        <div class="col s12">
+            <div class="row">
+                <button id="save-button" class="waves-effect waves-green btn green col s1 offset-s4 save-button hide" type="submit">Save</button>
+                <a id="edit-button" href="#!" class="waves-effect waves-grey btn blue-grey darken-1 col s2 offset-s5 edit-button">Edit</a>
+                <a id="cancel-button" href="#!" class="waves-effect waves-red btn red darken-2 col s1 offset-s1 cancel-button hide">Cancel</a>
+            </div>
+        </div>
+    </form>
+</template>

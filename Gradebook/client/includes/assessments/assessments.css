@@ -1,0 +1,25 @@
+.assessments-collapsible {
+    padding: 0 !important;
+    
+}
+
+.icon-bluegrey{
+    color:#455a64
+}
+
+.icon-bluegrey:hover{
+    color:#ff5252
+}
+
+.assessment-icon {
+    padding-top: 3px;
+    padding-right: 10px
+}
+
+.assessments-collapsible-nested {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    /* height: 80px !important; */
+    padding-left: 50px;
+    line-height: 1px!important;
+}

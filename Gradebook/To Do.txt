@@ -1,22 +1,29 @@
--Fix styling of the following:
-	-"Thanks for signing in! Add a course to get started!
-	-"Welcome Back! Select a course to get started!"
+-Styling Issues
+	- "Thanks for signing in! Add a course to get started!
+	- "Welcome Back! Select a course to get started!"
+	- Fix buttons placements in each of the settings tabs.
+	- Finish all of the styling in each of the settings tabs.
+	- In Settings>Assessment Settings when you click edit and click on the input of the assessmentType Name, the underline color is not correct.
 
-- register/login/logout looks
+-Functionality Issues
+- Finish the login/lougout/register functionality and styling.
+- Limit the number of characters you can have in your course name (brings up issues in sidenav if too long).
+- When you select a new course from the sidenav, you should be forced to the gradebook view.
+- In Settings>General Settings, change Course Year to a dropdown menu.
+- In each of the Settings' Tabs, check the input type to ensure only numbers can be inputted for the weights.
 
-- limit the number of characters in the courses sideNav
 
--fix styling of Settings>Assessment
+-Course Settings: 
+	-issue: when on a tab other then general settings, click to the right and left of the courseSettingsNavBar and general settings will pop up on screen.
+	-fix: need to make sure we stay in correct tab
 
--Fix buttons placements in each of the settings tabs
 
--some input fields dont have the correct green underline when typing in them, whereas some do
-
--when you select a new course from the sidenav, you should be forced to the gradebook view
-
--in Settings>General Settings, change Course Year to a dropdown menu
 
 
 -------------
+
+
+
+
 Good web documents:
 	Using Dynamic Templates in Meteor: https://themeteorchef.com/tutorials/using-dynamic-templates

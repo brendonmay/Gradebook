@@ -24,8 +24,10 @@ Template.courseSettingsNavBar.events({
             settingScreen = "Assessments";
         } else if (settingId == "AW") {
             settingScreen = "Assessment Weightings";
-        } else {
+        } else if (settingId == "GS") {
             settingScreen = "General Settings"
+        }else{
+            settingScreen = Session.get('settingScreenText')
         }
 
         //console.log(settingScreen);

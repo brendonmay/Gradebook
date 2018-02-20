@@ -45,36 +45,26 @@ if(Meteor.isClient){
             $('#customRegisterModal').modal('close');
         },
 
+        'click .back-button': function(){
+            registerEmail.value = "";
+            registerPassword.value = "";
+
+            $('#customRegisterModal').modal('close');
+            $('#customLoginModal').modal('open');
+        },
+
         'submit form': function(event, template) {
             event.preventDefault();
+
             var emailVar = event.target.registerEmail.value;
             var passwordVar = event.target.registerPassword.value;
-            var buttonName = event.target.name;
-            console.log(event.target);
 
-            // if(registerTarget.id = "back"){
-            //     console.log("back was pressed");
-            //     registerTarget.registerEmail.value = "";
-            //     registerTarget.registerPassword.value = "";
-            //     $('#customRegisterModal').modal('close');
-            // }
-            // else if (registerTarget.id = "cancel-registration"){
-            //     console.log("cancel was pressed");
-            //     registerTarget.registerEmail.value = "";
-            //     registerTarget.registerPassword.value = "";
-            //     $('#customRegisterModal').modal('close');
-            //     $('#customLoginModal').modal('open');
-            // }
-            // else if(registerTarget.id = "register"){
-            //     console.log("submit was pressed");
-            //     //document.getElementById("register").type = email;
-            //     console.log(registerTarget.type);
-            //     // Accounts.createUser({
-            //     //     email: emailVar,
-            //     //     password: passwordVar
-            //     // });
-            //     $('#customRegisterModal').modal('close');
-            // }
+            Accounts.createUser({
+                email: emailVar,
+                password: passwordVar
+            });
+            
+            $('#customRegisterModal').modal('close');
         }
     })
 }

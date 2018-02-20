@@ -24,7 +24,7 @@ Template.courseSettingsNavBar.events({
             settingScreen = "Assessments";
         } else if (settingId == "AW") {
             settingScreen = "Assessment Weightings";
-        } else {
+        } else if (settingID == "GS") {
             settingScreen = "General Settings"
         }
 

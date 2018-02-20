@@ -11,10 +11,10 @@ Template.nav.onRendered(function () {
     menuWidth: 200, // Default is 300 // Choose the horizontal origin
     edge: 'left',
   });
-});
 
-Template.nav.onCreated(function (){
-  $('.dropdown-button').dropdown();
+  /*This is where i'm supposed to initialize my dropdown menu... but it is still not appearing*/
+  this.$("[data-activates=emailDropdown]").dropdown();
+  //can also use: this.$('.dropdown-button').dropdown();
 });
 
 Template.nav.events({
@@ -22,7 +22,7 @@ Template.nav.events({
     $('#customLoginModal').modal('open');
   },
 
-  // 'click .dropdown-button': function() {
+  // 'click .loginDropdown': function() {
   //   $('.dropdown-button').dropdown('open');
   // },
 

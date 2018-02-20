@@ -63,7 +63,9 @@ if(Meteor.isClient){
                 email: emailVar,
                 password: passwordVar
             });
-            
+
+            registerEmail.value = "";
+            registerPassword.value = "";
             $('#customRegisterModal').modal('close');
         }
     })

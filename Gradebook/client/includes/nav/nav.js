@@ -18,15 +18,15 @@ Template.nav.onCreated(function (){
 });
 
 Template.nav.events({
-  'click .customLoginModal': function() {
+  'click .customLoginModal': function () {
     $('#customLoginModal').modal('open');
   },
 
   // 'click .dropdown-button': function() {
   //   $('.dropdown-button').dropdown('open');
   // },
-
-  'click .logout': function() {
+  
+  'click .logout': function () {
     event.preventDefault();
     Meteor.logout();
   }

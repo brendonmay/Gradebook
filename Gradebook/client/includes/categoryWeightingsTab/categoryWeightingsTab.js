@@ -1,13 +1,13 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Courses } from '../../../lib/collections.js';
-import { CourseWeighting } from '../../../lib/collections.js'; 
+import { CourseWeighting } from '../../../lib/collections.js';
 import { Accounts } from 'meteor/accounts-base';
 import { Meteor } from "meteor/meteor";
 
 import '../../main.html';
 
-function finishedEditing(){
+function finishedEditing() {
     let editButtonElement = document.getElementById("edit-button");
     let saveButtonElement = document.getElementById("save-button");
     let cancelButtonElement = document.getElementById("cancel-button");
@@ -28,30 +28,30 @@ function finishedEditing(){
 }
 
 Template.categoryWeightingsTab.helpers({
-    fetchKnowledge: function(){
+    fetchKnowledge: function () {
         return Session.get('knowledgeWeight');
     },
 
-    fetchApplication: function(){
+    fetchApplication: function () {
         return Session.get('applicationWeight')
     },
 
-    fetchThinking: function(){
+    fetchThinking: function () {
         return Session.get('thinkingWeight')
     },
 
-    fetchCommunication: function(){
+    fetchCommunication: function () {
         return Session.get('communicationWeight')
     },
 
-    checkIfEditing: function(){
+    checkIfEditing: function () {
 
     },
 
 });
 
 Template.categoryWeightingsTab.events({
-    'click .edit-category-weightings': function(){
+    'click .edit-category-weightings': function () {
         let editButtonElement = document.getElementById("edit-button");
         let saveButtonElement = document.getElementById("save-button");
         let cancelButtonElement = document.getElementById("cancel-button");
@@ -71,7 +71,7 @@ Template.categoryWeightingsTab.events({
         communicationWeight.removeAttribute("disabled");
 
     },
-    'click .cancel-category-weightings': function(){
+    'click .cancel-category-weightings': function () {
         finishedEditing();
 
         let knowledgeWeight = document.getElementById("knowledge");
@@ -87,7 +87,7 @@ Template.categoryWeightingsTab.events({
 
     },
 
-    'submit .categoryWeightingsForm': function(){ //include check that they add to 100,  disable forms
+    'submit .categoryWeightingsForm': function () { //include check that they add to 100,  disable forms
 
         const currentCourseId = Session.get('courseId');
         const target = event.target;
@@ -99,8 +99,8 @@ Template.categoryWeightingsTab.events({
         //check that sum is 100
         let totalWeight = +knowledgeWeight + +applicationWeight + +thinkingWeight + +communicationWeight;
 
-        if (totalWeight == 100){
-            let newCategoryWeighting = {K: knowledgeWeight, A: applicationWeight, T: thinkingWeight, C: communicationWeight};
+        if (totalWeight == 100) {
+            let newCategoryWeighting = { K: knowledgeWeight, A: applicationWeight, T: thinkingWeight, C: communicationWeight };
 
             //update document
             Meteor.call('courseInformation.updateCategories', currentCourseId, newCategoryWeighting);
@@ -114,10 +114,10 @@ Template.categoryWeightingsTab.events({
             //buttons back to normal, disable forms
             finishedEditing();
         }
-        else{
+        else {
             Materialize.toast('Your Category Weightings must add up to 100%. They currently add up to ' + totalWeight + '%.', 5000, 'amber darken-3');
             console.log("they must add to 100");
         }
-        
+
     },
 });

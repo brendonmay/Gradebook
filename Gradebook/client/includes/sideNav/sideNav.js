@@ -6,12 +6,12 @@ import { Accounts } from 'meteor/accounts-base';
 import '../../main.html';
 
 Template.sideNav.onCreated(function () {
-    Session.set('courseId', 0);
-  });
-  
-  Template.sideNav.helpers({
-    hasNoCourses: function () {
-      return Courses.findOne({ ownerId: Meteor.userId() }) == null
-    },
-  
-  });
+  Session.set('courseId', 0);
+});
+
+Template.sideNav.helpers({
+  hasNoCourses: function () {
+    return Courses.findOne({ ownerId: Meteor.userId() }) == null
+  },
+
+});

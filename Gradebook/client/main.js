@@ -8,6 +8,6 @@ import './main.html';
 
 Accounts.onLogout(resetViewOnLogout);
 
-function resetViewOnLogout(){
+function resetViewOnLogout() {
     Session.set('courseId', 0);
 }

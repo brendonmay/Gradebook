@@ -22,10 +22,10 @@ Template.addCourse.events({
         const year = document.getElementById("courseYear").value;
 
         //check that courseName <= 20 characters
-        if (course.length > 15){
+        if (course.length > 15) {
             //console.log("courseName too long. Try again.")
         }
-        else{
+        else {
             //check if user has ever created a course
             //if user has not created a course,
 
@@ -57,6 +57,7 @@ Template.addCourse.events({
                 for (var i = 0; i < currentCourses.length; i++) { //error checking for null value
                     if (currentCourses[i] == null) {
                         currentCourses.splice(i, 1);
+                        i--;
                     }
                 }
                 Meteor.call('courses.addNewCourse', currentCourses);

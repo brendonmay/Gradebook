@@ -6,5 +6,5 @@ import { Accounts } from 'meteor/accounts-base';
 import '../../main.html';
 
 Template.courseTabsTitles.onRendered(function () {
-    this.$('.tabs').tabs();
-  });
+  this.$('.tabs').tabs();
+});

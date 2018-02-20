@@ -26,7 +26,7 @@ Template.courseSettingsNavBar.events({
             settingScreen = "Assessment Weightings";
         } else if (settingId == "GS") {
             settingScreen = "General Settings"
-        }else{
+        } else {
             settingScreen = Session.get('settingScreenText')
         }
 

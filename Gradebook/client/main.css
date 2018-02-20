@@ -40,8 +40,22 @@ body {
  .input-field input[type=text]:focus + label {
     color: #4caf50!important
 }
+.input-field input[type=email]:focus + label {
+  color: #4caf50!important
+}
+.input-field input[type=password]:focus + label {
+  color: #4caf50!important
+}
 /* label underline focus color */
   .input-field input[type=text]:focus {
+    border-bottom: 1px solid #4caf50 !important;
+    box-shadow: 0 1px 0 0 #4caf50 !important;
+  }
+  .input-field input[type=email]:focus {
+    border-bottom: 1px solid #4caf50 !important;
+    box-shadow: 0 1px 0 0 #4caf50 !important;
+  }
+  .input-field input[type=password]:focus {
     border-bottom: 1px solid #4caf50 !important;
     box-shadow: 0 1px 0 0 #4caf50 !important;
   }
@@ -54,8 +68,24 @@ body {
     border-bottom: 1px solid #4caf50!important;
     box-shadow: 0 1px 0 0 #4caf50!important;
   }
+  .input-field input[type=email].valid {
+    border-bottom: 1px solid #4caf50!important;
+    box-shadow: 0 1px 0 0 #4caf50!important;
+  }
+  .input-field input[type=password].valid {
+    border-bottom: 1px solid #4caf50!important;
+    box-shadow: 0 1px 0 0 #4caf50!important;
+  }
   /* invalid color */
   .input-field input[type=text].invalid {
+    border-bottom: 1px solid #D32F2F!important;
+    box-shadow: 0 1px 0 0 #D32F2F!important;
+  }
+  .input-field input[type=email].invalid {
+    border-bottom: 1px solid #D32F2F!important;
+    box-shadow: 0 1px 0 0 #D32F2F!important;
+  }
+  .input-field input[type=password].invalid {
     border-bottom: 1px solid #D32F2F!important;
     box-shadow: 0 1px 0 0 #D32F2F!important;
   }

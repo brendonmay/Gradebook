@@ -1,15 +1,14 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
-import { Courses } from '../../../lib/collections.js';
-import { CourseWeighting } from '../../../lib/collections.js';
 import { Accounts } from 'meteor/accounts-base';
 
 import '../../main.html';
 
 if(Meteor.isClient){
     Template.customLogin.events({
-        'submit form': function(event, template) {
+        'submit .login-form': function(event, template) { //there is no check for if a user exists or if password is incorrect
             event.preventDefault();
+            const target = event.target;
             var emailVar = template.find('#email').value;
             var passwordVar = template.find('#password').value;
             if(emailVar == "" || passwordVar == ""){
@@ -17,24 +16,57 @@ if(Meteor.isClient){
             }
             else{
                 Meteor.loginWithPassword(emailVar, passwordVar);
+                document.getElementById("loginForm").reset();
+                $('#customLoginModal').modal('close');
             }
         },
 
         'click .register': function(){
+            document.getElementById("loginForm").reset();
+
+            // document.getElementById("password").value = "";
             $('#customRegisterModal').modal('open');
             $('#customLoginModal').modal('close');
-        }
+        },
+
+        'click .cancel-button': function(){
+            //clear the input fields
+            document.getElementById("loginForm").reset();
+
+            //if cancel button is clicked, close the modal
+            $('#customLoginModal').modal('close');
+        },
     }),
 
     Template.customRegister.events({
-        'submit form': function(event, template) {
+        'click .cancel-button': function(){
+            //clear the input fields
+            document.getElementById("registerForm").reset();
+
+            //if cancel button is clicked, close the modal
+            $('#customRegisterModal').modal('close');
+        },
+
+        'click .back-button': function(){
+            document.getElementById("registerForm").reset();
+
+            $('#customRegisterModal').modal('close');
+            $('#customLoginModal').modal('open');
+        },
+
+        'submit .register-form': function(event, template) {
             event.preventDefault();
+
             var emailVar = event.target.registerEmail.value;
             var passwordVar = event.target.registerPassword.value;
+
             Accounts.createUser({
                 email: emailVar,
                 password: passwordVar
             });
+
+            document.getElementById("registerForm").reset();
+            $('#customRegisterModal').modal('close');
         }
     })
 }

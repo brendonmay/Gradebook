@@ -6,7 +6,10 @@
 	- In Settings>Assessment Settings when you click edit and click on the input of the assessmentType Name, the underline color is not correct.
 
 -Functionality Issues
-- Finish the login/lougout/register functionality and styling.
+- Login
+	-when registering, check if email is already in collection
+	-make the user input their password twice
+	-when logging in, check if password is incorrect or if email exists
 - In Settings>General Settings, change Course Year to a dropdown menu.
 - In each of the Settings' Tabs, check the input type to ensure only numbers can be inputted for the weights.
 - Add 3 courses to the same year. Delete the middle course, then make a new course. Repeat this until it break. It will eventually add null to Courses.collection

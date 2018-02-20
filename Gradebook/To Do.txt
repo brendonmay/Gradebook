@@ -11,6 +11,9 @@
 - In Settings>General Settings, change Course Year to a dropdown menu.
 - In each of the Settings' Tabs, check the input type to ensure only numbers can be inputted for the weights.
 
+Add Course Modal: 
+- if user inputs more then 20 characters in the course Name, and tries to submit, leave modal open with an error message
+- For some reason, when user inputs > 20 characters the input line doesn't get red until user has clicked off. On Materialize the input box gets red immediately. 
 
 
 

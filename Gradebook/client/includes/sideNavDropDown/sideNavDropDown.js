@@ -51,17 +51,17 @@ Template.sideNavDropDown.helpers({
                     }
                     if (uniqueYear) {
                         var splitYear = entryYear.split("-"); //splits the year so it may be compared
-                        for (index = 0; index < uniqueYears.length; index++){
+                        for (index = 0; index < uniqueYears.length; index++) {
                             var grabYear = uniqueYears[index].courseYear; //grabs the year to compare with
                             var comparisonYear = grabYear.split("-"); //splits off the first part for comparison
-                            if (splitYear[0] > comparisonYear[0]){
+                            if (splitYear[0] > comparisonYear[0]) {
                                 /*if the new entry is a more recent year than the old entry it will trade places
                                  with that entry in the array */
                                 var newEntryYear = grabYear;
                                 uniqueYears[index] = { "courseYear": entryYear }
                                 entryYear = newEntryYear;
                                 splitYear = entryYear.split("-");
-                            }                            
+                            }
                         }
                         //otherwise it is inserted as normal
                         uniqueYears[uniqueYears.length] = { "courseYear": entryYear }
@@ -83,17 +83,17 @@ Template.sideNavDropDown.events({
         var courseId = Number(target.id);
         var courseYear = target.name;
         const courseName = target.innerText;
-        const categoryWeighting = CourseWeighting.findOne({ownerId: Meteor.userId(), courseId: courseId}).categoryWeighting;
+        const categoryWeighting = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: courseId }).categoryWeighting;
         var knowledgeWeight = categoryWeighting.K;
         var applicationWeight = categoryWeighting.A;
         var thinkingWeight = categoryWeighting.T;
         var communicationWeight = categoryWeighting.C;
-        var courseworkWeight = CourseWeighting.findOne({ownerId: Meteor.userId(), courseId: courseId}).courseworkWeight;
-        var finalWeight = CourseWeighting.findOne({ownerId: Meteor.userId(), courseId: courseId}).finalWeight;
+        var courseworkWeight = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: courseId }).courseworkWeight;
+        var finalWeight = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: courseId }).finalWeight;
 
         //Set Session Variables for Selected Course
         Session.set('courseId', courseId);
-        Session.set('courseYear', courseYear);
+        Session.set('courseYear', courseYear); 
         Session.set('courseName', courseName);
         Session.set('knowledgeWeight', knowledgeWeight);
         Session.set('applicationWeight', applicationWeight);
@@ -101,6 +101,15 @@ Template.sideNavDropDown.events({
         Session.set('communicationWeight', communicationWeight);
         Session.set('courseworkWeight', courseworkWeight);
         Session.set('finalWeight', finalWeight);
+
+        if (document.getElementById('gradeBookCourseTab')) { //this allows us to navigate back to gradebook page when new course is clicked
+            document.getElementById('gradeBookCourseTab').click();
+        }
+        if (document.getElementById('GS')) {
+            document.getElementById('GS').click();
+            Session.set('settingScreenText', "General Settings");
+        }
+
 
     },
 

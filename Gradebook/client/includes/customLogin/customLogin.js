@@ -6,7 +6,7 @@ import '../../main.html';
 
 if(Meteor.isClient){
     Template.customLogin.events({
-        'submit form': function(event, template) {
+        'submit .login-form': function(event, template) { //there is no check for if a user exists or if password is incorrect
             event.preventDefault();
             const target = event.target;
             var emailVar = template.find('#email').value;
@@ -16,44 +16,45 @@ if(Meteor.isClient){
             }
             else{
                 Meteor.loginWithPassword(emailVar, passwordVar);
-                target.userEmail.value = "";
-                target.userPassword.value = "";
+                document.getElementById("loginForm").reset();
                 $('#customLoginModal').modal('close');
             }
         },
 
         'click .register': function(){
+            document.getElementById("loginForm").reset();
+
+            // document.getElementById("password").value = "";
             $('#customRegisterModal').modal('open');
             $('#customLoginModal').modal('close');
-        }
-    }),
-
-    Template.customRegister.events({
-        //I dont know what you are trying to do with this.
-        // 'click button': function(){
-        //     const target = event.target;
-        //     eventId = target.id;
-        //     return eventId;
-        // },
+        },
 
         'click .cancel-button': function(){
             //clear the input fields
-            registerEmail.value = "";
-            registerPassword.value = "";
+            document.getElementById("loginForm").reset();
+
+            //if cancel button is clicked, close the modal
+            $('#customLoginModal').modal('close');
+        },
+    }),
+
+    Template.customRegister.events({
+        'click .cancel-button': function(){
+            //clear the input fields
+            document.getElementById("registerForm").reset();
 
             //if cancel button is clicked, close the modal
             $('#customRegisterModal').modal('close');
         },
 
         'click .back-button': function(){
-            registerEmail.value = "";
-            registerPassword.value = "";
+            document.getElementById("registerForm").reset();
 
             $('#customRegisterModal').modal('close');
             $('#customLoginModal').modal('open');
         },
 
-        'submit form': function(event, template) {
+        'submit .register-form': function(event, template) {
             event.preventDefault();
 
             var emailVar = event.target.registerEmail.value;
@@ -64,8 +65,7 @@ if(Meteor.isClient){
                 password: passwordVar
             });
 
-            registerEmail.value = "";
-            registerPassword.value = "";
+            document.getElementById("registerForm").reset();
             $('#customRegisterModal').modal('close');
         }
     })

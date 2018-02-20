@@ -6,24 +6,23 @@ import { Accounts } from 'meteor/accounts-base';
 import '../../main.html';
 
 Template.deleteCourse.helpers({
-    CurrentCourseName: function() {
+    CurrentCourseName: function () {
         return Session.get('courseName');
     }
 });
 
 Template.deleteCourse.events({
-    'click .yes-delete-modal': function() {
+    'click .yes-delete-modal': function () {
         const currentCourseId = Session.get('courseId');
 
-        var courseInfo = Courses.find({ ownerId: Meteor.userId()}, { _id: 0, ownerId: 0 });
+        var courseInfo = Courses.find({ ownerId: Meteor.userId() }, { _id: 0, ownerId: 0 });
         var courseObj = [];
 
-        courseInfo.forEach( 
-            function(doc) {
+        courseInfo.forEach(
+            function (doc) {
                 const docLength = doc.courses.length;
                 let courses = doc.courses;
-                for (var i = 0; i < docLength; i++)
-                {
+                for (var i = 0; i < docLength; i++) {
                     if (courses[i].courseId == currentCourseId) { }
                     else {
                         courseObj.push(courses[i]);
@@ -47,6 +46,6 @@ Template.deleteCourse.events({
 
 
         Meteor.call('courses.deleteCourse', currentCourseId, courseObj);
-       
+
     },
 });

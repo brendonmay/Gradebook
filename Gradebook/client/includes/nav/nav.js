@@ -14,11 +14,11 @@ Template.nav.onRendered(function () {
 });
 
 Template.nav.events({
-  'click .customLoginModal': function() {
+  'click .customLoginModal': function () {
     $('#customLoginModal').modal('open');
   },
 
-  'click .logout': function() {
+  'click .logout': function () {
     event.preventDefault();
     Meteor.logout();
   }

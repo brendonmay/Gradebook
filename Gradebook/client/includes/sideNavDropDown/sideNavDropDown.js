@@ -93,7 +93,7 @@ Template.sideNavDropDown.events({
 
         //Set Session Variables for Selected Course
         Session.set('courseId', courseId);
-        Session.set('courseYear', courseYear); 
+        Session.set('courseYear', courseYear);
         Session.set('courseName', courseName);
         Session.set('knowledgeWeight', knowledgeWeight);
         Session.set('applicationWeight', applicationWeight);

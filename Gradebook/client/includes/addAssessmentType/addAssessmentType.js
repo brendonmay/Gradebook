@@ -9,15 +9,15 @@ import '../../main.html';
 
 Template.addAssessmentType.events({
     //type of event is a submit, the element is a form with class add-form, when its called run a function
-    'submit .add-final-form': function () {
+    'submit .add-finßal-form': function () {
 
         const newAssessment = document.getElementById('add-final-type').value;
         const currentCourseId = Session.get('courseId');
 
-        let courseInfo = CourseWeighting.findOne( 
-            { ownerId: Meteor.userId(), courseId: currentCourseId} );
+        let courseInfo = CourseWeighting.findOne(
+            { ownerId: Meteor.userId(), courseId: currentCourseId });
         let finalAssessmentTypes = courseInfo.finalAssessmentTypes;
-        
+
         const courseWorkLength = finalAssessmentTypes.length;
         var newAssessmentTypeId = 0;
         var newAssessmentWeight = 0;
@@ -44,7 +44,7 @@ Template.addAssessmentType.events({
         finalAssessmentTypes.push(newAssessmentType);
 
         Meteor.call('courseInformation.addNewFinalWork', currentCourseId, finalAssessmentTypes);
-        
+
         //Close Modal
         $('#addFinalWork').modal('close');
     },
@@ -53,10 +53,10 @@ Template.addAssessmentType.events({
         const newAssessment = document.getElementById('add-coursework-type').value;
         const currentCourseId = Session.get('courseId');
 
-        let courseInfo = CourseWeighting.findOne( 
-            { ownerId: Meteor.userId(), courseId: currentCourseId} );
+        let courseInfo = CourseWeighting.findOne(
+            { ownerId: Meteor.userId(), courseId: currentCourseId });
         let courseWorkAssessmentType = courseInfo.courseworkAssessmentTypes;
-        
+
         const courseWorkLength = courseWorkAssessmentType.length;
         var newAssessmentType = 0;
         var newAssessmentWeight = 0;

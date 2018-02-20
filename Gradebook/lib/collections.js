@@ -160,9 +160,9 @@ Meteor.methods({
             ownerId: Meteor.userId(),
             courseId: newCourseId,
             courseAssessmentTypes: [
-                { assessmentTypeId: "c1",  assessments: []  },
+                { assessmentTypeId: "c1", assessments: [] },
                 { assessmentTypeId: "c2", assessments: [] },
-                { assessmentTypeId: "c3",  assessments: [] }
+                { assessmentTypeId: "c3", assessments: [] }
             ],
             finalAssessmentTypes: [
                 { assessmentTypeId: "f1", K: 0, A: 0, T: 0, C: 0 },
@@ -171,13 +171,13 @@ Meteor.methods({
         });
     },
     'assessments.addNewCourse'(currentCourses) {
-        const assessments = Assessments.find( { "ownerId": Meteor.userId() } );
+        const assessments = Assessments.find({ "ownerId": Meteor.userId() });
         //find new course that was added 
         for (var i = 0; i < currentCourses.length; i++) {
             var currentCoursesId = currentCourses[i].courseId;
             var doesCourseExist = false;
             assessments.forEach(
-                function(doc) {
+                function (doc) {
                     if (currentCoursesId == doc.courseId) {
                         doesCourseExist = true;
                         return false;
@@ -191,7 +191,7 @@ Meteor.methods({
         }
     },
     'assessments.addNewAssessmentType'(currentCourseId, assessmentTypeObj) {
-        const assessments = Assessments.findOne( { "ownerId": Meteor.userId(), courseId: currentCourseId });
+        const assessments = Assessments.findOne({ "ownerId": Meteor.userId(), courseId: currentCourseId });
         var newCourseAssessmentTypes = [];
         for (var index = 0; index < assessmentTypeObj.length; index++) {
             const assessmentId = assessmentTypeObj[index].assessmentTypeId;
@@ -209,16 +209,16 @@ Meteor.methods({
                     assessmentTypeId: assessmentId,
                     assessments: assessment
                 };
-                newCourseAssessmentTypes.push(assessmentType);   
+                newCourseAssessmentTypes.push(assessmentType);
             }
             else {
                 const assessmentType = {
                     assessmentTypeId: assessmentId,
                     assessments: []
                 };
-                newCourseAssessmentTypes.push(assessmentType);   
+                newCourseAssessmentTypes.push(assessmentType);
             }
-            
+
         }
         Assessments.update(
             { "ownerId": Meteor.userId(), courseId: currentCourseId },
@@ -230,9 +230,9 @@ Meteor.methods({
 
     },
     'assessments.addNewFinalType'(currentCourseId, finalTypeObj) {
-        const assessments = Assessments.findOne( { "ownerId": Meteor.userId(), courseId: currentCourseId });
+        const assessments = Assessments.findOne({ "ownerId": Meteor.userId(), courseId: currentCourseId });
         var newFinalAssessmentTypes = [];
-        for (var i = 0; i < finalTypeObj.length; i++) { 
+        for (var i = 0; i < finalTypeObj.length; i++) {
             const currentFinalID = finalTypeObj[i].assessmentTypeId;
             var sameAssessmentIndex = -1;
             for (var i = 0; i < assessments.finalAssessmentTypes.length; i++) {
@@ -251,7 +251,7 @@ Meteor.methods({
                     T: assessment.T,
                     C: assessment.C
                 };
-                newFinalAssessmentTypes.push(assessmentType);   
+                newFinalAssessmentTypes.push(assessmentType);
             }
             else {
                 const assessmentType = {
@@ -261,10 +261,10 @@ Meteor.methods({
                     T: 0,
                     C: 0
                 };
-                newFinalAssessmentTypes.push(assessmentType);   
+                newFinalAssessmentTypes.push(assessmentType);
             }
         }
-        
+
         Assessments.update(
             { "ownerId": Meteor.userId(), courseId: currentCourseId },
             {

@@ -6,21 +6,21 @@ import { Accounts } from 'meteor/accounts-base';
 import '../../main.html';
 
 Template.courseTabsContent.helpers({
-    displaySettings: function () { //helper that grabs the setting display ID (i.e. the courseId)
-      var setting = (Session.get('settingScreenText'));
-  
-      return setting;
-    },
+  displaySettings: function () { //helper that grabs the setting display ID (i.e. the courseId)
+    var setting = (Session.get('settingScreenText'));
 
-    generalSettingsSelected: function(){
-      return  Session.get('settingScreenText') == "General Settings";
-    },
+    return setting;
+  },
 
-    categoryWeightingsSelected: function(){
-      return Session.get('settingScreenText') == "Category Weightings";
-    },
+  generalSettingsSelected: function () {
+    return Session.get('settingScreenText') == "General Settings";
+  },
 
-    assessmentsSelected: function(){
-      return Session.get('settingScreenText') == "Assessments";
-    },
-  });
+  categoryWeightingsSelected: function () {
+    return Session.get('settingScreenText') == "Category Weightings";
+  },
+
+  assessmentsSelected: function () {
+    return Session.get('settingScreenText') == "Assessments";
+  },
+});

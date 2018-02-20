@@ -9,7 +9,7 @@ import '../../main.html';
 
 Template.addAssessmentType.events({
     //type of event is a submit, the element is a form with class add-form, when its called run a function
-    'submit .add-finßal-form': function () {
+    'submit .add-final-form': function () {
 
         const newAssessment = document.getElementById('add-final-type').value;
         const currentCourseId = Session.get('courseId');

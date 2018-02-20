@@ -12,11 +12,6 @@
 - In each of the Settings' Tabs, check the input type to ensure only numbers can be inputted for the weights.
 
 
--Course Settings: 
-	-issue: when on a tab other then general settings, click to the right and left of the courseSettingsNavBar and general settings will pop up on screen.
-	-fix: need to make sure we stay in correct tab
-
-
 
 
 -------------

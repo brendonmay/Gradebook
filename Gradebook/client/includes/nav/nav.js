@@ -13,10 +13,18 @@ Template.nav.onRendered(function () {
   });
 });
 
+Template.nav.onCreated(function (){
+  $('.dropdown-button').dropdown();
+});
+
 Template.nav.events({
   'click .customLoginModal': function() {
     $('#customLoginModal').modal('open');
   },
+
+  // 'click .dropdown-button': function() {
+  //   $('.dropdown-button').dropdown('open');
+  // },
 
   'click .logout': function() {
     event.preventDefault();

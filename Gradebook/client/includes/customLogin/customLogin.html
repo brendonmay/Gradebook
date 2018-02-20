@@ -17,7 +17,7 @@
                     </div>
                     <div class="register">
                         <h7>
-                            Not a user yet? <a class="waves-effect waves-grey btn-flat modal-trigger blue-grey darken-1" href="#customRegisterModal">Register here!</a>
+                            Not a user yet? <a class="modal-trigger" href="#customRegisterModal">Register here!</a>
                         </h7>
                     </div>
                     <input type="submit" style="display: none;"/>
@@ -41,16 +41,18 @@
                 <form class="add-form col s12">
                     <div class="row">
                         <div class='input-field col s12'>
-                            <input type="email" id="regEmail" name="registerEmail" placeholder="teacher@address.com">
-                            <label for = "userEmail">E-mail</label>
+                            <input type="text" id=registerEmail name="registerEmail" placeholder="teacher@address.com">
+                            <label for = "registerEmail">E-mail</label>
                         </div>
                         <div class='input-field col s12'>
-                            <input type="password" id="regPassword" name="registerPassword">
-                            <label for = "userPassword">Password</label>
+                            <input type="password" id=registerPassword name="registerPassword">
+                            <label for = "registerPassword">Password</label>
                         </div>
                         <input type="submit" style="display: none;"/>
                     <div class="modal-footer">
-                        <button class="add-form modal-action modal-close waves-effect waves-grey btn-flat" type="submit">Register</button>
+                        <button class="add-form modal-action modal-close waves-effect waves-grey btn-flat" id="register" type="submit">Register</button>
+                        <button class="add-form modal-action waves-effect waves-grey btn-flat" id="cancel-registration" type="submit">Cancel</button>
+                        <button class="waves-effect waves-grey btn-flat left back-button" id="back" type="submit">Back</button>
                     </div>
                     </div>
                 </form>

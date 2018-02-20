@@ -7,13 +7,10 @@
 
 -Functionality Issues
 - Finish the login/lougout/register functionality and styling.
-- Limit the number of characters you can have in your course name (brings up issues in sidenav if too long).
 - In Settings>General Settings, change Course Year to a dropdown menu.
 - In each of the Settings' Tabs, check the input type to ensure only numbers can be inputted for the weights.
+- Add 3 courses to the same year. Delete the middle course, then make a new course. Repeat this until it break. It will eventually add null to Courses.collection
 
-Add Course Modal: 
-- if user inputs more then 20 characters in the course Name, and tries to submit, leave modal open with an error message
-- For some reason, when user inputs > 20 characters the input line doesn't get red until user has clicked off. On Materialize the input box gets red immediately. 
 
 
 

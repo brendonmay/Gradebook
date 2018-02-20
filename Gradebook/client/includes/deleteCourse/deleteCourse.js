@@ -41,6 +41,10 @@ Template.deleteCourse.events({
         Session.set('courseworkWeight', "");
         Session.set('finalWeight', "");
 
+        let activeElement = document.getElementById(currentCourseId);
+        activeElement.classList.remove("active");
+        activeElement.classList.remove("green");
+
 
         Meteor.call('courses.deleteCourse', currentCourseId, courseObj);
        

@@ -29,10 +29,20 @@ if(Meteor.isClient){
     }),
 
     Template.customRegister.events({
-        'click button': function(){
-            const target = event.target;
-            eventId = target.id;
-            return eventId;
+        //I dont know what you are trying to do with this.
+        // 'click button': function(){
+        //     const target = event.target;
+        //     eventId = target.id;
+        //     return eventId;
+        // },
+
+        'click .cancel-button': function(){
+            //clear the input fields
+            registerEmail.value = "";
+            registerPassword.value = "";
+
+            //if cancel button is clicked, close the modal
+            $('#customRegisterModal').modal('close');
         },
 
         'submit form': function(event, template) {

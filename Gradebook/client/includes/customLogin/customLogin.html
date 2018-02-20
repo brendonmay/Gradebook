@@ -6,7 +6,7 @@
                 <h4>Login</h4>
             </div>
             <form class="add-form col s12 login-form" id="loginForm">
-                <div class="row">
+                
                     <div class='input-field col s12'>
                         <input type="email" id="email" name="userEmail" class="validate">
                         <label for = "userEmail" data-error="Invalid email">E-mail</label>
@@ -15,10 +15,10 @@
                         <input type="password" id="password" name="userPassword">
                         <label for = "userPassword">Password</label>
                     </div>
-                    <div class="register row">
+                    <div class="row">
                         <h7>
                             Not a user yet?
-                            <a class="modal-trigger" href="#customRegisterModal">Register here!</a>
+                            <a class="modal-trigger register" href="#customRegisterModal">Register here!</a>
                         </h7>
                     </div>
                     <input type="submit" style="display: none;"/>
@@ -26,7 +26,7 @@
                         <button class="modal-action modal-close waves-effect waves-grey btn-flat" id="login" type="submit">Login</button>
                         <a href="#!" class="modal-action waves-effect waves-grey btn-flat cancel-button">Cancel</a>
                     </div>
-                </div>
+              
             </form>
         </div>
     </div>
@@ -49,11 +49,11 @@
                             <label for = "registerPassword" data-error="Must be at least 7 characters">Password</label>
                         </div>
                         <input type="submit" style="display: none;"/>
+                    </div>
                     <div class="modal-footer">
                         <button class="modal-action modal-close waves-effect waves-grey btn-flat" type="submit">Register</button>
                         <a href="#!" class="modal-action waves-effect waves-grey btn-flat cancel-button">Cancel</a>
                         <a href="#!" class="waves-effect waves-grey btn-flat left back-button">Back</a>
-                    </div>
                     </div>
                 </form>
             </div>

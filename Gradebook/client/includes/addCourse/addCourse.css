@@ -6,3 +6,8 @@
 .modal-title{
     padding-bottom: .5em
 }
+
+.courseName-input::after{
+    width: 300px;
+
+}

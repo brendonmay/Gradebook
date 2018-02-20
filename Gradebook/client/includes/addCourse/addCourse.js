@@ -19,6 +19,11 @@ Template.addCourse.events({
         //Get input value
         const target = event.target;
         const course = target.courseName.value;
+        console.log(course);
+        if (course.length > 20) {
+            return;
+        }
+
         const year = document.getElementById("courseYear").value;
 
         //check if user has ever created a course
@@ -51,7 +56,7 @@ Template.addCourse.events({
 
             for (var i = 0; i < currentCourses.length; i++) { //error checking for null value
                 if (currentCourses[i] == null) {
-                    currentCourses.splice(i,1);
+                    currentCourses.splice(i, 1);
                 }
             }
             Meteor.call('courses.addNewCourse', currentCourses);
@@ -68,13 +73,13 @@ Template.addCourse.events({
 });
 
 Template.addCourse.helpers({
-    getYear: function(){
+    getYear: function () {
         //return yearList = [{year: "2017-2018"}, {year:"2018-2019"}];
         currentYear = new Date().getFullYear();
         option1 = (Number(currentYear) - 1) + "-" + currentYear;
         option2 = currentYear + "-" + (Number(currentYear) + 1);
         option3 = (Number(currentYear) + 1) + "-" + (Number(currentYear) + 2);
-        yearlist = [{year: option1}, {year: option2}, {year: option3}];
+        yearlist = [{ year: option1 }, { year: option2 }, { year: option3 }];
         return yearlist
     }
 });

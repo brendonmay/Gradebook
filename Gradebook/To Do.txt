@@ -8,7 +8,6 @@
 -Functionality Issues
 - Finish the login/lougout/register functionality and styling.
 - Limit the number of characters you can have in your course name (brings up issues in sidenav if too long).
-- When you select a new course from the sidenav, you should be forced to the gradebook view.
 - In Settings>General Settings, change Course Year to a dropdown menu.
 - In each of the Settings' Tabs, check the input type to ensure only numbers can be inputted for the weights.
 

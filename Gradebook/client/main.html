@@ -6,7 +6,7 @@
 
 <body>
   {{> nav}} {{> sideNav}} {{> addCourse}} {{> deleteCourse}} {{> addAssessmentType}} {{> deleteCourseworkAssessmentType}} {{>
-  deleteFinalAssessmentType}} {{> customLogin}} {{> customRegister}}
+  deleteFinalAssessmentType}} {{> login}} {{> register}}
 
 
   <!--Site Content Here-->
@@ -21,25 +21,12 @@
 
   <!--Scripts Here-->
   <script>
-    //Initialize Collapse Button
-    // $('.button-collapse').sideNav({
-    //   menuWidth: 200, // Default is 300
-    // });
-
     // Initialize collapsible
     $(document).ready(function () {
       $('.collapsible').collapsible();
-    });
-
-    //Open Modal Using Trigger
-    $(document).ready(function () {
       $('.modal').modal();
-    });
-
-    //Select dropdown Menu
-    $(document).ready(function () {
+      $(".dropdown-button").dropdown();
       $('select').material_select();
     });
-
   </script>
 </body>

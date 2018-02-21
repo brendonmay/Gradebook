@@ -10,23 +10,15 @@
                 <ul id="nav-mobile" class="right">
                     <!-- Modal Trigger -->
                     {{#if currentUser}}
-                    <li class="nav-item">
-                        <a class="waves-effect waves-grey btn modal-trigger blue-grey darken-1" href="#addModal">Add Course</a>
-                        <!--This is where I implemented the dropdown menu, but the contents is not appearing-->
-                        <a class='dropdown-button btn' data-beloworigin="true" href='#!' data-activates='emailDropdown'>test@test.ca</a>
-                        <ul id='emailDropdown' class='dropdown-content'>
-                                <li><a href="#!">one</a></li>
-                                <li><a href="#!">two</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#!">three</a></li>
-                                <li><a href="#!"><i class="material-icons">view_module</i>four</a></li>
-                                <li><a href="#!"><i class="material-icons">cloud</i>five</a></li>
-                        </ul>
-                        <!-- <a class="waves-effect waves-red red darken-2 btn logout">Logout</a>  -->
-                    </li>
+                    <!-- <li class="nav-item"> -->
+                        <li><a class="waves-effect waves-grey btn modal-trigger blue-grey darken-1" href="#addModal">Add Course</a></li>
+                        <!-- <li><a class="waves-effect waves-red red darken-2 btn logout">Logout</a></li> -->
+                        <li><a class="dropdown-button" href="#emailDropdownList" data-beloworigin="true" data-activates="emailDropdownList">{{currentEmail}}<i class="material-icons right">arrow_drop_down</i></a></li>
+                        {{> emailDropdown}}
+                    <!-- </li> -->
                     {{else}}
                     <li class="nav-item">
-                        <a class="waves-effect waves-green btn modal-trigger green darken-1" href="#customLoginModal">Login</a>
+                        <a class="waves-effect waves-green btn modal-trigger green darken-1" href="#loginModal">Login</a>
                     </li>
                     {{/if}}
                     <!-- {{> loginButtons}} -->

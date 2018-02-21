@@ -31,3 +31,7 @@ Template.nav.events({
     Meteor.logout();
   }
 });
+
+Template.dropdown.onRendered(function () {
+  $('.dropdown-button').dropdown();0
+});

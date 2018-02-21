@@ -13,12 +13,20 @@ Template.nav.onRendered(function () {
   });
 });
 
+Template.nav.onCreated(function (){
+  $('.dropdown-button').dropdown();
+});
+
 Template.nav.events({
-  'click .customLoginModal': function() {
+  'click .customLoginModal': function () {
     $('#customLoginModal').modal('open');
   },
 
-  'click .logout': function() {
+  // 'click .dropdown-button': function() {
+  //   $('.dropdown-button').dropdown('open');
+  // },
+  
+  'click .logout': function () {
     event.preventDefault();
     Meteor.logout();
   }

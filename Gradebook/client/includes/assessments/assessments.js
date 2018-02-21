@@ -6,7 +6,7 @@ import { CourseWeighting } from '../../../lib/collections.js';
 
 import '../../main.html';
 
-Template.assessments.onRendered(function() {
+Template.assessments.onRendered(function () {
     $(document).ready(function () {
         $('.collapsible').collapsible();
     });

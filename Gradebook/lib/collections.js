@@ -165,8 +165,8 @@ Meteor.methods({
                 { assessmentTypeId: "c3", assessments: [] }
             ],
             finalAssessmentTypes: [
-                { assessmentTypeId: "f1", K: 0, A: 0, T: 0, C: 0 },
-                { assessmentTypeId: "f2", K: 0, A: 0, T: 0, C: 0 }
+                { assessmentTypeId: "f1", K: "N/A", A: "N/A", T: "N/A", C: "N/A" },
+                { assessmentTypeId: "f2", K: "N/A", A: "N/A", T: "N/A", C: "N/A" }
             ]
         });
     },
@@ -256,10 +256,10 @@ Meteor.methods({
             else {
                 const assessmentType = {
                     assessmentTypeId: currentFinalID,
-                    K: 0,
-                    A: 0,
-                    T: 0,
-                    C: 0
+                    K: "N/A",
+                    A: "N/A",
+                    T: "N/A",
+                    C: "N/A"
                 };
                 newFinalAssessmentTypes.push(assessmentType);
             }

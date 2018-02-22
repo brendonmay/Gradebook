@@ -55,41 +55,38 @@ Collection 2 - CourseInformation - Structure (example)
 //------------------------------------------------------------------------------------
 Collection 3 - Assessments - Structure (example) 
 {
-	ownerId: Meteor.userId(), 
-	courseId: courseId,
+	ownerId: "bmay", 
+	courseId: 1,
 	courseAssessmentTypes: [
 		{
-			assessmentTypeId: c1,
+			assessmentTypeId: "c1",
 			assessments: [
-				{ assessmentId: a1, assessmentName: "Quiz 1", K: 5, A: 5, T: 5, C: 5 },
-				{ assessmentId: a2, assessmentName: "Quiz 2", K: 7, A: 4, T: 6, C: 5 }
+				{ assessmentId: "a1", assessmentName: "Quiz 1", K: 5, A: 5, T: 5, C: 5 },
+				{ assessmentId: "a2", assessmentName: "Quiz 2", K: 7, A: 4, T: 6, C: 5 }
 			]
 		},
 		{
-			assessmentTypeId: c2,
+			assessmentTypeId: "c2",
 			assessments: [
-				{ assessmentId: a3, assessmentName: "Assignment 1", K: 5, A: 5, T: 5, C: 5 },
-				{ assessmentId: a4, assessmentName: "Assignment 2", K: 7, A: 4, T: 6, C: 5 }
+				{ assessmentId: "a3", assessmentName: "Assignment 1", K: 5, A: 5, T: 5, C: 5 },
+				{ assessmentId: "a4", assessmentName: "Assignment 2", K: 7, A: 4, T: 6, C: 5 }
 			]
 		},
 		{
-			assessmentTypeId: c3,
-			assessments: [
-				{ assessmentId: a5, assessmentName: "Test 1", K: 5, A: 5, T: 5, C: 5 },
-				{ assessmentId: a6, assessmentName: "Test 2", K: 7, A: 4, T: 6, C: 5 }
-			]
+			assessmentTypeId: "c3",
+			assessments: []
 		}
-	]
+	],
 	finalAssessmentTypes: [
 		{
-			assessmentTypeId: f1,
+			assessmentTypeId: "f1",
 			K: 25, 
 			A: 25, 
 			T: 25, 
 			C: 25
 		},
 		{
-			assessmentTypeId: f2,
+			assessmentTypeId: "f2",
 			K: 25, 
 			A: 25, 
 			T: 25, 

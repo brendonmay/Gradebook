@@ -12,6 +12,7 @@
 	-when logging in, check if password is incorrect or if email exists
 - In Settings>General Settings, change Course Year to a dropdown menu.
 - In each of the Settings' Tabs, check the input type to ensure only numbers can be inputted for the weights.
+- Include the date of the assessment in the Assessments Collection
 
 
 

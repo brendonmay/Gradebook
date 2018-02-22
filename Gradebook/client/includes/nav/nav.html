@@ -10,18 +10,14 @@
                 <ul id="nav-mobile" class="right">
                     <!-- Modal Trigger -->
                     {{#if currentUser}}
-                    <!-- <li class="nav-item"> -->
                         <li><a class="waves-effect waves-grey btn modal-trigger blue-grey darken-1" href="#addModal">Add Course</a></li>
-                        <!-- <li><a class="waves-effect waves-red red darken-2 btn logout">Logout</a></li> -->
                         <li><a class="dropdown-button" href="#emailDropdownList" data-beloworigin="true" data-activates="emailDropdownList">{{currentEmail}}<i class="material-icons right">arrow_drop_down</i></a></li>
                         {{> emailDropdown}}
-                    <!-- </li> -->
                     {{else}}
                     <li class="nav-item">
                         <a class="waves-effect waves-green btn modal-trigger green darken-1" href="#loginModal">Login</a>
                     </li>
                     {{/if}}
-                    <!-- {{> loginButtons}} -->
                 </ul>
             </div>
         </div>

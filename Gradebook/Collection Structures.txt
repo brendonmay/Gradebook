@@ -32,7 +32,7 @@ db.Courses.insert({
 })
 
 //-----------------------------------------------------------------------------------
-Collection 2 - CourseInformation - Structure (example)
+Collection 2 - CourseWeighting - Structure (example)
 {	
 	ownerId: Meteor.userId(),
 	courseId: courseId,

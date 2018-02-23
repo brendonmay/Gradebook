@@ -61,15 +61,15 @@ Collection 3 - Assessments - Structure (example)
 		{
 			assessmentTypeId: "c1",
 			assessments: [
-				{ assessmentId: "a1", assessmentName: "Quiz 1", K: 5, A: 5, T: 5, C: 5 },
-				{ assessmentId: "a2", assessmentName: "Quiz 2", K: 7, A: 4, T: 6, C: 5 }
+				{ assessmentId: "c1-1", assessmentName: "Quiz 1", K: 5, A: 5, T: 5, C: 5, Date: "15 February, 2018" },
+				{ assessmentId: "c1-2", assessmentName: "Quiz 2", K: 7, A: 4, T: 6, C: 5, Date: "16 February, 2018" }
 			]
 		},
 		{
 			assessmentTypeId: "c2",
 			assessments: [
-				{ assessmentId: "a3", assessmentName: "Assignment 1", K: 5, A: 5, T: 5, C: 5 },
-				{ assessmentId: "a4", assessmentName: "Assignment 2", K: 7, A: 4, T: 6, C: 5 }
+				{ assessmentId: "c2-1", assessmentName: "Assignment 1", K: 5, A: 5, T: 5, C: 5, Date: "17 February, 2018" },
+				{ assessmentId: "c2-2", assessmentName: "Assignment 2", K: 7, A: 4, T: 6, C: 5, Date: "18 February, 2018" }
 			]
 		},
 		{
@@ -83,14 +83,16 @@ Collection 3 - Assessments - Structure (example)
 			K: 25, 
 			A: 25, 
 			T: 25, 
-			C: 25
+			C: 25,
+			Date: "19 February, 2018"
 		},
 		{
 			assessmentTypeId: "f2",
 			K: 25, 
 			A: 25, 
 			T: 25, 
-			C: 25
+			C: 25,
+			Date: "20 February, 2018"
 		}
 	]
 }
@@ -105,22 +107,22 @@ Students Collection
 			studentId: studentId
 			grades: [
 				{
-					assessmentId: a1, K: 5, A: 5, C: 5, T: 5
+					assessmentId: "c1-1", K: 5, A: 5, C: 5, T: 5
 				},
 				{
-					assessmentId: a2, K: 5, A: 5, C: 5, T: 5
+					assessmentId: "c1-2", K: 5, A: 5, C: 5, T: 5
 				},
 				{
-					assessmentId: a3, K: 5, A: 5, C: 5, T: 5
+					assessmentId: "c2-1", K: 5, A: 5, C: 5, T: 5
 				},
 				{
-					assessmentId: a4, K: 5, A: 5, C: 5, T: 5
+					assessmentId: "c2-2", K: 5, A: 5, C: 5, T: 5
 				},
 				{
-					assessmentId: a5, K: 5, A: 5, C: 5, T: 5
+					assessmentId: "f1", K: 5, A: 5, C: 5, T: 5
 				},
 				{
-					assessmentId: a6, K: 5, A: 5, C: 5, T: 5
+					assessmentId: "f2", K: 5, A: 5, C: 5, T: 5
 				},
 			]
 		},

@@ -107,6 +107,6 @@ Template.assessments.events({
                 break;
             }
         }
-        Meteor.call('assessments.deleteAssessment', currentCourseId, courseAssessmentsTypes);
+        Meteor.call('assessments.updateAssessments', currentCourseId, courseAssessmentsTypes);
     }
 });

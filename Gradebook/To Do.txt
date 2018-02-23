@@ -6,6 +6,7 @@
 	- In Settings>Assessment Settings when you click edit and click on the input of the assessmentType Name, the underline color is not correct.
 	- When you click the "today" button in the datepicker, color of highlighted circle is not correct.
 	- Buttons in settings tab dont behave well as you change the size of the window. Possibl suggested solution, use display=none instead of adding class "hide" when they shouldnt be there. This can be achieved with the setAttribute() functiion.
+	- Many modals get fucked up as you zoom in
 
 -Functionality Issues
 - Login
@@ -14,6 +15,16 @@
 	-when logging in, check if password is incorrect or if email exists
 - In Settings>General Settings, change Course Year to a dropdown menu.
 - In each of the Settings' Tabs, check the input type to ensure only numbers can be inputted for the weights.
+- Make it so assessmentTypes cannot have the same name
+- Assessments tables currently arent reading the Date from the Collection
+- Create a cancel button for createAssessmentModal
+- Run checks before createAssessmentForm is submitted. Things to check:
+	-max character length for assessment name
+	-marks input can only be N/A or an integer > 0
+- Before an assessment can be deleted, a modal should pop up confirming if you want to delete it.
+- When you click the "X" to delete an assessment, make it so that the dropdown doesnt expand.
+- Decide how to integrate editing assessments.
+- Create a note under the final evaluations table in the Assessments tab, indicating that to delete a Final Evaluation it must be done via Course Settings>Assessment Settings with a hyperlink pointing them there.
 
 
 

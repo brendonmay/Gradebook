@@ -1,0 +1,32 @@
+.picker__date-display{
+    background-color:#607d8b
+}
+.picker__clear{
+    color:#d32f2f
+}
+.picker__today{
+    color:#4caf50
+}
+.picker__close{
+    color:#4caf50
+}
+.picker--focused .picker__day--selected{
+    background-color: #4caf50
+}
+
+[type="checkbox"].filled-in:checked+label::after{
+    background-color:#4caf50;
+    border: #4caf50;
+}
+.pad-left-right-a{
+    padding-left: 0.75rem;
+    padding-right: 0.75rem
+}
+
+.createAssessmentMargin{
+    margin-top: 15px
+}
+
+.zero-margin-top{
+    margin-top: 0px;
+}

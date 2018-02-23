@@ -6,7 +6,7 @@
 
 <body>
   {{> nav}} {{> sideNav}} {{> addCourse}} {{> deleteCourse}} {{> addAssessmentType}} {{> deleteCourseworkAssessmentType}} {{>
-  deleteFinalAssessmentType}} {{> customLogin}} {{> customRegister}}
+  deleteFinalAssessmentType}} {{> login}} {{> register}} {{> createAssessment}} {{> deleteCourseworkAssessment}}
 
 
   <!--Site Content Here-->
@@ -21,25 +21,20 @@
 
   <!--Scripts Here-->
   <script>
-    //Initialize Collapse Button
-    // $('.button-collapse').sideNav({
-    //   menuWidth: 200, // Default is 300
-    // });
-
     // Initialize collapsible
     $(document).ready(function () {
       $('.collapsible').collapsible();
-    });
-
-    //Open Modal Using Trigger
-    $(document).ready(function () {
       $('.modal').modal();
-    });
-
-    //Select dropdown Menu
-    $(document).ready(function () {
+      $(".dropdown-button").dropdown();
       $('select').material_select();
+      $('.datepicker').pickadate({
+        selectMonths: false, // Creates a dropdown to control month
+        selectYears: 15, // Creates a dropdown of 15 years to control year,
+        today: 'Today',
+        clear: 'Clear',
+        close: 'Ok',
+        closeOnSelect: false // Close upon selecting a date,
+      });
     });
-
   </script>
 </body>

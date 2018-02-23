@@ -14,79 +14,46 @@ Template.assessments.onRendered(function () {
 });
 
 Template.assessments.helpers({
-<<<<<<< HEAD
-    courseworkAssessmentTypes: function () {
-=======
     courseworkAssessmentTypes: function(){
->>>>>>> origin/master
         let currentCourseId = Session.get('courseId');
         let courseAssessmentsTypes = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseworkAssessmentTypes;
         return courseAssessmentsTypes
     },
 
-<<<<<<< HEAD
-    courseworkAssessments: function (assessmentTypeId) {
-        let currentCourseId = Session.get('courseId');
-        let courseAssessmentsTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseAssessmentTypes;
-        for (i = 0; i < courseAssessmentsTypes.length; i++) {
-            if (courseAssessmentsTypes[i].assessmentTypeId == assessmentTypeId) {
-=======
     courseworkAssessments: function(assessmentTypeId){
         let currentCourseId = Session.get('courseId');
         let courseAssessmentsTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseAssessmentTypes;
         for(i = 0; i < courseAssessmentsTypes.length; i++){
             if(courseAssessmentsTypes[i].assessmentTypeId == assessmentTypeId){
->>>>>>> origin/master
                 return courseAssessmentsTypes[i].assessments;
             }
         }
         return false
     },
 
-<<<<<<< HEAD
-    hasCourseworkAssessments: function (assessmentTypeId) {
-        let currentCourseId = Session.get('courseId');
-        let courseAssessmentsTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseAssessmentTypes;
-        for (i = 0; i < courseAssessmentsTypes.length; i++) {
-            if (courseAssessmentsTypes[i].assessmentTypeId == assessmentTypeId) {
-=======
     hasCourseworkAssessments: function(assessmentTypeId){
         let currentCourseId = Session.get('courseId');
         let courseAssessmentsTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseAssessmentTypes;
         for(i = 0; i < courseAssessmentsTypes.length; i++){
             if(courseAssessmentsTypes[i].assessmentTypeId == assessmentTypeId){
->>>>>>> origin/master
                 return courseAssessmentsTypes[i].assessments.length != 0;
             }
         }
         return false
     },
 
-<<<<<<< HEAD
-    finalAssessmentTypes: function () {
-=======
     finalAssessmentTypes: function(){
->>>>>>> origin/master
         let currentCourseId = Session.get('courseId');
         let finalAssessmentTypes = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).finalAssessmentTypes;
         return finalAssessmentTypes
     },
 
-<<<<<<< HEAD
-    finalAssessments: function (assessmentTypeId) {
-        let currentCourseId = Session.get('courseId');
-        let finalAssessmentTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).finalAssessmentTypes;
-        let assessments = [];
-        for (i = 0; i < finalAssessmentTypes.length; i++) {
-            if (finalAssessmentTypes[i].assessmentTypeId == assessmentTypeId) {
-=======
     finalAssessments: function(assessmentTypeId){
         let currentCourseId = Session.get('courseId');
         let finalAssessmentTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).finalAssessmentTypes;
         let assessments = [];
         for(i = 0; i < finalAssessmentTypes.length; i++){
             if(finalAssessmentTypes[i].assessmentTypeId == assessmentTypeId){
->>>>>>> origin/master
                 assessments[0] = finalAssessmentTypes[i];
                 return assessments
             }
@@ -94,36 +61,20 @@ Template.assessments.helpers({
         return false
     },
 
-<<<<<<< HEAD
-    hasFinalAssessments: function (assessmentTypeId) {
-        let currentCourseId = Session.get('courseId');
-        let finalAssessmentTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).finalAssessmentTypes;
-        let assessments = [];
-        for (i = 0; i < finalAssessmentTypes.length; i++) {
-            if (finalAssessmentTypes[i].assessmentTypeId == assessmentTypeId) {
-=======
     hasFinalAssessments: function(assessmentTypeId){
         let currentCourseId = Session.get('courseId');
         let finalAssessmentTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).finalAssessmentTypes;
         let assessments = [];
         for(i = 0; i < finalAssessmentTypes.length; i++){
             if(finalAssessmentTypes[i].assessmentTypeId == assessmentTypeId){
->>>>>>> origin/master
                 assessments[0] = finalAssessmentTypes[i];
                 break;
             }
         }
-<<<<<<< HEAD
-        if (assessments[0].K == "N/A" && assessments[0].A == "N/A" && assessments[0].T == "N/A" && assessments[0].C == "N/A") {
-            return false;
-        }
-        else {
-=======
         if(assessments[0].K == "N/A" && assessments[0].A == "N/A" && assessments[0].T == "N/A" && assessments[0].C == "N/A"){
             return false;
         }
         else{
->>>>>>> origin/master
             return true;
         }
 
@@ -131,11 +82,7 @@ Template.assessments.helpers({
 });
 
 Template.assessments.events({
-<<<<<<< HEAD
-    'click .deleteAssessmentType': function () {
-=======
     'click .deleteAssessmentType': function() {
->>>>>>> origin/master
         var assessmentId = 0;
         if (event.target.classList.contains("deleteAssessmentType")) {
             assessmentId = event.target.id;
@@ -145,7 +92,6 @@ Template.assessments.events({
         const elementToRemove = document.getElementById(assessmentId);
         const assessmentTypeId = elementToRemove.parentNode.id;
         let currentCourseId = Session.get('courseId');
-<<<<<<< HEAD
         Session.set("currentAssessmentID", assessmentId);
 
         $('.modal').modal({
@@ -169,26 +115,8 @@ Template.assessments.events({
                 }
                 Session.set("deleteFinalAssessmentModal", "");
                 $('#deleteCourseworkAssessmentModal').modal('close');
-            } // Callback for Modal close
+            } 
         });
         $('#deleteCourseworkAssessmentModal').modal('open');
-=======
-
-        var courseAssessmentsTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseAssessmentTypes;
-        for (var i = 0; i < courseAssessmentsTypes.length; i++) {
-            if (courseAssessmentsTypes[i].assessmentTypeId == assessmentTypeId) {
-                let assessmentType = courseAssessmentsTypes[i].assessments;
-                for (var j = 0; j < assessmentType.length; j++) {
-                    if (assessmentType[j].assessmentId == assessmentId) {
-                        assessmentType.splice(j, 1);
-                        break;
-                    }
-                }
-                courseAssessmentsTypes[i].assessments = assessmentType;
-                break;
-            }
-        }
-        Meteor.call('assessments.updateAssessments', currentCourseId, courseAssessmentsTypes);
->>>>>>> origin/master
     }
 });

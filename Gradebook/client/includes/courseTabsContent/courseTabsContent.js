@@ -28,3 +28,9 @@ Template.courseTabsContent.helpers({
     return Session.get('settingScreenText') == "Assessments";
   },
 });
+
+Template.courseTabsContent.onRendered(function () {
+  $(document).ready(function() {
+      $('select').material_select();
+  });
+});

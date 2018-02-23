@@ -13,6 +13,7 @@
 - In Settings>General Settings, change Course Year to a dropdown menu.
 - In each of the Settings' Tabs, check the input type to ensure only numbers can be inputted for the weights.
 - Include the date of the assessment in the Assessments Collection
+- createAssessment Modal, fix the lining of the input fields for Marks
 
 
 

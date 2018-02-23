@@ -17,13 +17,13 @@
                         <select id="courseYear" name='courseYearSelect' required>
                             <option value="" disabled selected>Choose School Year</option>
                             {{#each getYear}}
-                                <option value={{year}}>{{year}}</option>
+                            <option value={{year}}>{{year}}</option>
                             {{/each}}
                         </select>
                         <label for='courseYearSelect'>Course Year</label>
                     </div>
                 </div>
-                <input type="submit" style="display: none;"/>
+                <input type="submit" style="display: none;" />
                 <div class="modal-footer">
                     <button class="add-form modal-action waves-effect waves-grey btn-flat" type="submit">Create Course</button>
                 </div>

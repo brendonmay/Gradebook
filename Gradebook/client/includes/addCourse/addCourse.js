@@ -19,11 +19,6 @@ Template.addCourse.events({
         //Get input value
         const target = event.target;
         const course = target.courseName.value;
-        console.log(course);
-        if (course.length > 20) {
-            return;
-        }
-
         const year = document.getElementById("courseYear").value;
 
         //check that courseName <= 20 characters

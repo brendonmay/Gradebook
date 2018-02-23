@@ -4,7 +4,7 @@
             <div class='modal-title'>
                 <h4>Create New Assessment</h4>
             </div>
-            <form class="add-form createAssessmentForm">
+            <form class="add-form createAssessmentForm" onsubmit="return false" id="createAssessmentFormId">
                 <div class="row">
                     <div class="col s5 offset">
                         <div class="input-field">
@@ -22,7 +22,7 @@
                         <label for="createNewAssessmentDate" style="left: 0">Date of Assessment</label>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row pad-left-right-a">
                     <div class='input-field col s12' style="padding: 0">
                         <input id="createNewAssessment" type="text" name="assessmentName" placeholder="Example: Chapter 1 Unit Test" required>
                         <label for="createNewAssessment" style="left: 0">Assessment Name</label>
@@ -46,8 +46,8 @@
                         <label id="dontTarget" for="checkboxT">T</label></a>
                     </div>
                     <div class="col s1 offset-s1">
-                        <a href="#!" class="check-box"><input type="checkbox" class="filled-in" id="checkboxKC" />
-                        <label id="dontTarget" for="checkboxKC">C</label></a>
+                        <a href="#!" class="check-box"><input type="checkbox" class="filled-in" id="checkboxC" />
+                        <label id="dontTarget" for="checkboxC">C</label></a>
                     </div>
                 </div>
                 <div class="row">

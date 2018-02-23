@@ -1,0 +1,16 @@
+1. Run the following lines in cmd:
+meteor npm install materialize-css@0.100.1 --save
+meteor npm update materialize-css
+meteor npm install hammerjs --save
+
+2. Open the meteor project folder in VSC and create the following directory:
+client/stylesheets/style.scss and add
+@import '{}/node_modules/materialize-css/sass/materialize.scss';
+
+3. In the main.js:
+import _Hammer from "hammerjs"
+import "/node_modules/materialize-css/dist/js/materialize";
+
+// made global
+Hammer = _Hammer;
+Materialize = window.Materialize;

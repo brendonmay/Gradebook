@@ -9,12 +9,22 @@ import '../../main.html';
 
 Template.deleteCourseworkAssessment.helpers({
     assessmentName: function () {
-        const assessmentId = Session.get("currentAssessmentID");
+        const removeAssessmentObj = Session.get("removeAssessmentObj");
         let currentCourseId = Session.get('courseId');
-        let assessmentTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseAssessmentTypes;
-        for (var i = 0; i < assessmentTypes.length; i++) {
-            if (assessmentTypes[i].assessmentTypeId == assessmentId) {
-                return assessmentTypes[i].assessmentType;
+        if (removeAssessmentObj) {
+            const assessmentTypeId = removeAssessmentObj.assessmentTypeId;
+            const assessmentId = removeAssessmentObj.assessmentId;
+
+            let assessmentTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseAssessmentTypes;
+            for (var i = 0; i < assessmentTypes.length; i++) {
+                if (assessmentTypes[i].assessmentTypeId == assessmentTypeId) {
+                    const assessments = assessmentTypes[i].assessments;
+                    for (var j = 0; j < assessments.length; j++) {
+                        if (assessments[j].assessmentId == assessmentId) {
+                            return assessments[j].assessmentName;
+                        }
+                    }
+                }
             }
         }
     }
@@ -22,9 +32,13 @@ Template.deleteCourseworkAssessment.helpers({
 
 Template.deleteCourseworkAssessment.events({
     'click .yes-delete-modal': function () {
-        Session.set("deleteFinalAssessmentModal", "yes");
+        let removeAssessmentObj = Session.get("removeAssessmentObj");
+        removeAssessmentObj.removeCourse = "yes";
+        Session.set("removeAssessmentObj", removeAssessmentObj);
     },
     'click .no-delete-modal': function () {
-        Session.set("deleteFinalAssessmentModal", "no");
+        let removeAssessmentObj = Session.get("removeAssessmentObj");
+        removeAssessmentObj.removeCourse = "no";
+        Session.set("removeAssessmentObj", removeAssessmentObj);
     },
 });

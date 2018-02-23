@@ -7,7 +7,7 @@ import { Assessments } from '../../../lib/collections.js';
 
 import '../../main.html';
 
-function closeCreateAssessmentModal(){
+function closeCreateAssessmentModal() {
     //clear the input fields
     document.getElementById("createAssessmentFormId").reset();
 
@@ -16,17 +16,17 @@ function closeCreateAssessmentModal(){
     let checkboxA = document.getElementById("checkboxA");
     let checkboxT = document.getElementById("checkboxT");
     let checkboxC = document.getElementById("checkboxC");
-    
-    if (checkboxK.hasAttribute("checked")){
+
+    if (checkboxK.hasAttribute("checked")) {
         checkboxK.removeAttribute("checked");
     }
-    if (checkboxA.hasAttribute("checked")){
+    if (checkboxA.hasAttribute("checked")) {
         checkboxA.removeAttribute("checked");
     }
-    if (checkboxT.hasAttribute("checked")){
+    if (checkboxT.hasAttribute("checked")) {
         checkboxT.removeAttribute("checked");
     }
-    if (checkboxC.hasAttribute("checked")){
+    if (checkboxC.hasAttribute("checked")) {
         checkboxC.removeAttribute("checked");
     }
 
@@ -48,8 +48,10 @@ function closeCreateAssessmentModal(){
 Template.createAssessment.helpers({
     getAssessmentTypes: function () {
         let currentCourseId = Session.get('courseId');
-        let courseworkAssessmentTypes = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseworkAssessmentTypes;
-        return courseworkAssessmentTypes
+        if (currentCourseId) {
+            let courseworkAssessmentTypes = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseworkAssessmentTypes;
+            return courseworkAssessmentTypes
+        }
     }
 });
 
@@ -117,7 +119,7 @@ Template.createAssessment.events({
         var index = 0;
         let newAssessmentObjects = [];
         for (i = 0; i < assessmentObjects.length; i++) {
-            if (assessmentObjects[i].assessmentTypeId != assessmentTypeId){
+            if (assessmentObjects[i].assessmentTypeId != assessmentTypeId) {
                 newAssessmentObjects[newAssessmentObjects.length] = assessmentObjects[i];
                 //console.log("We are on index # " + i + " which is NOT assessment Type: " + assessmentType + ". Here is the updated newAssessmentObjects: " + newAssessmentObjects);
             }
@@ -125,7 +127,7 @@ Template.createAssessment.events({
                 let assessments = assessmentObjects[i].assessments;
                 index = i;
                 //if creating first assessment of this type
-                if (assessments.length == 0){
+                if (assessments.length == 0) {
                     assessmentObject = {
                         assessmentId: assessmentTypeId + "-" + 1,
                         assessmentName: assessmentName,
@@ -137,14 +139,14 @@ Template.createAssessment.events({
                     }
                     let courseAssessmentTypesObject = {
                         assessmentTypeId: assessmentTypeId,
-			            assessments: [assessmentObject]
+                        assessments: [assessmentObject]
                     }
                     newAssessmentObjects[newAssessmentObjects.length] = courseAssessmentTypesObject;
                     //console.log("We are on index # " + i + " which is assessment Type: " + assessmentType + ". You are making the first assessment of this type. Here is the updated newAssessmentObjects: " + newAssessmentObjects);
                 }
 
                 //otherwise
-                else{
+                else {
                     let mostCurrentAssessmentId = assessments[assessments.length - 1].assessmentId;
                     let newAssessmentIdNumber = Number(mostCurrentAssessmentId.slice(3, mostCurrentAssessmentId.length)) + 1;
                     newAssessmentId = assessmentTypeId + "-" + newAssessmentIdNumber;
@@ -159,13 +161,13 @@ Template.createAssessment.events({
                     }
                     //work from here
                     let newAssessmentsArray = []
-                    for(z = 0; z < assessments.length; z++){
+                    for (z = 0; z < assessments.length; z++) {
                         newAssessmentsArray[newAssessmentsArray.length] = assessments[z];
                     }
                     newAssessmentsArray[newAssessmentsArray.length] = assessmentObject;
                     let courseAssessmentTypesObject = {
                         assessmentTypeId: assessmentTypeId,
-			            assessments: newAssessmentsArray
+                        assessments: newAssessmentsArray
                     }
                     newAssessmentObjects[newAssessmentObjects.length] = courseAssessmentTypesObject;
                     //console.log("We are on index # " + i + " which is assessment Type: " + assessmentType + ". You are NOT making the first assessment of this type. Here is the updated newAssessmentObjects: " + newAssessmentObjects);

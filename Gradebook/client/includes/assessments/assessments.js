@@ -92,21 +92,38 @@ Template.assessments.events({
         const elementToRemove = document.getElementById(assessmentId);
         const assessmentTypeId = elementToRemove.parentNode.id;
         let currentCourseId = Session.get('courseId');
+        var removeAssessmentObj = {
+            assessmentTypeId: assessmentTypeId,
+            assessmentId: assessmentId,
+            removeCourse: ""
+        };
+        Session.set("removeAssessmentObj", removeAssessmentObj);
 
-        var courseAssessmentsTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseAssessmentTypes;
-        for (var i = 0; i < courseAssessmentsTypes.length; i++) {
-            if (courseAssessmentsTypes[i].assessmentTypeId == assessmentTypeId) {
-                let assessmentType = courseAssessmentsTypes[i].assessments;
-                for (var j = 0; j < assessmentType.length; j++) {
-                    if (assessmentType[j].assessmentId == assessmentId) {
-                        assessmentType.splice(j, 1);
-                        break;
+        $('.modal').modal({
+            complete: function () {
+                if (Session.get('removeAssessmentObj').removeCourse == "yes") {
+                    var courseAssessmentsTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseAssessmentTypes;
+                    for (var i = 0; i < courseAssessmentsTypes.length; i++) {
+                        if (courseAssessmentsTypes[i].assessmentTypeId == assessmentTypeId) {
+                            let assessmentType = courseAssessmentsTypes[i].assessments;
+                            for (var j = 0; j < assessmentType.length; j++) {
+                                if (assessmentType[j].assessmentId == assessmentId) {
+                                    assessmentType.splice(j, 1);
+                                    break;
+                                }
+                            }
+                            courseAssessmentsTypes[i].assessments = assessmentType;
+                            break;
+                        }
                     }
+                    Meteor.call('assessments.updateAssessments', currentCourseId, courseAssessmentsTypes);
                 }
-                courseAssessmentsTypes[i].assessments = assessmentType;
-                break;
-            }
-        }
-        Meteor.call('assessments.updateAssessments', currentCourseId, courseAssessmentsTypes);
+                let removeAssessmentObj = Session.get("removeAssessmentObj");
+                removeAssessmentObj.removeCourse = "";
+                Session.set("removeAssessmentObj",removeAssessmentObj);
+                $('#deleteCourseworkAssessmentModal').modal('close');
+            } 
+        });
+        $('#deleteCourseworkAssessmentModal').modal('open');
     }
 });

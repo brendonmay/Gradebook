@@ -276,6 +276,15 @@ Meteor.methods({
     },
     'assessments.deleteCourse'(currentCourseId, currentCourses) {
         Assessments.remove({ "ownerId": Meteor.userId(), "courseId": currentCourseId })
+    },
+    'assessments.deleteAssessment'(currentCourseId, newAssessmentTypeObj) {
+        Assessments.update(
+            { "ownerId": Meteor.userId(), courseId: currentCourseId },
+            {
+                $set:
+                    { "courseAssessmentTypes": newAssessmentTypeObj }
+            }
+        );
     }
 
 

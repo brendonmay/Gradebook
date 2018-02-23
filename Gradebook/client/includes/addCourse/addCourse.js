@@ -53,10 +53,6 @@ Template.addCourse.events({
                 //determine courses they currently have
                 let currentCourses = Courses.findOne({ ownerId: Meteor.userId() }, { _id: 0, ownerId: 0 }).courses; //array of course objects    
 
-                console.log("This is currentCourses: ");
-                console.log(currentCourses);
-                console.log("This is Courses.findOne: ");
-                console.log(Courses.findOne({ ownerId: Meteor.userId() }, { _id: 0, ownerId: 0 }));
                 //create a new course object to be inserted
                 const newCourse = { courseId: newCourseId, courseName: course, courseYear: year };
 

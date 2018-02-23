@@ -30,14 +30,5 @@ Template.nav.events({
   'click .logout': function () {
     event.preventDefault();
     Meteor.logout();
-<<<<<<< HEAD
-  }
-});
-
-Template.dropdown.onRendered(function () {
-  $('.dropdown-button').dropdown();0
-});
-=======
   },
 });
->>>>>>> 23259104e81ecc8180a44b3022a65fc4d563997d

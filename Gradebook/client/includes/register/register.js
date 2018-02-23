@@ -4,7 +4,6 @@ import { Accounts } from 'meteor/accounts-base';
 
 import '../../main.html';
 
-
 Meteor.subscribe("users");
 
 Template.register.events({

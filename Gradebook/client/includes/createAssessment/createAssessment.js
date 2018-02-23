@@ -14,3 +14,35 @@ Template.createAssessment.helpers({
         return courseworkAssessmentTypes
     }
 });
+
+Template.createAssessment.events({
+    'click .check-box': function(){
+        let target = event.target;
+        let elementId = target.id;
+        //console.log(elementId);
+        if(elementId != "dontTarget"){
+            let element = document.getElementById(elementId);
+            let inputId = "inputMark" + elementId[elementId.length-1];
+            let inputField = document.getElementById(inputId);
+            console.log(inputId);
+
+            if(element.hasAttribute("checked") == true){
+                console.log("This element has the attribute checked");
+                element.removeAttribute("checked");
+                inputField.disabled = true;
+                inputField.value = "N/A"
+            }
+
+            else if(element.hasAttribute("checked") == false){
+                console.log("This element does not have the attribute checked");
+                element.setAttribute("checked", "checked");
+                inputField.disabled = false;
+            }
+
+        }
+
+    },
+    'submit .createAssessmentForm': function(){
+        console.log("Form has been submitted")
+    }
+});

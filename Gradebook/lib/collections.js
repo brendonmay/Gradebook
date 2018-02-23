@@ -165,8 +165,8 @@ Meteor.methods({
                 { assessmentTypeId: "c3", assessments: [] }
             ],
             finalAssessmentTypes: [
-                { assessmentTypeId: "f1", K: "N/A", A: "N/A", T: "N/A", C: "N/A" },
-                { assessmentTypeId: "f2", K: "N/A", A: "N/A", T: "N/A", C: "N/A" }
+                { assessmentTypeId: "f1", K: "N/A", A: "N/A", T: "N/A", C: "N/A", Date: "N/A" },
+                { assessmentTypeId: "f2", K: "N/A", A: "N/A", T: "N/A", C: "N/A", Date: "N/A" }
             ]
         });
     },
@@ -259,7 +259,8 @@ Meteor.methods({
                     K: "N/A",
                     A: "N/A",
                     T: "N/A",
-                    C: "N/A"
+                    C: "N/A",
+                    Date: "N/A"
                 };
                 newFinalAssessmentTypes.push(assessmentType);
             }
@@ -275,6 +276,15 @@ Meteor.methods({
     },
     'assessments.deleteCourse'(currentCourseId, currentCourses) {
         Assessments.remove({ "ownerId": Meteor.userId(), "courseId": currentCourseId })
+    },
+    'assessments.deleteAssessment'(currentCourseId, newAssessmentTypeObj) {
+        Assessments.update(
+            { "ownerId": Meteor.userId(), courseId: currentCourseId },
+            {
+                $set:
+                    { "courseAssessmentTypes": newAssessmentTypeObj }
+            }
+        );
     }
 
 

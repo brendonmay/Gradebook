@@ -4,7 +4,10 @@
 	- Fix buttons placements in each of the settings tabs.
 	- Finish all of the styling in each of the settings tabs.
 	- In Settings>Assessment Settings when you click edit and click on the input of the assessmentType Name, the underline color is not correct.
-
+	- When you click the "today" button in the datepicker, color of highlighted circle is not correct.
+	- Buttons in settings tab dont behave well as you change the size of the window. Possibl suggested solution, use display=none instead of adding class "hide" when they shouldnt be there. This can be achieved with the setAttribute() functiion.
+	-Add Assessment Modal - Assessment Type drop down: determine a clean and nice way of differentiating the first dropdown item from the clickable drop down items! 
+	
 -Functionality Issues
 - Login
 	-when registering, check if email is already in collection
@@ -12,8 +15,7 @@
 	-when logging in, check if password is incorrect or if email exists
 - In Settings>General Settings, change Course Year to a dropdown menu.
 - In each of the Settings' Tabs, check the input type to ensure only numbers can be inputted for the weights.
-- Include the date of the assessment in the Assessments Collection
-- createAssessment Modal, fix the lining of the input fields for Marks
+
 
 
 

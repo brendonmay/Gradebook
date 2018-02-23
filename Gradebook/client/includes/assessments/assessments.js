@@ -77,7 +77,7 @@ Template.assessments.helpers({
         else{
             return true;
         }
-
+        
     }
 });
 
@@ -108,5 +108,24 @@ Template.assessments.events({
             }
         }
         Meteor.call('assessments.deleteAssessment', currentCourseId, courseAssessmentsTypes);
+    },
+    'click .deleteFinalType': function() {
+        let currentCourseId = Session.get('courseId');
+        var assessmentId = 0;
+        if (event.target.classList.contains("deleteFinalAssessmentType")) {
+            assessmentId = event.target.id;
+        } else {
+            assessmentId = event.target.parentNode.id; //probably
+        }
+        //get id based on where the 'x' is going to be
+
+        var finalAssessmentTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).finalAssessmentTypes;
+        for (var i = 0; i <finalAssessmentTypes.length; i++) {
+            if (finalAssessmentTypes[i].assessmentTypeId == assessmentId) {
+                finalAssessmentTypes.splice(i,1);
+                break;
+            }
+        }
+        Meteor.call('assessments.deleteFinalAssessment', currentCourseId, finalAssessmentTypes);
     }
 });

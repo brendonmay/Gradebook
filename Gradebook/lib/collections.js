@@ -285,6 +285,15 @@ Meteor.methods({
                     { "courseAssessmentTypes": newAssessmentTypeObj }
             }
         );
+    },
+    'assessments.deleteFinalAssessment'(currentCourseId, newFinalAssessmentTypeObj) {
+        Assessments.update(
+            { "ownerId": Meteor.userId(), courseId: currentCourseId },
+            {
+                $set:
+                    { "finalAssessmentTypes": newFinalAssessmentTypeObj }
+            }
+        );
     }
 
 

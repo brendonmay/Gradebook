@@ -8,26 +8,23 @@ import { Assessments } from '../../../lib/collections.js';
 import '../../main.html';
 
 Template.deleteCourseworkAssessment.helpers({
-    
+    assessmentName: function () {
+        const assessmentId = Session.get("currentAssessmentID");
+        let currentCourseId = Session.get('courseId');
+        let assessmentTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseAssessmentTypes;
+        for (var i = 0; i < assessmentTypes.length; i++) {
+            if (assessmentTypes[i].assessmentTypeId == assessmentId) {
+                return assessmentTypes[i].assessmentType;
+            }
+        }
+    }
 });
 
 Template.deleteCourseworkAssessment.events({
     'click .yes-delete-modal': function () {
-        //create new array of assessmentType objects excluding the selected one
-        let newcourseworkAssessmentTypes = [];
-        let currentCourseId = Session.get('courseId');
-
-        let courseworkAssessmentTypes = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseworkAssessmentTypes;
-
-        for (i = 0; i < courseworkAssessmentTypes.length; i++) {
-            if (courseworkAssessmentTypes[i].assessmentTypeId != selectedAssessmentTypeId) {
-                newcourseworkAssessmentTypes[newcourseworkAssessmentTypes.length] = courseworkAssessmentTypes[i];
-            }
-        }
-
-        Meteor.call('assessments.deleteAssessment', currentCourseId, newcourseworkAssessmentTypes)
-
-        //close modal
-        $('#deleteCourseworkAssessmentModal').modal('close');
-    }
+        Session.set("deleteFinalAssessmentModal", "yes");
+    },
+    'click .no-delete-modal': function () {
+        Session.set("deleteFinalAssessmentModal", "no");
+    },
 });

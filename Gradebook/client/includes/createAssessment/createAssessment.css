@@ -10,4 +10,19 @@
 .picker__close{
     color:#4caf50
 }
+.picker--focused .picker__day--selected{
+    background-color: #4caf50
+}
 
+[type="checkbox"].filled-in:checked+label::after{
+    background-color:#4caf50;
+    border: #4caf50;
+}
+
+.createAssessmentMargin{
+    margin-top: 15px
+}
+
+.zero-margin-top{
+    margin-top: 0px;
+}

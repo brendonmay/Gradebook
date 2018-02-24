@@ -98,8 +98,9 @@ Template.assessments.events({
             removeCourse: ""
         };
         Session.set("removeAssessmentObj", removeAssessmentObj);
+        document.getElementById(assessmentId).click();
 
-        $('.modal').modal({
+        $('.delete-courseworkAssessment-modal').modal({
             complete: function () {
                 if (Session.get('removeAssessmentObj').removeCourse == "yes") {
                     var courseAssessmentsTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseAssessmentTypes;

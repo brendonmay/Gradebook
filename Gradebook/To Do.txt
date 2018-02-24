@@ -16,12 +16,6 @@
 	-when logging in, check if password is incorrect or if email exists
 - In Settings>General Settings, change Course Year to a dropdown menu.
 - In each of the Settings' Tabs, check the input type to ensure only numbers can be inputted for the weights.
-
-
-- Run checks before createAssessmentForm is submitted. Things to check:
-	-max character length for assessment name
-	-marks input can only be N/A or an integer > 0
-- When you click the "X" to delete an assessment, make it so that the dropdown doesnt expand.
 - Decide how to integrate editing assessments.
 
 

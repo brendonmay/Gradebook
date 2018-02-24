@@ -89,6 +89,24 @@ Template.createAssessment.events({
         var markT = document.getElementById("inputMarkT").value;
         var markC = document.getElementById("inputMarkC").value;
 
+
+        if (markK == "N/A" && markA == "N/A" && markT == "N/A" && markC == "N/A"){
+            Materialize.toast('You must assess the students in at least one category.', 5000, 'amber darken-3');
+            return false
+        }
+
+        if (markK <= 0 || markA <= 0 || markT <= 0 || markC <= 0){
+            Materialize.toast("A selected category's mark must be an integer greater than 0.", 5000, 'amber darken-3');
+            return false
+        }
+
+        if (!( (markK ==  "N/A" || Math.floor(markK) == markK) && (markA ==  "N/A" || Math.floor(markA) == markA) && (markT ==  "N/A" || Math.floor(markT) == markT) && (markC ==  "N/A" || Math.floor(markC) == markC) )){
+            console.log("the problem is here");
+            Materialize.toast("A selected category's mark must be an integer greater than 0.", 5000, 'amber darken-3');
+            return false
+        }
+
+
         if (markK != "N/A") {
             markK = Number(markK)
         }

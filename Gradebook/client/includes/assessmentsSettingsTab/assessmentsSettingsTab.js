@@ -128,7 +128,6 @@ Template.assessmentsTab.events({
         assessmentTypeName = target.parentElement.name;
         assessmentTypeWeight = document.getElementById("inputc" + assessmentTypeId).value;
 
-
         if (Number(assessmentTypeWeight) == 0) {
             let sessionObject = {
                 type: 'courseworkAssessmentTypes',

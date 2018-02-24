@@ -176,5 +176,19 @@ Template.createAssessment.events({
         }
         Meteor.call('assessments.updateAssessments', currentCourseId, newAssessmentObjects);
         closeCreateAssessmentModal();
+    },
+
+    'click #createAssessmentCancel': function () {
+        $('.createAssessmentModal').modal('close');
     }
+});
+
+Template.createAssessment.onRendered(function () {
+    $('.createAssessmentModal').modal({
+        dismissible: true, // Modal can be dismissed by clicking outside of the modal
+        complete: function () {
+            closeCreateAssessmentModal();
+        }
+    }
+    );
 });

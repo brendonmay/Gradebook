@@ -11,7 +11,7 @@ Template.deleteCourseworkAssessment.helpers({
     assessmentName: function () {
         const removeAssessmentObj = Session.get("removeAssessmentObj");
         let currentCourseId = Session.get('courseId');
-        if (removeAssessmentObj && currentCourseId != 0) {
+        if (removeAssessmentObj) {
             const assessmentTypeId = removeAssessmentObj.assessmentTypeId;
             const assessmentId = removeAssessmentObj.assessmentId;
 

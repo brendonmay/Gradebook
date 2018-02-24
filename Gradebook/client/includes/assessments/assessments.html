@@ -1,4 +1,5 @@
 <template name="assessments">
+    <h4 class="light-blue lighten-4 settings-header">Assessments</h4>
     <div class="row">
         <ul class="collapsible col s5 offset-s1" data-collapsible="expandable">
             <li>
@@ -9,25 +10,24 @@
             {{#each courseworkAssessmentTypes}}
             <li>
                 <div class="collapsible-header">
-                    <i class="material-icons">filter_drama</i>{{assessmentType}}
+                    <i class="material-icons">arrow_drop_down</i>{{assessmentType}}
                 </div>
                 <div class="collapsible-body">
                     <div class="row">
                         <div class="col s12 m12">
                             <ul class="collapsible collection" data-collapsible="accordion">
-                                {{#if hasCourseworkAssessments assessmentTypeId}}
-                                 {{#each courseworkAssessments assessmentTypeId}}
+                                {{#if hasCourseworkAssessments assessmentTypeId}} {{#each courseworkAssessments assessmentTypeId}}
                                 <li>
                                     <div class="collapsible-header" id="{{../assessmentTypeId}}">
                                         <a href="#!" class="icon-bluegrey deleteAssessmentType" id="{{assessmentId}}">
                                             <i class="material-icons">close</i>
-                                        </a>{{assessmentName}}</div>
+                                        </a><i class="material-icons">arrow_drop_down</i>{{assessmentName}}</div>
                                     <div class="collapsible-body assessments-collapsible">
                                         <ul>
                                             <li class="collection-item assessments-collapsible-nested">
                                                 Date:
                                                 <div class="inline input-field">
-                                                    <input value="March 15">
+                                                    <input value={{Date}}>
                                                 </div>
                                             </li>
                                             <li class="collection-item assessments-collapsible-nested">
@@ -57,8 +57,7 @@
                                         </ul>
                                     </div>
                                 </li>
-                                {{/each}} 
-                                {{else}}
+                                {{/each}} {{else}}
                                 <p class="center">You have yet to create an assessment of this type.</p>
                                 {{/if}}
                             </ul>
@@ -77,13 +76,12 @@
             {{#each finalAssessmentTypes}}
             <li>
                 <div class="collapsible-header">
-                    <i class="material-icons">filter_drama</i>{{assessmentType}}</div>
+                    <i class="material-icons">arrow_drop_down</i>{{assessmentType}}</div>
                 <div class="collapsible-body assessments-collapsible">
                     <div class="row">
                         <div class="col s12 m12">
                             <ul class="collection">
-                                {{#each finalAssessments assessmentTypeId}}
-                                 {{#if hasFinalAssessments assessmentTypeId}}
+                                {{#each finalAssessments assessmentTypeId}} {{#if hasFinalAssessments assessmentTypeId}}
                                 <li class="collection-item assessments-collapsible-nested">
                                     Date:
                                     <div class="inline input-field">
@@ -116,8 +114,7 @@
                                 </li>
                                 {{else}}
                                 <p>You have yet to assign this assessment.</p>
-                                {{/if}} 
-                                {{/each}}
+                                {{/if}} {{/each}}
                             </ul>
                         </div>
                     </div>
@@ -125,13 +122,20 @@
             </li>
             {{/each}}
         </ul>
-    </div>
-    <div class="row">
-        <div class="col s3 offset-s1">
-            <button href="#createAssessmentModal" class="modal-trigger waves-effect waves-grey btn blue-grey darken-1">Create New Assessment</button>
+        <!-- <div class="row"> -->
+        <div class="col offset-s7">
+            <p class="shift-way-up">To delete a Final Evaluation, go to
+                <a href="#!" class="deleteFinalEval">Course Settings > Assessment Settings.</a>
+            </p>
         </div>
-        <div class="col s3 offset-s3">
-            <button href="#assignFinalModal" class="modal-trigger waves-effect waves-grey btn blue-grey darken-1">Assign Final Evaluation</button>
+        <!-- </div> -->
         </div>
-    </div>
+        <div class="row">
+            <div class="col s3 offset-s1">
+                <button href="#createAssessmentModal" class="modal-trigger waves-effect waves-grey btn blue-grey darken-1">Create New Assessment</button>
+            </div>
+            <div class="col s3 offset-s3">
+                <button href="#assignFinalModal" class="modal-trigger waves-effect waves-grey btn blue-grey darken-1">Assign Final Evaluation</button>
+            </div>
+        </div>
 </template>

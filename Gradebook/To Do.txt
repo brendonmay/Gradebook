@@ -8,7 +8,8 @@
 	- Buttons in settings tab dont behave well as you change the size of the window. Possibl suggested solution, use display=none instead of adding class "hide" when they shouldnt be there. This can be achieved with the setAttribute() functiion.
 	- Many modals get fucked up as you zoom in
 	- Add Assessment Modal - Assessment Type drop down: determine a clean and nice way of differentiating the first dropdown item from the clickable drop down items! 
-	
+	- In the Assessments Tab, the text directing you to Assessment Settings doesnt dynamically move.
+
 -Functionality Issues
 - Login
 	-when registering, check if email is already in collection

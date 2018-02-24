@@ -98,6 +98,7 @@ Template.assessments.events({
             removeCourse: ""
         };
         Session.set("removeAssessmentObj", removeAssessmentObj);
+        document.getElementById(assessmentId).click();
 
         $('.delete-courseworkAssessment-modal').modal({
             complete: function () {

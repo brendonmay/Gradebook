@@ -6,6 +6,31 @@ import { CourseWeighting } from '../../../lib/collections.js';
 
 import '../../main.html';
 
+function assessmentAlreadyExists(newAssessment) {
+    const courseId = Session.get("courseId");
+    if (courseId == 0) return;
+    const courseworkAssessmentTypes = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: courseId }).courseworkAssessmentTypes;
+    for (var i = 0; i < courseworkAssessmentTypes.length; i++) {
+        if (courseworkAssessmentTypes[i].assessmentType.trim() == newAssessment.trim()) {
+            Materialize.toast('You already have a Course Assessment Type named: ' + newAssessment, 5000, 'amber darken-3');
+            return true;
+        }
+    }
+    return false;
+}
+
+function finalAssessmentAlreadyExists(newAssessment) {
+    const courseId = Session.get("courseId");
+    if (courseId == 0) return;
+    const finalAssessmentTypes = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: courseId }).finalAssessmentTypes;
+    for (var i = 0; i < finalAssessmentTypes.length; i++) {
+        if (finalAssessmentTypes[i].assessmentType.trim() == newAssessment.trim()) {
+            Materialize.toast('You already have a Final Assessment Type named: ' + newAssessment, 5000, 'amber darken-3');
+            return true;
+        }
+    }
+    return false;
+}
 
 Template.addAssessmentType.events({
     //type of event is a submit, the element is a form with class add-form, when its called run a function
@@ -13,6 +38,10 @@ Template.addAssessmentType.events({
 
         const newAssessment = document.getElementById('add-final-type').value;
         const currentCourseId = Session.get('courseId');
+        if (finalAssessmentAlreadyExists(newAssessment)) {
+            document.getElementById('addFinalTypeForm').reset();
+            return;
+        }
 
         let courseInfo = CourseWeighting.findOne(
             { ownerId: Meteor.userId(), courseId: currentCourseId });
@@ -51,6 +80,10 @@ Template.addAssessmentType.events({
     'submit .add-coursework-form': function () {
 
         const newAssessment = document.getElementById('add-coursework-type').value;
+        if (assessmentAlreadyExists(newAssessment)) {
+            document.getElementById('addAssessmentTypeForm').reset();
+            return;
+        }
         const currentCourseId = Session.get('courseId');
 
         let courseInfo = CourseWeighting.findOne(

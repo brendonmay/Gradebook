@@ -5,7 +5,7 @@
             <div class='modal-title'>
                 <h4>Add Course</h4>
             </div>
-            <form class="add-form col s12">
+            <form id="addCourseModalForm" class="add-form col s12">
                 <div class="row">
                     <div class='input-field col s12' style="padding: 0">
                         <input id ="addCourseNameModal" type="text" name="courseName" placeholder="Example: MCR3U-01" data-length="15" required>
@@ -26,6 +26,7 @@
                 <input type="submit" style="display: none;" />
                 <div class="modal-footer">
                     <button class="add-form modal-action waves-effect waves-grey btn-flat" type="submit">Create Course</button>
+                    <button class="modal-action waves-effect waves-grey btn-flat" id="addCourseCancel">Cancel</button>
                 </div>
             </form>
         </div>

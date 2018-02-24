@@ -7,6 +7,10 @@ import { Assessments } from '../../../lib/collections.js';
 
 import '../../main.html';
 
+function closeAddCourseModal() {
+    document.getElementById("addCourseModalForm").reset();
+}
+
 Template.addCourse.events({
     //type of event is a submit, the element is a form with class add-form, when its called run a function
     'submit .add-form': function () {
@@ -70,6 +74,9 @@ Template.addCourse.events({
             //Close Modal
             $('#addModal').modal('close');
         }
+    },
+    'click #addCourseCancel': function() {
+        $('addCourseModal').modal('close');
     }
 
 });
@@ -90,4 +97,11 @@ Template.addCourse.onRendered(function () {
     $(document).ready(function () {
         $('input#addCourseNameModal, textarea#textarea1').characterCounter();
     });
+    $('.addCourseModal').modal({
+        dismissible: true, 
+        complete: function() { 
+            closeAddCourseModal();
+        } 
+      }
+    );
 });

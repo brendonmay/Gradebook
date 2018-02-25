@@ -6,16 +6,12 @@
 	- In Settings>Assessment Settings when you click edit and click on the input of the assessmentType Name, the underline color is not correct.
 	- When you click the "today" button in the datepicker, color of highlighted circle is not correct.
 	- Buttons in settings tab dont behave well as you change the size of the window. Possibl suggested solution, use display=none instead of adding class "hide" when they shouldnt be there. This can be achieved with the setAttribute() functiion.
-	- Many modals get fucked up as you zoom in
 	- Add Assessment Modal - Assessment Type drop down: determine a clean and nice way of differentiating the first dropdown item from the clickable drop down items! 
 	- In the Assessments Tab, the text directing you to Assessment Settings doesnt dynamically move.
 
 -Functionality Issues
 - Login
-	-turn current toasts into messages on the screen (like for email validation and password length)
 	-email validation (not logging the user in until they confirm their email address)
-	-error toast for trying to log in with the wrong password
-- In Settings>General Settings, change Course Year to a dropdown menu.
 - In each of the Settings' Tabs, check the input type to ensure only numbers can be inputted for the weights.
 - Decide how to integrate editing assessments.
 - Can't click cancel in add course modal

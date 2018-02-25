@@ -1,6 +1,7 @@
 import { Mongo } from "meteor/mongo";
 import { Meteor } from "meteor/meteor";
 import { check } from 'meteor/check';
+import { Accounts } from 'meteor/accounts-base';
 
 //don't forget to remove insecure and then add methods --> meteor remove insecure
 export const Courses = new Mongo.Collection("courses");
@@ -285,6 +286,5 @@ Meteor.methods({
                     { "courseAssessmentTypes": newAssessmentTypeObj }
             }
         );
-    },
-
+    }
 });

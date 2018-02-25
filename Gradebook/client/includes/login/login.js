@@ -1,59 +1,49 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
-import { Accounts } from 'meteor/accounts-base';
+// import { Accounts } from 'meteor/accounts-base'
 
 import '../../main.html';
 
 Meteor.subscribe("users");
 
 Template.login.events({
-    'submit .login-form': function(event, template) { //there is no check for if  the user password is incorrect
+    'submit .login-form': function (event, template) { //there is no check for if  the user password is incorrect
         event.preventDefault();
         const target = event.target;
 
         var emailVar = template.find('#email').value;
         var passwordVar = template.find('#password').value;
 
-        const emailCheck = Meteor.users.find({"emails.address" : emailVar}).fetch();
-        console.log(emailCheck[0]);
-        const passwordCheck = Meteor.users.find({"passwords" : passwordVar}).fetch();
-
-        if(emailVar == "" || passwordVar ==""){
-            Materialize.toast('Field was left unfilled, please enter an email and password', 5000, 'amber darken-3')
-            document.getElementById("loginForm").reset();
-            return false;
-        }
-        if(emailCheck[0] == null){
-            Materialize.toast('User does not exist on the server. Please register to use this email', 5000, 'amber darken-3')
-            document.getElementById("loginForm").reset();
-            //return false;
-        }
-        else{
-            //This is where the password check issue is occuring
-            var hashPassword = Package.sha.SHA256("DDRealms124");
-            console.log(hashPassword);
-            
-                if(Meteor.call('checkPassword', emailVar, hashPassword)){
-                    console.log("it worked");
+        Meteor.loginWithPassword(emailVar, passwordVar, function(error) {
+            if (error) {
+                console.log(error);
+                const reason = error.reason;
+                switch(error.error) {
+                    case 400:
+                        //user name/password aren't strings/objects or an unrecognized option
+                        break;
+                    case 403:
+                        //one of "User not found", "Incorrect password"
+                        Materialize.toast(reason, 5000, 'amber darken-3');
+                        break;
+                    default:
+                        //unidentified error 
                 }
-                else{
-                    console.log("it didn't work");
-                }
-            
-            Meteor.loginWithPassword(emailVar, passwordVar)
-            document.getElementById("loginForm").reset();
-            $('#loginModal').modal('close');
-        }
+            } else {
+                //no error on login, so user Logs in fine
+                $('#loginModal').modal('close');
+            }
+        });
     },
 
-    'click .register': function(){
+    'click .register': function () {
         document.getElementById("loginForm").reset();
 
         $('#registerModal').modal('open');
         $('#loginModal').modal('close');
     },
 
-    'click .cancel-button': function(){
+    'click .cancel-button': function () {
         //clear the input fields
         document.getElementById("loginForm").reset();
 

@@ -277,7 +277,7 @@ Meteor.methods({
     'assessments.deleteCourse'(currentCourseId, currentCourses) {
         Assessments.remove({ "ownerId": Meteor.userId(), "courseId": currentCourseId })
     },
-    'assessments.deleteAssessment'(currentCourseId, newAssessmentTypeObj) {
+    'assessments.updateAssessments'(currentCourseId, newAssessmentTypeObj) {
         Assessments.update(
             { "ownerId": Meteor.userId(), courseId: currentCourseId },
             {
@@ -285,8 +285,6 @@ Meteor.methods({
                     { "courseAssessmentTypes": newAssessmentTypeObj }
             }
         );
-    }
-
-
+    },
 
 });

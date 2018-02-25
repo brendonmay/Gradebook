@@ -9,15 +9,6 @@
 	- Many modals get fucked up as you zoom in
 	- Add Assessment Modal - Assessment Type drop down: determine a clean and nice way of differentiating the first dropdown item from the clickable drop down items! 
 	- In the Assessments Tab, the text directing you to Assessment Settings doesnt dynamically move.
-
--Functionality Issues
-	- Login
-		-when registering, check if email is already in collection
-		-make the user input their password twice
-		-when logging in, check if password is incorrect or if email exists
-	- In Settings>General Settings, change Course Year to a dropdown menu.
-	- In each of the Settings' Tabs, check the input type to ensure only numbers can be inputted for the weights.
-	- Decide how to integrate editing assessments.
 	- Change most (if not all) toasts to custom error messages via jQuery validation + MaterializeCSS. I have already installed jQuery validation.
 		-http://demo.geekslabs.com/materialize/v3.1/form-validation.html
 		-https://codepen.io/tdurant72/pen/vgyBjZ
@@ -25,6 +16,17 @@
 		-https://jsfiddle.net/rz0zk5u6/2/
 		-if we have problem with selects:
 			-https://github.com/Dogfalo/materialize/issues/3440
+
+-Functionality Issues
+	- Login
+		-when registering, check if email is already in collection
+		-make the user input their password twice
+		-when logging in, check if password is incorrect or if email exists
+	- In Settings>General Settings
+		-change Course Year to a dropdown menu
+		-make it so that max length of new name is 15 characters
+	- In each of the Settings' Tabs, check the input type to ensure only numbers can be inputted for the weights.
+	- Decide how to integrate editing assessments.
 
 
 

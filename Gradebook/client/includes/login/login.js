@@ -15,22 +15,32 @@ Template.login.events({
         var passwordVar = template.find('#password').value;
 
         const emailCheck = Meteor.users.find({"emails.address" : emailVar}).fetch();
-        //since the password is encrypted within the database i need to find a way to either decrypt (lol) or to check another way.
+        console.log(emailCheck[0]);
         const passwordCheck = Meteor.users.find({"passwords" : passwordVar}).fetch();
-        console.log(passwordCheck[0]);
 
         if(emailVar == "" || passwordVar ==""){
-            Materialize.toast('Field was left unfilled, please enter an email and password', 2000, 'amber darken-3')
+            Materialize.toast('Field was left unfilled, please enter an email and password', 5000, 'amber darken-3')
             document.getElementById("loginForm").reset();
             return false;
         }
         if(emailCheck[0] == null){
-            Materialize.toast('User does not exist on the server. Please register to use this email', 2000, 'amber darken-3')
+            Materialize.toast('User does not exist on the server. Please register to use this email', 5000, 'amber darken-3')
             document.getElementById("loginForm").reset();
-            return false;
+            //return false;
         }
         else{
-            Meteor.loginWithPassword(emailVar, passwordVar);
+            //This is where the password check issue is occuring
+            var hashPassword = Package.sha.SHA256("DDRealms124");
+            console.log(hashPassword);
+            
+                if(Meteor.call('checkPassword', emailVar, hashPassword)){
+                    console.log("it worked");
+                }
+                else{
+                    console.log("it didn't work");
+                }
+            
+            Meteor.loginWithPassword(emailVar, passwordVar)
             document.getElementById("loginForm").reset();
             $('#loginModal').modal('close');
         }

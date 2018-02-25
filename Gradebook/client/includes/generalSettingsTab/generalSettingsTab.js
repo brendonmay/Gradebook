@@ -12,6 +12,16 @@ Template.generalSettingsTab.helpers({
 
     currentYear: function () {
         return Session.get('courseYear');
+    },
+
+    getYear: function () {
+        //return yearList = [{year: "2017-2018"}, {year:"2018-2019"}];
+        currentYear = new Date().getFullYear();
+        option1 = (Number(currentYear) - 1) + "-" + currentYear;
+        option2 = currentYear + "-" + (Number(currentYear) + 1);
+        option3 = (Number(currentYear) + 1) + "-" + (Number(currentYear) + 2);
+        yearlist = [{ year: option1 }, { year: option2 }, { year: option3 }];
+        return yearlist
     }
 });
 
@@ -23,11 +33,13 @@ Template.generalSettingsTab.events({
         let courseName = document.getElementById("generalSettings-courseName");
         let courseYear = document.getElementById("generalSettings-courseYear");
 
+        console.log("before: " + courseYear.disabled);
         editButtonElement.classList.add("hide");
         saveButtonElement.classList.remove("hide");
         cancelButtonElement.classList.remove("hide");
         courseName.disabled = false;
         courseYear.disabled = false;
+        console.log("after: " + courseYear.disabled);
 
     },
     'submit .generalSettingsForm': function () {

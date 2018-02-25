@@ -27,6 +27,7 @@ Template.register.events({
 
         var emailVar = event.target.registerEmail.value;
         var passwordVar = event.target.registerPassword.value;
+        var confirmPass = event.target.confirmPassword.value;
 
         //regEx used for password verification
         var lowercase = /[a-z]/g;
@@ -39,24 +40,28 @@ Template.register.events({
         var toastCount = 0;
 
         if(emailCheck[0] != null){
-            Materialize.toast('User already exists', 3000, 'amber darken-3')
+            Materialize.toast('User already exists', 5000, 'amber darken-3')
             toastCount++;
         }
         if(!(passwordVar.match(lowercase))){
-            Materialize.toast('Password must contain a lowercase letter', 3000, 'amber darken-3')
+            Materialize.toast('Password must contain a lowercase letter', 5000, 'amber darken-3')
             toastCount++;
         }
         if(!(passwordVar.match(uppercase))){
-            Materialize.toast('Password must contain an uppercase letter', 3000, 'amber darken-3')
+            Materialize.toast('Password must contain an uppercase letter', 5000, 'amber darken-3')
             toastCount++;
         }
         if(!(passwordVar.match(number))){
-            Materialize.toast('Password must contain a number letter', 3000, 'amber darken-3')
+            Materialize.toast('Password must contain a number', 5000, 'amber darken-3')
+            toastCount++;
+        }
+        if(confirmPass != passwordVar){
+            Materialize.toast('Your passwords do not match.', 5000, 'amber darken-3')
             toastCount++;
         }
         if(toastCount > 0){
             document.getElementById("registerForm").reset();
-            return false;
+            //return false;
         }
         else{
             Accounts.createUser({

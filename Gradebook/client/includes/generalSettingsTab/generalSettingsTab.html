@@ -14,7 +14,11 @@
                 <div class="col s12">
                     School Year:
                     <div class="input-field inline">
-                        <input disabled id="generalSettings-courseYear" type="text" value={{currentYear}}>
+                        <select id="generalSettings-courseYear" value={{currentYear}}>
+                            {{#each getYear}}
+                            <option id="generalSettings-courseYear{{year}}" value={{year}}>{{year}}</option>
+                            {{/each}}
+                        </select>
                     </div>
                 </div>
             </div>

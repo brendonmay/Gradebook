@@ -7,6 +7,7 @@ import '../../main.html';
 
 Template.courseTabsContent.onRendered( function() {
   $('.dropdown-button').dropdown();
+  $('input#input_text, textarea#textarea1').characterCounter();
 })
 
 Template.courseTabsContent.helpers({

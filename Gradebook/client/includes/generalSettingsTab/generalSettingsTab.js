@@ -5,6 +5,27 @@ import { Accounts } from 'meteor/accounts-base';
 
 import '../../main.html';
 
+function getYearsArray(){
+    let currentYearRange = Session.get('courseYear');
+    let largeYear = currentYearRange.slice(5,9);
+    let smallYear = largeYear - 1;
+    
+    let yearOptions = [];
+    var startingYear = smallYear - 2;
+    for (i = 0; i < 5; i++){
+        var lowYear =  startingYear;
+        var highYear = lowYear + 1;
+        var yearRange = lowYear.toString() + "-" + highYear.toString();
+        yearOptions[yearOptions.length] = yearRange;
+        startingYear++;
+    }
+    return yearOptions
+}
+
+Template.generalSettingsTab.onRendered( function() {
+    $('input#input_text, textarea#textarea1').characterCounter();
+  })
+
 Template.generalSettingsTab.helpers({
     currentCourse: function () {
         return Session.get('courseName');
@@ -14,86 +35,124 @@ Template.generalSettingsTab.helpers({
         return Session.get('courseYear');
     },
 
-    getYear: function () {
-        //return yearList = [{year: "2017-2018"}, {year:"2018-2019"}];
-        currentYear = new Date().getFullYear();
-        option1 = (Number(currentYear) - 1) + "-" + currentYear;
-        option2 = currentYear + "-" + (Number(currentYear) + 1);
-        option3 = (Number(currentYear) + 1) + "-" + (Number(currentYear) + 2);
-        yearlist = [{ year: option1 }, { year: option2 }, { year: option3 }];
-        return yearlist
+    getYearsBefore: function (currentYearRange) {
+        //let currentYearRange = Session.get('courseYear');
+        let largeYear = currentYearRange.slice(5,9);
+        let smallYear = largeYear - 1;
+        
+        let yearOptions = [];
+        var startingYear = smallYear - 2;
+        for (i = 0; i < 2; i++){
+            var lowYear =  startingYear;
+            var highYear = lowYear + 1;
+            var yearRange = lowYear.toString() + "-" + highYear.toString();
+            yearOptions[yearOptions.length] = {year: yearRange};
+            startingYear++;
+        }
+        return yearOptions
+
+    },
+
+    getYearsAfter: function (currentYearRange) {
+        //let currentYearRange = Session.get('courseYear');
+        let largeYear = currentYearRange.slice(5,9);
+        let smallYear = largeYear - 1;
+        
+        let yearOptions = [];
+        var startingYear = smallYear + 1;
+        for (i = 0; i < 2; i++){
+            var lowYear =  startingYear;
+            var highYear = lowYear + 1;
+            var yearRange = lowYear.toString() + "-" + highYear.toString();
+            yearOptions[yearOptions.length] = {year: yearRange};
+            startingYear++;
+        }
+        return yearOptions
+
     }
 });
 
 Template.generalSettingsTab.events({
     'click .edit-general-settings': function () {
+        $('select').material_select();
+        $('input#input_text, textarea#textarea1').characterCounter();
+
         let editButtonElement = document.getElementById("generalSettings-EditButton");
         let saveButtonElement = document.getElementById("generalSettings-SaveButton");
         let cancelButtonElement = document.getElementById("generalSettings-CancelButton");
         let courseName = document.getElementById("generalSettings-courseName");
-        let courseYear = document.getElementById("generalSettings-courseYear");
+        let courseYearText = document.getElementById("yearTextId");
+        let courseYearDropdown = document.getElementById("yearDropdownId");
 
-        console.log("before: " + courseYear.disabled);
         editButtonElement.classList.add("hide");
         saveButtonElement.classList.remove("hide");
         cancelButtonElement.classList.remove("hide");
-        courseName.disabled = false;
-        courseYear.disabled = false;
-        console.log("after: " + courseYear.disabled);
+        courseName.removeAttribute('disabled');
+        courseYearText.classList.add('hide');
+        courseYearDropdown.classList.remove('hide');
 
     },
     'submit .generalSettingsForm': function () {
         let saveButtonElement = document.getElementById("generalSettings-SaveButton");
         let editButtonElement = document.getElementById("generalSettings-EditButton");
         let cancelButtonElement = document.getElementById("generalSettings-CancelButton");
-        editButtonElement.classList.remove("hide");
-        saveButtonElement.classList.add("hide");
-        cancelButtonElement.classList.add("hide");
 
         let newCourseName = document.getElementById("generalSettings-courseName").value;
         let newCourseYear = document.getElementById("generalSettings-courseYear").value;
 
         let courseName = document.getElementById("generalSettings-courseName");
-        let courseYear = document.getElementById("generalSettings-courseYear");
-        courseName.disabled = true;
-        courseYear.disabled = true;
+        let courseYearText = document.getElementById("yearTextId");
+        let courseYearDropdown = document.getElementById("yearDropdownId");
 
-        const currentCourseId = Session.get('courseId');
+        if (newCourseName.length > 15){
+            Materialize.toast('Your course name is too long.', 5000, 'amber darken-3');
+            return false
+        }
+        else{
+            editButtonElement.classList.remove("hide");
+            saveButtonElement.classList.add("hide");
+            cancelButtonElement.classList.add("hide");
+            courseYearText.classList.remove("hide");
+            courseYearDropdown.classList.add("hide");
+            courseName.disabled = true;
 
-        var courseInfo = Courses.find({ ownerId: Meteor.userId() }, { _id: 0, ownerId: 0 });
-        var courseObj = [];
+            const currentCourseId = Session.get('courseId');
 
-        courseInfo.forEach(
-            function (doc) {
-                const docLength = doc.courses.length;
-                let courses = doc.courses;
-                for (var i = 0; i < docLength; i++) {
-                    if (courses[i].courseId == currentCourseId) {
-                        const newCourseInfo = {
-                            courseId: currentCourseId,
-                            courseName: newCourseName,
-                            courseYear: newCourseYear
-                        };
-                        courseObj.push(newCourseInfo);
-                    }
-                    else {
-                        courseObj.push(courses[i]);
+            var courseInfo = Courses.find({ ownerId: Meteor.userId() }, { _id: 0, ownerId: 0 });
+            var courseObj = [];
+
+            courseInfo.forEach(
+                function (doc) {
+                    const docLength = doc.courses.length;
+                    let courses = doc.courses;
+                    for (var i = 0; i < docLength; i++) {
+                        if (courses[i].courseId == currentCourseId) {
+                            const newCourseInfo = {
+                                courseId: currentCourseId,
+                                courseName: newCourseName,
+                                courseYear: newCourseYear
+                            };
+                            courseObj.push(newCourseInfo);
+                        }
+                        else {
+                            courseObj.push(courses[i]);
+                        }
                     }
                 }
-            }
-        );
-        Session.set('courseName', newCourseName);
-        Session.set('courseYear', newCourseYear);
+            );
+            Session.set('courseName', newCourseName);
+            Session.set('courseYear', newCourseYear);
 
-        Meteor.call('courses.updateCourseNameAndYear', currentCourseId, courseObj);
+            Meteor.call('courses.updateCourseNameAndYear', currentCourseId, courseObj);
+        }
     },
     'click .cancel-general-settings': function () {
-
         let editButtonElement = document.getElementById("generalSettings-EditButton");
         let saveButtonElement = document.getElementById("generalSettings-SaveButton");
         let cancelButtonElement = document.getElementById("generalSettings-CancelButton");
         let courseName = document.getElementById("generalSettings-courseName");
-        let courseYear = document.getElementById("generalSettings-courseYear");
+        let courseYearText = document.getElementById("yearTextId");
+        let courseYearDropdown = document.getElementById("yearDropdownId");
 
         courseName.value = Session.get('courseName');
         courseYear.value = Session.get('courseYear');
@@ -101,8 +160,27 @@ Template.generalSettingsTab.events({
         editButtonElement.classList.remove("hide");
         saveButtonElement.classList.add("hide");
         cancelButtonElement.classList.add("hide");
+        courseYearText.classList.remove("hide");
+        courseYearDropdown.classList.add("hide");
 
         courseName.disabled = true;
-        courseYear.disabled = true;
+
+        let yearsArray = getYearsArray();
+
+        //find the option that is selected
+        for(i = 0; i < yearsArray.length; i++){
+            let potentialId = "GS-Id" + yearsArray[i];
+            let potentialSelectedOption = document.getElementById(potentialId);
+            if(potentialSelectedOption != null){
+                if (potentialSelectedOption.hasAttribute("active")){
+                    potentialSelectedOption.removeAttribute("active");
+                    break
+                }
+            }
+        }
+
+        //make currentyear get selected
+        let currentYearSelectItem = document.getElementById("selectCurrentYear");
+        currentYearSelectItem.selected = true;
     },
 });

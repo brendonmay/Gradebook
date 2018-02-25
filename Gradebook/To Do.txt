@@ -18,6 +18,7 @@
 - In Settings>General Settings, change Course Year to a dropdown menu.
 - In each of the Settings' Tabs, check the input type to ensure only numbers can be inputted for the weights.
 - Decide how to integrate editing assessments.
+- Can't click cancel in add course modal
 
 
 

@@ -6,7 +6,7 @@
                 <h4>Login</h4>
             </div>
             <form class="add-form col s12 login-form" id="loginForm">
-                
+                <div class="row">
                     <div class='input-field col s12'>
                         <input type="email" id="email" name="userEmail" class="validate">
                         <label for = "userEmail" data-error="Invalid email">E-mail</label>
@@ -15,18 +15,16 @@
                         <input type="password" id="password" name="userPassword">
                         <label for = "userPassword">Password</label>
                     </div>
-                    <div class="row">
-                        <h7>
-                            Not a user yet?
-                            <a class="modal-trigger register" href="#registerModal">Register here!</a>
-                        </h7>
-                    </div>
-                    <input type="submit" style="display: none;"/>
-                    <div class="modal-footer right">
-                        <button class="modal-action waves-effect waves-grey btn-flat" id="login" type="submit">Login</button>
-                        <a href="#!" class="modal-action waves-effect waves-grey btn-flat cancel-button">Cancel</a>
-                    </div>
-              
+                    <h7>
+                        Not a user yet?
+                        <a class="modal-trigger register" href="#registerModal">Register here!</a>
+                    </h7>
+                </div>
+                <input type="submit" style="display: none;"/>
+                <div class="modal-footer right">
+                    <button class="modal-action waves-effect waves-grey btn-flat" id="login" type="submit">Login</button>
+                    <a href="#!" class="modal-action waves-effect waves-grey btn-flat cancel-button">Cancel</a>
+                </div>
             </form>
         </div>
     </div>

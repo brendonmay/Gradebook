@@ -8,13 +8,21 @@
 	- Buttons in settings tab dont behave well as you change the size of the window. Possibl suggested solution, use display=none instead of adding class "hide" when they shouldnt be there. This can be achieved with the setAttribute() functiion.
 	- Add Assessment Modal - Assessment Type drop down: determine a clean and nice way of differentiating the first dropdown item from the clickable drop down items! 
 	- In the Assessments Tab, the text directing you to Assessment Settings doesnt dynamically move.
+	- Change most (if not all) toasts to custom error messages via jQuery validation + MaterializeCSS. I have already installed jQuery validation.
+		-http://demo.geekslabs.com/materialize/v3.1/form-validation.html
+		-https://codepen.io/tdurant72/pen/vgyBjZ
+		-https://stackoverflow.com/questions/39313758/materialize-css-custom-form-validation-error-message
+		-https://jsfiddle.net/rz0zk5u6/2/
+		-if we have problem with selects:
+			-https://github.com/Dogfalo/materialize/issues/3440
 
 -Functionality Issues
-- Login
-	-email validation (not logging the user in until they confirm their email address)
-- In each of the Settings' Tabs, check the input type to ensure only numbers can be inputted for the weights.
-- Decide how to integrate editing assessments.
-- Can't click cancel in add course modal
+	- Login
+		-make the confirm password properly check the first password via validate (I started this in onRendered in register.js)
+	- In each of the Settings' Tabs, check the input type to ensure only numbers can be inputted for the weights.
+	- Decide how to integrate editing assessments.
+
+
 
 
 

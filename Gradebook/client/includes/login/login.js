@@ -1,30 +1,44 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
-import { Accounts } from 'meteor/accounts-base';
+// import { Accounts } from 'meteor/accounts-base'
 
 import '../../main.html';
 
+Meteor.subscribe("users");
+
 Template.login.events({
-    'submit .login-form': function (event, template) { //there is no check for if a user exists or if password is incorrect
+    'submit .login-form': function (event, template) { //there is no check for if  the user password is incorrect
         event.preventDefault();
         const target = event.target;
+
         var emailVar = template.find('#email').value;
         var passwordVar = template.find('#password').value;
-        if (emailVar == "" || passwordVar == "") {
-            Materialize.toast('Field was left unfilled, please enter an email and password', 2000, 'amber darken-3')
-            return false;
-        }
-        else {
-            Meteor.loginWithPassword(emailVar, passwordVar);
-            document.getElementById("loginForm").reset();
-            $('#loginModal').modal('close');
-        }
+
+        Meteor.loginWithPassword(emailVar, passwordVar, function(error) {
+            if (error) {
+                console.log(error);
+                const reason = error.reason;
+                switch(error.error) {
+                    case 400:
+                        //user name/password aren't strings/objects or an unrecognized option
+                        break;
+                    case 403:
+                        //one of "User not found", "Incorrect password"
+                        Materialize.toast(reason, 5000, 'amber darken-3');
+                        break;
+                    default:
+                        //unidentified error 
+                }
+            } else {
+                //no error on login, so user Logs in fine
+                $('#loginModal').modal('close');
+            }
+        });
     },
 
     'click .register': function () {
         document.getElementById("loginForm").reset();
 
-        // document.getElementById("password").value = "";
         $('#registerModal').modal('open');
         $('#loginModal').modal('close');
     },

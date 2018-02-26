@@ -5,7 +5,18 @@
     <div id="assessments" class="col s12">
         {{> assessments}}
     </div>
-    <div id="studentReports" class="col s12">{{> uniqueDisplayContent}} works on Student Reports</div>
+    <div id="studentReports" class="col s12">
+        <!-- {{> uniqueDisplayContent}} works on Student Reports -->
+        <a class='dropdown-button btn' data-beloworigin="true" href='#!' data-activates='emailDropdown'>test@test.ca</a>
+        <ul id='emailDropdown' class='dropdown-content'>
+                                <li><a href="#!">one</a></li>
+                                <li><a href="#!">two</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#!">three</a></li>
+                                <li><a href="#!"><i class="material-icons">view_module</i>four</a></li>
+                                <li><a href="#!"><i class="material-icons">cloud</i>five</a></li>
+                        </ul>
+    </div>
     <div id="classStatistics" class="col s12">{{> uniqueDisplayContent}} works on Class Statistics</div>
     <div id="courseSettings" class="col s12 courseSettings">
         <!--Settings sideNav implementation-->

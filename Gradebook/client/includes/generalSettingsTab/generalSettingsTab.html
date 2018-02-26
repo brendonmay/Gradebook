@@ -1,20 +1,31 @@
 <template name="generalSettingsTab">
     <h4 class="light-blue lighten-4 settings-header">General Settings</h4>
     <div class="row center">
-        <form class="generalSettingsForm col s12">
+        <form class="generalSettingsForm col s12" onsubmit="return false">
             <div class="row">
                 <div class="col s12">
                     Course Name:
                     <div class="input-field inline">
-                        <input disabled id="generalSettings-courseName" type="text" value={{currentCourse}}>
+                        <input disabled id="generalSettings-courseName" type="text" value={{currentCourse}} required>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col s12">
                     School Year:
-                    <div class="input-field inline">
-                        <input disabled id="generalSettings-courseYear" type="text" value={{currentYear}}>
+                    <div class="input-field inline" id="yearTextId">
+                        <input disabled id="generalSettings-courseYear-text" type="text" value={{currentYear}}>
+                    </div>
+                    <div class="input-field inline hide" id="yearDropdownId">
+                        <select id="generalSettings-courseYear">
+                            {{#each getYearsBefore currentYear}}
+                                <option id="GS-Id{{year}}" value={{year}}>{{year}}</option>
+                            {{/each}}
+                            <option selected id="selectCurrentYear" value={{currentYear}}>{{currentYear}}</option>
+                            {{#each getYearsAfter currentYear}}
+                                <option id="GS-Id{{year}}" value={{year}}>{{year}}</option>
+                            {{/each}}
+                        </select>
                     </div>
                 </div>
             </div>
@@ -32,7 +43,6 @@
             <input type="submit" style="display: none" />
         </form>
     </div>
-    <br>
     <div class="center delete-general-settings">
         <a class="waves-effect waves-red btn red darken-2 modal-trigger" href="#deleteModal">Delete Course</a>
     </div>

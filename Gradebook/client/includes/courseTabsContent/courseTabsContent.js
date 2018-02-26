@@ -5,6 +5,11 @@ import { Accounts } from 'meteor/accounts-base';
 
 import '../../main.html';
 
+Template.courseTabsContent.onRendered( function() {
+  $('.dropdown-button').dropdown();
+  $('input#input_text, textarea#textarea1').characterCounter();
+})
+
 Template.courseTabsContent.helpers({
   displaySettings: function () { //helper that grabs the setting display ID (i.e. the courseId)
     var setting = (Session.get('settingScreenText'));

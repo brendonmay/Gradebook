@@ -8,7 +8,10 @@
 	- Buttons in settings tab dont behave well as you change the size of the window. Possibl suggested solution, use display=none instead of adding class "hide" when they shouldnt be there. This can be achieved with the setAttribute() functiion.
 	- Add Assessment Modal - Assessment Type drop down: determine a clean and nice way of differentiating the first dropdown item from the clickable drop down items! 
 	- In the Assessments Tab, the text directing you to Assessment Settings doesnt dynamically move.
+	- All modals should have a blue banner on the top.
+	- Assessments>Assign final evaluation, when selecting date, scroll bar appears in modal.
 	- Change most (if not all) toasts to custom error messages via jQuery validation + MaterializeCSS. I have already installed jQuery validation.
+		-https://themeteorchef.com/tutorials/validating-forms-with-jquery-validation
 		-http://demo.geekslabs.com/materialize/v3.1/form-validation.html
 		-https://codepen.io/tdurant72/pen/vgyBjZ
 		-https://stackoverflow.com/questions/39313758/materialize-css-custom-form-validation-error-message
@@ -20,7 +23,8 @@
 	- Login
 		-make the confirm password properly check the first password via validate (I started this in onRendered in register.js)
 	- In each of the Settings' Tabs, check the input type to ensure only numbers can be inputted for the weights.
-	- Decide how to integrate editing assessments.
+	- Edit coursework and final assessments in the style of gradebook.
+	- You can assign or create assessments even if you don't input a date. Do we want it to be like that?
 
 
 

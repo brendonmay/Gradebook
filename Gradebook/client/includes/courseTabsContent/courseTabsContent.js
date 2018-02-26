@@ -8,6 +8,7 @@ import '../../main.html';
 Template.courseTabsContent.onRendered( function() {
   $('.dropdown-button').dropdown();
   $('input#input_text, textarea#textarea1').characterCounter();
+  $('select').material_select();
 })
 
 Template.courseTabsContent.helpers({

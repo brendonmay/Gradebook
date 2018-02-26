@@ -286,5 +286,14 @@ Meteor.methods({
                     { "courseAssessmentTypes": newAssessmentTypeObj }
             }
         );
+    },
+    'assessments.updateFinalAssessments'(currentCourseId, newAssessmentTypeObj) {
+        Assessments.update(
+            { "ownerId": Meteor.userId(), courseId: currentCourseId },
+            {
+                $set:
+                    { "finalAssessmentTypes": newAssessmentTypeObj }
+            }
+        );
     }
 });

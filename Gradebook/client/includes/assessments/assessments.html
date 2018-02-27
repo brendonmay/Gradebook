@@ -23,38 +23,41 @@
                                             <i class="material-icons">close</i>
                                         </a><i class="material-icons">arrow_drop_down</i>{{assessmentName}}</div>
                                     <div class="collapsible-body assessments-collapsible">
-                                        <ul>
-                                            <li class="collection-item assessments-collapsible-nested">
-                                                Date:
-                                                <div class="inline input-field">
-                                                    <input value={{Date}}>
-                                                </div>
-                                            </li>
-                                            <li class="collection-item assessments-collapsible-nested">
-                                                Knowledge:
-                                                <div class="inline input-field">
-                                                    <input value={{K}}>
-                                                </div>
-                                            </li>
-                                            <li class="collection-item assessments-collapsible-nested">
-                                                Application:
-                                                <div class="inline input-field">
-                                                    <input value={{A}}>
-                                                </div>
-                                            </li>
-                                            <li class="collection-item assessments-collapsible-nested">
-                                                Thinking:
-                                                <div class="inline input-field">
-                                                    <input value={{T}}>
-                                                </div>
-                                            </li>
-                                            <li class="collection-item assessments-collapsible-nested">
-                                                Communication:
-                                                <div class="inline input-field">
-                                                    <input value={{C}}>
-                                                </div>
-                                            </li>
-                                        </ul>
+                                        <form class="edit-courseassessment-form" onsubmit="return false" id="form{{assessmentId}}">
+                                            <ul>
+                                                <li class="collection-item assessments-collapsible-nested">
+                                                    Date:
+                                                    <div class="inline input-field">
+                                                        <input class="datepicker" type="text" id="courseDate{{assessmentId}}" value={{Date}}>
+                                                    </div>
+                                                </li>
+                                                <li class="collection-item assessments-collapsible-nested">
+                                                    Knowledge:
+                                                    <div class="inline input-field">
+                                                        <input id="courseK{{assessmentId}}" value={{K}}>
+                                                    </div>
+                                                </li>
+                                                <li class="collection-item assessments-collapsible-nested">
+                                                    Application:
+                                                    <div class="inline input-field">
+                                                        <input id="courseA{{assessmentId}}" value={{A}}>
+                                                    </div>
+                                                </li>
+                                                <li class="collection-item assessments-collapsible-nested">
+                                                    Thinking:
+                                                    <div class="inline input-field">
+                                                        <input id="courseT{{assessmentId}}" value={{T}}>
+                                                    </div>
+                                                </li>
+                                                <li class="collection-item assessments-collapsible-nested">
+                                                    Communication:
+                                                    <div class="inline input-field">
+                                                        <input id="courseC{{assessmentId}}" value={{C}}>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <input type="submit" style="display: none;"/>
+                                        </form>
                                     </div>
                                 </li>
                                 {{/each}} {{else}}
@@ -82,36 +85,39 @@
                         <div class="col s12 m12">
                             <ul class="collection">
                                 {{#each finalAssessments assessmentTypeId}} {{#if hasFinalAssessments assessmentTypeId}}
-                                <li class="collection-item assessments-collapsible-nested">
-                                    Date:
-                                    <div class="inline input-field">
-                                        <input value={{Date}}>
-                                    </div>
-                                </li>
-                                <li class="collection-item assessments-collapsible-nested">
-                                    Knowledge:
-                                    <div class="inline input-field">
-                                        <input value={{K}}>
-                                    </div>
-                                </li>
-                                <li class="collection-item assessments-collapsible-nested">
-                                    Application:
-                                    <div class="inline input-field">
-                                        <input value={{A}}>
-                                    </div>
-                                </li>
-                                <li class="collection-item assessments-collapsible-nested">
-                                    Thinking:
-                                    <div class="inline input-field">
-                                        <input value={{T}}>
-                                    </div>
-                                </li>
-                                <li class="collection-item assessments-collapsible-nested">
-                                    Communication:
-                                    <div class="inline input-field">
-                                        <input value={{C}}>
-                                    </div>
-                                </li>
+                                <form class="edit-finalevaluation-form" onsubmit="return false" id="form{{assessmentTypeId}}">
+                                    <li class="collection-item assessments-collapsible-nested">
+                                        Date:
+                                        <div class="inline input-field">
+                                            <input class="datepicker" type="text" id="finalDate{{assessmentTypeId}}" value={{Date}}>
+                                        </div>
+                                    </li>
+                                    <li class="collection-item assessments-collapsible-nested">
+                                        Knowledge:
+                                        <div class="inline input-field">
+                                            <input id="finalK{{assessmentTypeId}}" value={{K}}>
+                                        </div>
+                                    </li>
+                                    <li class="collection-item assessments-collapsible-nested">
+                                        Application:
+                                        <div class="inline input-field">
+                                            <input id="finalA{{assessmentTypeId}}" value={{A}}>
+                                        </div>
+                                    </li>
+                                    <li class="collection-item assessments-collapsible-nested">
+                                        Thinking:
+                                        <div class="inline input-field">
+                                            <input id="finalT{{assessmentTypeId}}" value={{T}}>
+                                        </div>
+                                    </li>
+                                    <li class="collection-item assessments-collapsible-nested">
+                                        Communication:
+                                        <div class="inline input-field">
+                                            <input id="finalC{{assessmentTypeId}}" value={{C}}>
+                                        </div>
+                                    </li>
+                                    <input type="submit" style="display: none;"/>
+                                </form>
                                 {{else}}
                                 <p>You have yet to assign this assessment.</p>
                                 {{/if}} {{/each}}

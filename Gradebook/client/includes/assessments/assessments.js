@@ -122,7 +122,6 @@ Template.assessments.events({
             Materialize.toast("All of your final evaluations have already been assigned", 5000, 'amber darken-3');
         }
     },
-
     'click .deleteFinalEval': function () {
         let courseSettings = document.getElementById("courseSettingsTabId");
         courseSettings.click();
@@ -185,7 +184,6 @@ Template.assessments.events({
             closeOnSelect: false // Close upon selecting a date,
         });
     },
-
     'submit .edit-courseassessment-form': function () {
         //determine which form has been changed
         let target = event.target;
@@ -242,10 +240,12 @@ Template.assessments.events({
         //update collection
         var courseAssessmentTypes = Assessments.findOne({ownerId: Meteor.userId(), courseId: currentCourseId}).courseAssessmentTypes;
 
+        var courseName;
         for (i = 0; i < courseAssessmentTypes.length; i++){
             if(courseAssessmentTypes[i].assessmentTypeId == assessmentTypeId){
                 for(z = 0; z < courseAssessmentTypes[i].assessments.length; z++){
                     if(courseAssessmentTypes[i].assessments[z].assessmentId == assessmentId){
+                        courseName = courseAssessmentTypes[i].assessments[z].assessmentName;
                         courseAssessmentTypes[i].assessments[z].K = markK;
                         courseAssessmentTypes[i].assessments[z].A = markA;
                         courseAssessmentTypes[i].assessments[z].T = markT;
@@ -260,9 +260,8 @@ Template.assessments.events({
         Meteor.call('assessments.updateAssessments', currentCourseId, courseAssessmentTypes)
 
         //at the end, push a message to the user saying the changes have been saved.
-        Materialize.toast('Your changes have been saved', 3000, 'amber darken-3'); //make it so that toast includes assessment name
+        Materialize.toast('Your changes to ' + courseName + ' have been saved', 3000, 'amber darken-3'); //make it so that toast includes assessment name
     },
-
     'submit .edit-finalevaluation-form': function () {
         //determine which form has been changed
         let target = event.target;
@@ -277,6 +276,82 @@ Template.assessments.events({
         let aId = "finalA" + assessmentTypeId;
         let tId = "finalT" + assessmentTypeId;
         let cId = "finalC" + assessmentTypeId;
+
+        let markK = document.getElementById(kId).value;
+        let markA = document.getElementById(aId).value;
+        let markT = document.getElementById(tId).value;
+        let markC = document.getElementById(cId).value;
+        let newDate = document.getElementById(dateId).value
+
+        //check that each variable is of the correct type/format
+        if (markK == "N/A" && markA == "N/A" && markT == "N/A" && markC == "N/A") {
+            Materialize.toast('You must assess the students in at least one category.', 5000, 'amber darken-3');
+            return false
+        }
+
+        if (markK <= 0 || markA <= 0 || markT <= 0 || markC <= 0) {
+            Materialize.toast("A selected category's mark must be an integer greater than 0 or N/A.", 5000, 'amber darken-3');
+            return false
+        }
+
+        if (!(
+            (markK == "N/A" || Math.floor(markK) == markK) && 
+            (markA == "N/A" || Math.floor(markA) == markA) && 
+            (markT == "N/A" || Math.floor(markT) == markT) && 
+            (markC == "N/A" || Math.floor(markC) == markC)
+        )) {
+            Materialize.toast("A selected category's mark must be an integer greater than 0 or N/A.", 5000, 'amber darken-3');
+            return false
+        }
+
+        if (markK != "N/A") {
+            markK = Number(markK)
+        }
+        if (markA != "N/A") {
+            markA = Number(markA)
+        }
+        if (markT != "N/A") {
+            markT = Number(markT)
+        }
+        if (markC != "N/A") {
+            markC = Number(markC)
+        }
+
+        //update collection
+        var finalAssessmentTypes = Assessments.findOne({ownerId: Meteor.userId(), courseId: currentCourseId}).finalAssessmentTypes;
+
+        for (i = 0; i < finalAssessmentTypes.length; i++){
+            if(finalAssessmentTypes[i].assessmentTypeId == assessmentTypeId){
+                finalAssessmentTypes[i].K = markK;
+                finalAssessmentTypes[i].A = markA;
+                finalAssessmentTypes[i].T = markT;
+                finalAssessmentTypes[i].C = markC;
+                finalAssessmentTypes[i].Date = newDate;
+                break;
+            }
+        }
+
+        Meteor.call('assessments.updateFinalAssessments', currentCourseId, finalAssessmentTypes)
+
+        //at the end, push a message to the user saying the changes have been saved.
+        Materialize.toast('Your changes have been saved', 3000, 'amber darken-3'); //make it so that toast includes assessment name
+    },
+    'blur .editable-assessment-fields': function() {
+        let target = event.target;
+        let formId = target.id;
+        //assign all the new values to variables
+        let assessmentId = formId.substring(7);
+        let assessmentTypeId = assessmentId.substring(0, assessmentId.indexOf('-'));
+        let currentCourseId = Session.get('courseId');
+        
+        target.focus();
+
+        //console.log("assessmentTypeId: " + assessmentTypeId + ". AssessmentId: " + assessmentId);
+        let dateId = "courseDate" + assessmentId;
+        let kId = "courseK" + assessmentId;
+        let aId = "courseA" + assessmentId;
+        let tId = "courseT" + assessmentId;
+        let cId = "courseC" + assessmentId;
 
         let markK = document.getElementById(kId).value;
         let markA = document.getElementById(aId).value;
@@ -314,23 +389,29 @@ Template.assessments.events({
         }
 
         //update collection
-        var finalAssessmentTypes = Assessments.findOne({ownerId: Meteor.userId(), courseId: currentCourseId}).finalAssessmentTypes;
+        var courseAssessmentTypes = Assessments.findOne({ownerId: Meteor.userId(), courseId: currentCourseId}).courseAssessmentTypes;
 
-        for (i = 0; i < finalAssessmentTypes.length; i++){
-            if(finalAssessmentTypes[i].assessmentTypeId == assessmentTypeId){
-                finalAssessmentTypes[i].K = markK;
-                finalAssessmentTypes[i].A = markA;
-                finalAssessmentTypes[i].T = markT;
-                finalAssessmentTypes[i].C = markC;
-                finalAssessmentTypes[i].Date = newDate;
-                break;
+        var courseName;
+        for (i = 0; i < courseAssessmentTypes.length; i++){
+            if(courseAssessmentTypes[i].assessmentTypeId == assessmentTypeId){
+                for(z = 0; z < courseAssessmentTypes[i].assessments.length; z++){
+                    if(courseAssessmentTypes[i].assessments[z].assessmentId == assessmentId){
+                        courseName = courseAssessmentTypes[i].assessments[z].assessmentName;
+                        courseAssessmentTypes[i].assessments[z].K = markK;
+                        courseAssessmentTypes[i].assessments[z].A = markA;
+                        courseAssessmentTypes[i].assessments[z].T = markT;
+                        courseAssessmentTypes[i].assessments[z].C = markC;
+                        courseAssessmentTypes[i].assessments[z].Date = newDate;
+                        break;
+                    }
+                }
             }
         }
 
-        Meteor.call('assessments.updateFinalAssessments', currentCourseId, finalAssessmentTypes)
+        Meteor.call('assessments.updateAssessments', currentCourseId, courseAssessmentTypes)
 
         //at the end, push a message to the user saying the changes have been saved.
-        Materialize.toast('Your changes have been saved', 3000, 'amber darken-3'); //make it so that toast includes assessment name
+        Materialize.toast('Your changes to ' + courseName + ' have been saved', 3000, 'amber darken-3'); //make it so that toast includes assessment name
     }
-
 });
+

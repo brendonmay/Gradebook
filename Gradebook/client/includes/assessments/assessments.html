@@ -23,7 +23,7 @@
                                             <i class="material-icons">close</i>
                                         </a><i class="material-icons">arrow_drop_down</i>{{assessmentName}}</div>
                                     <div class="collapsible-body assessments-collapsible">
-                                        <form class="edit-courseassessment-form" onsubmit="return false" id="form{{assessmentId}}">
+                                        <form class="edit-courseassessment-form" onsubmit="return false" onChange="" id="form{{assessmentId}}">
                                             <ul>
                                                 <li class="collection-item assessments-collapsible-nested">
                                                     Date:
@@ -34,25 +34,25 @@
                                                 <li class="collection-item assessments-collapsible-nested">
                                                     Knowledge:
                                                     <div class="inline input-field">
-                                                        <input id="courseK{{assessmentId}}" value={{K}}>
+                                                        <input class="editable-assessment-fields" id="courseK{{assessmentId}}" value={{K}}>
                                                     </div>
                                                 </li>
                                                 <li class="collection-item assessments-collapsible-nested">
                                                     Application:
                                                     <div class="inline input-field">
-                                                        <input id="courseA{{assessmentId}}" value={{A}}>
+                                                        <input class="editable-assessment-fields" id="courseA{{assessmentId}}" value={{A}}>
                                                     </div>
                                                 </li>
                                                 <li class="collection-item assessments-collapsible-nested">
                                                     Thinking:
                                                     <div class="inline input-field">
-                                                        <input id="courseT{{assessmentId}}" value={{T}}>
+                                                        <input class="editable-assessment-fields" id="courseT{{assessmentId}}" value={{T}}>
                                                     </div>
                                                 </li>
                                                 <li class="collection-item assessments-collapsible-nested">
                                                     Communication:
                                                     <div class="inline input-field">
-                                                        <input id="courseC{{assessmentId}}" value={{C}}>
+                                                        <input class="editable-assessment-fields" id="courseC{{assessmentId}}" value={{C}}>
                                                     </div>
                                                 </li>
                                             </ul>

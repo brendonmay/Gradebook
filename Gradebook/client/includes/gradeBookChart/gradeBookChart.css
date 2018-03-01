@@ -11,7 +11,7 @@
 }
 
 .studMarkTableCell{
-    min-width: 70px;
+    min-width: 70px !important;
     border: 1px dashed green;
 }
 

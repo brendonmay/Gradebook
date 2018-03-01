@@ -17,8 +17,42 @@
 
 #gradeBookChartHolder{
     width: 100%;
-    overflow-x:scroll;
-    overflow-y:scroll;
+    /* overflow: auto */
+    /* overflow-x:scroll;
+    overflow-y:scroll; */
+}
+
+.heighten-nav{
+    height: 4.5em;
+}
+
+.nav-padding-top{
+    margin-top:1em;
+}
+
+.extra-table-padding{
+    padding:1.82em!important;
+}
+
+.gradebook-header{
+    color: #616161 !important;
+    padding: .6em !important;
+}
+
+.zero-top-pad{
+    margin-top: 0!important;
+    margin-bottom: 0!important;
+    height: 69px!important;
+}
+
+.no-padding{
+    padding:0 !important;
+    margin-top:0 !important;
+    margin-bottom:0 !important;
+}
+
+.grey-font-color{
+    color: #616161!important;
 }
 
 .testColumns{

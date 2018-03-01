@@ -182,6 +182,10 @@ Template.assessments.events({
             Materialize.toast("All of your final evaluations have already been assigned", 5000, 'amber darken-3');
         }
     },
+    'click .createAssessmentButton': function () {
+        $('#createAssessmentModal').modal('open');
+        $('select').material_select();
+    },
     'click .deleteFinalEval': function () {
         let courseSettings = document.getElementById("courseSettingsTabId");
         courseSettings.click();

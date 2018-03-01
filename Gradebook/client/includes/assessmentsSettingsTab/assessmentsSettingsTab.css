@@ -1,3 +1,7 @@
+.assessment-type-input:not([type]):focus:not([readonly]){
+    border-bottom-color: #4caf50;
+}
+
 .toRight{
     margin-left: auto;
 }

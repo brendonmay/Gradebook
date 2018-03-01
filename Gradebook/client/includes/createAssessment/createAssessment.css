@@ -13,6 +13,12 @@
 .picker--focused .picker__day--selected{
     background-color: #4caf50
 }
+.picker__day.picker__day--today{
+    color: #4caf50
+}
+.picker__day--selected{
+    background-color: #4caf50
+}
 
 [type="checkbox"].filled-in:checked+label::after{
     background-color:#4caf50;

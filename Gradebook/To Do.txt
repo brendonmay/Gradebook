@@ -20,6 +20,7 @@
 	- In each of the Settings' Tabs, check the input type to ensure only numbers can be inputted for the weights.
 	- You can assign or create assessments even if you don't input a date. Do we want it to be like that?
 	- In Assessments, if you expand any part of the table, if you open to a new course, the table remains expanded in the same way.
+	- After creating a new assessment type, if you try to create a new assessment, that type isnt being listed.
 
 
 

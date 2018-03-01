@@ -6,8 +6,16 @@ import { CourseWeighting } from '../../../lib/collections.js';
 
 import '../../main.html';
 
+function collapseAll() {
+    $(".collapsible-header").removeClass(function () {
+        return "active";
+    });
+    $(".collapsible").collapsible({ accordion: true });
+    $(".collapsible").collapsible({ accordion: false });
+}
+
 Template.sideNavDropDown.onRendered(function () {
-    this.$('.collapsible').collapsible();
+    this.$('.collapsible-nav').collapsible();
 });
 
 Template.sideNavDropDown.helpers({
@@ -101,6 +109,8 @@ Template.sideNavDropDown.events({
         Session.set('communicationWeight', communicationWeight);
         Session.set('courseworkWeight', courseworkWeight);
         Session.set('finalWeight', finalWeight);
+
+        collapseAll();
 
         if (document.getElementById('gradeBookCourseTab')) { //this allows us to navigate back to gradebook page when new course is clicked
             document.getElementById('gradeBookCourseTab').click();

@@ -247,6 +247,7 @@ Template.assessments.events({
             container: 'body',
             closeOnSelect: false // Close upon selecting a date,
         });
+        $('.collapsible').collapsible();
     },
     'submit .edit-courseassessment-form': function () {
         //determine which form has been changed

@@ -1,9 +1,9 @@
 <template name="assignFinal">
     <div id="assignFinalModal" class="modal assignFinalModal">
-        <div class='modal-title'>
-                <h4 class="white-text">Assign Final Evaluation</h4>
-            </div>
         <div class="modal-content">
+            <div class='modal-title'>
+                <h4>Assign Final Evaluation</h4>
+            </div>
             <form class="add-form assignFinalForm" onsubmit="return false" id="assignFinalFormId">
                 <div class="row">
                     <div class="col s5 offset">
@@ -23,29 +23,37 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class= "col s3">
+                    <div class="col s3">
                         Categories included:
                     </div>
                     <div class="col s1">
                         <!-- checked="checked" to input to make it checked -->
-                        <a href="#!" class="final-check-box"><input type="checkbox" class="filled-in" id="finalCheckboxK"/>
-                        <label id="dontTargetFinal" for="finalCheckboxK">K</label></a>
-                    </div>  
-                    <div class="col s1 offset-s1">
-                        <a href="#!" class="final-check-box"><input type="checkbox" class="filled-in" id="finalCheckboxA" />
-                        <label id="dontTargetFinal" for="finalCheckboxA">A</label></a>
+                        <a href="#!" class="final-check-box">
+                            <input type="checkbox" class="filled-in" id="finalCheckboxK" />
+                            <label id="dontTargetFinal" for="finalCheckboxK">K</label>
+                        </a>
                     </div>
                     <div class="col s1 offset-s1">
-                        <a href="#!" class="final-check-box"><input type="checkbox" class="filled-in" id="finalCheckboxT" />
-                        <label id="dontTargetFinal" for="finalCheckboxT">T</label></a>
+                        <a href="#!" class="final-check-box">
+                            <input type="checkbox" class="filled-in" id="finalCheckboxA" />
+                            <label id="dontTargetFinal" for="finalCheckboxA">A</label>
+                        </a>
                     </div>
                     <div class="col s1 offset-s1">
-                        <a href="#!" class="final-check-box"><input type="checkbox" class="filled-in" id="finalCheckboxC" />
-                        <label id="dontTargetFinal" for="finalCheckboxC">C</label></a>
+                        <a href="#!" class="final-check-box">
+                            <input type="checkbox" class="filled-in" id="finalCheckboxT" />
+                            <label id="dontTargetFinal" for="finalCheckboxT">T</label>
+                        </a>
+                    </div>
+                    <div class="col s1 offset-s1">
+                        <a href="#!" class="final-check-box">
+                            <input type="checkbox" class="filled-in" id="finalCheckboxC" />
+                            <label id="dontTargetFinal" for="finalCheckboxC">C</label>
+                        </a>
                     </div>
                 </div>
                 <div class="row">
-                    <div class= "col s3 createAssessmentMargin">
+                    <div class="col s3 createAssessmentMargin">
                         Marks:
                     </div>
                     <div class='input-field inline col s1 zero-margin-top' style="padding: 0">

@@ -8,6 +8,7 @@
 	- Buttons in settings tab dont behave well as you change the size of the window. Possible suggested solution, use display=none instead of adding class "hide" when they shouldnt be there. This can be achieved with the setAttribute() functiion.
 	- Add Assessment Modal - Assessment Type drop down: determine a clean and nice way of differentiating the first dropdown item from the clickable drop down items! 
 	- In the Assessments Tab, the text directing you to Assessment Settings doesnt dynamically move.
+	- Make all toasts appear in the top right of the nav bar
 	- Change most (if not all) toasts to custom error messages via jQuery validation + MaterializeCSS. I have already installed jQuery validation.
 		-https://themeteorchef.com/tutorials/validating-forms-with-jquery-validation
 		-http://demo.geekslabs.com/materialize/v3.1/form-validation.html
@@ -23,6 +24,7 @@
 	- In each of the Settings' Tabs, check the input type to ensure only numbers can be inputted for the weights.
 	- You can assign or create assessments even if you don't input a date. Do we want it to be like that?
 	- In Assessments, if you expand any part of the table, if you open to a new course, the table remains expanded in the same way.
+	- After creating a new assessment type, if you try to create a new assessment, that type isnt being listed.
 
 
 

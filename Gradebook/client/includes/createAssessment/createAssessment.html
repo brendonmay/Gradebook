@@ -1,9 +1,9 @@
 <template name="createAssessment">
     <div id="createAssessmentModal" class="modal createAssessmentModal">
-        <div class='modal-title white-text'>
-            <h4>Create New Assessment</h4>
-        </div>
         <div class="modal-content">
+            <div class='modal-title'>
+                <h4>Create New Assessment</h4>
+            </div>
             <form class="add-form createAssessmentForm" onsubmit="return false" id="createAssessmentFormId">
                 <div class="row">
                     <div class="col s5 offset">
@@ -29,29 +29,37 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class= "col s3">
+                    <div class="col s3">
                         Categories included:
                     </div>
                     <div class="col s1">
                         <!-- checked="checked" to input to make it checked -->
-                        <a href="#!" class="check-box"><input type="checkbox" class="filled-in" id="checkboxK"/>
-                        <label id="dontTarget" for="checkboxK">K</label></a>
-                    </div>  
-                    <div class="col s1 offset-s1">
-                        <a href="#!" class="check-box"><input type="checkbox" class="filled-in" id="checkboxA" />
-                        <label id="dontTarget" for="checkboxA">A</label></a>
+                        <a href="#!" class="check-box">
+                            <input type="checkbox" class="filled-in" id="checkboxK" />
+                            <label id="dontTarget" for="checkboxK">K</label>
+                        </a>
                     </div>
                     <div class="col s1 offset-s1">
-                        <a href="#!" class="check-box"><input type="checkbox" class="filled-in" id="checkboxT" />
-                        <label id="dontTarget" for="checkboxT">T</label></a>
+                        <a href="#!" class="check-box">
+                            <input type="checkbox" class="filled-in" id="checkboxA" />
+                            <label id="dontTarget" for="checkboxA">A</label>
+                        </a>
                     </div>
                     <div class="col s1 offset-s1">
-                        <a href="#!" class="check-box"><input type="checkbox" class="filled-in" id="checkboxC" />
-                        <label id="dontTarget" for="checkboxC">C</label></a>
+                        <a href="#!" class="check-box">
+                            <input type="checkbox" class="filled-in" id="checkboxT" />
+                            <label id="dontTarget" for="checkboxT">T</label>
+                        </a>
+                    </div>
+                    <div class="col s1 offset-s1">
+                        <a href="#!" class="check-box">
+                            <input type="checkbox" class="filled-in" id="checkboxC" />
+                            <label id="dontTarget" for="checkboxC">C</label>
+                        </a>
                     </div>
                 </div>
                 <div class="row">
-                    <div class= "col s3 createAssessmentMargin">
+                    <div class="col s3 createAssessmentMargin">
                         Marks:
                     </div>
                     <div class='input-field inline col s1 zero-margin-top' style="padding: 0">

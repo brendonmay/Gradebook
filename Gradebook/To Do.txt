@@ -22,12 +22,7 @@
 		-make the confirm password properly check the first password via validate (I started this in onRendered in register.js)
 	- In each of the Settings' Tabs, check the input type to ensure only numbers can be inputted for the weights.
 	- You can assign or create assessments even if you don't input a date. Do we want it to be like that?
-	- In assessments if you try to edit the date sometimes it wont let you.
-
-
-
-
-
+	- In assessments tab if you try to edit the date sometimes it wont let you.
 
 -------------
 

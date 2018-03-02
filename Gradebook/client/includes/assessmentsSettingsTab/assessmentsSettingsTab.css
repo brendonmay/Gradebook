@@ -69,3 +69,7 @@
     bottom: auto!important;
     left: auto!important;
   }
+
+  .assessment-type-listing{
+      margin-top:0
+  }

@@ -38,24 +38,8 @@ function canAssignFinalEvaluation() {
 }
 
 Template.gradeBookChart.onRendered(function() {
-    var $table = $('#main_table');
-    $table.floatThead();
+    $("#main_table").tableHeadFixer({"left" : 1}); 
 });
-$(document).ready(function() {
-    $(window).scroll(function(e) { //detect a scroll event on the tbody
-        var studentNameCells = document.getElementsByClassName('studNameCell');
-        var offset = document.getElementsByClassName('floatThead-container')[0].style.left;
-        var newoffset = (parseInt(offset) * -1);
-        console.log(newoffset)
-        for (var i = 0; i < studentNameCells.length; i++) {            
-            if (newoffset >= 0) {
-                studentNameCells[i].style.left = '' + newoffset + 'px';
-            }
-        }
-
-      //$('tbody tr td:nth-child(1)').css("left", -$(".floatThead-container").css("left")); //fix the first column of tdbody
-    });
-  });
   
 
 

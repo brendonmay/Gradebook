@@ -39,6 +39,7 @@ function canAssignFinalEvaluation() {
 
 Template.gradeBookChart.onRendered(function() {
     $("#main_table").tableHeadFixer({"left" : 1}); 
+    $("#main_table").floatThead();
 });
   
 

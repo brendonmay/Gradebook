@@ -1,7 +1,3 @@
-.table {
-    overflow: scroll;
-}
-
 .studName:focus{
     background-color: #c1c1c1;
 }
@@ -12,9 +8,6 @@
 
 .studNameCell{
     border-right: 2px solid black;
-    position: relative;
-    display: block;
-    
 }
 
 .studMarkTableCell{

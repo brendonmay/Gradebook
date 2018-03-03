@@ -59,5 +59,7 @@ Template.gradeBookChart.events({
         $('#createAssessmentModal').modal('open');
         $('select').material_select();
     },
-    
+    'click .addStudentsButtonGradebook': function(){
+        $('#addStudentsModal').modal('open');
+    }
 });

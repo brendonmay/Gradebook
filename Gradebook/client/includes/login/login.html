@@ -1,26 +1,26 @@
 <!-- Modal Structure -->
 <template name="login">
     <div id="loginModal" class="modal addLoginModal">
-        <div class="modal-title white-text">
-            <h4>Login</h4>
-        </div>
         <div class="modal-content">
+            <div class="modal-title">
+                <h4>Login</h4>
+            </div>
             <form class="add-form col s12 login-form" id="loginForm">
                 <div class="row">
                     <div class='input-field col s12'>
                         <input type="email" id="email" name="userEmail" class="validate">
-                        <label for = "userEmail" data-error="Invalid email">E-mail</label>
+                        <label for="userEmail" data-error="Invalid email">E-mail</label>
                     </div>
                     <div class='input-field col s12'>
                         <input type="password" id="password" name="userPassword">
-                        <label for = "userPassword">Password</label>
+                        <label for="userPassword">Password</label>
                     </div>
                     <h7>
                         Not a user yet?
                         <a class="modal-trigger register" href="#registerModal">Register here!</a>
                     </h7>
                 </div>
-                <input type="submit" style="display: none;"/>
+                <input type="submit" style="display: none;" />
                 <div class="modal-footer right">
                     <button class="modal-action waves-effect waves-grey btn-flat" id="login" type="submit">Login</button>
                     <a href="#!" class="modal-action waves-effect waves-grey btn-flat cancel-button">Cancel</a>

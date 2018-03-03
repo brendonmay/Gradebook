@@ -1,0 +1,27 @@
+<!-- Modal Structure -->
+<template name="addStudents">
+        <div id="addStudentsModal" class="modal addStudentsModal">
+            <div class="modal-content">
+                    <div class='modal-title'>
+                        <h4 class="addCourse-pad-top">Add Students</h4>
+                    </div>
+                <form id="addStudentsModalForm" class="col s12" onsubmit="return false">
+                    <div id="addNewStudentsDiv" class="row">
+                        <div class='input-field col s4 offset-s1' style="padding: 0">
+                            <input id ="studentLastName" type="text" required>
+                            <label style="left: 0">Last Name</label>
+                        </div>
+                        <div class='input-field col s4 offset-s1' style="padding: 0">
+                            <input id ="studentFirstName" type="text" name="firstName" required>
+                            <label style="left: 0">First Name</label>
+                        </div>
+                    </div>
+                    <input type="submit" style="display: none;"/>
+                    <div class="modal-footer">
+                        <a class="waves-effect waves-grey btn-flat addStudentsModalButton">Add Students</a>
+                        <a class="waves-effect waves-grey btn-flat addStudentsCancelButton">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </template>

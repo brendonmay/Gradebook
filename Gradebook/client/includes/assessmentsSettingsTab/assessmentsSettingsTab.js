@@ -115,9 +115,7 @@ Template.assessmentsTab.helpers({
 });
 
 Template.assessmentsTab.onRendered(function () {
-    $(document).ready(function () {
-        $('.collapsible').collapsible();
-    });
+    $('.collapsible').collapsible();
 });
 
 Template.assessmentsTab.events({

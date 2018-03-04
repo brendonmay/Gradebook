@@ -1,25 +1,25 @@
-.studName:focus{
-    background-color: #c1c1c1;
-}
-
-.studName:hover{
-    background-color: #c1c1c1;
-}
-
-.studNameCell{
-    border-right: 2px solid black;
-}
-
-.studMarkTableCell{
-    min-width: 70px;
-    border: 1px dashed green;
-}
-
-#gradeBookChartHolder{
+.gradebook-table {
     width: 100%;
-    /* overflow: auto */
-    /* overflow-x:scroll;
-    overflow-y:scroll; */
+}
+
+.studentBlankCellBorder {
+    border-right: 1px solid black;
+}
+
+.studentCellBorder {
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.studentsCell {
+    min-width:200px; 
+    background-color: white !important; 
+    font-weight: bold; 
+    text-align:center; 
+}
+
+#gradeBookChartHolder{ /*//not sure why we need this */
+    width: 100%;
 }
 
 .heighten-nav{
@@ -55,9 +55,6 @@
     color: #616161!important;
 }
 
-.testColumns{
-    border-bottom: 1px solid black;
-}
 
 .tableCell{
     padding: 5px 5px;

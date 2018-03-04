@@ -1,0 +1,20 @@
+.categoryCell {
+    min-width: 70px; 
+    background-color: white; 
+    text-align:center; 
+    border: 1px solid black; 
+    border-top: 2px solid black;
+}
+
+.categoryCell.K {
+    background-color: #b39ddb; 
+}
+.categoryCell.A {
+    background-color: #4fc3f7;
+}
+.categoryCell.T {
+    background-color: #81c784; 
+}
+.categoryCell.C {
+    background-color: #e57373; 
+}

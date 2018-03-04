@@ -1,10 +1,9 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
+import jqueryValidation from 'jquery-validation'
 // import { Accounts } from 'meteor/accounts-base'
 
 import '../../main.html';
-
-Meteor.subscribe("users");
 
 Template.login.events({
     'submit .login-form': function (event, template) { //there is no check for if  the user password is incorrect
@@ -51,3 +50,41 @@ Template.login.events({
         $('#loginModal').modal('close');
     },
 })
+
+Template.login.onRendered(function() {
+
+    $.validate.addMethod( 'isValidUserID', (input) => {
+        Users
+    });
+
+    $("#formValidate").validate({
+        rules: {
+            userEmail: {
+                required: true,
+                isValidUserID: true
+            },
+            userPassword: {
+                required: true
+            }
+        },
+        //For custom messages
+        messages: {
+            userEmail:{
+                required: "Enter your username",
+                isValidUserID: "This userID is not valid"
+            },
+            userPassword: {
+                required: "Enter your password"
+            }
+        },
+        errorElement : 'div',
+        errorPlacement: function(error, element) {
+          var placement = $(element).data('error');
+          if (placement) {
+            $(placement).append(error)
+          } else {
+            error.insertAfter(element);
+          }
+        }
+     });
+});

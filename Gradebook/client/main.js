@@ -11,8 +11,3 @@ Accounts.onLogout(resetViewOnLogout);
 function resetViewOnLogout() {
     Session.set('courseId', 0);
 }
-
-Meteor.subscribe("courses");
-Meteor.subscribe("courseWeighting");
-Meteor.subscribe("assessments");
-Meteor.subscribe("students");

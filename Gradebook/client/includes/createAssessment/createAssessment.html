@@ -8,7 +8,7 @@
                 <div class="row">
                     <div class="col s5 offset">
                         <div class="input-field">
-                            <select id="assessmentType" name='assessmentTypeSelect' required>
+                            <select id="assessmentType" name='assessmentTypeSelect' class="required">
                                 <option value="" disabled selected>Choose Assessment Type</option>
                                 {{#each getAssessmentTypes}}
                                 <option value={{assessmentType}}>{{assessmentType}}</option>
@@ -18,13 +18,13 @@
                         </div>
                     </div>
                     <div class='input-field col s5 offset-s1' style="padding: 0">
-                        <input class="datepicker" id="createNewAssessmentDate" type="text" name="assessmentDate" required>
+                        <input class="datepicker" id="createNewAssessmentDate" type="text" name="assessmentDate">
                         <label for="createNewAssessmentDate" style="left: 0">Date of Assessment</label>
                     </div>
                 </div>
                 <div class="row pad-left-right-a">
                     <div class='input-field col s12' style="padding: 0">
-                        <input id="createNewAssessment" type="text" name="assessmentName" placeholder="Example: Chapter 1 Unit Test" required>
+                        <input id="createNewAssessment" type="text" name="assessmentName" placeholder="Example: Chapter 1 Unit Test" class="required">
                         <label for="createNewAssessment" style="left: 0">Assessment Name</label>
                     </div>
                 </div>
@@ -58,23 +58,27 @@
                         </a>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row marks-row">
                     <div class="col s3 createAssessmentMargin">
                         Marks:
                     </div>
                     <div class='input-field inline col s1 zero-margin-top' style="padding: 0">
-                        <input id="inputMarkK" type="text" name="marksK" value="N/A" class="center" disabled>
+                        <input id="inputMarkK" type="text" name="marksK" value="N/A" class="center form-control" data-error=".errorMessage" disabled>
+                        <div class="KError"></div>
                     </div>
                     <div class='input-field inline col s1 offset-s1 zero-margin-top' style="padding: 0">
-                        <input id="inputMarkA" type="text" name="marksA" value="N/A" class="center" disabled>
+                        <input id="inputMarkA" type="text" name="marksA" value="N/A" class="center form-control" data-error=".errorMessage" disabled>
+                        <div class="AError"></div>
                     </div>
                     <div class='input-field inline col s1 offset-s1 zero-margin-top' style="padding: 0">
-                        <input id="inputMarkT" type="text" name="marksT" value="N/A" class="center" disabled>
+                        <input id="inputMarkT" type="text" name="marksT" value="N/A" class="center form-control" data-error=".errorMessage" disabled>
+                        <div class="TError"></div>
                     </div>
                     <div class='input-field inline col s1 offset-s1 zero-margin-top' style="padding: 0">
-                        <input id="inputMarkC" type="text" name="marksC" value="N/A" class="center" disabled>
+                        <input id="inputMarkC" type="text" name="marksC" value="N/A" class="center form-control" data-error=".errorMessage" disabled>
                     </div>
                 </div>
+                <div class="center errorMessage"></div>
                 <input type="submit" style="display: none;" />
                 <div class="modal-footer">
                     <button class="add-form modal-action waves-effect waves-grey btn-flat" type="submit">Create Assessment</button>

@@ -4,6 +4,7 @@ import { Courses } from '../../../lib/collections.js';
 import { Accounts } from 'meteor/accounts-base';
 import { CourseWeighting } from '../../../lib/collections.js';
 import { Assessments } from '../../../lib/collections.js';
+import jqueryValidation from 'jquery-validation'
 
 import '../../main.html';
 
@@ -65,18 +66,21 @@ Template.createAssessment.events({
             if (element.hasAttribute("checked") == true) {
                 element.removeAttribute("checked");
                 inputField.disabled = true;
-                inputField.value = "N/A"
+                document.getElementById(inputId + "-error").remove();
+                inputField.classList.remove("invalid");
+                inputField.value = "N/A";
             }
 
             else if (element.hasAttribute("checked") == false) {
                 element.setAttribute("checked", "checked");
                 inputField.disabled = false;
-                inputField.value = ""
+                inputField.value = "";
             }
         }
     },
 
-    'submit .createAssessmentForm': function () {
+    'submit .createAssessmentForm': function (event) {
+        event.preventDefault();
         let currentCourseId = Session.get('courseId');
         let assessmentType = document.getElementById("assessmentType").value;
         let assessmentDate = document.getElementById("createNewAssessmentDate").value;
@@ -86,22 +90,6 @@ Template.createAssessment.events({
         var markA = document.getElementById("inputMarkA").value;
         var markT = document.getElementById("inputMarkT").value;
         var markC = document.getElementById("inputMarkC").value;
-
-
-        if (markK == "N/A" && markA == "N/A" && markT == "N/A" && markC == "N/A"){
-            Materialize.toast('You must assess the students in at least one category.', 5000, 'amber darken-3');
-            return false
-        }
-
-        if (markK <= 0 || markA <= 0 || markT <= 0 || markC <= 0){
-            Materialize.toast("A selected category's mark must be an integer greater than 0.", 5000, 'amber darken-3');
-            return false
-        }
-
-        if (!( (markK ==  "N/A" || Math.floor(markK) == markK) && (markA ==  "N/A" || Math.floor(markA) == markA) && (markT ==  "N/A" || Math.floor(markT) == markT) && (markC ==  "N/A" || Math.floor(markC) == markC) )){
-            Materialize.toast("A selected category's mark must be an integer greater than 0.", 5000, 'amber darken-3');
-            return false
-        }
 
 
         if (markK != "N/A") {
@@ -199,11 +187,65 @@ Template.createAssessment.events({
 });
 
 Template.createAssessment.onRendered(function () {
+    $.validator.addMethod( 'isInteger', (input) => {
+        return (input == "N/A" || Math.floor(input) == input);
+    });
+    $.validator.addMethod( 'isPositive', (input) => {
+        return (input >= 0);
+    });
     $('.createAssessmentModal').modal({
         dismissible: true, // Modal can be dismissed by clicking outside of the modal
         complete: function () {
             closeCreateAssessmentModal();
         }
-    }
-    );
+    });
+    $("#createAssessmentFormId").validate({
+        errorClass:'invalid',
+        validClass:'marks-valid',
+        rules: {
+            marksK: {
+                isInteger: true,
+                isPositive: true
+            },
+            marksA: {
+                isInteger: true,
+                isPositive: true
+            },
+            marksT: {
+                isInteger: true,
+                isPositive: true
+            },
+            marksC: {
+                isInteger: true,
+                isPositive: true
+            }
+        },
+        messages: {
+            marksK: {
+                isInteger: "A selected category's mark must be an integer.",
+                isPositive: "A selected category's mark must be greater than 0."
+            },
+            marksA: {
+                isInteger: "A selected category's mark must be an integer.",
+                isPositive: "A selected category's mark must be greater than 0."
+            },
+            marksT: {
+                isInteger: "A selected category's mark must be an integer.",
+                isPositive: "A selected category's mark must be greater than 0."
+            },
+            marksC: {
+                isInteger: "A selected category's mark must be an integer.",
+                isPositive: "A selected category's mark must be greater than 0."
+            }
+        },
+        errorElement : 'div',
+        errorPlacement: function(error, element) {
+            var placement = $(element).data('error');
+            if (placement) {
+              $(placement).append(error)
+            } else {
+              error.insertAfter(element);
+            }
+          }
+    });
 });

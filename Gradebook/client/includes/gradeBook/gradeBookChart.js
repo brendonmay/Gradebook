@@ -38,8 +38,10 @@ function canAssignFinalEvaluation() {
 }
 
 Template.gradeBookChart.onRendered(function() {
-    $("#main_table").tableHeadFixer({"left" : 1}); 
+    $("#main_table").tableHeadFixer({"left" : 1});
     $("#main_table").floatThead();
+    document.getElementsByClassName('floatThead-wrapper')[0].parentElement.style.width = "100%";
+
 });
   
 

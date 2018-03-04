@@ -22,21 +22,20 @@
                 </div>
         </nav>
         <div>
-                <table class="gradebook-table" id="main_table" align="center">
+                <table class="gradebook-table striped centered" id="main_table" align="center">
                         <thead>
                                 <tr>
-                                        <th class="studNameCell" style="background-color: white !important;"></th>
+                                        <th class="studNameCell studentBlankCellBorder studentsCell"></th>
                                         {{> assessmentNameHeader}} {{> assessmentNameHeader}} {{> assessmentNameHeader}} {{> assessmentNameHeader}} {{> assessmentNameHeader}}
                                         {{> assessmentNameHeader}} {{> assessmentNameHeader}} {{> assessmentNameHeader}}
 
                                 </tr>
                                 <tr>
-                                        <th class="studNameCell" style="min-width:399px; background-color: white !important; font-weight: bold; text-align:center; border-right: 2px solid black">Students</th>
+                                        <th class="studNameCell studentCellBorder studentsCell" >Students</th>
                                         {{> categoryAndValue}} {{> categoryAndValue}} {{> categoryAndValue}} {{> categoryAndValue}} {{> categoryAndValue}} {{> categoryAndValue}}
                                         {{> categoryAndValue}} {{> categoryAndValue}}
                                 </tr>
-                        </thead>
-                        
+                        </thead>                     
                         <tbody>
                                 <tr>
                                         {{> studentName}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}}

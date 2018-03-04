@@ -1,0 +1,12 @@
+.studName:focus{
+    background-color: #c1c1c1;
+}
+
+.studName:hover{
+    background-color: #c1c1c1;
+}
+
+.studNameCell{
+    border-right: 1px double black !important;
+    min-width:200px;
+}

@@ -1,0 +1,118 @@
+<template name="gradeBookChart">
+        <nav class="heighten-nav nav-padding-top">
+                <div class="nav-wrapper light-blue lighten-4">
+                        <a href="#" class="left-align gradebook-header">Grade Book</a>
+                        <ul id="nav-mobile" class="right hide-on-med-and-down">
+                                <li>
+                                        <a href="#!" class="modal-trigger">
+                                                <p class="zero-top-pad grey-font-color">Add Students</p>
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#!" class="createAssessmentButtonGradeBook">
+                                                <p class="zero-top-pad grey-font-color">Create New Assessment</p>
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#!" class="assignFinalEvalButtonGradeBook">
+                                                <p class="zero-top-pad grey-font-color">Assign Final Evaluation</p>
+                                        </a>
+                                </li>
+                        </ul>
+                </div>
+        </nav>
+        <div>
+                <table class="gradebook-table striped centered" id="main_table" align="center">
+                        <thead>
+                                <tr>
+                                        <th class="studNameCell studentBlankCellBorder studentsCell"></th>
+                                        {{> assessmentNameHeader}} {{> assessmentNameHeader}} {{> assessmentNameHeader}} {{> assessmentNameHeader}} {{> assessmentNameHeader}}
+                                        {{> assessmentNameHeader}} {{> assessmentNameHeader}} {{> assessmentNameHeader}}
+
+                                </tr>
+                                <tr>
+                                        <th class="studNameCell studentCellBorder studentsCell" >Students</th>
+                                        {{> categoryCells}} {{> categoryCells}} {{> categoryCells}} {{> categoryCells}} {{> categoryCells}} {{> categoryCells}}
+                                        {{> categoryCells}} {{> categoryCells}}
+                                </tr>
+                        </thead>                     
+                        <tbody>
+                                <tr>
+                                        {{> studentName}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}}
+                                        {{> studentMark}} {{> studentMark}}
+
+                                </tr>
+                                <tr>
+                                        {{> studentName}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}}
+                                        {{> studentMark}} {{> studentMark}}
+                                </tr>
+                                <tr>
+                                        {{> studentName}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}}
+                                        {{> studentMark}} {{> studentMark}}
+                                </tr>
+                                <tr>
+                                        {{> studentName}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}}
+                                        {{> studentMark}} {{> studentMark}}
+                                </tr>
+                                <tr>
+                                        {{> studentName}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}}
+                                        {{> studentMark}} {{> studentMark}}
+                                </tr>
+                                <tr>
+                                        {{> studentName}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}}
+                                        {{> studentMark}} {{> studentMark}}
+                                </tr>
+                                <tr>
+                                        {{> studentName}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}}
+                                        {{> studentMark}} {{> studentMark}}
+                                </tr>
+                                <tr>
+                                        {{> studentName}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}}
+                                        {{> studentMark}} {{> studentMark}}
+                                </tr>
+                                <tr>
+                                        {{> studentName}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}}
+                                        {{> studentMark}} {{> studentMark}}
+                                </tr>
+                                <tr>
+                                        {{> studentName}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}}
+                                        {{> studentMark}} {{> studentMark}}
+                                </tr>
+                                <tr>
+                                        {{> studentName}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}}
+                                        {{> studentMark}} {{> studentMark}}
+                                </tr>
+                                <tr>
+                                        {{> studentName}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}}
+                                        {{> studentMark}} {{> studentMark}}
+                                </tr>
+                                <tr>
+                                        {{> studentName}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}}
+                                        {{> studentMark}} {{> studentMark}}
+                                </tr>
+                                <tr>
+                                        {{> studentName}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}}
+                                        {{> studentMark}} {{> studentMark}}
+                                </tr>
+                                <tr>
+                                        {{> studentName}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}}
+                                        {{> studentMark}} {{> studentMark}}
+                                </tr>
+                                <tr>
+                                        {{> studentName}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}}
+                                        {{> studentMark}} {{> studentMark}}
+                                </tr>
+                                <tr>
+                                        {{> studentName}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}}
+                                        {{> studentMark}} {{> studentMark}}
+                                </tr>
+                                <tr>
+                                        {{> studentName}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}} {{> studentMark}}
+                                        {{> studentMark}} {{> studentMark}}
+                                </tr>
+                        </tbody>
+                </table>
+
+
+        </div>
+</template>

@@ -68,6 +68,7 @@ if (Meteor.isServer) {
             }
             CourseWeighting.remove({ "ownerId": Meteor.userId(), "courseId": currentCourseId });
             Meteor.call('assessments.deleteCourse', currentCourseId, courseObj);
+            Students.remove({ownerId: Meteor.userId(), courseId: currentCourseId});
         },
     });
 }

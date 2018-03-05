@@ -22,11 +22,10 @@
 		-make the confirm password properly check the first password via validate (I started this in onRendered in register.js)
 	- In each of the Settings' Tabs, check the input type to ensure only numbers can be inputted for the weights.
 	- You can assign or create assessments even if you don't input a date. Do we want it to be like that?
-	- In assessments tab if you try to edit the date sometimes it wont let you.
+	- In assessments tab if you try to edit the date sometimes it wont let you (I think?)
 	- When you change the year of a course, it will no longer be highlighted in the sideNav
 	- When you delete a course that is in a folder with more than one course, another course will become highlighted, yet no information is shown
-	- When you delete a course, make sure you delete the students document for that course. find "remove students document for the course"
-	- When you create a new assessment, you need to update the students document for the course in the Students Collection so that the grades array includes the newly created assessment with all marks = N/A
+	- Limit the number of students of a class to 39.
 
 -------------
 

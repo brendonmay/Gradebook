@@ -5,7 +5,9 @@
 	- Finish all of the styling in each of the settings tabs.
 	- Buttons in settings tab dont behave well as you change the size of the window. Possible suggested solution, use display=none instead of adding class "hide" when they shouldnt be there. This can be achieved with the setAttribute() functiion.
 	- Add Assessment Modal - Assessment Type drop down: determine a clean and nice way of differentiating the first dropdown item from the clickable drop down items! 
-	- Change most (if not all) toasts to custom error messages via jQuery validation + MaterializeCSS. I have already installed jQuery validation.
+	- In the Assessments Tab, the text directing you to Assessment Settings doesnt dynamically move.
+	- Make all toasts appear in the top right of the nav bar
+	- Change most (if not all) toasts to custom error messages via jQuery validation + MaterializeCSS. I have already installed jQuery validation. Note: it is not up to date! Due to this supposedly being very buggy I highly suggest we install the latest version.
 		-https://themeteorchef.com/tutorials/validating-forms-with-jquery-validation
 		-http://demo.geekslabs.com/materialize/v3.1/form-validation.html
 		-https://codepen.io/tdurant72/pen/vgyBjZ
@@ -19,13 +21,12 @@
 		-make the confirm password properly check the first password via validate (I started this in onRendered in register.js)
 	- In each of the Settings' Tabs, check the input type to ensure only numbers can be inputted for the weights.
 	- You can assign or create assessments even if you don't input a date. Do we want it to be like that?
-	- In assessments tab if you try to edit the date sometimes it wont let you.
+	- In assessments tab if you try to edit the date sometimes it wont let you (I think?)
 	- When you change the year of a course, it will no longer be highlighted in the sideNav
+	- When you delete a course that is in a folder with more than one course, another course will become highlighted, yet no information is shown
+	- Limit the number of students of a class to 39.
 
 -------------
-
-
-
 
 Good web documents:
 	Using Dynamic Templates in Meteor: https://themeteorchef.com/tutorials/using-dynamic-templates

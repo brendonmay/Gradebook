@@ -7,9 +7,13 @@
             </div>
             <form class="add-form col s12 login-form" id="loginForm">
                 <div class="row">
+                    <div class='col s12 center' id="login-failed" style="display: none; color:#d32f2f">
+                        <span>*Incorrect username or password.</span>
+                    </div>
                     <div class='input-field col s12'>
-                        <input type="email" id="email" name="userEmail" class="validate">
-                        <label for="userEmail" data-error="Invalid email">E-mail</label>
+                        <input type="email" id="email" name="userEmail" class="validate" data-error=".emailError">
+                        <label for="userEmail">E-mail</label>
+                        <div class="emailError"></div>
                     </div>
                     <div class='input-field col s12'>
                         <input type="password" id="password" name="userPassword">

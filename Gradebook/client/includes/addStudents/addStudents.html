@@ -1,27 +1,85 @@
 <!-- Modal Structure -->
 <template name="addStudents">
-        <div id="addStudentsModal" class="modal addStudentsModal">
-            <div class="modal-content">
-                    <div class='modal-title'>
-                        <h4 class="addCourse-pad-top">Add Students</h4>
-                    </div>
-                <form id="addStudentsModalForm" class="col s12" onsubmit="return false">
-                    <div id="addNewStudentsDiv" class="row">
-                        <div class='input-field col s4 offset-s1' style="padding: 0">
-                            <input id ="studentLastName" type="text" required>
-                            <label style="left: 0">Last Name</label>
-                        </div>
-                        <div class='input-field col s4 offset-s1' style="padding: 0">
-                            <input id ="studentFirstName" type="text" name="firstName" required>
-                            <label style="left: 0">First Name</label>
-                        </div>
-                    </div>
-                    <input type="submit" style="display: none;"/>
-                    <div class="modal-footer">
-                        <a class="waves-effect waves-grey btn-flat addStudentsModalButton">Add Students</a>
-                        <a class="waves-effect waves-grey btn-flat addStudentsCancelButton">Cancel</a>
-                    </div>
-                </form>
+    <div id="addStudentsModal" class="modal addStudentsModal">
+        <div class="modal-content">
+            <div class='modal-title'>
+                <h4 class="addCourse-pad-top">Manage Students</h4>
+                <u>
+                    <h5 class="center">Current Students</h5>
+                </u>
             </div>
+            <form id="addStudentsModalForm" onsubmit="return false">
+                <div class="row">
+                    {{#if hasStudents}}
+                        <div class="col s4">
+                            <!-- 13 students per column -->
+                            <ul>
+                                {{#each studentsForColumnOne}}
+                                <li>
+                                    <div>
+                                        <a href="#!">
+                                            <i class="material-icons icon-bluegrey">close</i>
+                                        </a>
+                                        {{listNumber}}. {{studentName}}
+                                    </div>
+                                </li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                        <div class="col s4">
+                            <ul>
+                                {{#each studentsForColumnTwo}}
+                                <li>
+                                    <div>
+                                        <a href="#!">
+                                            <i class="material-icons icon-bluegrey">close</i>
+                                        </a>
+                                        {{listNumber}}. {{studentName}}
+                                    </div>
+                                </li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                        <div class="col s4">
+                            <ul>
+                                {{#each studentsForColumnThree}}
+                                <li>
+                                    <div>
+                                        <a href="#!">
+                                            <i class="material-icons icon-bluegrey">close</i>
+                                        </a>
+                                        {{listNumber}}. {{studentName}}
+                                    </div>
+                                </li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                    {{else}}
+                        <p class="center custom-css-for-p">You currently have no students on your roster.</p>
+                    {{/if}}
+                </div>
+
+                <div class="row zero-marg-bottom">
+                    <u>
+                        <h5 class="center">Add New Student</h5>
+                    </u>
+                </div>
+                <div id="addNewStudentsDiv" class="row">
+                    <div class='input-field col s4 offset-s1' style="padding: 0">
+                        <input id="studentLastName" type="text" required>
+                        <label style="left: 0">Last Name</label>
+                    </div>
+                    <div class='input-field col s4 offset-s1' style="padding: 0">
+                        <input id="studentFirstName" type="text" name="firstName" required>
+                        <label style="left: 0">First Name</label>
+                    </div>
+                </div>
+                <input type="submit" style="display: none;" />
+                <div class="modal-footer">
+                    <a class="waves-effect waves-grey btn-flat addStudentsModalButton">Add Student</a>
+                    <a class="waves-effect waves-grey btn-flat addStudentsCancelButton">Close</a>
+                </div>
+            </form>
         </div>
-    </template>
+    </div>
+</template>

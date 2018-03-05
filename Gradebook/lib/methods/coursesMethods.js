@@ -31,8 +31,9 @@ if (Meteor.isServer) {
                 ]
             });
             Meteor.call('assessments.setUpCourseAssessments', 1);
+            Meteor.call('students.defaultStudentsDocument', Meteor.userId(), 1);
         },
-        'courses.addNewCourse'(currentCourses) {
+        'courses.addNewCourse'(currentCourses, newCourseId) {
             Courses.update(
                 { "ownerId": Meteor.userId() },
                 {
@@ -41,6 +42,7 @@ if (Meteor.isServer) {
                 }
             );
             Meteor.call('assessments.addNewCourse', currentCourses);
+            Meteor.call('students.defaultStudentsDocument', Meteor.userId(), newCourseId);
         },
         'courses.updateCourseNameAndYear'(currentCourseId, courseObj) {
             Courses.update(
@@ -51,7 +53,7 @@ if (Meteor.isServer) {
                 }
             );
         },
-        'courses.deleteCourse'(currentCourseId, courseObj) {
+        'courses.deleteCourse'(currentCourseId, courseObj) { //remove students document for the course
             Courses.update(
                 { "ownerId": Meteor.userId() },
                 {
@@ -66,6 +68,7 @@ if (Meteor.isServer) {
             }
             CourseWeighting.remove({ "ownerId": Meteor.userId(), "courseId": currentCourseId });
             Meteor.call('assessments.deleteCourse', currentCourseId, courseObj);
+            Students.remove({ownerId: Meteor.userId(), courseId: currentCourseId});
         },
     });
 }

@@ -62,6 +62,13 @@ Template.gradeBookChart.events({
         $('select').material_select();
     },
     'click .addStudentsButtonGradebook': function(){
+        $('#addStudentsModal').modal({
+            dismissible: true,
+            complete: function(){
+                document.getElementById('addStudentsModalForm').reset();
+            }
+
+        });
         $('#addStudentsModal').modal('open');
     }
 });

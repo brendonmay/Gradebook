@@ -162,6 +162,7 @@ Template.createAssessment.events({
                         assessments: [assessmentObject]
                     }
                     newAssessmentObjects[newAssessmentObjects.length] = courseAssessmentTypesObject;
+                    Meteor.call('students.addNewAssessment', Meteor.userId(), currentCourseId, assessmentTypeId + "-" + 1);
                     //console.log("We are on index # " + i + " which is assessment Type: " + assessmentType + ". You are making the first assessment of this type. Here is the updated newAssessmentObjects: " + newAssessmentObjects);
                 }
 
@@ -190,6 +191,7 @@ Template.createAssessment.events({
                         assessments: newAssessmentsArray
                     }
                     newAssessmentObjects[newAssessmentObjects.length] = courseAssessmentTypesObject;
+                    Meteor.call('students.addNewAssessment', Meteor.userId(), currentCourseId, newAssessmentId);
                     //console.log("We are on index # " + i + " which is assessment Type: " + assessmentType + ". You are NOT making the first assessment of this type. Here is the updated newAssessmentObjects: " + newAssessmentObjects);
                 }
             }

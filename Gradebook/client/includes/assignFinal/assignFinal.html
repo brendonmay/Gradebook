@@ -8,7 +8,7 @@
                 <div class="row">
                     <div class="col s5 offset">
                         <div class="input-field">
-                            <select id="finalAssessmentType" name='finalAssessmentTypeSelect' required>
+                            <select id="finalAssessmentType" name='finalAssessmentTypeSelect' class="required">
                                 <option value="" disabled selected>Choose Final Evaluation</option>
                                 {{#each getAssessmentTypes}}
                                 <option value={{assessmentType}}>{{assessmentType}}</option>
@@ -18,7 +18,7 @@
                         </div>
                     </div>
                     <div class='input-field col s5 offset-s1' style="padding: 0">
-                        <input class="datepicker" id="createNewFinalAssessmentDate" type="text" name="finalAssessmentDate" required>
+                        <input class="datepicker" id="createNewFinalAssessmentDate" type="text" name="finalAssessmentDate">
                         <label for="createNewFinalAssessmentDate" style="left: 0">Date of Assessment</label>
                     </div>
                 </div>
@@ -57,18 +57,19 @@
                         Marks:
                     </div>
                     <div class='input-field inline col s1 zero-margin-top' style="padding: 0">
-                        <input id="inputFinalMarkK" type="text" name="marksKFinal" value="N/A" class="center" disabled>
+                        <input id="inputFinalMarkK" type="text" name="marksKFinal" value="N/A" data-error=".errorMessageFinal" class="center form-control" disabled>
                     </div>
                     <div class='input-field inline col s1 offset-s1 zero-margin-top' style="padding: 0">
-                        <input id="inputFinalMarkA" type="text" name="marksAFinal" value="N/A" class="center" disabled>
+                        <input id="inputFinalMarkA" type="text" name="marksAFinal" value="N/A" data-error=".errorMessageFinal" class="center form-control" disabled>
                     </div>
                     <div class='input-field inline col s1 offset-s1 zero-margin-top' style="padding: 0">
-                        <input id="inputFinalMarkT" type="text" name="marksTFinal" value="N/A" class="center" disabled>
+                        <input id="inputFinalMarkT" type="text" name="marksTFinal" value="N/A" data-error=".errorMessageFinal" class="center form-control" disabled>
                     </div>
                     <div class='input-field inline col s1 offset-s1 zero-margin-top' style="padding: 0">
-                        <input id="inputFinalMarkC" type="text" name="marksCFinal" value="N/A" class="center" disabled>
+                        <input id="inputFinalMarkC" type="text" name="marksCFinal" value="N/A" data-error=".errorMessageFinal" class="center form-control" disabled>
                     </div>
                 </div>
+                <div class="center errorMessageFinal"></div>
                 <input type="submit" style="display: none;" />
                 <div class="modal-footer">
                     <button class="add-form modal-action waves-effect waves-grey btn-flat" type="submit">Assign Evaluation</button>

@@ -8,9 +8,23 @@ import jqueryValidation from 'jquery-validation';
 
 import '../../main.html';
 
+function clearValidation(formElement) {
+    //Internal $.validator is exposed through $(form).validate()
+    var validator = $(formElement).validate();
+    //Iterate through named elements inside of the form, and mark them as error free
+    $('[name]', formElement).each(function () {
+        validator.successList.push(this);//mark as error free
+        validator.showErrors();//remove error messages if present
+    });
+    validator.resetForm();//remove error class on name elements and clear history
+    validator.reset();//remove all error and success data
+}
+
 function closeCreateAssessmentModal() {
     //clear the input fields
-    document.getElementById("createAssessmentFormId").reset();
+    var form = document.getElementById("createAssessmentFormId");
+    form.reset();
+    clearValidation(form);
 
     //uncheck the checkboxes
     let checkboxK = document.getElementById("checkboxK");
@@ -66,7 +80,10 @@ Template.createAssessment.events({
             if (element.hasAttribute("checked") == true) {
                 element.removeAttribute("checked");
                 inputField.disabled = true;
-                document.getElementById(inputId + "-error").remove();
+                var errorElement = document.getElementById(inputId + "-error");
+                if (errorElement) {
+                    errorElement.remove();
+                }
                 inputField.classList.remove("invalid");
                 inputField.value = "N/A";
             }
@@ -182,15 +199,16 @@ Template.createAssessment.events({
     },
 
     'click #createAssessmentCancel': function () {
+        closeCreateAssessmentModal();
         $('.createAssessmentModal').modal('close');
     }
 });
 
 Template.createAssessment.onRendered(function () {
-    $.validator.addMethod( 'isInteger', (input) => {
+    $.validator.addMethod('isInteger', (input) => {
         return (input == "N/A" || Math.floor(input) == input);
     });
-    $.validator.addMethod( 'isPositive', (input) => {
+    $.validator.addMethod('isPositive', (input) => {
         return (input >= 0);
     });
     $('.createAssessmentModal').modal({
@@ -200,8 +218,8 @@ Template.createAssessment.onRendered(function () {
         }
     });
     $("#createAssessmentFormId").validate({
-        errorClass:'invalid',
-        validClass:'marks-valid',
+        errorClass: 'invalid',
+        validClass: 'marks-valid',
         rules: {
             marksK: {
                 isInteger: true,
@@ -238,14 +256,14 @@ Template.createAssessment.onRendered(function () {
                 isPositive: "A selected category's mark must be greater than 0."
             }
         },
-        errorElement : 'div',
-        errorPlacement: function(error, element) {
+        errorElement: 'div',
+        errorPlacement: function (error, element) {
             var placement = $(element).data('error');
             if (placement) {
-              $(placement).append(error)
+                $(placement).append(error)
             } else {
-              error.insertAfter(element);
+                error.insertAfter(element);
             }
-          }
+        }
     });
 });

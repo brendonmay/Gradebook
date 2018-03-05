@@ -64,7 +64,7 @@ Template.addCourse.events({
                         i--;
                     }
                 }
-                Meteor.call('courses.addNewCourse', currentCourses);
+                Meteor.call('courses.addNewCourse', currentCourses, newCourseId);
                 Meteor.call('courseInformation.defaultSettings', newCourseId);
             }
 

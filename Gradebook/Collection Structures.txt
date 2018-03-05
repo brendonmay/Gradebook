@@ -103,8 +103,9 @@ Students Collection
 	courseId: courseId,
 	students: [
 		{
-			studentName: Josh Currie
-			studentId: studentId
+			studentLastName: "Currie",
+			studentFirstName: "Joshua",
+			studentId: studentId,
 			grades: [
 				{
 					assessmentId: "c1-1", K: 5, A: 5, C: 5, T: 5

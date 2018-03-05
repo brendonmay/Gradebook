@@ -90,6 +90,14 @@
     color:#ff5252
 }
 
+.icon-bluegrey-edit{
+    color:#455a64
+}
+
+.icon-bluegrey-edit:hover{
+    color:#4caf50
+}
+
 .assessment-icon {
     padding-top: 3px;
     padding-right: 10px

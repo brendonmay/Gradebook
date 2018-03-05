@@ -1,0 +1,15 @@
+<template name="deleteStudent">
+    <div id="deleteStudentModal" class="modal delete-student-modal">
+        <div class="modal-content">
+            <h4>Delete Student</h4>
+            <p>Are you sure you want to remove
+                <u>{{studentName}}</u> from the student roster? This action is irreversable.</p>
+        </div>
+        <div class="modal-footer">
+            <button id="deleteStudent-yes" class="yes-delete-student add-form modal-action modal-close waves-effect waves-grey btn-flat"
+                type="submit">Yes</button>
+            <button id="deleteStudent-no" class="no-delete-student add-form modal-action modal-close waves-effect waves-grey btn-flat"
+                type="submit">No</button>
+        </div>
+    </div>
+</template>

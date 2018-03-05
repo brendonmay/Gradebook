@@ -2,18 +2,18 @@
     <div id="editStudentModal" class="modal">
         <div class="modal-content">
             <h4>Rename Student</h4>
-            <p>Below you can rename
-                <u>{{studentName}}</u>
+            <p>Below you can change
+                <u>{{getFirstName}} {{getLastName}}'s</u> name on the student roster:
             </p>
             <form id="editStudentsModalForm" onsubmit="return false">
                 <div class="row">
                     <div class='input-field col s4 offset-s1' style="padding: 0">
-                        <input id="editStudentLastName" type="text" value={{getLastName}} required>
-                        <label style="left: 0">Last Name</label>
+                        <input id="editStudentLastName" type="text" placeholder="" value={{getLastName}} required>
+                        <label for="editStudentLastName" style="left: 0">Last Name</label>
                     </div>
                     <div class='input-field col s4 offset-s1' style="padding: 0">
-                        <input id="editStudentFirstName" type="text" value={{getFirstName}} required>
-                        <label style="left: 0">First Name</label>
+                        <input id="editStudentFirstName" type="text" placeholder="" value={{getFirstName}} required>
+                        <label for="editStudentFirstName" style="left: 0">First Name</label>
                     </div>
                 </div>
                 <input type="submit" style="display: none;" />

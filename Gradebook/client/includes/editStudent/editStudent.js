@@ -3,35 +3,13 @@ import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Accounts } from 'meteor/accounts-base';
 
-function getStudentName(part){
-    let firstName = Session.get('selectedStudent').firstName;
-    let lastName = Session.get('selectedStudent').lastName;
-    let studentName = firstname + " " + lastname;
-
-    if (part == "first"){
-        return firstName
-    }
-    if (part == "last"){
-        return lastName
-    }
-    if (part == "full"){
-        return studentName
-    }
-    else{
-        console.log("invalid arguement")
-        return false
-    }
-};
-
 Template.editStudent.helpers({
-    studentName: function(){
-        getStudentName("full");
-    },
     getFirstName: function(){
-        getStudentName("first");
+        return Session.get('selectedStudent').firstName;
     },
-    getFirstName: function(){
-        getStudentName("last");
+
+    getLastName: function(){
+        return Session.get('selectedStudent').lastName;
     },
 });
 

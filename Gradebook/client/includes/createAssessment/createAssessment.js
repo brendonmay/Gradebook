@@ -4,7 +4,7 @@ import { Courses } from '../../../lib/collections.js';
 import { Accounts } from 'meteor/accounts-base';
 import { CourseWeighting } from '../../../lib/collections.js';
 import { Assessments } from '../../../lib/collections.js';
-import jqueryValidation from 'jquery-validation'
+import jqueryValidation from 'jquery-validation';
 
 import '../../main.html';
 

@@ -1,9 +1,18 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
-import jqueryValidation from 'jquery-validation'
+import jqueryValidation from 'jquery-validation';
 // import { Accounts } from 'meteor/accounts-base'
 
 import '../../main.html';
+
+function showLoginErrorMessageText(reason) {
+    var message = document.getElementById('login-failed');
+    message.style.display = "";
+}
+function removeLoginError() {
+    var message = document.getElementById('login-failed');
+    message.style.display = "none";
+}
 
 Template.login.events({
     'submit .login-form': function (event, template) { //there is no check for if  the user password is incorrect
@@ -23,13 +32,15 @@ Template.login.events({
                         break;
                     case 403:
                         //one of "User not found", "Incorrect password"
-                        Materialize.toast(reason, 5000, 'amber darken-3');
+                        showLoginErrorMessageText(reason);
+                        //Materialize.toast(reason, 5000, 'amber darken-3');
                         break;
                     default:
                         //unidentified error 
                 }
             } else {
                 //no error on login, so user Logs in fine
+                removeLoginError();
                 $('#loginModal').modal('close');
             }
         });
@@ -39,29 +50,25 @@ Template.login.events({
         document.getElementById("loginForm").reset();
 
         $('#registerModal').modal('open');
+        removeLoginError();
         $('#loginModal').modal('close');
     },
 
     'click .cancel-button': function () {
         //clear the input fields
         document.getElementById("loginForm").reset();
-
+        removeLoginError();
         //if cancel button is clicked, close the modal
         $('#loginModal').modal('close');
     },
 })
 
 Template.login.onRendered(function() {
-
-    $.validate.addMethod( 'isValidUserID', (input) => {
-        Users
-    });
-
-    $("#formValidate").validate({
+    $("#loginForm").validate({
+        errorClass:'invalid',
         rules: {
             userEmail: {
-                required: true,
-                isValidUserID: true
+                required: true
             },
             userPassword: {
                 required: true
@@ -70,8 +77,7 @@ Template.login.onRendered(function() {
         //For custom messages
         messages: {
             userEmail:{
-                required: "Enter your username",
-                isValidUserID: "This userID is not valid"
+                required: "Enter your username"
             },
             userPassword: {
                 required: "Enter your password"
@@ -87,4 +93,6 @@ Template.login.onRendered(function() {
           }
         }
      });
+
+     
 });

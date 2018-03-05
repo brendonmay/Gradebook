@@ -19,6 +19,13 @@ Template.register.events({
         document.getElementById("registerForm").reset();
 
         $('#registerModal').modal('close');
+        $('#loginModal').modal({
+            complete: function () {
+                var message = document.getElementById('login-failed');
+                message.style.display = "none";
+            } // Callback for Modal close
+        }
+        );
         $('#loginModal').modal('open');
     },
 

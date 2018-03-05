@@ -4,12 +4,27 @@ import { Courses } from '../../../lib/collections.js';
 import { Accounts } from 'meteor/accounts-base';
 import { CourseWeighting } from '../../../lib/collections.js';
 import { Assessments } from '../../../lib/collections.js';
+import jqueryValidation from 'jquery-validation';
 
 import '../../main.html';
 
+function clearValidation(formElement) {
+    //Internal $.validator is exposed through $(form).validate()
+    var validator = $(formElement).validate();
+    //Iterate through named elements inside of the form, and mark them as error free
+    $('[name]', formElement).each(function () {
+        validator.successList.push(this);//mark as error free
+        validator.showErrors();//remove error messages if present
+    });
+    validator.resetForm();//remove error class on name elements and clear history
+    validator.reset();//remove all error and success data
+}
+
 function closeAssignFinalModal() {
     //clear the input fields
-    document.getElementById("assignFinalFormId").reset();
+    var form = document.getElementById("assignFinalFormId");
+    form.reset();
+    clearValidation(form);
 
     //uncheck the checkboxes
     let checkboxK = document.getElementById("finalCheckboxK");
@@ -54,20 +69,20 @@ Template.assignFinal.helpers({ //make sure that this only returns assessments th
         var arrayOfEvaluationsToReturn = [];
 
         //check which final assessment Type Ids have not already been assigned
-        for (i = 0; i < finalAssessmentTypeObjects.length; i++){
-            if (finalAssessmentTypeObjects[i].K == "N/A" && finalAssessmentTypeObjects[i].A == "N/A" && finalAssessmentTypeObjects[i].T == "N/A" && finalAssessmentTypeObjects[i].C == "N/A"){
+        for (i = 0; i < finalAssessmentTypeObjects.length; i++) {
+            if (finalAssessmentTypeObjects[i].K == "N/A" && finalAssessmentTypeObjects[i].A == "N/A" && finalAssessmentTypeObjects[i].T == "N/A" && finalAssessmentTypeObjects[i].C == "N/A") {
                 let unassignedAssessmentTypeId = finalAssessmentTypeObjects[i].assessmentTypeId;
                 unassignedFinalEvaluationIds[unassignedFinalEvaluationIds.length] = unassignedAssessmentTypeId;
             }
         }
 
         //We now have all the Ids of the unassigned final assessments. We must find their names
-        for (i = 0; i < unassignedFinalEvaluationIds.length; i++){
-            for (z = 0; z < finalAssessmentTypes.length; z ++){
-                if ( unassignedFinalEvaluationIds[i] == finalAssessmentTypes[z].assessmentTypeId ){
+        for (i = 0; i < unassignedFinalEvaluationIds.length; i++) {
+            for (z = 0; z < finalAssessmentTypes.length; z++) {
+                if (unassignedFinalEvaluationIds[i] == finalAssessmentTypes[z].assessmentTypeId) {
                     //console.log(finalAssessmentTypes[z].assessmentType + " is the name of assessmentTypeId: " + unassignedFinalEvaluationIds[i]);
                     var assessmentName = finalAssessmentTypes[z].assessmentType;
-                    var unassignedEvaluation = {assessmentType: assessmentName};
+                    var unassignedEvaluation = { assessmentType: assessmentName };
                     arrayOfEvaluationsToReturn[arrayOfEvaluationsToReturn.length] = unassignedEvaluation;
                 }
             }
@@ -93,25 +108,25 @@ Template.assignFinal.events({
 
 
         //find assessmentTypeId
-        var assessmentTypeId = ""; 
-        for(i = 0; i < finalAssessmentTypes.length; i++){
-            if (finalAssessmentTypes[i].assessmentType == assessmentType){
+        var assessmentTypeId = "";
+        for (i = 0; i < finalAssessmentTypes.length; i++) {
+            if (finalAssessmentTypes[i].assessmentType == assessmentType) {
                 assessmentTypeId = finalAssessmentTypes[i].assessmentTypeId
             }
         }
 
         //checks
-        if (markK == "N/A" && markA == "N/A" && markT == "N/A" && markC == "N/A"){
+        if (markK == "N/A" && markA == "N/A" && markT == "N/A" && markC == "N/A") {
             Materialize.toast('You must assess the students in at least one category.', 5000, 'amber darken-3');
             return false
         }
 
-        if (markK <= 0 || markA <= 0 || markT <= 0 || markC <= 0){
+        if (markK <= 0 || markA <= 0 || markT <= 0 || markC <= 0) {
             Materialize.toast("A selected category's mark must be an integer greater than 0.", 5000, 'amber darken-3');
             return false
         }
 
-        if (!( (markK ==  "N/A" || Math.floor(markK) == markK) && (markA ==  "N/A" || Math.floor(markA) == markA) && (markT ==  "N/A" || Math.floor(markT) == markT) && (markC ==  "N/A" || Math.floor(markC) == markC) )){
+        if (!((markK == "N/A" || Math.floor(markK) == markK) && (markA == "N/A" || Math.floor(markA) == markA) && (markT == "N/A" || Math.floor(markT) == markT) && (markC == "N/A" || Math.floor(markC) == markC))) {
             console.log("the problem is here");
             Materialize.toast("A selected category's mark must be an integer greater than 0.", 5000, 'amber darken-3');
             return false
@@ -129,10 +144,10 @@ Template.assignFinal.events({
         if (markC != "N/A") {
             markC = Number(markC)
         }
-        
+
         //create new finalAssessmentTypes array for Assessments Collection.
-        for (i = 0; i < assessmentObjects.length; i++){
-            if(assessmentObjects[i].assessmentTypeId == assessmentTypeId){
+        for (i = 0; i < assessmentObjects.length; i++) {
+            if (assessmentObjects[i].assessmentTypeId == assessmentTypeId) {
                 assessmentObjects[i].K = markK;
                 assessmentObjects[i].A = markA;
                 assessmentObjects[i].T = markT;
@@ -159,6 +174,11 @@ Template.assignFinal.events({
             if (element.hasAttribute("checked") == true) {
                 element.removeAttribute("checked");
                 inputField.disabled = true;
+                var errorElement = document.getElementById(inputId + "-error");
+                if (errorElement) {
+                    errorElement.remove();
+                }
+                inputField.classList.remove("invalid");
                 inputField.value = "N/A"
             }
 
@@ -170,6 +190,7 @@ Template.assignFinal.events({
         }
     },
     'click #assignFinalCancel': function () {
+        closeAssignFinalModal();
         $('.assignFinalModal').modal('close');
     },
 });
@@ -182,4 +203,65 @@ Template.assignFinal.onRendered(function () {
         }
     }
     );
+    $.validator.addMethod('isInteger', (input) => {
+        return (input == "N/A" || Math.floor(input) == input);
+    });
+    $.validator.addMethod('isPositive', (input) => {
+        return (input >= 0);
+    });
+    $('.createAssessmentModal').modal({
+        dismissible: true, // Modal can be dismissed by clicking outside of the modal
+        complete: function () {
+            closeCreateAssessmentModal();
+        }
+    });
+    $("#assignFinalFormId").validate({
+        errorClass: 'invalid',
+        validClass: 'final-marks-valid',
+        rules: {
+            marksKFinal: {
+                isInteger: true,
+                isPositive: true,
+            },
+            marksAFinal: {
+                isInteger: true,
+                isPositive: true
+            },
+            marksTFinal: {
+                isInteger: true,
+                isPositive: true
+            },
+            marksCFinal: {
+                isInteger: true,
+                isPositive: true
+            }
+        },
+        messages: {
+            marksKFinal: {
+                isInteger: "A selected category's mark must be an integer.",
+                isPositive: "A selected category's mark must be greater than 0."
+            },
+            marksAFinal: {
+                isInteger: "A selected category's mark must be an integer.",
+                isPositive: "A selected category's mark must be greater than 0."
+            },
+            marksTFinal: {
+                isInteger: "A selected category's mark must be an integer.",
+                isPositive: "A selected category's mark must be greater than 0."
+            },
+            marksCFinal: {
+                isInteger: "A selected category's mark must be an integer.",
+                isPositive: "A selected category's mark must be greater than 0."
+            }
+        },
+        errorElement: 'div',
+        errorPlacement: function (error, element) {
+            var placement = $(element).data('error');
+            if (placement) {
+                $(placement).append(error)
+            } else {
+                error.insertAfter(element);
+            }
+        }
+    });
 });

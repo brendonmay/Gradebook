@@ -27,8 +27,6 @@
 	- Limit the number of students of a class to 39.
 	- Make it so that you cannot include the characters "," or "?" in the student first or last name.
 	- Perhaps limit the length of the student first and last name?
-	- Editting students now works 100%, with the exception of: in editStudent Modal, unable to get the name of the current student via Session Variable.
-	- in Assessments tabs, when you click edit, make it so that the edit icons have class icon-bluegrey-edit instead of icon-bluegrey
 
 -------------
 

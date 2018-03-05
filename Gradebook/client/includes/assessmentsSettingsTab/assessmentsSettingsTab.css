@@ -8,9 +8,10 @@
 
 .weightInput{
     margin: 0!important;
-    margin-left: auto!important;
-    width: 6%!important;
+    margin-left: 15px!important;
+    width: 25px!important;
     height: 1.5rem!important;
+    text-align: center!important;
 }
 
 .weightingList{
@@ -61,7 +62,7 @@
 }
 
 #assessments-courseWorkWeight, #assessments-finalWeight{
-    width: 10%;
+    width: 40px;
     margin-bottom: 0;
     font-size: 1.64rem;
     text-align: center;

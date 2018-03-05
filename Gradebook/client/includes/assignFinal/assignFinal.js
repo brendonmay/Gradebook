@@ -219,9 +219,6 @@ Template.assignFinal.onRendered(function () {
         errorClass: 'invalid',
         validClass: 'final-marks-valid',
         rules: {
-            finalAssessmentTypeSelect: {
-                required: true
-            },
             marksKFinal: {
                 isInteger: true,
                 isPositive: true,

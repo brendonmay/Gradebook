@@ -21,11 +21,13 @@
 	- Login
 		-make the confirm password properly check the first password via validate (I started this in onRendered in register.js)
 	- In each of the Settings' Tabs, check the input type to ensure only numbers can be inputted for the weights.
-	- You can assign or create assessments even if you don't input a date. Do we want it to be like that?
 	- In assessments tab if you try to edit the date sometimes it wont let you (I think?)
 	- When you change the year of a course, it will no longer be highlighted in the sideNav
 	- When you delete a course that is in a folder with more than one course, another course will become highlighted, yet no information is shown
 	- Limit the number of students of a class to 39.
+	- Make it so that you cannot include the characters "," or "?" in the student first or last name.
+	- Perhaps limit the length of the student first and last name?
+	- Editting students now works 100%, with the exception of: in editStudent Modal, unable to get the name of the current student via Session Variable.
 
 -------------
 

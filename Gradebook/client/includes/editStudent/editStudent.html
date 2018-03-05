@@ -1,0 +1,27 @@
+<template name="editStudent">
+    <div id="editStudentModal" class="modal">
+        <div class="modal-content">
+            <h4>Rename Student</h4>
+            <p>Below you can rename
+                <u>{{studentName}}</u>
+            </p>
+            <form id="editStudentsModalForm" onsubmit="return false">
+                <div class="row">
+                    <div class='input-field col s4 offset-s1' style="padding: 0">
+                        <input id="editStudentLastName" type="text" value={{getLastName}} required>
+                        <label style="left: 0">Last Name</label>
+                    </div>
+                    <div class='input-field col s4 offset-s1' style="padding: 0">
+                        <input id="editStudentFirstName" type="text" value={{getFirstName}} required>
+                        <label style="left: 0">First Name</label>
+                    </div>
+                </div>
+                <input type="submit" style="display: none;" />
+                <div class="modal-footer">
+                    <a href="#!" id="save-changes-edit-student" class="waves-effect waves-grey btn-flat">Save Changes</a>
+                    <a href="#!" class="modal-action modal-close waves-effect waves-grey btn-flat">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</template>

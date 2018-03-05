@@ -2,22 +2,6 @@
     width: 100%;
 }
 
-.studentBlankCellBorder {
-    border-right: 1px solid black;
-}
-
-.studentCellBorder {
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
-}
-
-.studentsCell {
-    min-width:200px; 
-    background-color: white !important; 
-    font-weight: bold; 
-    text-align:center; 
-}
-
 #gradeBookChartHolder{ /*//not sure why we need this */
     width: 100%;
 }

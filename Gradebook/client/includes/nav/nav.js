@@ -16,7 +16,7 @@ Template.nav.onRendered(function () {
 });
 
 Template.nav.helpers({
-  currentEmail: function(){
+  currentEmail: function () {
     let account = Meteor.users.findOne({ _id: Meteor.userId() });
     return account.emails[0].address;
   }
@@ -24,6 +24,13 @@ Template.nav.helpers({
 
 Template.nav.events({
   'click .loginModal': function () {
+    $('#loginModal').modal({
+      complete: function () {
+        var message = document.getElementById('login-failed');
+        message.style.display = "none";
+      } // Callback for Modal close
+    }
+    );
     $('#loginModal').modal('open');
   },
 

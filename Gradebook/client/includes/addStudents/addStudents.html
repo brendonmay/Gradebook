@@ -11,12 +11,13 @@
             <form id="addStudentsModalForm" onsubmit="return false">
                 <div class="row">
                     {{#if hasStudents}}
+                    <h6 class="center" style="color:#607d8b">Hover over a student name to edit or delete the student.</h6>
                     <div class="col s4">
                         <!-- 13 students per column -->
                         <ul>
                             {{#each studentsForColumnOne}}
                             <li>
-                                <div>
+                                <div class='edit_hover_class'>
                                     <a href="#!" class="deleteStudent" id="d-s{{studentId}}?{{studentName}}">
                                         <i class="material-icons icon-bluegrey">close</i>
                                     </a>
@@ -33,7 +34,7 @@
                         <ul>
                             {{#each studentsForColumnTwo}}
                             <li>
-                                <div>
+                                <div class='edit_hover_class'>
                                     <a href="#!" class="deleteStudent" id="d-s{{studentId}}?{{studentName}}">
                                         <i class="material-icons icon-bluegrey">close</i>
                                     </a>
@@ -50,7 +51,7 @@
                         <ul>
                             {{#each studentsForColumnThree}}
                             <li>
-                                <div>
+                                <div class='edit_hover_class'>
                                     <a href="#!" class="deleteStudent" id="d-s{{studentId}}?{{studentName}}">
                                         <i class="material-icons icon-bluegrey">close</i>
                                     </a>
@@ -64,7 +65,9 @@
                         </ul>
                     </div>
                     {{else}}
-                        <p class="center custom-css-for-p">You currently have no students on your roster.</p>
+                        <!-- <ul class="collection"> -->
+                            <p class="custom-css-for-p center">You currently have no students on your roster.</p>
+                        <!-- </ul> -->
                     {{/if}}
                 </div>
                 <div class="row zero-marg-bottom">
@@ -84,7 +87,7 @@
                 </div>
                 <input type="submit" style="display: none;" />
                 <div class="modal-footer">
-                    <a class="waves-effect waves-grey btn-flat addStudentsModalButton">Add Student</a>
+                    <a class="waves-effect waves-grey btn-flat addStudentsModalButton" type="submit">Add Student</a>
                     <a class="waves-effect waves-grey btn-flat addStudentsCancelButton">Close</a>
                 </div>
             </form>

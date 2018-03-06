@@ -27,6 +27,8 @@
 	- Limit the number of students of a class to 39.
 	- Make it so that you cannot include the characters "," or "?" in the student first or last name.
 	- Perhaps limit the length of the student first and last name?
+	- Make it so that icons in student modal only appear on hover
+	- On forms/modals that have a button for submit, the required fields arent being enforced as it would if you hit enter to submit. This is evidennt in the addStudents modal, and likely the case in others.
 
 -------------
 

@@ -13,3 +13,7 @@
   .edit_hover_class:hover a {
    visibility:visible;
   }
+
+  .custom-bottom-pad-addStudents{
+      padding-bottom:0
+  }

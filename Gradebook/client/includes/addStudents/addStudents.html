@@ -73,16 +73,16 @@
                     </u>
                 </div>
                 <div id="addNewStudentsDiv" class="row">
-                    <div class='input-field col s4 offset-s1' style="padding: 0">
+                    <div class='input-field input-margin-bottom-fix col s4 offset-s1' style="padding: 0">
                         <input id="studentLastName" type="text" required>
                         <label style="left: 0">Last Name</label>
                     </div>
-                    <div class='input-field col s4 offset-s1' style="padding: 0">
+                    <div class='input-field input-margin-bottom-fix col s4 offset-s1' style="padding: 0">
                         <input id="studentFirstName" type="text" name="firstName" required>
                         <label style="left: 0">First Name</label>
                     </div>
                 </div>
-                <input type="submit" style="display: none;" />
+                <input type="submit" onsubmit="return false" style="display: none;" />
                 <div class="modal-footer">
                     <a class="waves-effect waves-grey btn-flat addStudentsModalButton">Add Student</a>
                     <a class="waves-effect waves-grey btn-flat addStudentsCancelButton">Close</a>

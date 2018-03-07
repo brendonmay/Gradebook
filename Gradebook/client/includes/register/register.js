@@ -1,10 +1,20 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Accounts } from 'meteor/accounts-base';
+import jqueryValidation from 'jquery-validation';
+import { Meteor } from "meteor/meteor";
+
 
 import '../../main.html';
 
-Meteor.subscribe("users");
+function doesEmailAlreadyExist(allEmails, userEmail) {
+    for (var i = 0; i < allEmails.length; i++) {
+        if (userEmail == allEmails[i]) {
+            return true;
+        }
+    }
+    return false;
+}
 
 Template.register.events({
     'click .cancel-button': function () {
@@ -41,7 +51,7 @@ Template.register.events({
         var uppercase = /[A-Z]/g;
         var number = /[0-9]/g;
 
-        const emailCheck = Meteor.users.find({ "emails.address": emailVar }).fetch();
+        // const emailCheck = Meteor.users.find({ "emails.address": emailVar }).fetch();
 
         //a count that will allow us to post multiple toasts to appear on the screen at once
         var toastCount = 0;
@@ -83,50 +93,74 @@ Template.register.events({
 
 
 Template.register.onRendered(function () {
-    // $(document).ready(function () {
-    //     $("#registerModal").validate({
-    //         rules: {
-    //             registerEmail: {
-    //                 required: true,
-    //                 email: true
-    //             },
-    //             registerPassword: {
-    //                 required: true,
-    //                 minlength: 7
-    //             },
-    //             confirmPassword: {
-    //                 required: true,
-    //                 minlength: 7,
-    //                 equalTo: "#registerPassword"
-    //             }
-    //         },
-    //         //For custom messages
-    //         messages: {
-    //             registerEmail: {
-    //                 required: "Enter an email.",
-    //                 email: "You must enter an email."
-    //             },
-    //             registerPassword: {
-    //                 required: "You must enter a password.",
-    //                 minlength: "Your password must be at least 7 characters."
-    //             },
-    //             confirmPassword: {
-    //                 required: "Re-enter your password.",
-    //                 minlength: "Your password must be at least 7 characters.",
-    //                 equalTo: "Does not match your initial password."
-    //             }
-    //         },
-    //         errorElement: 'div',
-    //         errorPlacement: function (error, element) {
-    //             var placement = $(element).data('error');
-    //             if (placement) {
-    //                 $(placement).append(error)
-    //             } else {
-    //                 error.insertAfter(element);
-    //             }
-    //         }
-    //     });
-    // });
+    $.validator.addMethod('containsUppercase', (input) => {
+        const uppercase = /[A-Z]/g;
+        return (input.match(uppercase));
+    });
+    $.validator.addMethod('containsNumber', (input) => {
+        const numbers = /[0-9]/g;
+        return (input.match(numbers));
+    });
+    $.validator.addMethod('emailNotInUse', (input) => {
+        var emailsArray = [];
+        const userList = Meteor.users.find({});
+        userList.forEach(
+            function (doc) {
+                emailsArray.push(doc.emails[0].address);
+            }
+        );
+        return !doesEmailAlreadyExist(emailsArray, input);
+    });
+
+    $("#registerForm").validate({
+        rules: {
+            registerEmail: {
+                required: true,
+                email: true,
+                emailNotInUse: true,
+
+            },
+            registerPassword: {
+                required: true,
+                minlength: 7,
+                containsUppercase: true,
+                containsNumber: true,
+            },
+            confirmPassword: {
+                required: true,
+                equalTo: "#registerPassword"
+            }
+        },
+        //For custom messages
+        messages: {
+            registerEmail: {
+                required: "Enter an email.",
+                email: "You must enter an email.",
+                emailNotInUse: "The email you entered already has an account assoicated with it."
+            },
+            registerPassword: {
+                required: "You must enter a password.",
+                minlength: "Your password must be at least 7 characters.",
+                containsUppercase: "Your password must contain atleast 1 upper case letter.",
+                containsNumber: "Your password must contain atleast 1 number."
+
+            },
+            confirmPassword: {
+                required: "Re-enter your password.",
+                equalTo: "The passwords you entered do not match."
+            }
+        },
+        errorElement: 'div',
+        errorPlacement: function (error, element) {
+            var placement = $(element).data('error');
+            $(element).addClass("validation-red-text");
+            if (placement) {
+                $(placement).append(error)
+            } else {
+                error.insertAfter(element);
+            }
+        }
+    });
 });
 
 

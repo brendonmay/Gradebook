@@ -6,17 +6,20 @@
             </div>
             <form class="add-form register-form col s12" id="registerForm">
                 <div class="row input-field">
-                    <div class='input-field col s12'>
-                        <input type="email" id="registerEmail" name="registerEmail" class="validate" required>
-                        <label for="registerEmail" data-error="Invalid email">E-mail</label>
+                    <div class='input-field input-margin-bottom-fix col s12'>
+                        <label for="registerEmail">E-mail</label>
+                        <input type="email" id="registerEmail" name="registerEmail" class="validate required" data-error=".emailError">
+                        <div class="emailError"></div>
                     </div>
-                    <div class='input-field col s12'>
-                        <input type="password" id="registerPassword" name="registerPassword" class="validate" minlength="7" required>
-                        <label for="registerPassword" data-error="Must be at least 7 characters">Password</label>
+                    <div class='input-field input-margin-bottom-fix col s12'>
+                        <label for="registerPassword">Password</label>
+                        <input type="password" id="registerPassword" name="registerPassword" class="validate required" data-error=".passwordError">
+                        <div class="passwordError"></div>
                     </div>
-                    <div class='input-field col s12'>
-                        <input type="password" id="confirmPassword" name="confirmPassword" class="validate" minlength="7" required>
-                        <label for="confirmPassword" data-error="Must be at least 7 characters">Confirm Password</label>
+                    <div class='input-field input-margin-bottom-fix col s12'>
+                        <label for="confirmPassword" >Confirm Password</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" class="validate required" data-error="confirmPasswordError">
+                        <div class="confirmPasswordError"></div>
                     </div>
                     <input type="submit" style="display: none;" />
                 </div>

@@ -89,6 +89,15 @@ ul.dropdown-content.select-dropdown li span{
   border-bottom: 1px solid #D32F2F!important;
   box-shadow: 0 1px 0 0 #D32F2F!important;
 }
+input {
+  margin-bottom: 0 !important;
+}
+.input-margin-bottom-fix {
+  margin-bottom: 20px !important;
+}
+.validation-red-text {
+  color: #d32f2f !important;
+}
 
 .material-icons, .icon-text {
   vertical-align: middle;

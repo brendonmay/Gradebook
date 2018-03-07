@@ -58,7 +58,7 @@
     height: 1.5rem;
 }
 
-.datepicker[type=text]:not(.browser-default){
+.datepickerspecial[type=text]:not(.browser-default){
     text-align: center;
     margin-left: 210px;
     width: 95px;

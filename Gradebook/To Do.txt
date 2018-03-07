@@ -16,7 +16,6 @@
 		-https://jsfiddle.net/rz0zk5u6/2/
 		-if we have problem with selects:
 			-https://github.com/Dogfalo/materialize/issues/3440
-
 -Functionality Issues
 	- Login
 		-make the confirm password properly check the first password via validate (I started this in onRendered in register.js)
@@ -27,6 +26,9 @@
 	- Limit the number of students of a class to 39.
 	- Make it so that you cannot include the characters "," or "?" in the student first or last name.
 	- Perhaps limit the length of the student first and last name?
+
+	-Delete Coursework Assessment has white text with no banner/Add Course Work/Add Final Evaluation Work
+	-In create new coursework, when checkbox is clicked focus on input field 
 
 -------------
 

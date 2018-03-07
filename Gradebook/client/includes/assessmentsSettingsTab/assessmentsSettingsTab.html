@@ -13,7 +13,7 @@
                     </div>
                     {{#each courseAssessmentTypes}}
                     <li>
-                        <div class="collapsible-header input-field" style="cursor: initial">
+                        <div class="collapsible-header input-field input-margin-bottom-fix" style="cursor: initial">
                             <a href='#!' class="delete-courseworkAssessmentType" name={{assessmentType}} id={{assessmentTypeId}}>
                                 <i id="deletec{{assessmentTypeId}}" class="material-icons icon-bluegrey">close</i>
                             </a>
@@ -41,7 +41,7 @@
                     </div>
                     {{#each courseAssessmentTypes}}
                     <li>
-                        <div class="collapsible-header input-field" style="cursor: initial; padding-top: 19.5px; padding-bottom: 19.5px">
+                        <div class="collapsible-header input-field input-margin-bottom-fix" style="cursor: initial; padding-top: 19.5px; padding-bottom: 19.5px">
                             <input class="assessment-type-input hide" id="changeNamec{{assessmentTypeId}}" value={{assessmentType}}>
                             <input disabled id="inputc{{assessmentTypeId}}" class="weightInput" type="text" name={{assessmentType}} value={{assessmentWeight}}>%
                         </div>
@@ -64,7 +64,7 @@
                     </div>
                     {{#each finalAssessmentTypes}}
                     <li>
-                        <div class="collapsible-header input-field" style="cursor: initial">
+                        <div class="collapsible-header input-field input-margin-bottom-fix" style="cursor: initial">
                             <a href='#!' class="delete-finalAssessmentType close-icon" name={{assessmentType}} id={{assessmentTypeId}}>
                                 <i class="material-icons icon-bluegrey" id="deletef{{assessmentTypeId}}">close</i>
                             </a>
@@ -92,7 +92,7 @@
                     </div>
                     {{#each finalAssessmentTypes}}
                     <li>
-                        <div class="collapsible-header input-field" style="cursor: initial; padding-top: 19.5px; padding-bottom: 19.5px">
+                        <div class="collapsible-header input-field input-margin-bottom-fix" style="cursor: initial; padding-top: 19.5px; padding-bottom: 19.5px">
                             <input disabled id="inputf{{assessmentTypeId}}" class="weightInput" type="text" name={{assessmentType}} value={{assessmentWeight}}>%
                         </div>
                     </li>

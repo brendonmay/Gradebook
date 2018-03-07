@@ -209,6 +209,46 @@ Template.addStudents.events({
     'click .addStudentsCancelButton': function(){
         document.getElementById("addStudentsModalForm").reset();
         $('#addStudentsModal').modal('close');
+    },
+    'click .deleteStudent': function(){
+        let target = event.target;
+        let targetId = target.parentElement.id
+        let studentId = targetId.slice(3, targetId.indexOf('?'));
+        let studentName = targetId.slice(targetId.indexOf('?') + 1, targetId.length);
+        let lastName = studentName.slice(0, studentName.indexOf(', '));
+        let firstName = studentName.slice(studentName.indexOf(', ') + 2, studentName.length);
+        let firstThenLastName = firstName + " " + lastName;
+
+        Session.set('selectedStudent', {studentId: studentId, studentName: firstThenLastName});
+        $('#addStudentsModal').modal('close');
+        $('#deleteStudentModal').modal({
+            dismissible: true, 
+            complete: function() { 
+                $('#addStudentsModal').modal('open');
+            } 
+          }
+        );
+        $('#deleteStudentModal').modal('open');
+    },
+    'click .editStudent': function(){
+        let target = event.target;
+        let targetId = target.parentElement.id
+        let studentId = targetId.slice(3, targetId.indexOf('?'));
+        let studentName = targetId.slice(targetId.indexOf('?') + 1, targetId.length);
+        let lastName = studentName.slice(0, studentName.indexOf(', '));
+        let firstName = studentName.slice(studentName.indexOf(', ') + 2, studentName.length);
+
+        Session.set('selectedStudent', {studentId: studentId, firstName: firstName, lastName: lastName});
+        $('#addStudentsModal').modal('close');
+        $('#editStudentModal').modal({
+            dismissible: true, 
+            complete: function() { 
+                $('#addStudentsModal').modal('open');
+                // document.getElementById("editStudentsModalForm").reset();
+            } 
+          }
+        );
+        $('#editStudentModal').modal('open');
     }
 });
 

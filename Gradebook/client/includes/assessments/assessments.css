@@ -1,6 +1,85 @@
+.editable-assessment-fields:not([type]):focus:not([readonly]){
+    border-bottom-color: #4caf50;
+}
+
+.k:not([type]){
+    text-align: center;
+    margin-left: 210px;
+    width: 25px;
+    height: 1.5rem;
+}
+
+.k-final:not([type]){
+    text-align: center;
+    margin-left: 260px;
+    width: 25px;
+    height: 1.5rem;
+}
+
+.a:not([type]){
+    text-align: center;
+    margin-left: 209px;
+    width: 25px;
+    height: 1.5rem;
+}
+
+.a-final:not([type]){
+    text-align: center;
+    margin-left: 259px;
+    width: 25px;
+    height: 1.5rem;
+}
+
+.t:not([type]){
+    text-align: center;
+    margin-left: 227px;
+    width: 25px;
+    height: 1.5rem;
+}
+
+.t-final:not([type]){
+    text-align: center;
+    margin-left: 277px;
+    width: 25px;
+    height: 1.5rem;
+}
+
+.c:not([type]){
+    text-align: center;
+    margin-left: 183px;
+    width: 25px;
+    height: 1.5rem;
+}
+
+.c-final:not([type]){
+    text-align: center;
+    margin-left: 233px;
+    width: 25px;
+    height: 1.5rem;
+}
+
+.datepickerspecial[type=text]:not(.browser-default){
+    text-align: center;
+    margin-left: 210px;
+    width: 95px;
+    height: 1.5rem;
+}
+
+.final-date[type=text]:not(.browser-default){
+    text-align: center;
+    margin-left: 260px;
+    width: 95px;
+    height: 1.5rem;
+}
+
 .assessments-collapsible {
     padding: 0 !important;
     
+}
+
+.collection .collection-item{
+    padding-left: 70px;
+    padding-right: 0px;
 }
 
 .icon-bluegrey{
@@ -11,6 +90,14 @@
     color:#ff5252
 }
 
+.icon-bluegrey-edit{
+    color:#455a64
+}
+
+.icon-bluegrey-edit:hover{
+    color:#4caf50
+}
+
 .assessment-icon {
     padding-top: 3px;
     padding-right: 10px
@@ -19,7 +106,6 @@
 .assessments-collapsible-nested {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
-    /* height: 80px !important; */
     padding-left: 50px;
     line-height: 1px!important;
 }
@@ -27,8 +113,3 @@
 .shift-way-up{
     margin-top: -55px!important;
 }
-
-/* .reduce-padding-assessments{
-    margin-left: 0em !important;
-    margin-right: 20em!important
-} */

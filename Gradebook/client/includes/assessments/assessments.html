@@ -28,31 +28,31 @@
                                                 <li class="collection-item assessments-collapsible-nested">
                                                     Date:
                                                     <div class="inline input-field">
-                                                        <input class="datepicker" type="text" id="courseDate{{assessmentId}}" value={{Date}}>
+                                                        <input class="datepicker datepickerspecial" type="text" id="courseDate{{assessmentId}}" value={{Date}}>
                                                     </div>
                                                 </li>
                                                 <li class="collection-item assessments-collapsible-nested">
                                                     Knowledge:
                                                     <div class="inline input-field">
-                                                        <input class="editable-assessment-fields" id="courseK{{assessmentId}}" value={{K}}>
+                                                        <input class="editable-assessment-fields k" id="courseK{{assessmentId}}" value={{K}}>
                                                     </div>
                                                 </li>
                                                 <li class="collection-item assessments-collapsible-nested">
                                                     Application:
                                                     <div class="inline input-field">
-                                                        <input class="editable-assessment-fields" id="courseA{{assessmentId}}" value={{A}}>
+                                                        <input class="editable-assessment-fields a" id="courseA{{assessmentId}}" value={{A}}>
                                                     </div>
                                                 </li>
                                                 <li class="collection-item assessments-collapsible-nested">
                                                     Thinking:
                                                     <div class="inline input-field">
-                                                        <input class="editable-assessment-fields" id="courseT{{assessmentId}}" value={{T}}>
+                                                        <input class="editable-assessment-fields t" id="courseT{{assessmentId}}" value={{T}}>
                                                     </div>
                                                 </li>
                                                 <li class="collection-item assessments-collapsible-nested">
                                                     Communication:
                                                     <div class="inline input-field">
-                                                        <input class="editable-assessment-fields" id="courseC{{assessmentId}}" value={{C}}>
+                                                        <input class="editable-assessment-fields c" id="courseC{{assessmentId}}" value={{C}}>
                                                     </div>
                                                 </li>
                                             </ul>
@@ -89,31 +89,31 @@
                                     <li class="collection-item assessments-collapsible-nested">
                                         Date:
                                         <div class="inline input-field">
-                                            <input class="datepicker" type="text" id="finalDate{{assessmentTypeId}}" value={{Date}}>
+                                            <input class="datepicker datepickerspecial final-date" type="text" id="finalDate{{assessmentTypeId}}" value={{Date}}>
                                         </div>
                                     </li>
                                     <li class="collection-item assessments-collapsible-nested">
                                         Knowledge:
                                         <div class="inline input-field">
-                                            <input id="finalK{{assessmentTypeId}}" value={{K}}>
+                                            <input class="k-final" id="finalK{{assessmentTypeId}}" value={{K}}>
                                         </div>
                                     </li>
                                     <li class="collection-item assessments-collapsible-nested">
                                         Application:
                                         <div class="inline input-field">
-                                            <input id="finalA{{assessmentTypeId}}" value={{A}}>
+                                            <input class="a-final" id="finalA{{assessmentTypeId}}" value={{A}}>
                                         </div>
                                     </li>
                                     <li class="collection-item assessments-collapsible-nested">
                                         Thinking:
                                         <div class="inline input-field">
-                                            <input id="finalT{{assessmentTypeId}}" value={{T}}>
+                                            <input class="t-final" id="finalT{{assessmentTypeId}}" value={{T}}>
                                         </div>
                                     </li>
-                                    <li class="collection-item assessments-collapsible-nested">
+                                    <li class="collection-item assessments-collapsible-nested c-final-row">
                                         Communication:
                                         <div class="inline input-field">
-                                            <input id="finalC{{assessmentTypeId}}" value={{C}}>
+                                            <input class="c-final" id="finalC{{assessmentTypeId}}" value={{C}}>
                                         </div>
                                     </li>
                                     <input type="submit" style="display: none;"/>
@@ -130,7 +130,7 @@
         </ul>
         <!-- <div class="row"> -->
         <div class="col offset-s7">
-            <p class="shift-way-up">To delete a Final Evaluation, go to
+            <p class="shift-way-down">To delete a Final Evaluation, go to
                 <a href="#!" class="deleteFinalEval">Course Settings > Assessment Settings.</a>
             </p>
         </div>

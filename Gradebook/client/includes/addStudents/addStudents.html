@@ -11,54 +11,62 @@
             <form id="addStudentsModalForm" onsubmit="return false">
                 <div class="row">
                     {{#if hasStudents}}
-                        <div class="col s4">
-                            <!-- 13 students per column -->
-                            <ul>
-                                {{#each studentsForColumnOne}}
-                                <li>
-                                    <div>
-                                        <a href="#!">
-                                            <i class="material-icons icon-bluegrey">close</i>
-                                        </a>
-                                        {{listNumber}}. {{studentName}}
-                                    </div>
-                                </li>
-                                {{/each}}
-                            </ul>
-                        </div>
-                        <div class="col s4">
-                            <ul>
-                                {{#each studentsForColumnTwo}}
-                                <li>
-                                    <div>
-                                        <a href="#!">
-                                            <i class="material-icons icon-bluegrey">close</i>
-                                        </a>
-                                        {{listNumber}}. {{studentName}}
-                                    </div>
-                                </li>
-                                {{/each}}
-                            </ul>
-                        </div>
-                        <div class="col s4">
-                            <ul>
-                                {{#each studentsForColumnThree}}
-                                <li>
-                                    <div>
-                                        <a href="#!">
-                                            <i class="material-icons icon-bluegrey">close</i>
-                                        </a>
-                                        {{listNumber}}. {{studentName}}
-                                    </div>
-                                </li>
-                                {{/each}}
-                            </ul>
-                        </div>
+                    <div class="col s4">
+                        <!-- 13 students per column -->
+                        <ul>
+                            {{#each studentsForColumnOne}}
+                            <li>
+                                <div>
+                                    <a href="#!" class="deleteStudent" id="d-s{{studentId}}?{{studentName}}">
+                                        <i class="material-icons icon-bluegrey">close</i>
+                                    </a>
+                                    <a href="#!" class="editStudent" id="e-s{{studentId}}?{{studentName}}">
+                                        <i class="material-icons icon-bluegrey-edit">edit</i>
+                                    </a>
+                                    {{listNumber}}. {{studentName}}
+                                </div>
+                            </li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                    <div class="col s4">
+                        <ul>
+                            {{#each studentsForColumnTwo}}
+                            <li>
+                                <div>
+                                    <a href="#!" class="deleteStudent" id="d-s{{studentId}}?{{studentName}}">
+                                        <i class="material-icons icon-bluegrey">close</i>
+                                    </a>
+                                    <a href="#!" class="editStudent" id="e-s{{studentId}}?{{studentName}}">
+                                        <i class="material-icons icon-bluegrey-edit">edit</i>
+                                    </a>
+                                    {{listNumber}}. {{studentName}}
+                                </div>
+                            </li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                    <div class="col s4">
+                        <ul>
+                            {{#each studentsForColumnThree}}
+                            <li>
+                                <div>
+                                    <a href="#!" class="deleteStudent" id="d-s{{studentId}}?{{studentName}}">
+                                        <i class="material-icons icon-bluegrey">close</i>
+                                    </a>
+                                    <a href="#!" class="editStudent" id="e-s{{studentId}}?{{studentName}}">
+                                        <i class="material-icons icon-bluegrey-edit">edit</i>
+                                    </a>
+                                    {{listNumber}}. {{studentName}}
+                                </div>
+                            </li>
+                            {{/each}}
+                        </ul>
+                    </div>
                     {{else}}
                         <p class="center custom-css-for-p">You currently have no students on your roster.</p>
                     {{/if}}
                 </div>
-
                 <div class="row zero-marg-bottom">
                     <u>
                         <h5 class="center">Add New Student</h5>

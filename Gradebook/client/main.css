@@ -167,6 +167,7 @@ input {
 .modal-content{
   /* overflow-y: hidden !important; */
   height: calc(100% - 56px)!important;
+  overflow: visible;
 }
 
 .modal-title{
@@ -179,4 +180,5 @@ input {
   min-height: 30%;
   height: auto;
   top: 5% !important;
+  overflow: visible;
 }

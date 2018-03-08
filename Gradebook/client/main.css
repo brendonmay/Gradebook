@@ -38,6 +38,10 @@ footer {
   background-color:black;
 }
 
+.side-nav{
+  transform: translateX(0%) !important;
+}
+
 
 /* .main-site-nav {
   height: 7% !important;

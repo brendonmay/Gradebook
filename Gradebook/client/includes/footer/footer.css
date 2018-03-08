@@ -1,3 +1,12 @@
 .page-footer{
-    background-color:#03a9f4
+    background-color:#03a9f4;
+    padding-left: 0;
+}
+
+.cusmarg{
+    margin-left:0 !important;
+}
+
+.no-mar-bot{
+    margin-bottom:0!important;
 }

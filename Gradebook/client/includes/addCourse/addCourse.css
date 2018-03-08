@@ -1,7 +1,4 @@
-.modal{
+.addCourseModal{
+    height: 38%!important;
     overflow: visible;
-}
-
-.modal-title{
-    padding-bottom: .5em
 }

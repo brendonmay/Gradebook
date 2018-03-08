@@ -92,6 +92,7 @@ Template.createAssessment.events({
                 element.setAttribute("checked", "checked");
                 inputField.disabled = false;
                 inputField.value = "";
+                inputField.focus();
             }
         }
     },

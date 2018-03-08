@@ -9,7 +9,8 @@ import '../../main.html';
 Template.nav.onRendered(function () {
   this.$("[data-activates=slide-out-l]").sideNav({
     // this.$('.button-collapse').sideNav({
-    menuWidth: 200, // Default is 300 // Choose the horizontal origin
+    // menuWidth: 200, // Default is 300 // Choose the horizontal origin
+    menuWidth: document.getElementById('side-nav-section').style.width,
     edge: 'left',
   });
 

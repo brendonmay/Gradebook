@@ -169,7 +169,19 @@ Template.addStudents.events({
         let courseId = Session.get('courseId');
         var studentsDocument = Students.findOne({ ownerId: Meteor.userId, courseId: courseId }).students;
 
-        if (studentsDocument.length == 0) {
+        var firstNameInput = document.getElementById('studentFirstName');
+        var lastNameInput = document.getElementById('studentLastName');
+
+        if (firstNameInput == "" || lastNameInput == ""){
+            return false
+        }
+
+        else if ( Students.findOne({ownerId: Meteor.userId(), courseId: courseId}).students.length == 39 ){
+            Materialize.toast("Your student roster is currently full.", 3000, 'amber darken-3');
+            return false
+        }
+
+        else if (studentsDocument.length == 0) {
             addFirstStudent();
         }
         else {
@@ -186,25 +198,8 @@ Template.addStudents.events({
         document.getElementById("addStudentsModalForm").reset();
     },
     'click .addStudentsModalButton': function () {
-        event.preventDefault();
-        let courseId = Session.get('courseId');
-        var studentsDocument = Students.findOne({ ownerId: Meteor.userId, courseId: courseId }).students;
-
-        if (studentsDocument.length == 0) {
-            addFirstStudent();
-        }
-        else {
-            addNewStudent();
-        }
-
-        document.getElementById("studentLastName").focus()
-
-        //send a toast
-        let firstName = document.getElementById('studentFirstName').value;
-        let lastName = document.getElementById('studentLastName').value;
-        Materialize.toast(firstName + " " + lastName + " has been added to the student roster.", 3000, 'amber darken-3');
-
-        document.getElementById("addStudentsModalForm").reset();
+        document.getElementById("submit-add-student").click();
+        return false
     },
     'click .addStudentsCancelButton': function(){
         document.getElementById("addStudentsModalForm").reset();

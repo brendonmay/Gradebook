@@ -5,21 +5,27 @@
 </head>
 
 <body>
-  {{> nav}} {{> sideNav}} {{> addCourse}} {{> deleteCourse}} {{> addAssessmentType}} {{> deleteCourseworkAssessmentType}} {{>
-  deleteFinalAssessmentType}} {{> login}} {{> register}} {{> createAssessment}} {{> deleteCourseworkAssessment}} {{> assignFinal}} 
-  {{> addStudents}} {{> deleteStudent}} {{> editStudent}}
+  <div id="site-content">
+    <div id="side-nav-section">
+      {{> sideNav}}
+    </div>
+    <div id="main-content-area">
+      <header>
+        {{> nav}}
+      </header>
+      <main>
+        {{> courseTabs}}
+      </main>
+      <footer>
+        {{> footer}}
+      </footer>
+    </div>
+  </div>
 
-
-  <!--Site Content Here-->
-  <main>
-    {{> courseTabs}}
-  </main>
-
-  <!--Footer Content-->
-  <footer>
-    {{> footer}}
-  </footer>
-
+  {{> addCourse}} {{> deleteCourse}} {{> addAssessmentType}} {{> deleteCourseworkAssessmentType}} {{>deleteFinalAssessmentType}}
+  {{> login}} {{> register}} {{> createAssessment}} {{> deleteCourseworkAssessment}} {{> assignFinal}} {{> addStudents}}
+  {{> deleteStudent}} {{> editStudent}}
+  
   <!--Scripts Here-->
   <script>
     // Initialize collapsible

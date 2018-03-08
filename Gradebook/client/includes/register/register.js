@@ -113,6 +113,8 @@ Template.register.onRendered(function () {
     });
 
     $("#registerForm").validate({
+        errorClass: "validation-red-text",
+        validClass: "",
         rules: {
             registerEmail: {
                 required: true,
@@ -153,7 +155,6 @@ Template.register.onRendered(function () {
         errorElement: 'div',
         errorPlacement: function (error, element) {
             var placement = $(element).data('error');
-            $(element).addClass("validation-red-text");
             if (placement) {
                 $(placement).append(error)
             } else {

@@ -159,6 +159,9 @@ input {
 .validation-red-text {
   color: #d32f2f !important;
 }
+.input-field .div.error {
+  color: #d32f2f;
+}
 
 .material-icons, .icon-text {
   vertical-align: middle;

@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col s12">
                     Course Name:
-                    <div class="input-field inline">
+                    <div class="input-field input-margin-bottom-fix inline">
                         <input disabled id="generalSettings-courseName" type="text" value={{currentCourse}} required>
                     </div>
                 </div>
@@ -13,10 +13,10 @@
             <div class="row">
                 <div class="col s12">
                     School Year:
-                    <div class="input-field inline" id="yearTextId">
+                    <div class="input-field input-margin-bottom-fix inline" id="yearTextId">
                         <input disabled id="generalSettings-courseYear-text" type="text" value={{currentYear}}>
                     </div>
-                    <div class="input-field inline hide" id="yearDropdownId">
+                    <div class="input-field input-margin-bottom-fix inline hide" id="yearDropdownId">
                         <select id="generalSettings-courseYear">
                             {{#each getYearsBefore currentYear}}
                                 <option id="GS-Id{{year}}" value={{year}}>{{year}}</option>

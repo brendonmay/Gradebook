@@ -8,5 +8,10 @@
 }
 
 .left-align{
-    font-size: 30px !important;
+    font-size: 2em !important;
+}
+
+.nav-container-content{
+    padding-left: 8em;
+    padding-right: 12em;
 }

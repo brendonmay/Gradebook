@@ -182,6 +182,10 @@ Template.assessments.events({
             Materialize.toast("All of your final evaluations have already been assigned", 5000, 'amber darken-3');
         }
     },
+    'click .createAssessmentButton': function () {
+        $('#createAssessmentModal').modal('open');
+        $('select').material_select();
+    },
     'click .deleteFinalEval': function () {
         let courseSettings = document.getElementById("courseSettingsTabId");
         courseSettings.click();
@@ -243,6 +247,7 @@ Template.assessments.events({
             container: 'body',
             closeOnSelect: false // Close upon selecting a date,
         });
+        $('.collapsible').collapsible();
     },
     'submit .edit-courseassessment-form': function () {
         //determine which form has been changed

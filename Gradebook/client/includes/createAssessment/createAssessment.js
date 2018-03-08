@@ -4,12 +4,27 @@ import { Courses } from '../../../lib/collections.js';
 import { Accounts } from 'meteor/accounts-base';
 import { CourseWeighting } from '../../../lib/collections.js';
 import { Assessments } from '../../../lib/collections.js';
+import jqueryValidation from 'jquery-validation';
 
 import '../../main.html';
 
+function clearValidation(formElement) {
+    //Internal $.validator is exposed through $(form).validate()
+    var validator = $(formElement).validate();
+    //Iterate through named elements inside of the form, and mark them as error free
+    $('[name]', formElement).each(function () {
+        validator.successList.push(this);//mark as error free
+        validator.showErrors();//remove error messages if present
+    });
+    validator.resetForm();//remove error class on name elements and clear history
+    validator.reset();//remove all error and success data
+}
+
 function closeCreateAssessmentModal() {
     //clear the input fields
-    document.getElementById("createAssessmentFormId").reset();
+    var form = document.getElementById("createAssessmentFormId");
+    form.reset();
+    clearValidation(form);
 
     //uncheck the checkboxes
     let checkboxK = document.getElementById("checkboxK");
@@ -65,18 +80,25 @@ Template.createAssessment.events({
             if (element.hasAttribute("checked") == true) {
                 element.removeAttribute("checked");
                 inputField.disabled = true;
-                inputField.value = "N/A"
+                var errorElement = document.getElementById(inputId + "-error");
+                if (errorElement) {
+                    errorElement.remove();
+                }
+                inputField.classList.remove("invalid");
+                inputField.value = "N/A";
             }
 
             else if (element.hasAttribute("checked") == false) {
                 element.setAttribute("checked", "checked");
                 inputField.disabled = false;
-                inputField.value = ""
+                inputField.value = "";
+                inputField.focus();
             }
         }
     },
 
-    'submit .createAssessmentForm': function () {
+    'submit .createAssessmentForm': function (event) {
+        event.preventDefault();
         let currentCourseId = Session.get('courseId');
         let assessmentType = document.getElementById("assessmentType").value;
         let assessmentDate = document.getElementById("createNewAssessmentDate").value;
@@ -86,22 +108,6 @@ Template.createAssessment.events({
         var markA = document.getElementById("inputMarkA").value;
         var markT = document.getElementById("inputMarkT").value;
         var markC = document.getElementById("inputMarkC").value;
-
-
-        if (markK == "N/A" && markA == "N/A" && markT == "N/A" && markC == "N/A"){
-            Materialize.toast('You must assess the students in at least one category.', 5000, 'amber darken-3');
-            return false
-        }
-
-        if (markK <= 0 || markA <= 0 || markT <= 0 || markC <= 0){
-            Materialize.toast("A selected category's mark must be an integer greater than 0.", 5000, 'amber darken-3');
-            return false
-        }
-
-        if (!( (markK ==  "N/A" || Math.floor(markK) == markK) && (markA ==  "N/A" || Math.floor(markA) == markA) && (markT ==  "N/A" || Math.floor(markT) == markT) && (markC ==  "N/A" || Math.floor(markC) == markC) )){
-            Materialize.toast("A selected category's mark must be an integer greater than 0.", 5000, 'amber darken-3');
-            return false
-        }
 
 
         if (markK != "N/A") {
@@ -157,6 +163,7 @@ Template.createAssessment.events({
                         assessments: [assessmentObject]
                     }
                     newAssessmentObjects[newAssessmentObjects.length] = courseAssessmentTypesObject;
+                    Meteor.call('students.addNewAssessment', Meteor.userId(), currentCourseId, assessmentTypeId + "-" + 1);
                     //console.log("We are on index # " + i + " which is assessment Type: " + assessmentType + ". You are making the first assessment of this type. Here is the updated newAssessmentObjects: " + newAssessmentObjects);
                 }
 
@@ -185,6 +192,7 @@ Template.createAssessment.events({
                         assessments: newAssessmentsArray
                     }
                     newAssessmentObjects[newAssessmentObjects.length] = courseAssessmentTypesObject;
+                    Meteor.call('students.addNewAssessment', Meteor.userId(), currentCourseId, newAssessmentId);
                     //console.log("We are on index # " + i + " which is assessment Type: " + assessmentType + ". You are NOT making the first assessment of this type. Here is the updated newAssessmentObjects: " + newAssessmentObjects);
                 }
             }
@@ -194,16 +202,71 @@ Template.createAssessment.events({
     },
 
     'click #createAssessmentCancel': function () {
+        closeCreateAssessmentModal();
         $('.createAssessmentModal').modal('close');
     }
 });
 
 Template.createAssessment.onRendered(function () {
+    $.validator.addMethod('isInteger', (input) => {
+        return (input == "N/A" || Math.floor(input) == input);
+    });
+    $.validator.addMethod('isPositive', (input) => {
+        return (input >= 0);
+    });
     $('.createAssessmentModal').modal({
         dismissible: true, // Modal can be dismissed by clicking outside of the modal
         complete: function () {
             closeCreateAssessmentModal();
         }
-    }
-    );
+    });
+    $("#createAssessmentFormId").validate({
+        errorClass: 'invalid',
+        validClass: 'marks-valid',
+        rules: {
+            marksK: {
+                isInteger: true,
+                isPositive: true
+            },
+            marksA: {
+                isInteger: true,
+                isPositive: true
+            },
+            marksT: {
+                isInteger: true,
+                isPositive: true
+            },
+            marksC: {
+                isInteger: true,
+                isPositive: true
+            }
+        },
+        messages: {
+            marksK: {
+                isInteger: "A selected category's mark must be an integer.",
+                isPositive: "A selected category's mark must be greater than 0."
+            },
+            marksA: {
+                isInteger: "A selected category's mark must be an integer.",
+                isPositive: "A selected category's mark must be greater than 0."
+            },
+            marksT: {
+                isInteger: "A selected category's mark must be an integer.",
+                isPositive: "A selected category's mark must be greater than 0."
+            },
+            marksC: {
+                isInteger: "A selected category's mark must be an integer.",
+                isPositive: "A selected category's mark must be greater than 0."
+            }
+        },
+        errorElement: 'div',
+        errorPlacement: function (error, element) {
+            var placement = $(element).data('error');
+            if (placement) {
+                $(placement).append(error)
+            } else {
+                error.insertAfter(element);
+            }
+        }
+    });
 });

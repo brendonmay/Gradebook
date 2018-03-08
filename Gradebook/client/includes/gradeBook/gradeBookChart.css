@@ -1,0 +1,45 @@
+.gradebook-table {
+    width: 100%;
+}
+
+#gradeBookChartHolder{ /*//not sure why we need this */
+    width: 100%;
+}
+
+.heighten-nav{
+    height: 4.5em;
+}
+
+.nav-padding-top{
+    margin-top:1em;
+}
+
+.extra-table-padding{
+    padding:1.82em!important;
+}
+
+.gradebook-header{
+    color: #616161 !important;
+    padding: .6em !important;
+}
+
+.zero-top-pad{
+    margin-top: 0!important;
+    margin-bottom: 0!important;
+    height: 69px!important;
+}
+
+.no-padding{
+    padding:0 !important;
+    margin-top:0 !important;
+    margin-bottom:0 !important;
+}
+
+.grey-font-color{
+    color: #616161!important;
+}
+
+
+.tableCell{
+    padding: 5px 5px;
+}

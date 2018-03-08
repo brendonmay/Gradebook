@@ -6,6 +6,9 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.36",
+    "bcrypt": "^1.0.3",
+    "floatthead": "^2.1.1",
+    "jquery-validation": "^1.17.0",
     "meteor-node-stubs": "^0.3.2"
   }
 }

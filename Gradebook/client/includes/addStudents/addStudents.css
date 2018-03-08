@@ -1,0 +1,19 @@
+.zero-marg-bottom{
+    margin-bottom: 0!important;
+}
+
+.custom-css-for-p{
+    margin-top: 0px!important;
+    margin-bottom: 20px!important;
+}
+
+.edit_hover_class a{
+    visibility:hidden;
+  }
+  .edit_hover_class:hover a {
+   visibility:visible;
+  }
+
+  .custom-bottom-pad-addStudents{
+      padding-bottom:0
+  }

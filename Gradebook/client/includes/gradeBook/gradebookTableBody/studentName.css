@@ -1,0 +1,31 @@
+.studName:focus{
+    background-color: #c1c1c1;
+}
+
+.studName:hover{
+    background-color: #c1c1c1;
+}
+
+.studNameCell{
+    border-right: 1px double black !important;
+    min-width:200px;
+    border-bottom: 1px dashed green;
+}
+
+.studentBlankCellBorder {
+    border-right: 1px solid black !important;
+    border: none;
+}
+
+.studentCellBorder {
+    border-right: 1px solid black !important;
+    border-bottom: 1px solid black !important;
+    border: none;
+}
+
+.studentsCell {
+    min-width:200px; 
+    background-color: white !important; 
+    font-weight: bold; 
+    text-align:center; 
+}

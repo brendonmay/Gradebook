@@ -7,20 +7,24 @@
             </div>
             <form class="add-form col s12 login-form" id="loginForm">
                 <div class="row">
-                    <div class='input-field col s12'>
-                        <input type="email" id="email" name="userEmail" class="validate">
-                        <label for = "userEmail" data-error="Invalid email">E-mail</label>
+                    <div class='col s12 center' id="login-failed" style="display: none; color:#d32f2f">
+                        <span>*Incorrect username or password.</span>
                     </div>
-                    <div class='input-field col s12'>
-                        <input type="password" id="password" name="userPassword">
-                        <label for = "userPassword">Password</label>
+                    <div class='input-field input-margin-bottom-fix col s12'>
+                        <label for="userEmail">E-mail</label>
+                        <input type="email" id="login-email" name="userEmail" class="user-loginEmail" data-error=".emailError">
+                        <div class="emailError"></div>
+                    </div>
+                    <div class='input-field input-margin-bottom-fix col s12'>
+                        <input type="password" id="login-password" name="userPassword">
+                        <label for="userPassword">Password</label>
                     </div>
                     <h7>
                         Not a user yet?
                         <a class="modal-trigger register" href="#registerModal">Register here!</a>
                     </h7>
                 </div>
-                <input type="submit" style="display: none;"/>
+                <input type="submit" style="display: none;" />
                 <div class="modal-footer right">
                     <button class="modal-action waves-effect waves-grey btn-flat" id="login" type="submit">Login</button>
                     <a href="#!" class="modal-action waves-effect waves-grey btn-flat cancel-button">Cancel</a>

@@ -12,14 +12,19 @@ function doneEditing() { //works
     let cancelButtonElement = document.getElementById("cancel-button");
 
     let addFinalAssessmentType = document.getElementById('finalAddAssessment');
+    let finalCourseStyler = document.getElementById('finalCourseStyler');
     let addCourseAssessmentType = document.getElementById('courseAddAssessment');
+    let courseStyler = document.getElementById('courseStyler');
 
     editButtonElement.classList.remove("hide");
     saveButtonElement.classList.add("hide");
     cancelButtonElement.classList.add("hide");
 
     addFinalAssessmentType.classList.remove("hide");
+    finalCourseStyler.classList.remove("hide");
     addCourseAssessmentType.classList.remove('hide');
+    courseStyler.classList.remove("hide");
+    
 
     let currentCourseId = Session.get('courseId');
     const courseworkAssessmentTypes = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseworkAssessmentTypes;
@@ -115,9 +120,7 @@ Template.assessmentsTab.helpers({
 });
 
 Template.assessmentsTab.onRendered(function () {
-    $(document).ready(function () {
-        $('.collapsible').collapsible();
-    });
+    $('.collapsible').collapsible();
 });
 
 Template.assessmentsTab.events({
@@ -173,6 +176,8 @@ Template.assessmentsTab.events({
 
         let addFinalAssessmentType = document.getElementById('finalAddAssessment');
         let addCourseAssessmentType = document.getElementById('courseAddAssessment');
+        let courseStyler = document.getElementById('courseStyler');
+        let finalCourseStyler = document.getElementById('finalCourseStyler');
 
         editButtonElement.classList.add("hide");
         saveButtonElement.classList.remove("hide");
@@ -180,6 +185,8 @@ Template.assessmentsTab.events({
 
         addFinalAssessmentType.classList.add('hide');
         addCourseAssessmentType.classList.add('hide');
+        courseStyler.classList.add("hide");
+        finalCourseStyler.classList.add("hide");
 
         let currentCourseId = Session.get('courseId');
         const courseworkAssessmentTypes = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseworkAssessmentTypes;

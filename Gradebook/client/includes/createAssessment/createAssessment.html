@@ -7,66 +7,74 @@
             <form class="add-form createAssessmentForm" onsubmit="return false" id="createAssessmentFormId">
                 <div class="row">
                     <div class="col s5 offset">
-                        <div class="input-field">
-                            <select id="assessmentType" name='assessmentTypeSelect' required>
+                        <div class="input-field input-margin-bottom-fix">
+                            <select id="assessmentType" name='assessmentTypeSelect' class="required">
                                 <option value="" disabled selected>Choose Assessment Type</option>
                                 {{#each getAssessmentTypes}}
                                 <option value={{assessmentType}}>{{assessmentType}}</option>
                                 {{/each}}
                             </select>
-                            <label for='assessmentTypeSelect'>Assessment Type</label>
                         </div>
                     </div>
-                    <div class='input-field col s5 offset-s1' style="padding: 0">
-                        <input class="datepicker" id="createNewAssessmentDate" type="text" name="assessmentDate" required>
+                    <div class='input-field input-margin-bottom-fix col s5 offset-s1' style="padding: 0">
+                        <input class="datepicker" id="createNewAssessmentDate" type="text" name="assessmentDate">
                         <label for="createNewAssessmentDate" style="left: 0">Date of Assessment</label>
                     </div>
                 </div>
                 <div class="row pad-left-right-a">
-                    <div class='input-field col s12' style="padding: 0">
-                        <input id="createNewAssessment" type="text" name="assessmentName" placeholder="Example: Chapter 1 Unit Test" required>
+                    <div class='input-field input-margin-bottom-fix col s12' style="padding: 0">
+                        <input id="createNewAssessment" type="text" name="assessmentName" placeholder="Example: Chapter 1 Unit Test" class="required">
                         <label for="createNewAssessment" style="left: 0">Assessment Name</label>
                     </div>
                 </div>
                 <div class="row">
-                    <div class= "col s3">
+                    <div class="col s3">
                         Categories included:
                     </div>
                     <div class="col s1">
                         <!-- checked="checked" to input to make it checked -->
-                        <a href="#!" class="check-box"><input type="checkbox" class="filled-in" id="checkboxK"/>
-                        <label id="dontTarget" for="checkboxK">K</label></a>
-                    </div>  
-                    <div class="col s1 offset-s1">
-                        <a href="#!" class="check-box"><input type="checkbox" class="filled-in" id="checkboxA" />
-                        <label id="dontTarget" for="checkboxA">A</label></a>
+                        <a href="#!" class="check-box">
+                            <input type="checkbox" class="filled-in" id="checkboxK" />
+                            <label id="dontTarget" for="checkboxK">K</label>
+                        </a>
                     </div>
                     <div class="col s1 offset-s1">
-                        <a href="#!" class="check-box"><input type="checkbox" class="filled-in" id="checkboxT" />
-                        <label id="dontTarget" for="checkboxT">T</label></a>
+                        <a href="#!" class="check-box">
+                            <input type="checkbox" class="filled-in" id="checkboxA" />
+                            <label id="dontTarget" for="checkboxA">A</label>
+                        </a>
                     </div>
                     <div class="col s1 offset-s1">
-                        <a href="#!" class="check-box"><input type="checkbox" class="filled-in" id="checkboxC" />
-                        <label id="dontTarget" for="checkboxC">C</label></a>
+                        <a href="#!" class="check-box">
+                            <input type="checkbox" class="filled-in" id="checkboxT" />
+                            <label id="dontTarget" for="checkboxT">T</label>
+                        </a>
+                    </div>
+                    <div class="col s1 offset-s1">
+                        <a href="#!" class="check-box">
+                            <input type="checkbox" class="filled-in" id="checkboxC" />
+                            <label id="dontTarget" for="checkboxC">C</label>
+                        </a>
                     </div>
                 </div>
-                <div class="row">
-                    <div class= "col s3 createAssessmentMargin">
+                <div class="row marks-row">
+                    <div class="col s3 createAssessmentMargin">
                         Marks:
                     </div>
-                    <div class='input-field inline col s1 zero-margin-top' style="padding: 0">
-                        <input id="inputMarkK" type="text" name="marksK" value="N/A" class="center" disabled>
+                    <div class='input-field input-margin-bottom-fix inline col s1 zero-margin-top' style="padding: 0">
+                        <input id="inputMarkK" type="text" name="marksK" value="N/A" class="center form-control" data-error=".errorMessage" disabled>
                     </div>
-                    <div class='input-field inline col s1 offset-s1 zero-margin-top' style="padding: 0">
-                        <input id="inputMarkA" type="text" name="marksA" value="N/A" class="center" disabled>
+                    <div class='input-field input-margin-bottom-fix inline col s1 offset-s1 zero-margin-top' style="padding: 0">
+                        <input id="inputMarkA" type="text" name="marksA" value="N/A" class="center form-control" data-error=".errorMessage" disabled>
                     </div>
-                    <div class='input-field inline col s1 offset-s1 zero-margin-top' style="padding: 0">
-                        <input id="inputMarkT" type="text" name="marksT" value="N/A" class="center" disabled>
+                    <div class='input-field input-margin-bottom-fix inline col s1 offset-s1 zero-margin-top' style="padding: 0">
+                        <input id="inputMarkT" type="text" name="marksT" value="N/A" class="center form-control" data-error=".errorMessage" disabled>
                     </div>
-                    <div class='input-field inline col s1 offset-s1 zero-margin-top' style="padding: 0">
-                        <input id="inputMarkC" type="text" name="marksC" value="N/A" class="center" disabled>
+                    <div class='input-field input-margin-bottom-fix inline col s1 offset-s1 zero-margin-top' style="padding: 0">
+                        <input id="inputMarkC" type="text" name="marksC" value="N/A" class="center form-control" data-error=".errorMessage" disabled>
                     </div>
                 </div>
+                <div class="center errorMessage"></div>
                 <input type="submit" style="display: none;" />
                 <div class="modal-footer">
                     <button class="add-form modal-action waves-effect waves-grey btn-flat" type="submit">Create Assessment</button>

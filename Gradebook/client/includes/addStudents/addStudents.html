@@ -1,0 +1,91 @@
+<!-- Modal Structure -->
+<template name="addStudents">
+    <div id="addStudentsModal" class="modal addStudentsModal">
+        <div class="modal-content">
+            <div class='modal-title custom-bottom-pad-addStudents'>
+                <h4 class="addCourse-pad-top">Manage Students</h4>
+            </div>
+            <form id="addStudentsModalForm" onsubmit="return false">
+                <div class="row">
+                    {{#if hasStudents}}
+                    <h6 class="center" style="color:#607d8b"><i class="material-icons">info</i>Hover over a student name to edit or delete the student.</h6>
+                    <div class="col s4">
+                        <!-- 13 students per column -->
+                        <ul>
+                            {{#each studentsForColumnOne}}
+                            <li>
+                                <div class='edit_hover_class'>
+                                    <a href="#!" class="deleteStudent" id="d-s{{studentId}}?{{studentName}}">
+                                        <i class="material-icons icon-bluegrey">close</i>
+                                    </a>
+                                    <a href="#!" class="editStudent" id="e-s{{studentId}}?{{studentName}}">
+                                        <i class="material-icons icon-bluegrey-edit">edit</i>
+                                    </a>
+                                    {{listNumber}}. {{studentName}}
+                                </div>
+                            </li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                    <div class="col s4">
+                        <ul>
+                            {{#each studentsForColumnTwo}}
+                            <li>
+                                <div class='edit_hover_class'>
+                                    <a href="#!" class="deleteStudent" id="d-s{{studentId}}?{{studentName}}">
+                                        <i class="material-icons icon-bluegrey">close</i>
+                                    </a>
+                                    <a href="#!" class="editStudent" id="e-s{{studentId}}?{{studentName}}">
+                                        <i class="material-icons icon-bluegrey-edit">edit</i>
+                                    </a>
+                                    {{listNumber}}. {{studentName}}
+                                </div>
+                            </li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                    <div class="col s4">
+                        <ul>
+                            {{#each studentsForColumnThree}}
+                            <li>
+                                <div class='edit_hover_class'>
+                                    <a href="#!" class="deleteStudent" id="d-s{{studentId}}?{{studentName}}">
+                                        <i class="material-icons icon-bluegrey">close</i>
+                                    </a>
+                                    <a href="#!" class="editStudent" id="e-s{{studentId}}?{{studentName}}">
+                                        <i class="material-icons icon-bluegrey-edit">edit</i>
+                                    </a>
+                                    {{listNumber}}. {{studentName}}
+                                </div>
+                            </li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                    {{else}}
+                        <!-- <ul class="collection"> -->
+                            <p class="custom-css-for-p center">You currently have no students on your roster.</p>
+                        <!-- </ul> -->
+                    {{/if}}
+                </div>
+                <div class="row zero-marg-bottom">
+                    <h4>Add New Student</h4>  
+                </div>
+                <div id="addNewStudentsDiv" class="row">
+                    <div class='input-field input-margin-bottom-fix col s4 offset-s1' style="padding: 0">
+                        <input id="studentLastName" type="text" required>
+                        <label style="left: 0">Last Name</label>
+                    </div>
+                    <div class='input-field input-margin-bottom-fix col s4 offset-s1' style="padding: 0">
+                        <input id="studentFirstName" type="text" name="firstName" required>
+                        <label style="left: 0">First Name</label>
+                    </div>
+                </div>
+                <input type="submit" id="submit-add-student" value="submit" style="display: none;"/>
+                <div class="modal-footer">
+                <a class="waves-effect waves-grey btn-flat addStudentsModalButton">Add Student</a>
+                <a class="waves-effect waves-grey btn-flat addStudentsCancelButton">Close</a>
+            </div>
+            </form>
+        </div>
+    </div>
+</template>

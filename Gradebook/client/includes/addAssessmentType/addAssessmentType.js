@@ -74,6 +74,7 @@ Template.addAssessmentType.events({
 
         Meteor.call('courseInformation.addNewFinalWork', currentCourseId, finalAssessmentTypes);
 
+        document.getElementById("addFinalTypeForm").reset();
         //Close Modal
         $('#addFinalWork').modal('close');
     },
@@ -116,6 +117,7 @@ Template.addAssessmentType.events({
 
         Meteor.call('courseInformation.addNewCourseWork', currentCourseId, courseWorkAssessmentType);
 
+        document.getElementById("addAssessmentTypeForm").reset();
         //Close Modal
         $('#addCourseWork').modal('close');
     }

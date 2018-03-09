@@ -1,5 +1,4 @@
 <template name="assessmentsTab">
-    <h4 class="light-blue lighten-4 settings-header">Assessment Settings</h4>
     <form class="col s12 assessmentsTabForm" onsubmit="return false">
         <div class="row">
 
@@ -25,10 +24,10 @@
                     {{/each}}
                     <li>
                         <div class="collapsible-header" id="courseAddAssessment" style="cursor: initial">
-                            <a href="#addCourseWork" class='modal-trigger'>
+                            <a href="#!" class='addNewCourseAssessmentTypeButton'>
                                 <i class="material-icons icon-green">add_box</i>
                             </a>
-                            <a id="addCourseworkAssessmentType" href="#addCourseWork" class="modal-trigger waves-effect waves-light btn-flat addAssessmentButton">Add assessment type</a>
+                            <a id="addCourseworkAssessmentType" href="#!" class="addNewCourseAssessmentTypeButton waves-effect waves-light btn-flat addAssessmentButton">Add assessment type</a>
                         </div>
                     </li>
                 </ul>
@@ -76,10 +75,10 @@
                     {{/each}}
                     <li>
                         <div class="collapsible-header" id="finalAddAssessment" style="cursor: initial">
-                            <a href="#addFinalWork" class='modal-trigger'>
+                            <a href="#!" class='addFinalAssessmentTypeButton'>
                                 <i class="material-icons icon-green">add_box</i>
                             </a>
-                            <a id="addFinalAssessmentType" href="#addFinalWork" class="modal-trigger waves-effect waves-light btn-flat addAssessmentButton">Add assessment type</a>
+                            <a id="addFinalAssessmentType" href="#!" class="addFinalAssessmentTypeButton waves-effect waves-light btn-flat addAssessmentButton">Add assessment type</a>
                         </div>
                     </li>
                 </ul>

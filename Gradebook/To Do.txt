@@ -7,7 +7,7 @@
 	- Add Assessment Modal - Assessment Type drop down: determine a clean and nice way of differentiating the first dropdown item from the clickable drop down items! 
 	- In the Assessments Tab, the text directing you to Assessment Settings doesnt dynamically move.
 	- Make all toasts appear in the top right of the nav bar
-	- sideNav length is not dynamic
+	- courseyears and courses listed in sidenav shift if you zoom in/out
 	- Change most (if not all) toasts to custom error messages via jQuery validation + MaterializeCSS. I have already installed jQuery validation. Note: it is not up to date! Due to this supposedly being very buggy I highly suggest we install the latest version.
 		-https://themeteorchef.com/tutorials/validating-forms-with-jquery-validation
 		-http://demo.geekslabs.com/materialize/v3.1/form-validation.html
@@ -25,6 +25,7 @@
 	- Make it so that you cannot include the characters "," or "?" in the student first or last name.
 	- Perhaps limit the length of the student first and last name?
 	- In each of the Settings' Tabs, check the input type to ensure only numbers can be inputted for the weights.
+	- Create new assessment modal error messages arent red for "Assessment Name" field
 
 -------------
 

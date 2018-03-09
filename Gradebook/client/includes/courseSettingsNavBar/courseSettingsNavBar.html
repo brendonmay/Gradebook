@@ -1,4 +1,5 @@
 <template name="courseSettingsNavBar">
+    <!-- <h4 class="light-blue lighten-4 settings-header">Course Settings</h4>
     <ul class="pagination settings-nav center">
         <li class="active green pag-click">
             <a href="#!" id="GS">General Settings</a>
@@ -9,5 +10,27 @@
         <li class="pag-click">
             <a href="#!" id="AS">Assessments Settings</a>
         </li>
-    </ul>
+    </ul> -->
+    <nav class="heighten-nav nav-padding-top">
+        <div class="nav-wrapper light-blue lighten-4">
+            <a href="#" class="left-align gradebook-header">Course Settings</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down settings-nav">
+                <li class="active">
+                    <a href="#!" id="GS">
+                        <p class="zero-top-pad grey-font-color">General Settings</p>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="#!" id="CW">
+                        <p class="zero-top-pad grey-font-color">Category Weightings</p>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="#!" id="AS">
+                        <p class="zero-top-pad grey-font-color">Assessments Settings</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 </template>

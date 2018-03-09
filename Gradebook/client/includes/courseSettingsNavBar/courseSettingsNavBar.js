@@ -15,8 +15,20 @@ Template.courseSettingsNavBar.events({
         event.preventDefault();
 
         const target = event.target;
-        var settingId = target.id;
+        var settingId = target.parentElement.id;
         var settingScreen;
+
+        
+        var generalSettingsElement = document.getElementById("GS");
+        var assessmentsElement = document.getElementById("AS");
+        var categoryElement = document.getElementById("CW");
+
+        generalSettingsElement.parentElement.classList.remove("active");
+        assessmentsElement.parentElement.classList.remove("active");
+        categoryElement.parentElement.classList.remove("active");
+
+        var listElement = target.parentElement.parentElement;
+        listElement.classList.add("active");
 
         if (settingId == "CW") {
             settingScreen = "Category Weightings";

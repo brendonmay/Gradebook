@@ -1,32 +1,96 @@
 /* Site Content */
-main{
-    padding-left: 200px;
-  }
-.courseSettings {
-    padding-right: 200px;
+#site-content{
+  overflow: hidden;
+  width: 100%;
+  height: 100vh!important;
 }
+
+#side-nav-section{
+  float: left;
+  width: 14%;
+  height: 100vh!important;
+}
+
+#main-content-area{
+  position: relative;
+  float: left;
+  width: 86%;
+  
+  /* min-height: 100%; */
+  height: 100%;
+  overflow-y: scroll;
+
+  display: flex;
+  flex-direction: column;
+}
+
+article {
+  flex: 1 0 auto;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+footer {
+  width: 100%;
+  background-color:black;
+}
+
+.side-nav{
+  transform: translateX(0%) !important;
+}
+
+
+/* .main-site-nav {
+  height: 7% !important;
+  position: relative;
+  background-color:black;
+} */
+
+/* .main-site-contentView {
+  position: relative;
+  height: 83% !important;
+  overflow-y: scroll;
+  width: 100%;
+  background-color: green;
+} */
+
+/* .footer{
+  position: relative;
+  height: 10% !important;
+  background-color: yellow;
+} */
+
 
 .courseSettingsSideNav {
     margin-top: 100px;
-    margin-bottom: 500px !important;
+    /* margin-bottom: 500px !important; */
 }
 
 
-@media only screen and (max-width : 992px) {
+/* @media only screen and (max-width : 992px) {
     main{
-        padding-left: 0;
+      padding-left: 0;
+    }
+    footer{
+      padding-left: 0;
     }
 }
 
 body {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
-  }
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
 
-  main {
-    flex: 1 0 auto;
-  }
+main {
+  flex: 1 0 auto;
+}
+
+footer {
+  flex: 1 0 auto;
+} */
 
   /*************** grade book chart CSS ***********/
   .studName{
@@ -64,7 +128,7 @@ ul.dropdown-content.select-dropdown li span{
     color: #4caf50 !important;
 }
 /* valid color */
-.input-field input[type=text].valid {
+/* .input-field input[type=text].valid {
   border-bottom: 1px solid #4caf50!important;
   box-shadow: 0 1px 0 0 #4caf50!important;
 }
@@ -75,9 +139,10 @@ ul.dropdown-content.select-dropdown li span{
 .input-field input[type=password].valid {
   border-bottom: 1px solid #4caf50!important;
   box-shadow: 0 1px 0 0 #4caf50!important;
-}
+} */
+
 /* invalid color */
-.input-field input[type=text].invalid {
+/* .input-field input[type=text].invalid {
   border-bottom: 1px solid #D32F2F!important;
   box-shadow: 0 1px 0 0 #D32F2F!important;
 }
@@ -88,8 +153,43 @@ ul.dropdown-content.select-dropdown li span{
 .input-field input[type=password].invalid {
   border-bottom: 1px solid #D32F2F!important;
   box-shadow: 0 1px 0 0 #D32F2F!important;
+} */
+input {
+  margin-bottom: 0 !important;
+}
+.input-margin-bottom-fix {
+  margin-bottom: 20px !important;
+}
+.validation-red-text {
+  color: #d32f2f !important;
+}
+.input-field .div.error {
+  color: #d32f2f;
 }
 
 .material-icons, .icon-text {
   vertical-align: middle;
+}
+
+.modal-content{
+  /* overflow-y: hidden !important; */
+  height: calc(100% - 56px)!important;
+  overflow: visible;
+}
+
+.modal-title{
+  padding-bottom: .5em
+}
+
+.modal{
+  width: 60%;
+  max-height: 100%;
+  min-height: 30%;
+  height: auto;
+  top: 5% !important;
+  overflow: visible;
+}
+
+.gradeBookChartHolder {
+  
 }

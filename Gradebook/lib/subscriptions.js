@@ -5,4 +5,5 @@ if (Meteor.isClient){
     Meteor.subscribe("courseWeighting");
     Meteor.subscribe("assessments");
     Meteor.subscribe("students");
+    Meteor.subscribe("allUsers");
 }

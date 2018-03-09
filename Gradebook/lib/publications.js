@@ -45,4 +45,18 @@ if (Meteor.isServer) {
             return false
         }
     });
+    // Meteor.publish("allUsers", function () {
+    //     return Meteor.users.find({});
+        // var emailsArray = [];
+        // const userList = Meteor.users.find({});
+        // userList.forEach(
+        //     function (doc) {
+        //         emailsArray.push(doc.emails.address);
+        //     }
+        // );
+        // return emailsArray;
+    // });
+    Meteor.publish("allUsers", function () {
+        return Meteor.users.find({}, {fields: {emails:1}});
+    });
 };

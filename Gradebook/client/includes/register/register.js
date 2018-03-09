@@ -45,8 +45,8 @@ Template.register.events({
         var emailVar = event.target.registerEmail.value;
         var passwordVar = event.target.registerPassword.value;
         Accounts.createUser({
-            email: emailVar,
-            password: passwordVar
+            email: Template.find("[name='registerEmail']").value,
+            password: Template.find("[name='registerPassword']").value
         });
 
         document.getElementById("registerForm").reset();

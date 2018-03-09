@@ -37,14 +37,11 @@ function canAssignFinalEvaluation() {
     return arrayOfEvaluationsToReturn.length != 0
 }
 
-Template.gradeBookChart.onRendered(function () {
-    $("#main_table").tableHeadFixer({ "left": 1 });
-    $("#main_table").floatThead();
-    document.getElementsByClassName('floatThead-wrapper')[0].parentElement.style.width = "100%";
-
+Template.gradeBookChart.onRendered(function() {
+    $("#main_table").tableHeadFixer({"left" : 1});
+    //  $("#main_table").floatThead();
+    //document.getElementsByClassName('floatThead-wrapper')[0].parentElement.style.width = "100%";
 });
-
-
 
 Template.gradeBookChart.events({
     'click .assignFinalEvalButtonGradeBook': function () {

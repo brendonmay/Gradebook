@@ -3,7 +3,7 @@
     width: 100%;
     min-height: 50% !important;
     max-height: 50% !important;
-    height: 1000px;
+    height: 45vh!important;
     overflow-y: scroll;
 }
 

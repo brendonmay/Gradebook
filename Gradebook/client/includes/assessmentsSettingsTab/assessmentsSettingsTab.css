@@ -2,9 +2,20 @@
     border-bottom-color: #4caf50;
 }
 
+#assessments-courseWorkWeight[type=text]:not(.browser-default):focus:not([readonly]){
+    border-bottom-color: #4caf50;
+}
+
+#assessments-finalWeight:not([type]):focus:not([readonly]){
+    border-bottom-color: #4caf50;
+}
+
 .assessment-type-input:not([type]){
+    text-align: center;
+    width: 200px;
     height: 1.09rem;
-    margin-bottom: 15px;
+    margin-bottom: 6px;
+    margin-top: 9px;
 }
 
 .toRight{
@@ -66,11 +77,31 @@
     color:#ff5252
 }
 
+
+.courseWeightPercentage{
+    font-size: 1.64rem;
+}
+
 #assessments-courseWorkWeight, #assessments-finalWeight{
     width: 40px;
-    margin-bottom: 0;
     font-size: 1.64rem;
     text-align: center;
+    margin: 0rem;
+}
+
+.courseHeader, .courseWeight{
+    box-sizing: content-box;
+    height: 49px; 
+}
+
+.assessmentType, .assessmentTypeWeight{
+    box-sizing: content-box;
+    height: 33px;
+}
+
+.addAssessment, .courseStyler{
+    box-sizing: content-box;
+    height: 33px;
 }
 
 #toast-container {

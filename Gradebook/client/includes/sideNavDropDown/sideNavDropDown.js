@@ -79,7 +79,7 @@ Template.sideNavDropDown.helpers({
 
         return uniqueYears;
     },
-
+    
 });
 
 Template.sideNavDropDown.events({

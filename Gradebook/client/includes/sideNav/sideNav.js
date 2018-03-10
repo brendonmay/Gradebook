@@ -13,5 +13,18 @@ Template.sideNav.helpers({
   hasNoCourses: function () {
     return Courses.findOne({ ownerId: Meteor.userId() }) == null
   },
+  highlightCorrectCourse: function () {
+    var newCourseYear = Session.get('courseYear');
+    var currentCourseId = Session.get('courseId');
+    console.log(currentCourseId);
+    if (currentCourseId != 0) {
+
+      document.getElementById("active" + currentCourseId).classList.add("active");
+      document.getElementById("active" + currentCourseId).classList.add("green");
+      document.getElementById("" + newCourseYear).click();
+
+      console.log(document.getElementById("active" + currentCourseId));
+    }
+  }
 
 });

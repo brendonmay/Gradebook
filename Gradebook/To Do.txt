@@ -1,13 +1,11 @@
 -Styling Issues
 	- "Thanks for signing in! Add a course to get started!
 	- "Welcome Back! Select a course to get started!"
+	- Adjust size of footer to ensure its small enough that the assessment name can be read in the gradebook.
 	- Fix buttons placements in each of the settings tabs.
 	- Finish all of the styling in each of the settings tabs.
 	- Buttons in settings tab dont behave well as you change the size of the window. Possible suggested solution, use display=none instead of adding class "hide" when they shouldnt be there. This can be achieved with the setAttribute() functiion.
-	- Add Assessment Modal - Assessment Type drop down: determine a clean and nice way of differentiating the first dropdown item from the clickable drop down items! 
-	- In the Assessments Tab, the text directing you to Assessment Settings doesnt dynamically move.
-	- Make all toasts appear in the top right of the nav bar
-	- courseyears and courses listed in sidenav shift if you zoom in/out
+	- In the Assessments Tab, the text directing you to Assessment Settings doesnt dynamically move
 	- Change most (if not all) toasts to custom error messages via jQuery validation + MaterializeCSS. I have already installed jQuery validation. Note: it is not up to date! Due to this supposedly being very buggy I highly suggest we install the latest version.
 		-https://themeteorchef.com/tutorials/validating-forms-with-jquery-validation
 		-http://demo.geekslabs.com/materialize/v3.1/form-validation.html

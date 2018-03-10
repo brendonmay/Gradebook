@@ -40,13 +40,20 @@ Template.login.events({
             } else {
                 //no error on login, so user Logs in fine
                 removeLoginError();
+
+                var loginForm = document.getElementById('loginForm');
+                loginForm.reset();
+                clearValidation(loginForm);
+
                 $('#loginModal').modal('close');
             }
         });
     },
 
     'click .register': function () {
-        document.getElementById("loginForm").reset();
+        var loginForm = document.getElementById('loginForm');
+        loginFormloginForm.reset();
+        clearValidation(loginForm);
 
         $('#registerModal').modal('open');
         removeLoginError();
@@ -55,7 +62,10 @@ Template.login.events({
 
     'click .cancel-button': function () {
         //clear the input fields
-        document.getElementById("loginForm").reset();
+        var loginForm = document.getElementById('loginForm');
+        form.reset();
+        clearValidation(loginForm);
+
         removeLoginError();
         //if cancel button is clicked, close the modal
         $('#loginModal').modal('close');
@@ -64,7 +74,8 @@ Template.login.events({
 
 Template.login.onRendered(function () {
     $("#loginForm").validate({
-        errorClass: 'invalid',
+        errorClass: "invalid",
+        validClass: "jquery-validation-valid",
         rules: {
             userEmail: {
                 required: true
@@ -84,9 +95,6 @@ Template.login.onRendered(function () {
         },
         errorElement: 'div',
         errorPlacement: function (error, element) {
-            console.log(error);
-            console.log(element);
-            $(element).addClass("validation-red-text");
             var placement = $(element).data('error');
             if (placement) {
                 $(placement).append(error)

@@ -5,20 +5,7 @@ import { Accounts } from 'meteor/accounts-base';
 import { CourseWeighting } from '../../../lib/collections.js';
 import { Assessments } from '../../../lib/collections.js';
 import jqueryValidation from 'jquery-validation';
-
 import '../../main.html';
-
-function clearValidation(formElement) {
-    //Internal $.validator is exposed through $(form).validate()
-    var validator = $(formElement).validate();
-    //Iterate through named elements inside of the form, and mark them as error free
-    $('[name]', formElement).each(function () {
-        validator.successList.push(this);//mark as error free
-        validator.showErrors();//remove error messages if present
-    });
-    validator.resetForm();//remove error class on name elements and clear history
-    validator.reset();//remove all error and success data
-}
 
 function closeCreateAssessmentModal() {
     //clear the input fields
@@ -222,7 +209,7 @@ Template.createAssessment.onRendered(function () {
     });
     $("#createAssessmentFormId").validate({
         errorClass: 'invalid',
-        validClass: 'marks-valid',
+        validClass: 'jquery-validation-valid',
         rules: {
             marksK: {
                 isInteger: true,
@@ -239,6 +226,12 @@ Template.createAssessment.onRendered(function () {
             marksC: {
                 isInteger: true,
                 isPositive: true
+            },
+            assessmentTypeSelect: {
+                required: true
+            },
+            assessmentName: {
+                required: true
             }
         },
         messages: {

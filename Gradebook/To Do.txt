@@ -29,5 +29,8 @@
 
 -------------
 
+
+-Figure out why I can't add script with src includes/globalFunctions/clearValidation.js 
+
 Good web documents:
 	Using Dynamic Templates in Meteor: https://themeteorchef.com/tutorials/using-dynamic-templates

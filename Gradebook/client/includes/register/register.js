@@ -3,8 +3,6 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Accounts } from 'meteor/accounts-base';
 import jqueryValidation from 'jquery-validation';
 import { Meteor } from "meteor/meteor";
-
-
 import '../../main.html';
 
 function doesEmailAlreadyExist(allEmails, userEmail) {
@@ -18,21 +16,25 @@ function doesEmailAlreadyExist(allEmails, userEmail) {
 
 Template.register.events({
     'click .cancel-button': function () {
-        //clear the input fields
-        document.getElementById("registerForm").reset();
-
-        //if cancel button is clicked, close the modal
+        var registerForm = document.getElementById("registerForm");
+        registerForm.reset();
+        clearValidation(registerForm);
         $('#registerModal').modal('close');
     },
 
     'click .back-button': function () {
-        document.getElementById("registerForm").reset();
+        var registerForm = document.getElementById("registerForm");
+        registerForm.reset();
+        clearValidation(registerForm);
 
         $('#registerModal').modal('close');
         $('#loginModal').modal({
             complete: function () {
                 var message = document.getElementById('login-failed');
                 message.style.display = "none";
+                var loginForm = document.getElementById('loginForm');
+                loginForm.reset();
+                clearValidation(loginForm);
             } // Callback for Modal close
         }
         );
@@ -42,14 +44,17 @@ Template.register.events({
     'submit .register-form': function (event) {
         event.preventDefault();
 
-        var emailVar = event.target.registerEmail.value;
-        var passwordVar = event.target.registerPassword.value;
+        var email = event.target.registerEmail.value;
+        var password = event.target.registerPassword.value;
         Accounts.createUser({
-            email: Template.find("[name='registerEmail']").value,
-            password: Template.find("[name='registerPassword']").value
+            email: email,
+            password: password
         });
 
-        document.getElementById("registerForm").reset();
+        var registerForm = document.getElementById("registerForm");
+        registerForm.reset();
+        clearValidation(registerForm);
+
         $('#registerModal').modal('close');
     }
 })
@@ -76,8 +81,8 @@ Template.register.onRendered(function () {
     });
 
     $("#registerForm").validate({
-        errorClass: "invalid validation-red-text",
-        validClass: "",
+        errorClass: "invalid",
+        validClass: "jquery-validation-valid",
         rules: {
             registerEmail: {
                 required: true,

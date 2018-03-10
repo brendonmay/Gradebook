@@ -8,18 +8,6 @@ import jqueryValidation from 'jquery-validation';
 
 import '../../main.html';
 
-function clearValidation(formElement) {
-    //Internal $.validator is exposed through $(form).validate()
-    var validator = $(formElement).validate();
-    //Iterate through named elements inside of the form, and mark them as error free
-    $('[name]', formElement).each(function () {
-        validator.successList.push(this);//mark as error free
-        validator.showErrors();//remove error messages if present
-    });
-    validator.resetForm();//remove error class on name elements and clear history
-    validator.reset();//remove all error and success data
-}
-
 function closeAssignFinalModal() {
     //clear the input fields
     var form = document.getElementById("assignFinalFormId");
@@ -115,23 +103,6 @@ Template.assignFinal.events({
             }
         }
 
-        //checks
-        if (markK == "N/A" && markA == "N/A" && markT == "N/A" && markC == "N/A") {
-            Materialize.toast('You must assess the students in at least one category.', 5000, 'amber darken-3');
-            return false
-        }
-
-        if (markK <= 0 || markA <= 0 || markT <= 0 || markC <= 0) {
-            Materialize.toast("A selected category's mark must be an integer greater than 0.", 5000, 'amber darken-3');
-            return false
-        }
-
-        if (!((markK == "N/A" || Math.floor(markK) == markK) && (markA == "N/A" || Math.floor(markA) == markA) && (markT == "N/A" || Math.floor(markT) == markT) && (markC == "N/A" || Math.floor(markC) == markC))) {
-            console.log("the problem is here");
-            Materialize.toast("A selected category's mark must be an integer greater than 0.", 5000, 'amber darken-3');
-            return false
-        }
-
         if (markK != "N/A") {
             markK = Number(markK)
         }
@@ -218,7 +189,7 @@ Template.assignFinal.onRendered(function () {
     });
     $("#assignFinalFormId").validate({
         errorClass: 'invalid',
-        validClass: 'final-marks-valid',
+        validClass: 'jquery-validation-valid',
         rules: {
             marksKFinal: {
                 isInteger: true,
@@ -235,6 +206,9 @@ Template.assignFinal.onRendered(function () {
             marksCFinal: {
                 isInteger: true,
                 isPositive: true
+            },
+            finalAssessmentTypeSelect: {
+                required: true
             }
         },
         messages: {

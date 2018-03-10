@@ -52,7 +52,7 @@ Template.login.events({
 
     'click .register': function () {
         var loginForm = document.getElementById('loginForm');
-        loginFormloginForm.reset();
+        loginForm.reset();
         clearValidation(loginForm);
 
         $('#registerModal').modal('open');

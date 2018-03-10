@@ -3,13 +3,13 @@
         <ul class="collapsible-nav collapsible-accordion">
             {{#each years}}
             <li>
-                <a class="collapsible-header">{{courseYear}}
+                <a class="collapsible-header" id="sideNav{{courseYear}}">{{courseYear}}
                     <i class="material-icons">arrow_drop_down</i>
                 </a>
                 <div class="collapsible-body">
                     <ul class="sections">
                         {{#each courses courseYear}}
-                        <li class="course-dropdown">
+                        <li class="course-dropdown" id="sideNav{{courseId}}">
                             <a href="#!" id={{courseId}} name={{courseYear}}>{{courseName}}</a>
                         </li>
                         {{/each}}

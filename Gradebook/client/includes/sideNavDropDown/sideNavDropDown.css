@@ -1,4 +1,7 @@
 .collapsible-body{
     font-family: GillSans, Calibri, Trebuchet, sans-serif;
-    
+}
+.dropdown-marginfix {
+    margin-top: 1px;
+    margin-bottom: 1px;
 }

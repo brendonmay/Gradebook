@@ -50,6 +50,7 @@ Template.deleteCourse.events({
             if(activeElements[i].classList.contains("active")){
                 activeElements[i].classList.remove("active");
                 activeElements[i].classList.remove("green");
+                break
             }
         }
 

@@ -75,6 +75,10 @@ Template.addCourse.events({
             $('#addModal').modal('close');
         }
     },
+    'click .addCourseButton': function(){
+        document.getElementById('submitaddCourseForm').click();
+        return false
+    },
     'click .addCourseCancel': function() {
         $('#addModal').modal('close');
     }

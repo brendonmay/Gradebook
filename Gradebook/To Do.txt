@@ -7,7 +7,7 @@
 	- Add Assessment Modal - Assessment Type drop down: determine a clean and nice way of differentiating the first dropdown item from the clickable drop down items! 
 	- In the Assessments Tab, the text directing you to Assessment Settings doesnt dynamically move.
 	- Make all toasts appear in the top right of the nav bar
-	- sideNav length is not dynamic
+	- courseyears and courses listed in sidenav shift if you zoom in/out
 	- Change most (if not all) toasts to custom error messages via jQuery validation + MaterializeCSS. I have already installed jQuery validation. Note: it is not up to date! Due to this supposedly being very buggy I highly suggest we install the latest version.
 		-https://themeteorchef.com/tutorials/validating-forms-with-jquery-validation
 		-http://demo.geekslabs.com/materialize/v3.1/form-validation.html
@@ -17,13 +17,12 @@
 		-if we have problem with selects:
 			-https://github.com/Dogfalo/materialize/issues/3440
 -Functionality Issues
-	- In assessments tab if you try to edit the date sometimes it wont let you (I think?)
 	- When you change the year of a course, it will no longer be highlighted in the sideNav (redirect with clicks)
-	- When you delete a course that is in a folder with more than one course, another course will become highlighted, yet no information is shown (remove active class)
-
+	
 	- Make it so that you cannot include the characters "," or "?" in the student first or last name.
 	- Perhaps limit the length of the student first and last name?
 	- In each of the Settings' Tabs, check the input type to ensure only numbers can be inputted for the weights.
+	- Create new assessment modal error messages arent red for "Assessment Name" field
 
 	-Delete Coursework Assessment has white text with no banner/Add Course Work/Add Final Evaluation Work
 	-In create new coursework, when checkbox is clicked focus on input field 

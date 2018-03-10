@@ -16,6 +16,7 @@
 
 -Functionality Issues
 	- When you change the year of a course, it will no longer be highlighted in the sideNav (redirect with clicks)
+	- Clear errors on closing of login and register modal
 	
 	- Make it so that you cannot include the characters "," or "?" in the student first or last name.
 	- Perhaps limit the length of the student first and last name?

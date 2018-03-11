@@ -87,7 +87,7 @@ Template.login.onRendered(function () {
         //For custom messages
         messages: {
             userEmail: {
-                required: "Enter your username"
+                required: "Enter your email"
             },
             userPassword: {
                 required: "Enter your password"

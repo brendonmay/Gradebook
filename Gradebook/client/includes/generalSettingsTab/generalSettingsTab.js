@@ -2,6 +2,7 @@ import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Courses } from '../../../lib/collections.js';
 import { Accounts } from 'meteor/accounts-base';
+import jqueryValidation from 'jquery-validation';
 
 import '../../main.html';
 
@@ -21,10 +22,6 @@ function getYearsArray(){
     }
     return yearOptions
 }
-
-Template.generalSettingsTab.onRendered( function() {
-    $('input#input_text, textarea#textarea1').characterCounter();
-  })
 
 Template.generalSettingsTab.helpers({
     currentCourse: function () {
@@ -105,11 +102,11 @@ Template.generalSettingsTab.events({
         let courseYearText = document.getElementById("yearTextId");
         let courseYearDropdown = document.getElementById("yearDropdownId");
 
-        if (newCourseName.length > 15){
-            Materialize.toast('Your course name is too long.', 5000, 'amber darken-3');
-            return false
-        }
-        else{
+        // if (newCourseName.length > 15){
+        //     Materialize.toast('Your course name is too long.', 5000, 'amber darken-3');
+        //     return false
+        // }
+        // else{
             editButtonElement.classList.remove("hide");
             saveButtonElement.classList.add("hide");
             cancelButtonElement.classList.add("hide");
@@ -151,8 +148,8 @@ Template.generalSettingsTab.events({
                 document.getElementById(oldCourseYear).click();
                 document.getElementById(oldCourseYear).click();
             }
-                  
-        }
+        // }
+        return false;
     },
     'click .cancel-general-settings': function () {
         let editButtonElement = document.getElementById("generalSettings-EditButton");
@@ -191,4 +188,41 @@ Template.generalSettingsTab.events({
         let currentYearSelectItem = document.getElementById("selectCurrentYear");
         currentYearSelectItem.selected = true;
     },
+    'click .save-general-settings': function() {
+        document.getElementById('submitGeneralSettings').click();
+        return false;
+    }
+});
+
+Template.editStudent.onRendered(function () {
+
+    $("#generalSettingsFormID").validate({
+        errorClass: 'invalid',
+        validClass: 'jquery-validation-valid',
+        rules: {
+            courseName: {
+                required: true,
+                maxlength: 15
+            },
+            courseYear: {
+                required: true
+            }
+        },
+        messages: {
+            courseName: {
+                maxlength: "Course Names cannot exceed 15 characters"
+            }
+        },
+        errorElement: 'div',
+        errorPlacement: function (error, element) {
+            var placement = $(element).data('error');
+            if (placement) {
+                $(placement).append(error)
+            } else {
+                error.insertAfter(element);
+            }
+        }
+    });
+    
+    $('input#input_text, textarea#textarea1').characterCounter();
 });

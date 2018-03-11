@@ -12,7 +12,6 @@ function doneEditing() { //works
     let cancelButtonElement = document.getElementById("cancel-button");
 
     let addFinalAssessmentType = document.getElementById('finalAddAssessment');
-    let finalCourseStyler = document.getElementById('finalCourseStyler');
     let addCourseAssessmentType = document.getElementById('courseAddAssessment');
     let courseStyler = document.getElementById('courseStyler');
 
@@ -21,7 +20,6 @@ function doneEditing() { //works
     cancelButtonElement.classList.add("hide");
 
     addFinalAssessmentType.classList.remove("hide");
-    finalCourseStyler.classList.remove("hide");
     addCourseAssessmentType.classList.remove('hide');
     courseStyler.classList.remove("hide");
     

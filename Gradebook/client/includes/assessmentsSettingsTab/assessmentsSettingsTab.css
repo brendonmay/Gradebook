@@ -89,17 +89,17 @@
     margin: 0rem;
 }
 
-.courseHeader, .courseWeight{
+.courseHeader, .courseWeight, .finalCourseHeader, .finalCourseWeight{
     box-sizing: content-box;
-    height: 49px; 
+    height: 48px; 
 }
 
-.assessmentType, .assessmentTypeWeight{
+.assessmentType, .assessmentTypeWeight, .finalAssessmentType, .finalAssessmentWeight{
     box-sizing: content-box;
     height: 33px;
 }
 
-.addAssessment, .courseStyler{
+.addAssessment, .addFinalAssessment,.courseStyler{
     box-sizing: content-box;
     height: 33px;
 }

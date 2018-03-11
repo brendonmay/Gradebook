@@ -2,44 +2,6 @@
     <h4 class="light-blue lighten-4 settings-header">Assessment Settings</h4>
     <form class="col s12 assessmentsTabForm" onsubmit="return false">
         <div class="row">
-
-            <!-- <div class="col s6 assessmentContainer">
-                <ul class="collapsible" data-collapsible="expandable">
-                    <div class=" col s10 collapsible-header blue-grey lighten-2 courseHeader" style="cursor: initial; border: 1px solid black">
-                        <h5 class="header-text">Coursework</h5>
-                    </div>
-                    <div class="col s2 collapsible-header blue-grey lighten-2 courseWeight" style="cursor: initial; border: 1px solid black">
-                        <input disabled id="assessments-courseWorkWeight" type="text" value={{courseWorkWeight}}>%
-                    </div>
-                    {{#each courseAssessmentTypes}}
-                    <li>
-                        <div class="col s10 collapsible-header input-field assessmentType" style="cursor: initial; margin: 0rem; border: 1px solid black">
-                            <a href='#!' class="delete-courseworkAssessmentType" name={{assessmentType}} id={{assessmentTypeId}}>
-                                <i id="deletec{{assessmentTypeId}}" class="material-icons icon-bluegrey">close</i>
-                            </a>
-                            <i id="editc{{assessmentTypeId}}" class="material-icons icon-bluegrey-edit hide">edit</i>
-                            <p class="assessment-type-listing" id="displayc{{assessmentTypeId}}">{{assessmentType}}</p>
-                            <input class="assessment-type-input hide" id="changeNamec{{assessmentTypeId}}" value={{assessmentType}}>
-                        </div>
-                        <div class="col s2 collapsible-header input-field assessmentTypeWeight" style="cursor: initial; margin: 0rem; border: 1px solid black">
-                            <input class="assessment-type-input hide" id="changeNamec{{assessmentTypeId}}" value={{assessmentType}}>
-                            <input disabled id="inputc{{assessmentTypeId}}" class="weightInput" type="text" name={{assessmentType}} value={{assessmentWeight}}>%
-                        </div>
-                    </li>
-                    {{/each}}
-                    <li>
-                        <div class="col s10 collapsible-header addAssessment" id="courseAddAssessment" style="cursor: initial; border: 1px solid black">
-                            <a href="#addCourseWork" class='modal-trigger'>
-                                <i class="material-icons icon-green">add_box</i>
-                            </a>
-                            <a id="addCourseworkAssessmentType" href="#addCourseWork" class="modal-trigger waves-effect waves-light btn-flat addAssessmentButton">Add assessment type</a>
-                        </div>
-                        <div class="col s2 courseStyler" style="border: 1px solid black">
-                        </div>
-                    </li>
-                </ul>
-            </div> -->
-
             <div class="col s6 assessmentContainer">
                 <ul class="collapsible" data-collapsible="expandable">
                     <div class="col s10 collapsible-header blue-grey lighten-2 courseHeader" style="cursor: initial">
@@ -103,19 +65,17 @@
                     </li>
                     {{/each}}
                     <li>
-                        <div class="collapsible-header" id="finalAddAssessment" style="cursor: initial">
+                        <div class="col s10 collapsible-header addFinalAssessment" id="finalAddAssessment" style="cursor: initial">
                             <a href="#addFinalWork" class='modal-trigger'>
                                 <i class="material-icons icon-green">add_box</i>
                             </a>
                             <a id="addFinalAssessmentType" href="#addFinalWork" class="modal-trigger waves-effect waves-light btn-flat addAssessmentButton">Add assessment type</a>
                         </div>
+                        <div class="col s2 collapsible-header courseStyler2" id="courseStyler2" style="cursor: initial">
+                        </div>
                     </li>
                 </ul>
             </div>
-
-            <div class="col s1">
-            </div>
-
         </div>
 
         <div class="col s12">

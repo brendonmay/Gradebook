@@ -14,6 +14,7 @@ function doneEditing() { //works
     let addFinalAssessmentType = document.getElementById('finalAddAssessment');
     let addCourseAssessmentType = document.getElementById('courseAddAssessment');
     let courseStyler = document.getElementById('courseStyler');
+    let courseStyler2 = document.getElementById('courseStyler2');
 
     editButtonElement.classList.remove("hide");
     saveButtonElement.classList.add("hide");
@@ -22,7 +23,7 @@ function doneEditing() { //works
     addFinalAssessmentType.classList.remove("hide");
     addCourseAssessmentType.classList.remove('hide');
     courseStyler.classList.remove("hide");
-
+    courseStyler2.classList.remove("hide");
 
     let currentCourseId = Session.get('courseId');
     const courseworkAssessmentTypes = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseworkAssessmentTypes;
@@ -175,6 +176,7 @@ Template.assessmentsTab.events({
         let addFinalAssessmentType = document.getElementById('finalAddAssessment');
         let addCourseAssessmentType = document.getElementById('courseAddAssessment');
         let courseStyler = document.getElementById('courseStyler');
+        let courseStyler2 = document.getElementById('courseStyler2');
 
         editButtonElement.classList.add("hide");
         saveButtonElement.classList.remove("hide");
@@ -183,6 +185,7 @@ Template.assessmentsTab.events({
         addFinalAssessmentType.classList.add('hide');
         addCourseAssessmentType.classList.add('hide');
         courseStyler.classList.add("hide");
+        courseStyler2.classList.add("hide");
 
         let currentCourseId = Session.get('courseId');
         const courseworkAssessmentTypes = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseworkAssessmentTypes;

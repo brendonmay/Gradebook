@@ -99,7 +99,7 @@
     height: 33px;
 }
 
-.addAssessment, .addFinalAssessment,.courseStyler{
+.addAssessment, .addFinalAssessment, .courseStyler, .courseStyler2{
     box-sizing: content-box;
     height: 33px;
 }

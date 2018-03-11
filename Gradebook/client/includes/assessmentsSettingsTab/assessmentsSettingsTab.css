@@ -1,13 +1,12 @@
-.assessment-type-input:not([type]):focus:not([readonly]){
-    border-bottom-color: #4caf50;
+.finalAssessmentSettings{
+    border: 0rem solid #ddd;
 }
 
-#assessments-courseWorkWeight[type=text]:not(.browser-default):focus:not([readonly]){
-    border-bottom-color: #4caf50;
-}
-
+.input-field .weightInput[type=text]:focus, .assessment-type-input:not([type]):focus:not([readonly]),
+#assessments-courseWorkWeight[type=text]:not(.browser-default):focus:not([readonly]),
 #assessments-finalWeight:not([type]):focus:not([readonly]){
-    border-bottom-color: #4caf50;
+    border-bottom-color: #827717!important;
+    box-shadow: 0 1px 0 0 #827717 !important;
 }
 
 .assessment-type-input:not([type]){
@@ -18,15 +17,11 @@
     margin-top: 9px;
 }
 
-.toRight{
-    margin-left: auto;
-}
-
 .weightInput{
     margin: 0!important;
-    margin-left: 15px!important;
-    width: 25px!important;
-    height: 1.5rem!important;
+    margin-left: 1.05rem!important;
+    width: 1.7rem!important;
+    height: 1.7rem!important;
     text-align: center!important;
 }
 
@@ -61,7 +56,7 @@
     line-height: 1.5;
     padding: 0;
     font-style: italic;
-    margin-top: 2px;
+    margin-top: 0.35rem;
     width: 73%;
 }
 
@@ -77,31 +72,52 @@
     color:#ff5252
 }
 
-
-.courseWeightPercentage{
-    font-size: 1.64rem;
-}
-
 #assessments-courseWorkWeight, #assessments-finalWeight{
-    width: 40px;
+    margin-left: 0.8rem;
+    height: 2rem;
+    width: 2.7rem;
     font-size: 1.64rem;
     text-align: center;
-    margin: 0rem;
 }
 
-.courseHeader, .courseWeight, .finalCourseHeader, .finalCourseWeight{
-    box-sizing: content-box;
-    height: 48px; 
+.finalCourseWeight{
+    height: 3.5rem; 
+    border-top: 1px solid #ddd;
 }
 
-.assessmentType, .assessmentTypeWeight, .finalAssessmentType, .finalAssessmentWeight{
+.courseHeader, .courseWeight, .finalCourseHeader{
     box-sizing: content-box;
-    height: 33px;
+    height: 3.5rem; 
+    border-top: 1px solid #ddd;
 }
 
-.addAssessment, .addFinalAssessment, .courseStyler, .courseStyler2{
+.addAssessment, .addFinalAssessment, .courseStyler, .courseStyler2,
+.assessmentType, .assessmentTypeWeight, .finalAssessmentType,
+.finalAssessmentWeight{
     box-sizing: content-box;
-    height: 33px;
+    height: 2.2rem;
+}
+
+.courseHeader, .assessmentType, .finalCourseHeader, .finalAssessmentType{
+    border-right: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+}
+
+.addAssessment, .addFinalAssessment{
+    border-left: 1px solid #ddd;
+}
+
+.addAssessment, .courseStyler, .addFinalAssessment, .courseStyler2{
+    border-bottom: 1px solid #ddd;
+}
+
+.courseStyler, .assessmentTypeWeight, .courseWeight, .courseStyler2,
+.finalCourseWeight, .finalAssessmentWeight{
+    border-right: 1px solid #ddd;
+}
+
+.coursePercentage, .finalPercentage{
+    font-size: 1.4rem;
 }
 
 #toast-container {
@@ -112,5 +128,5 @@
   }
 
   .assessment-type-listing{
-      margin-top:0
+      margin-top: 0.35rem
   }

@@ -2,13 +2,14 @@
     <h4 class="light-blue lighten-4 settings-header">Assessment Settings</h4>
     <form class="col s12 assessmentsTabForm" onsubmit="return false">
         <div class="row">
-            <div class="col s6 assessmentContainer">
+            <div class="col s5 assessmentContainer">
                 <ul class="collapsible" data-collapsible="expandable">
                     <div class="col s10 collapsible-header blue-grey lighten-2 courseHeader" style="cursor: initial">
                         <h5 class="header-text">Coursework</h5>
                     </div>
-                    <div class="col s2 collapsible-header blue-grey lighten-2 courseWeight" style="cursor: initial">
-                        <input disabled id="assessments-courseWorkWeight" type="text" value={{courseWorkWeight}}>%
+                    <div class="col s2 collapsible-header blue-grey lighten-2 courseWeight" style="cursor: initial; padding: 0rem">
+                        <h5 class="coursePercentage">
+                            <input disabled id="assessments-courseWorkWeight" type="text" value={{courseWorkWeight}}>%</h5>
                     </div>
                     {{#each courseAssessmentTypes}}
                     <li>
@@ -21,7 +22,6 @@
                             <input class="assessment-type-input hide" id="changeNamec{{assessmentTypeId}}" value={{assessmentType}}>
                         </div>
                         <div class="col s2 collapsible-header input-field assessmentTypeWeight" style="cursor: initial; margin: 0rem">
-                            <input class="assessment-type-input hide" id="changeNamec{{assessmentTypeId}}" value={{assessmentType}}>
                             <input disabled id="inputc{{assessmentTypeId}}" class="weightInput" type="text" name={{assessmentType}} value={{assessmentWeight}}>%
                         </div>
                     </li>
@@ -38,16 +38,16 @@
                     </li>
                 </ul>
             </div>
-
-            <!--  -->
-
-            <div class="col s6 assessmentContainer">
-                <ul class="collapsible" data-collapsible="expandable">
+            <div class="col s1">
+            </div>
+            <div class="col s5 assessmentContainer">
+                <ul class="collapsible finalAssessmentSettings" data-collapsible="expandable">
                     <div class="col s10 collapsible-header blue-grey lighten-2 finalCourseHeader" style="cursor: initial">
                         <h5 class="header-text">Final Evaluations</h5>
                     </div>
                     <div class="collapsible-header blue-grey lighten-2 finalCourseWeight" style="cursor: initial; padding: 0rem">
-                        <input disabled id="assessments-finalWeight" value={{finalWeight}}>%
+                        <h5 class="finalPercentage">
+                            <input disabled id="assessments-finalWeight" value={{finalWeight}}>%</h5>
                     </div>
                     {{#each finalAssessmentTypes}}
                     <li>
@@ -75,6 +75,8 @@
                         </div>
                     </li>
                 </ul>
+            </div>
+            <div class="col s1">
             </div>
         </div>
 

@@ -44,6 +44,16 @@ Template.deleteCourse.events({
         activeElement.classList.remove("active");
         activeElement.classList.remove("green");
 
+        let activeElements = document.getElementsByClassName("course-dropdown");
+        console.log(activeElements);
+        for(i = 0; i < activeElements.length; i++){
+            if(activeElements[i].classList.contains("active")){
+                activeElements[i].classList.remove("active");
+                activeElements[i].classList.remove("green");
+                break
+            }
+        }
+
 
         Meteor.call('courses.deleteCourse', currentCourseId, courseObj);
 

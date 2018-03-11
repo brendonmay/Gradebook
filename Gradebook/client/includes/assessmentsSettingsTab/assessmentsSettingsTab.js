@@ -22,7 +22,7 @@ function doneEditing() { //works
     addFinalAssessmentType.classList.remove("hide");
     addCourseAssessmentType.classList.remove('hide');
     courseStyler.classList.remove("hide");
-    
+
 
     let currentCourseId = Session.get('courseId');
     const courseworkAssessmentTypes = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseworkAssessmentTypes;
@@ -323,5 +323,25 @@ Template.assessmentsTab.events({
             //doneEditing
             doneEditing();
         }
-    }
+    },
+    'click .addNewCourseAssessmentTypeButton': function () {
+        $('#addCourseWork').modal({
+            dismissible: true,
+            complete: function () {
+                document.getElementById('addAssessmentTypeForm').reset();
+            }
+
+        });
+        $('#addCourseWork').modal('open');
+    },
+    'click .addFinalAssessmentTypeButton': function () {
+        $('#addFinalWork').modal({
+            dismissible: true,
+            complete: function () {
+                document.getElementById('addFinalTypeForm').reset();
+            }
+
+        });
+        $('#addFinalWork').modal('open');
+    },
 });

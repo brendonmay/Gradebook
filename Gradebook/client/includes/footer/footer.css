@@ -10,3 +10,11 @@
 .no-mar-bot{
     margin-bottom:0!important;
 }
+
+.half-marg-bottom{
+    margin-bottom: .65rem;
+}
+
+.footer-pad-custom{
+    padding-top: .65rem;
+}

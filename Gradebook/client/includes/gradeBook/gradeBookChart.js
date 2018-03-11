@@ -39,17 +39,48 @@ function canAssignFinalEvaluation() {
 
 Template.gradeBookChart.onRendered(function() {
     $("#main_table").tableHeadFixer({"left" : 1});
-    //  $("#main_table").floatThead();
+    $("#main_table").floatThead();
     //document.getElementsByClassName('floatThead-wrapper')[0].parentElement.style.width = "100%";
-
 });
-  
-
 
 Template.gradeBookChart.events({
     'click .assignFinalEvalButtonGradeBook': function () {
         //check if you have no more evaluations to assign
         if (canAssignFinalEvaluation() == true) {
+            $('#assignFinalModal').modal({
+                dismissible: true,
+                complete: function () {
+                    document.getElementById('assignFinalFormId').reset();
+
+                    document.getElementById("finalCheckboxK").removeAttribute("checked");
+                    document.getElementById("finalCheckboxK").value = "N/A";
+                    document.getElementById("inputFinalMarkK").disabled = "true";
+                    if (document.getElementById("inputFinalMarkK-error")) {
+                        document.getElementById("inputFinalMarkK-error").remove();
+                    }
+
+                    document.getElementById("finalCheckboxA").removeAttribute("checked");
+                    document.getElementById("finalCheckboxA").value = "N/A";
+                    document.getElementById("inputFinalMarkA").disabled = "true";
+                    if (document.getElementById("inputFinalMarkA-error")) {
+                        document.getElementById("inputFinalMarkA-error").remove();
+                    }
+
+                    document.getElementById("finalCheckboxT").removeAttribute("checked");
+                    document.getElementById("finalCheckboxT").value = "N/A";
+                    document.getElementById("inputFinalMarkT").disabled = "true";
+                    if (document.getElementById("inputFinalMarkT-error")) {
+                        document.getElementById("inputFinalMarkT-error").remove();
+                    }
+
+                    document.getElementById("finalCheckboxC").removeAttribute("checked");
+                    document.getElementById("finalCheckboxC").value = "N/A";
+                    document.getElementById("inputFinalMarkC").disabled = "true";
+                    if (document.getElementById("inputFinalMarkC-error")) {
+                        document.getElementById("inputFinalMarkC-error").remove();
+                    }
+                }
+            });
             $('#assignFinalModal').modal('open');
             $('select').material_select();
         }
@@ -58,13 +89,51 @@ Template.gradeBookChart.events({
         }
     },
     'click .createAssessmentButtonGradeBook': function () {
+        $('#createAssessmentModal').modal({
+            dismissible: true,
+            complete: function () {
+                document.getElementById('createAssessmentFormId').reset();
+
+                document.getElementById("checkboxK").removeAttribute("checked");
+                document.getElementById("checkboxK").value = "N/A";
+                document.getElementById("inputMarkK").disabled = "true";
+                if (document.getElementById("inputMarkK-error")) {
+                    document.getElementById("inputMarkK-error").remove();
+                }
+
+                document.getElementById("checkboxA").removeAttribute("checked");
+                document.getElementById("checkboxA").value = "N/A";
+                document.getElementById("inputMarkA").disabled = "true";
+                if (document.getElementById("inputMarkA-error")) {
+                    document.getElementById("inputMarkA-error").remove();
+                }
+
+                document.getElementById("checkboxT").removeAttribute("checked");
+                document.getElementById("checkboxT").value = "N/A";
+                document.getElementById("inputMarkT").disabled = "true";
+                if (document.getElementById("inputMarkT-error")) {
+                    document.getElementById("inputMarkT-error").remove();
+                }
+
+                document.getElementById("checkboxC").removeAttribute("checked");
+                document.getElementById("checkboxC").value = "N/A";
+                document.getElementById("inputMarkC").disabled = "true";
+                if (document.getElementById("inputMarkC-error")) {
+                    document.getElementById("inputMarkC-error").remove();
+                }
+
+                if (document.getElementById('createNewAssessment-error')) {
+                    document.getElementById('createNewAssessment-error').remove();
+                }
+            }
+        });
         $('#createAssessmentModal').modal('open');
         $('select').material_select();
     },
-    'click .addStudentsButtonGradebook': function(){
+    'click .addStudentsButtonGradebook': function () {
         $('#addStudentsModal').modal({
             dismissible: true,
-            complete: function(){
+            complete: function () {
                 document.getElementById('addStudentsModalForm').reset();
             }
 

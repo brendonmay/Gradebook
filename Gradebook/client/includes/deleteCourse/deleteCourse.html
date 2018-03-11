@@ -1,9 +1,12 @@
 <template name="deleteCourse">
     <div id="deleteModal" class="modal delete-course-modal">
         <div class="modal-content">
-            <h4>Delete Course</h4>
+            <div class='modal-title'>
+                <h4 class="addCourse-pad-top">Delete Course</h4>
+            </div>
             <p>Are you sure you want to delete
-                <u>{{CurrentCourseName}}</u>? This action is irreversable.</p>
+                <u>{{CurrentCourseName}}</u>? This action is irreversable.
+            </p>
         </div>
         <div class="modal-footer">
             <button id="deleteModal-yes" class="yes-delete-modal add-form modal-action modal-close waves-effect waves-grey btn-flat"

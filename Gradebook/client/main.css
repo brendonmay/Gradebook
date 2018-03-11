@@ -41,56 +41,9 @@ footer {
   transform: translateX(0%) !important;
 }
 
-
-/* .main-site-nav {
-  height: 7% !important;
-  position: relative;
-  background-color:black;
-} */
-
-/* .main-site-contentView {
-  position: relative;
-  height: 83% !important;
-  overflow-y: scroll;
-  width: 100%;
-  background-color: green;
-} */
-
-/* .footer{
-  position: relative;
-  height: 10% !important;
-  background-color: yellow;
-} */
-
-
 .courseSettingsSideNav {
-    margin-top: 100px;
-    /* margin-bottom: 500px !important; */
+  margin-top: 100px;
 }
-
-
-/* @media only screen and (max-width : 992px) {
-    main{
-      padding-left: 0;
-    }
-    footer{
-      padding-left: 0;
-    }
-}
-
-body {
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
-}
-
-main {
-  flex: 1 0 auto;
-}
-
-footer {
-  flex: 1 0 auto;
-} */
 
   /*************** grade book chart CSS ***********/
   .studName{
@@ -102,58 +55,32 @@ footer {
 
  /* label focus color */
  .input-field input[type=text]:focus + label {
-    color: #4caf50!important
+    color: #827717 !important
 }
 .input-field input[type=email]:focus + label {
-  color: #4caf50!important
+  color: #827717 !important
 }
 .input-field input[type=password]:focus + label {
-  color: #4caf50!important
+  color: #827717 !important
 }
 /* label underline focus color */
 .input-field input[type=text]:focus {
-  border-bottom: 1px solid #4caf50 !important;
-  box-shadow: 0 1px 0 0 #4caf50 !important;
+  border-bottom: 1px solid #827717 !important;
+  box-shadow: 0 1px 0 0 #827717 !important;
 }
 .input-field input[type=email]:focus {
-  border-bottom: 1px solid #4caf50 !important;
-  box-shadow: 0 1px 0 0 #4caf50 !important;
+  border-bottom: 1px solid #827717 !important;
+  box-shadow: 0 1px 0 0 #827717!important;
 }
 .input-field input[type=password]:focus {
-  border-bottom: 1px solid #4caf50 !important;
-  box-shadow: 0 1px 0 0 #4caf50 !important;
+  border-bottom: 1px solid #827717 !important;
+  box-shadow: 0 1px 0 0 #827717 !important;
 }
 
 ul.dropdown-content.select-dropdown li span{
-    color: #4caf50 !important;
+    color: #827717 !important;
 }
-/* valid color */
-/* .input-field input[type=text].valid {
-  border-bottom: 1px solid #4caf50!important;
-  box-shadow: 0 1px 0 0 #4caf50!important;
-}
-.input-field input[type=email].valid {
-  border-bottom: 1px solid #4caf50!important;
-  box-shadow: 0 1px 0 0 #4caf50!important;
-}
-.input-field input[type=password].valid {
-  border-bottom: 1px solid #4caf50!important;
-  box-shadow: 0 1px 0 0 #4caf50!important;
-} */
 
-/* invalid color */
-/* .input-field input[type=text].invalid {
-  border-bottom: 1px solid #D32F2F!important;
-  box-shadow: 0 1px 0 0 #D32F2F!important;
-}
-.input-field input[type=email].invalid {
-  border-bottom: 1px solid #D32F2F!important;
-  box-shadow: 0 1px 0 0 #D32F2F!important;
-}
-.input-field input[type=password].invalid {
-  border-bottom: 1px solid #D32F2F!important;
-  box-shadow: 0 1px 0 0 #D32F2F!important;
-} */
 input {
   margin-bottom: 0 !important;
 }
@@ -184,7 +111,7 @@ input {
 .modal{
   width: 60%;
   max-height: 100%;
-  min-height: 30%;
+  /* min-height: 30%; */
   height: auto;
   top: 5% !important;
   overflow: visible;

@@ -99,6 +99,7 @@ Template.generalSettingsTab.events({
 
         let newCourseName = document.getElementById("generalSettings-courseName").value;
         let newCourseYear = document.getElementById("generalSettings-courseYear").value;
+        let oldCourseYear = Session.get('courseYear');
 
         let courseName = document.getElementById("generalSettings-courseName");
         let courseYearText = document.getElementById("yearTextId");
@@ -144,6 +145,13 @@ Template.generalSettingsTab.events({
             Session.set('courseYear', newCourseYear);
 
             Meteor.call('courses.updateCourseNameAndYear', currentCourseId, courseObj);
+
+            //highlight correct course after changing year
+            if (document.getElementById(oldCourseYear) != null){
+                document.getElementById(oldCourseYear).click();
+                document.getElementById(oldCourseYear).click();
+            }
+                  
         }
     },
     'click .cancel-general-settings': function () {

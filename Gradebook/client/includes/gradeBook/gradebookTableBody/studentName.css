@@ -2,22 +2,33 @@
     border-right: 1px double black !important;
     min-width:200px;
     border-bottom: 1px dashed green;
+    z-index: 1;
 }
 
 .studentBlankCellBorder {
     border-right: 1px solid black !important;
     border: none;
+    z-index: 2 !important;
 }
 
 .studentCellBorder {
     border-right: 1px solid black !important;
     border-bottom: 1px solid black !important;
     border: none;
+    z-index: 3!important;
 }
 
 .studentsCell {
-    min-width:200px; 
+    min-width:225px; 
     background-color: white !important; 
     font-weight: bold; 
     text-align:center; 
+}
+
+.cus-mar-col{
+    margin-top:10px!important;
+}
+
+.mar-bot-none{
+    margin-bottom:0!important;
 }

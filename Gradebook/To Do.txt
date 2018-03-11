@@ -19,7 +19,7 @@
 	- Clear errors on closing of login and register modal
 	
 	- Make it so that you cannot include the characters "," or "?" in the student first or last name.
-	- Perhaps limit the length of the student first and last name?
+	- limit the first and last name length to 16 characters each
 	- In each of the Settings' Tabs, check the input type to ensure only numbers can be inputted for the weights.
 	- Create new assessment modal error messages arent red for "Assessment Name" field
 

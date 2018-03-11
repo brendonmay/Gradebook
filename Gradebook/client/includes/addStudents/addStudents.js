@@ -5,8 +5,14 @@ import { Accounts } from 'meteor/accounts-base';
 import { CourseWeighting } from '../../../lib/collections.js';
 import { Assessments } from '../../../lib/collections.js';
 import { Students } from '../../../lib/collections.js';
+import jqueryValidation from 'jquery-validation';
 
 import '../../main.html';
+
+function clearAddStudentValidation() {
+    var addStudentsForm = document.getElementById('addStudentsModalForm');
+    clearValidation(addStudentsForm);
+}
 
 function organizeStudentsIntoColumns(col) {
     let sortedStudentArray = generateSortedStudentArray();
@@ -172,11 +178,7 @@ Template.addStudents.events({
         var firstNameInput = document.getElementById('studentFirstName');
         var lastNameInput = document.getElementById('studentLastName');
 
-        if (firstNameInput == "" || lastNameInput == ""){
-            return false
-        }
-
-        else if ( Students.findOne({ownerId: Meteor.userId(), courseId: courseId}).students.length == 39 ){
+        if (Students.findOne({ ownerId: Meteor.userId(), courseId: courseId }).students.length == 39) {
             Materialize.toast("Your student roster is currently full.", 3000, 'amber darken-3');
             return false
         }
@@ -196,16 +198,18 @@ Template.addStudents.events({
         Materialize.toast(firstName + " " + lastName + " has been added to the student roster.", 3000, 'amber darken-3');
 
         document.getElementById("addStudentsModalForm").reset();
+        clearAddStudentValidation();
     },
     'click .addStudentsModalButton': function () {
         document.getElementById("submit-add-student").click();
         return false
     },
-    'click .addStudentsCancelButton': function(){
+    'click .addStudentsCancelButton': function () {
         document.getElementById("addStudentsModalForm").reset();
+        clearAddStudentValidation();
         $('#addStudentsModal').modal('close');
     },
-    'click .deleteStudent': function(){
+    'click .deleteStudent': function () {
         let target = event.target;
         let targetId = target.parentElement.id
         let studentId = targetId.slice(3, targetId.indexOf('?'));
@@ -214,18 +218,20 @@ Template.addStudents.events({
         let firstName = studentName.slice(studentName.indexOf(', ') + 2, studentName.length);
         let firstThenLastName = firstName + " " + lastName;
 
-        Session.set('selectedStudent', {studentId: studentId, studentName: firstThenLastName});
+        Session.set('selectedStudent', { studentId: studentId, studentName: firstThenLastName });
+        clearAddStudentValidation();
         $('#addStudentsModal').modal('close');
         $('#deleteStudentModal').modal({
-            dismissible: true, 
-            complete: function() { 
+            dismissible: true,
+            complete: function () {
+                clearAddStudentValidation();
                 $('#addStudentsModal').modal('open');
-            } 
-          }
+            }
+        }
         );
         $('#deleteStudentModal').modal('open');
     },
-    'click .editStudent': function(){
+    'click .editStudent': function () {
         let target = event.target;
         let targetId = target.parentElement.id
         let studentId = targetId.slice(3, targetId.indexOf('?'));
@@ -233,15 +239,17 @@ Template.addStudents.events({
         let lastName = studentName.slice(0, studentName.indexOf(', '));
         let firstName = studentName.slice(studentName.indexOf(', ') + 2, studentName.length);
 
-        Session.set('selectedStudent', {studentId: studentId, firstName: firstName, lastName: lastName});
+        Session.set('selectedStudent', { studentId: studentId, firstName: firstName, lastName: lastName });
+        clearAddStudentValidation();
         $('#addStudentsModal').modal('close');
         $('#editStudentModal').modal({
-            dismissible: true, 
-            complete: function() { 
+            dismissible: true,
+            complete: function () {
+                clearAddStudentValidation();
                 $('#addStudentsModal').modal('open');
                 // document.getElementById("editStudentsModalForm").reset();
-            } 
-          }
+            }
+        }
         );
         $('#editStudentModal').modal('open');
     }
@@ -257,8 +265,46 @@ Template.addStudents.helpers({
     studentsForColumnThree: function () {
         return organizeStudentsIntoColumns(3);
     },
-    hasStudents: function(){
+    hasStudents: function () {
         let courseId = Session.get('courseId');
-        return Students.findOne({ownerId: Meteor.userId(), courseId: courseId}).students.length > 0;
+        return Students.findOne({ ownerId: Meteor.userId(), courseId: courseId }).students.length > 0;
     }
+});
+
+Template.addStudents.onRendered(function () {
+    $.validator.addMethod('containsIllegalCharacters', (input) => {
+        const illegalCharacters = /[,<.>/?;:'"{}|`~!@#$%^&*()_+=\]\[\\1234567890]/g;
+        return !(input.match(illegalCharacters)); 
+    });
+    $("#addStudentsModalForm").validate({
+        errorClass: 'invalid',
+        validClass: 'jquery-validation-valid',
+        rules: {
+            lastName: {
+                required: true,
+                containsIllegalCharacters: true
+            },
+            firstName: {
+                required: true,
+                containsIllegalCharacters: true
+            }
+        },
+        messages: {
+            lastName: {
+                containsIllegalCharacters: "Names can only contain alphabet letters and dashes(-)"
+            },
+            firstName: {
+                containsIllegalCharacters: "Names can only contain alphabet letters and dashes(-)"
+            }
+        },
+        errorElement: 'div',
+        errorPlacement: function (error, element) {
+            var placement = $(element).data('error');
+            if (placement) {
+                $(placement).append(error)
+            } else {
+                error.insertAfter(element);
+            }
+        }
+    });
 });

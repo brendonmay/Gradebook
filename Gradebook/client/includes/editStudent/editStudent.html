@@ -5,21 +5,23 @@
             <p>Below you can change
                 <u>{{getFirstName}} {{getLastName}}'s</u> name on the student roster:
             </p>
-            <form id="editStudentsModalForm" onsubmit="return false">
+            <form id="editStudentsModalForm">
                 <div class="row">
                     <div class='input-field input-margin-bottom-fix col s4 offset-s1' style="padding: 0">
-                        <input id="editStudentLastName" type="text" placeholder="" value={{getLastName}} required>
+                        <input id="editStudentLastName" name="editStudentLastName" type="text" placeholder="" value={{getLastName}} data-error=".editStudentLastNameError">
                         <label for="editStudentLastName" style="left: 0">Last Name</label>
+                        <div class="editStudentLastNameError"></div>
                     </div>
                     <div class='input-field input-margin-bottom-fix col s4 offset-s1' style="padding: 0">
-                        <input id="editStudentFirstName" type="text" placeholder="" value={{getFirstName}} required>
+                        <input id="editStudentFirstName" name="editStudentFirstName" type="text" placeholder="" value={{getFirstName}} data-error=".editStudentFirstNameError">
                         <label for="editStudentFirstName" style="left: 0">First Name</label>
+                        <div class="editStudentFirstNameError"></div>
                     </div>
                 </div>
-                <input type="submit" onsubmit="return false" style="display: none;" />
+                <input type="submit" id="submit-edit-student" style="display: none;" />
                 <div class="modal-footer">
-                    <a href="#!" id="save-changes-edit-student" class="waves-effect waves-grey btn-flat">Save Changes</a>
-                    <a href="#!" class="modal-action modal-close waves-effect waves-grey btn-flat">Cancel</a>
+                    <a id="save-changes-edit-student" type="submit" class="waves-effect waves-grey btn-flat">Save Changes</a>
+                    <a class="modal-action modal-close waves-effect waves-grey btn-flat">Cancel</a>
                 </div>
             </form>
         </div>

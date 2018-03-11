@@ -9,19 +9,21 @@
                 <form id="addCourseModalForm" class="add-form col s12">
                     <div class="row">
                         <div class='input-field input-margin-bottom-fix col s12' style="padding: 0">
-                            <input id="addCourseNameModal" type="text" name="courseName" placeholder="Example: MCR3U-01" data-length="15" required>
-                            <label for="addCourseNameModal" data-error="Too long." style="left: 0">Course Name</label>
+                            <input id="addCourseNameModal" type="text" name="courseName" placeholder="Example: MCR3U-01" data-error=".addCourseNameError">
+                            <label for="addCourseNameModal" style="left: 0">Course Name</label>
+                            <div class="addCourseNameError"></div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field input-margin-bottom-fix">
-                            <select id="courseYear" name='courseYearSelect' required>
+                            <select id="courseYear" name='courseYearSelect' data-error=".courseYearSelectError">
                                 <option value="" disabled selected>Choose School Year</option>
                                 {{#each getYear}}
                                 <option value={{year}}>{{year}}</option>
                                 {{/each}}
                             </select>
                             <label for='courseYearSelect'>Course Year</label>
+                            <div class="courseYearSelectError"></div>
                         </div>
                     </div>
                     <input type="submit" id="submitaddCourseForm" style="display: none;" />

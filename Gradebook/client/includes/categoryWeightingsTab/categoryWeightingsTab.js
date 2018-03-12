@@ -8,6 +8,10 @@ import jqueryValidation from 'jquery-validation';
 
 import '../../main.html';
 
+function clearCategoryWeightingsValidation() {
+    clearValidation(document.getElementById('categoryWeightingsFormID'));
+}
+
 function finishedEditing() {
     let editButtonElement = document.getElementById("edit-button");
     let saveButtonElement = document.getElementById("save-button");
@@ -26,6 +30,7 @@ function finishedEditing() {
     applicationWeight.disabled = true;
     thinkingWeight.disabled = true;
     communicationWeight.disabled = true;
+    clearCategoryWeightingsValidation();
 }
 
 Template.categoryWeightingsTab.helpers({
@@ -74,7 +79,7 @@ Template.categoryWeightingsTab.events({
     },
     'click .cancel-category-weightings': function () {
         finishedEditing();
-
+        
         let knowledgeWeight = document.getElementById("knowledge");
         let applicationWeight = document.getElementById("application");
         let thinkingWeight = document.getElementById("thinking");
@@ -133,10 +138,23 @@ Template.categoryWeightingsTab.onRendered(function () {
         return (input >= 0);
     });
     $.validator.addMethod('addTo100', (input) => {
-        const knowledgeWeight = Number(document.getElementById('knowledge'));
-        const applicationWeight = Number(document.getElementById('application'));
-        const thinkingWeight = Number(document.getElementById('thinking'));
-        const communicationWeight = Number(document.getElementById('communication'));
+        const knowledge = document.getElementById('knowledge').value;
+        const application = document.getElementById('application').value;
+        const thinking = document.getElementById('thinking').value;
+        const communication = document.getElementById('communication').value;
+
+        const knowledgeWeight = Number(knowledge);
+        const applicationWeight = Number(application);
+        const thinkingWeight = Number(thinking);
+        const communicationWeight = Number(communication);
+
+        if (knowledge == "" || application == "" || thinking == "" || communication == "") {
+            return true;
+        }
+
+        if (isNaN(knowledgeWeight) || isNaN(applicationWeight) || isNaN(thinkingWeight) || isNaN(communicationWeight)) {
+            return true;
+        }
 
         return (knowledgeWeight + applicationWeight + thinkingWeight + communicationWeight == 100);
     });
@@ -196,7 +214,9 @@ Template.categoryWeightingsTab.onRendered(function () {
         errorPlacement: function (error, element) {
             for (var i = 0; i < error.length; i++) {
                 var errorElement = new jQuery.fn.init(error[i]);
-                const isAddTo100Error = (errorElement[0].textContent.includes("100%"));
+                const isAddTo100Error = (errorElement[0].textContent == "Your Category Weightings must add up to 100%.");
+                console.log(errorElement);
+                console.log(i + " : " + errorElement[0].textContent.includes("100%"));
                 if (isAddTo100Error) {
                     const addTo100Errors = document.getElementsByClassName("addTo100ErrorPlacement");
                     if (addTo100Errors.length == 0) {
@@ -221,3 +241,5 @@ Template.categoryWeightingsTab.onRendered(function () {
         }
     });
 });
+
+//error case: prompting the "Your Category Weightings must add up to 100%." then prompting the required error on same input field

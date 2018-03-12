@@ -2,7 +2,7 @@
     color:#616161;
     padding: .5em;
 }
-#generalSettings-courseName-error {
+#generalSettingsCourseName-error {
     color: #d32f2f !important;
 }
 #generalSettings-courseYear-error {

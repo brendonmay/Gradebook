@@ -77,7 +77,7 @@ Template.generalSettingsTab.events({
         let editButtonElement = document.getElementById("generalSettings-EditButton");
         let saveButtonElement = document.getElementById("generalSettings-SaveButton");
         let cancelButtonElement = document.getElementById("generalSettings-CancelButton");
-        let courseName = document.getElementById("generalSettings-courseName");
+        let courseName = document.getElementById("generalSettingsCourseName");
         let courseYearText = document.getElementById("yearTextId");
         let courseYearDropdown = document.getElementById("yearDropdownId");
 
@@ -94,11 +94,11 @@ Template.generalSettingsTab.events({
         let editButtonElement = document.getElementById("generalSettings-EditButton");
         let cancelButtonElement = document.getElementById("generalSettings-CancelButton");
 
-        let newCourseName = document.getElementById("generalSettings-courseName").value;
+        let newCourseName = document.getElementById("generalSettingsCourseName").value;
         let newCourseYear = document.getElementById("generalSettings-courseYear").value;
         let oldCourseYear = Session.get('courseYear');
 
-        let courseName = document.getElementById("generalSettings-courseName");
+        let courseName = document.getElementById("generalSettingsCourseName");
         let courseYearText = document.getElementById("yearTextId");
         let courseYearDropdown = document.getElementById("yearDropdownId");
 
@@ -155,7 +155,7 @@ Template.generalSettingsTab.events({
         let editButtonElement = document.getElementById("generalSettings-EditButton");
         let saveButtonElement = document.getElementById("generalSettings-SaveButton");
         let cancelButtonElement = document.getElementById("generalSettings-CancelButton");
-        let courseName = document.getElementById("generalSettings-courseName");
+        let courseName = document.getElementById("generalSettingsCourseName");
         let courseYearText = document.getElementById("yearTextId");
         let courseYearDropdown = document.getElementById("yearDropdownId");
 
@@ -194,22 +194,22 @@ Template.generalSettingsTab.events({
     }
 });
 
-Template.editStudent.onRendered(function () {
+Template.generalSettingsTab.onRendered(function () {
 
-    $("#generalSettingsFormID").validate({
+    $('#generalSettingsFormID').validate({
         errorClass: 'invalid',
         validClass: 'jquery-validation-valid',
         rules: {
-            courseName: {
+            GScourseName: {
                 required: true,
                 maxlength: 15
             },
-            courseYear: {
+            GScourseYear: {
                 required: true
             }
         },
         messages: {
-            courseName: {
+            GScourseName: {
                 maxlength: "Course Names cannot exceed 15 characters"
             }
         },

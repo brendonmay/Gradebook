@@ -5,7 +5,7 @@
                 <div class="col s12">
                     Course Name:
                     <div class="input-field input-margin-bottom-fix inline">
-                        <input disabled id="generalSettings-courseName" type="text" value={{currentCourse}} name="courseName" data-error=".generalSettingsCourseNameError">
+                        <input disabled id="generalSettingsCourseName" name="GScourseName" type="text" value={{currentCourse}} data-error=".generalSettingsCourseNameError">
                         <div class="generalSettingsCourseNameError"></div>
                     </div>
                 </div>
@@ -17,7 +17,7 @@
                         <input disabled id="generalSettings-courseYear-text" type="text" value={{currentYear}}>
                     </div>
                     <div class="input-field input-margin-bottom-fix inline hide" id="yearDropdownId">
-                        <select id="generalSettings-courseYear" name="courseYear" data-error=".generalSettingsCourseYearError">
+                        <select id="generalSettings-courseYear" name="GScourseYear" data-error=".generalSettingsCourseYearError">
                             {{#each getYearsBefore currentYear}}
                             <option id="GS-Id{{year}}" value={{year}}>{{year}}</option>
                             {{/each}}
@@ -33,7 +33,7 @@
             <div class="edit-general-settings col s2 offset-s5">
                 <a id="generalSettings-EditButton" class="waves-effect waves-grey btn blue-grey darken-1">Edit</a>
             </div>
-            <input type="submit" id="submitGeneralSettings" style="display: none" />
+            <input type="submit" id="submitGeneralSettings" value="submit" style="display: none" />
         </form>
         <div class="row container">
             <div class="save-general-settings col s1 offset-s4">

@@ -127,7 +127,6 @@ Template.assignFinal.events({
         }
 
         if (!((markK == "N/A" || Math.floor(markK) == markK) && (markA == "N/A" || Math.floor(markA) == markA) && (markT == "N/A" || Math.floor(markT) == markT) && (markC == "N/A" || Math.floor(markC) == markC))) {
-            console.log("the problem is here");
             Materialize.toast("A selected category's mark must be an integer greater than 0.", 5000, 'amber darken-3');
             return false
         }

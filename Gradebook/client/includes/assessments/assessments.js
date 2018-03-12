@@ -261,7 +261,7 @@ Template.assessments.events({
     'click .deleteFinalEval': function () {
         let courseSettings = document.getElementById("courseSettingsTabId");
         courseSettings.click();
-        let assessmentSettings = document.getElementById("AS");
+        let assessmentSettings = document.getElementById("ASClick");
         assessmentSettings.click();
     },
     'click .deleteAssessmentType': function () {

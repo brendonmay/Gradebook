@@ -104,7 +104,8 @@ input {
 }
 
 .material-icons, .icon-text {
-  vertical-align: middle;
+   /*Changed from middle, notify adam if it messess anything up*/
+  vertical-align: -webkit-baseline-middle; 
 }
 
 .modal-content{

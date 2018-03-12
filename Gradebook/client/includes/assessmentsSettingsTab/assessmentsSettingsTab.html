@@ -1,18 +1,19 @@
 <template name="assessmentsTab">
+    <h4 class="light-blue lighten-4 settings-header">Assessment Settings</h4>
     <form class="col s12 assessmentsTabForm" onsubmit="return false">
         <div class="row">
-
-            <div class="col s1">
-            </div>
-
-            <div class="col s3 assessmentContainer">
+            <div class="col s5 assessmentContainer">
                 <ul class="collapsible" data-collapsible="expandable">
-                    <div class="collapsible-header blue-grey lighten-2" style="cursor: initial">
+                    <div class="col s10 collapsible-header blue-grey lighten-2 courseHeader" style="cursor: initial">
                         <h5 class="header-text">Coursework</h5>
+                    </div>
+                    <div class="col s2 collapsible-header blue-grey lighten-2 courseWeight" style="cursor: initial; padding: 0rem">
+                        <h5 class="coursePercentage">
+                            <input disabled id="assessments-courseWorkWeight" type="text" value={{courseWorkWeight}}>%</h5>
                     </div>
                     {{#each courseAssessmentTypes}}
                     <li>
-                        <div class="collapsible-header input-field input-margin-bottom-fix" style="cursor: initial">
+                        <div class="col s10 collapsible-header input-field assessmentType" style="cursor: initial; margin: 0rem">
                             <a href='#!' class="delete-courseworkAssessmentType" name={{assessmentType}} id={{assessmentTypeId}}>
                                 <i id="deletec{{assessmentTypeId}}" class="material-icons icon-bluegrey">close</i>
                             </a>
@@ -20,50 +21,37 @@
                             <p class="assessment-type-listing" id="displayc{{assessmentTypeId}}">{{assessmentType}}</p>
                             <input class="assessment-type-input hide" id="changeNamec{{assessmentTypeId}}" value={{assessmentType}}>
                         </div>
-                    </li>
-                    {{/each}}
-                    <li>
-                        <div class="collapsible-header" id="courseAddAssessment" style="cursor: initial">
-                            <a href="#!" class='addNewCourseAssessmentTypeButton'>
-                                <i class="material-icons icon-green">add_box</i>
-                            </a>
-                            <a id="addCourseworkAssessmentType" href="#!" class="addNewCourseAssessmentTypeButton waves-effect waves-light btn-flat addAssessmentButton">Add assessment type</a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="col s1 assessmentValueContainer" style="padding-left: 0px">
-                <ul class="collapsible" data-collapsible="expandable">
-                    <div class="collapsible-header blue-grey lighten-2" style="cursor: initial; padding-top: 5px; padding-bottom: 5px">
-                        <h5><input disabled id="assessments-courseWorkWeight" type="text" value={{courseWorkWeight}}>%</h5>
-                    </div>
-                    {{#each courseAssessmentTypes}}
-                    <li>
-                        <div class="collapsible-header input-field input-margin-bottom-fix" style="cursor: initial; padding-top: 19.5px; padding-bottom: 19.5px">
-                            <input class="assessment-type-input hide" id="changeNamec{{assessmentTypeId}}" value={{assessmentType}}>
+                        <div class="col s2 collapsible-header input-field assessmentTypeWeight" style="cursor: initial; margin: 0rem">
                             <input disabled id="inputc{{assessmentTypeId}}" class="weightInput" type="text" name={{assessmentType}} value={{assessmentWeight}}>%
                         </div>
                     </li>
                     {{/each}}
                     <li>
-                        <div class="collapsible-header" id="courseStyler" style="cursor: initial; padding-top: 27px; padding-bottom: 27px">
+                        <div class="col s10 collapsible-header addAssessment" id="courseAddAssessment" style="cursor: initial">
+                            <a href="#addCourseWork" class='modal-trigger'>
+                                <i class="material-icons icon-green">add_box</i>
+                            </a>
+                            <a id="addCourseworkAssessmentType" href="#addCourseWork" class="modal-trigger waves-effect waves-light btn-flat addAssessmentButton">Add assessment type</a>
+                        </div>
+                        <div class="col s2 collapsible-header courseStyler" id="courseStyler" style="cursor: initial">
                         </div>
                     </li>
                 </ul>
             </div>
-
             <div class="col s1">
             </div>
-
-            <div class="col s3 assessmentContainer">
-                <ul class="collapsible" data-collapsible="expandable">
-                    <div class="collapsible-header blue-grey lighten-2" style="cursor: initial">
+            <div class="col s5 assessmentContainer">
+                <ul class="collapsible finalAssessmentSettings" data-collapsible="expandable">
+                    <div class="col s10 collapsible-header blue-grey lighten-2 finalCourseHeader" style="cursor: initial">
                         <h5 class="header-text">Final Evaluations</h5>
+                    </div>
+                    <div class="collapsible-header blue-grey lighten-2 finalCourseWeight" style="cursor: initial; padding: 0rem">
+                        <h5 class="finalPercentage">
+                            <input disabled id="assessments-finalWeight" value={{finalWeight}}>%</h5>
                     </div>
                     {{#each finalAssessmentTypes}}
                     <li>
-                        <div class="collapsible-header input-field input-margin-bottom-fix" style="cursor: initial">
+                        <div class="col s10 collapsible-header input-field finalAssessmentType" style="cursor: initial; margin: 0rem">
                             <a href='#!' class="delete-finalAssessmentType close-icon" name={{assessmentType}} id={{assessmentTypeId}}>
                                 <i class="material-icons icon-bluegrey" id="deletef{{assessmentTypeId}}">close</i>
                             </a>
@@ -71,41 +59,25 @@
                             <p class="assessment-type-listing" id="displayf{{assessmentTypeId}}">{{assessmentType}}</p>
                             <input class="assessment-type-input hide" id="changeNamef{{assessmentTypeId}}" value={{assessmentType}}>
                         </div>
-                    </li>
-                    {{/each}}
-                    <li>
-                        <div class="collapsible-header" id="finalAddAssessment" style="cursor: initial">
-                            <a href="#!" class='addFinalAssessmentTypeButton'>
-                                <i class="material-icons icon-green">add_box</i>
-                            </a>
-                            <a id="addFinalAssessmentType" href="#!" class="addFinalAssessmentTypeButton waves-effect waves-light btn-flat addAssessmentButton">Add assessment type</a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="col s1 assessmentValueContainer" style="padding-left: 0px">
-                <ul class="collapsible" data-collapsible="expandable">
-                    <div class="collapsible-header blue-grey lighten-2" style="cursor: initial; padding-top: 5px; padding-bottom: 5px">
-                        <h5><input disabled id="assessments-finalWeight" value={{finalWeight}}>%</h5>
-                    </div>
-                    {{#each finalAssessmentTypes}}
-                    <li>
-                        <div class="collapsible-header input-field input-margin-bottom-fix" style="cursor: initial; padding-top: 19.5px; padding-bottom: 19.5px">
+                        <div class="col s2 collapsible-header input-field finalAssessmentWeight" style="cursor: initial; margin: 0rem">
                             <input disabled id="inputf{{assessmentTypeId}}" class="weightInput" type="text" name={{assessmentType}} value={{assessmentWeight}}>%
                         </div>
                     </li>
                     {{/each}}
                     <li>
-                        <div class="collapsible-header" id="finalCourseStyler" style="cursor: initial; padding-top: 27px; padding-bottom: 27px">
+                        <div class="col s10 collapsible-header addFinalAssessment" id="finalAddAssessment" style="cursor: initial">
+                            <a href="#addFinalWork" class='modal-trigger'>
+                                <i class="material-icons icon-green">add_box</i>
+                            </a>
+                            <a id="addFinalAssessmentType" href="#addFinalWork" class="modal-trigger waves-effect waves-light btn-flat addAssessmentButton">Add assessment type</a>
+                        </div>
+                        <div class="col s2 collapsible-header courseStyler2" id="courseStyler2" style="cursor: initial">
                         </div>
                     </li>
                 </ul>
             </div>
-
             <div class="col s1">
             </div>
-
         </div>
 
         <div class="col s12">

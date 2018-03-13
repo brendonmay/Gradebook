@@ -24,16 +24,7 @@
         <div class="gradebookChart-container">
                 <table class="gradebook-table striped centered" id="main_table" align="center">
                         <thead>
-                                <tr>
-                                        <th class="studNameCell studentBlankCellBorder studentsCell"></th>
-                                        {{> assessmentNameHeader}}
-
-                                </tr>
-                                <tr>
-                                        <th class="studNameCell studentCellBorder studentsCell" >Students</th>
-                                        {{> categoryCells}} {{> categoryCells}} {{> categoryCells}} {{> categoryCells}} {{> categoryCells}} {{> categoryCells}}
-                                        {{> categoryCells}} {{> categoryCells}}
-                                </tr>
+                                {{> assessmentNameHeader}}
                         </thead>                     
                         <tbody>
                                 {{> studentName}}

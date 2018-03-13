@@ -26,7 +26,23 @@ function convertAssessmentIdIntoAssessmentName(arrayOfAssessmentIds, courseId) {
                 if (assessments[z].assessmentId == courseAssessmentId){
                     var assessmentName = assessments[z].assessmentName;
                     var assessmentDate = assessments[z].Date;
-                    var assessmentNameObject = {assessmentName: assessmentName, assessmentId: courseAssessmentId, assessmentDate: assessmentDate};
+                    var K = assessments[z].K;
+                    var A = assessments[z].A;
+                    var T = assessments[z].T;
+                    var C = assessments[z].C;
+                    if (K == "N/A"){
+                        K = "-";
+                    }
+                    if (A == "N/A"){
+                        A = "-";
+                    }
+                    if (T == "N/A"){
+                        T = "-";
+                    }
+                    if (C == "N/A"){
+                        C = "-";
+                    }
+                    var assessmentNameObject = {assessmentName: assessmentName, assessmentId: courseAssessmentId, assessmentDate: assessmentDate, K:K, A:A, T:T, C:C};
                     arrayOfAssessmentNames[arrayOfAssessmentNames.length] = assessmentNameObject;
                     z = assessments.length;
                 }
@@ -45,7 +61,23 @@ function convertAssessmentIdIntoAssessmentName(arrayOfAssessmentIds, courseId) {
             for (z = 0; z < finalAssessentTypesWithDate.length; z++){
                 if (finalAssessentTypesWithDate[z].assessmentTypeId == arrayOfAssessmentIds[i]){
                     var assessmentDate = finalAssessentTypesWithDate[z].Date;
-                    var assessmentNameObject = {assessmentName: assessmentName, assessmentId: arrayOfAssessmentIds[i], assessmentDate: assessmentDate};
+                    var K = finalAssessentTypesWithDate[z].K;
+                    var A = finalAssessentTypesWithDate[z].A;
+                    var T = finalAssessentTypesWithDate[z].T;
+                    var C = finalAssessentTypesWithDate[z].C;
+                    if (K == "N/A"){
+                        K = "-";
+                    }
+                    if (A == "N/A"){
+                        A = "-";
+                    }
+                    if (T == "N/A"){
+                        T = "-";
+                    }
+                    if (C == "N/A"){
+                        C = "-";
+                    }
+                    var assessmentNameObject = {assessmentName: assessmentName, assessmentId: arrayOfAssessmentIds[i], assessmentDate: assessmentDate, K:K, A:A, T:T, C:C};
                     arrayOfAssessmentNames[arrayOfAssessmentNames.length] = assessmentNameObject;
                     z = finalAssessentTypesWithDate.length;
                 }

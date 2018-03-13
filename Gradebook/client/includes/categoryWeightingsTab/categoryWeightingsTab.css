@@ -37,10 +37,10 @@
     width: 100%;
 }
 
-.addTo100ErrorPlacement {
-    position: relative;
-    width: 150%;
-    padding-left: 40%
+.addTo100InputError {
+    padding-top: 15px;
+    width: 100%;
+    color: #d32f2f !important;
 }
 
 #knowledge-error {

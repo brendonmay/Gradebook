@@ -10,6 +10,31 @@ import '../../main.html';
 
 function clearCategoryWeightingsValidation() {
     clearValidation(document.getElementById('categoryWeightingsFormID'));
+    removeAddTo100Error();
+}
+
+function doCategoriesAddTo100() {
+    const knowledge = document.getElementById('knowledge').value;
+    const application = document.getElementById('application').value;
+    const thinking = document.getElementById('thinking').value;
+    const communication = document.getElementById('communication').value;
+
+    const knowledgeWeight = Number(knowledge);
+    const applicationWeight = Number(application);
+    const thinkingWeight = Number(thinking);
+    const communicationWeight = Number(communication);
+
+    return (knowledgeWeight + applicationWeight + thinkingWeight + communicationWeight == 100);
+}
+
+function populateAddTo100Error() {
+    const addTo100Errors = document.getElementById("addTo100InputErrorID");
+    addTo100Errors.style.display = "";
+}
+
+function removeAddTo100Error() {
+    const addTo100Errors = document.getElementById("addTo100InputErrorID");
+    addTo100Errors.style.display = "none";
 }
 
 function finishedEditing() {
@@ -79,7 +104,7 @@ Template.categoryWeightingsTab.events({
     },
     'click .cancel-category-weightings': function () {
         finishedEditing();
-        
+
         let knowledgeWeight = document.getElementById("knowledge");
         let applicationWeight = document.getElementById("application");
         let thinkingWeight = document.getElementById("thinking");
@@ -93,6 +118,10 @@ Template.categoryWeightingsTab.events({
 
     },
     'submit .categoryWeightingsForm': function () { //include check that they add to 100,  disable forms
+        if (!doCategoriesAddTo100()) {
+            populateAddTo100Error();
+            return false;
+        }
 
         const currentCourseId = Session.get('courseId');
         const target = event.target;
@@ -138,25 +167,12 @@ Template.categoryWeightingsTab.onRendered(function () {
         return (input >= 0);
     });
     $.validator.addMethod('addTo100', (input) => {
-        const knowledge = document.getElementById('knowledge').value;
-        const application = document.getElementById('application').value;
-        const thinking = document.getElementById('thinking').value;
-        const communication = document.getElementById('communication').value;
-
-        const knowledgeWeight = Number(knowledge);
-        const applicationWeight = Number(application);
-        const thinkingWeight = Number(thinking);
-        const communicationWeight = Number(communication);
-
-        if (knowledge == "" || application == "" || thinking == "" || communication == "") {
-            return true;
+        if (!doCategoriesAddTo100()) {
+            populateAddTo100Error();
+        } else {
+            removeAddTo100Error();
         }
-
-        if (isNaN(knowledgeWeight) || isNaN(applicationWeight) || isNaN(thinkingWeight) || isNaN(communicationWeight)) {
-            return true;
-        }
-
-        return (knowledgeWeight + applicationWeight + thinkingWeight + communicationWeight == 100);
+        return true;
     });
     $("#categoryWeightingsFormID").validate({
         errorClass: 'invalid',
@@ -185,61 +201,64 @@ Template.categoryWeightingsTab.onRendered(function () {
                 isInteger: true,
                 isPositive: true,
                 addTo100: true
-
             },
         },
         messages: {
             knowledgeName: {
                 isInteger: "A selected category's mark must be an integer.",
-                isPositive: "A selected category's mark must be greater than 0.",
-                addTo100: "Your Category Weightings must add up to 100%."
+                isPositive: "A selected category's mark must be greater than 0."
             },
             applicationName: {
                 isInteger: "A selected category's mark must be an integer.",
-                isPositive: "A selected category's mark must be greater than 0.",
-                addTo100: "Your Category Weightings must add up to 100%."
+                isPositive: "A selected category's mark must be greater than 0."
             },
             thinkingName: {
                 isInteger: "A selected category's mark must be an integer.",
-                isPositive: "A selected category's mark must be greater than 0.",
-                addTo100: "Your Category Weightings must add up to 100%."
+                isPositive: "A selected category's mark must be greater than 0."
             },
             communicationName: {
                 isInteger: "A selected category's mark must be an integer.",
-                isPositive: "A selected category's mark must be greater than 0.",
-                addTo100: "Your Category Weightings must add up to 100%."
+                isPositive: "A selected category's mark must be greater than 0."
             },
         },
         errorElement: 'div',
         errorPlacement: function (error, element) {
-            for (var i = 0; i < error.length; i++) {
-                var errorElement = new jQuery.fn.init(error[i]);
-                const isAddTo100Error = (errorElement[0].textContent == "Your Category Weightings must add up to 100%.");
-                console.log(errorElement);
-                console.log(i + " : " + errorElement[0].textContent.includes("100%"));
-                if (isAddTo100Error) {
-                    const addTo100Errors = document.getElementsByClassName("addTo100ErrorPlacement");
-                    if (addTo100Errors.length == 0) {
-                        var newElement = $('.addTo100InputError');
-                        var placement = $('.addTo100InputError').data('error');
-                        errorElement[0].classList.add("addTo100ErrorPlacement");
-                        if (placement) {
-                            $(placement).append(errorElement)
-                        } else {
-                            errorElement.insertAfter(newElement);
-                        }
-                    }
-                } else {
-                    var placement = $(element).data('error');
-                    if (placement) {
-                        $(placement).append(errorElement)
-                    } else {
-                        errorElement.insertAfter(element);
-                    }
-                }
+            var placement = $(element).data('error');
+            if (placement) {
+                $(placement).append(error);
+            } else {
+                error.insertAfter(element);
             }
         }
     });
 });
 
-//error case: prompting the "Your Category Weightings must add up to 100%." then prompting the required error on same input field
+
+        // errorPlacement: function (error, element) {
+        //     for (var i = 0; i < error.length; i++) {
+        //         var errorElement = new jQuery.fn.init(error[i]);
+        //         const isAddTo100Error = (errorElement[0].textContent == "Your Category Weightings must add up to 100%.");
+        //         console.log(errorElement);
+        //         console.log(i + " : " + errorElement[0].textContent.includes("100%"));
+        //         if (isAddTo100Error) {
+        //             const addTo100Errors = document.getElementsByClassName("addTo100ErrorPlacement");
+        //             if (addTo100Errors.length == 0) {
+        //                 var newElement = $('.addTo100InputError');
+        //                 var placement = $('.addTo100InputError').data('error');
+        //                 errorElement[0].classList.add("addTo100ErrorPlacement");
+        //                 if (placement) {
+        //                     $(placement).append(errorElement)
+        //                 } else {
+        //                     errorElement.insertAfter(newElement);
+        //                 }
+        //             }
+        //         } else {
+        //             var placement = $(element).data('error');
+        //             if (placement) {
+        //                 $(placement).append(errorElement)
+        //             } else {
+        //                 errorElement.insertAfter(element);
+        //             }
+        //         }
+        //     }
+        // }

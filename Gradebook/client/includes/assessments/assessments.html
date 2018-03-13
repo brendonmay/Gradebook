@@ -26,35 +26,40 @@
                                     <div class="collapsible-body assessments-collapsible">
                                         <form class="edit-courseassessment-form" onsubmit="return false" onChange="" id="form{{assessmentId}}">
                                             <ul>
-                                                <li class="collection-item assessments-collapsible-nested">
-                                                    Date:
-                                                    <div class="inline input-field input-margin-bottom-fix">
-                                                        <input class="center-align datepicker datepickerspecial" type="text" id="courseDate{{assessmentId}}" value={{Date}}>
-                                                    </div>
+                                                <li class="row collection-item assessments-collapsible-nested item-height">
+                                                    <h6 class="col s11 offset-s1 assessment-field-display">Date:
+                                                        <div class="inline input-field input-margin-bottom-fix assessment-input">
+                                                            <input class="center-align datepicker datepickerspecial" type="text" id="courseDate{{assessmentId}}" value={{Date}}>
+                                                        </div>
+                                                    </h6>
                                                 </li>
-                                                <li class="collection-item assessments-collapsible-nested">
-                                                    Knowledge:
-                                                    <div class="inline input-field input-margin-bottom-fix">
-                                                        <input class="center-align editable-assessment-fields k" id="courseK{{assessmentId}}" value={{K}}>
-                                                    </div>
+                                                <li class="row collection-item assessments-collapsible-nested item-height">
+                                                    <h6 class="col s11 offset-s1 assessment-field-display">Knowledge:
+                                                        <div class="inline input-field input-margin-bottom-fix assessment-input">
+                                                            <input class="center-align editable-assessment-fields k" id="courseK{{assessmentId}}" value={{K}}>
+                                                        </div>
+                                                    </h6>
                                                 </li>
-                                                <li class="collection-item assessments-collapsible-nested">
-                                                    Application:
-                                                    <div class="inline input-field input-margin-bottom-fix">
-                                                        <input class="center-align editable-assessment-fields a" id="courseA{{assessmentId}}" value={{A}}>
-                                                    </div>
+                                                <li class="row collection-item assessments-collapsible-nested item-height">
+                                                    <h6 class="col s11 offset-s1 assessment-field-display">Application:
+                                                        <div class="inline input-field input-margin-bottom-fix assessment-input">
+                                                            <input class="center-align editable-assessment-fields a" id="courseA{{assessmentId}}" value={{A}}>
+                                                        </div>
+                                                    </h6>
                                                 </li>
-                                                <li class="collection-item assessments-collapsible-nested">
-                                                    Thinking:
-                                                    <div class="inline input-field input-margin-bottom-fix">
-                                                        <input class="center-align editable-assessment-fields t" id="courseT{{assessmentId}}" value={{T}}>
-                                                    </div>
+                                                <li class="row collection-item assessments-collapsible-nested item-height">
+                                                    <h6 class="col s11 offset-s1 assessment-field-display">Thinking:
+                                                        <div class="inline input-field input-margin-bottom-fix assessment-input">
+                                                            <input class="center-align editable-assessment-fields t" id="courseT{{assessmentId}}" value={{T}}>
+                                                        </div>
+                                                    </h6>
                                                 </li>
-                                                <li class="collection-item assessments-collapsible-nested">
-                                                    Communication:
-                                                    <div class="inline input-field input-margin-bottom-fix">
-                                                        <input class="center-align editable-assessment-fields c" id="courseC{{assessmentId}}" value={{C}}>
-                                                    </div>
+                                                <li class="row collection-item assessments-collapsible-nested item-height">
+                                                    <h6 class="col s11 offset-s1 assessment-field-display">Communication:
+                                                        <div class="inline input-field input-margin-bottom-fix assessment-input">
+                                                            <input class="center-align editable-assessment-fields c" id="courseC{{assessmentId}}" value={{C}}>
+                                                        </div>
+                                                    </h6>
                                                 </li>
                                             </ul>
                                             <input type="submit" style="display: none;" />
@@ -82,40 +87,45 @@
                 <div class="collapsible-header">
                     <i class="material-icons">arrow_drop_down</i>{{assessmentType}}</div>
                 <div class="collapsible-body assessments-collapsible">
-                    <div class="row">
+                    <div class="row finalAssessmentsRow">
                         <div class="col s12 m12">
                             <ul class="collection finalAssessments">
                                 {{#each finalAssessments assessmentTypeId}} {{#if hasFinalAssessments assessmentTypeId}}
                                 <form class="edit-finalevaluation-form" onsubmit="return false" id="form{{assessmentTypeId}}">
-                                    <li class="collection-item assessments-collapsible-nested">
-                                        Date:
-                                        <div class="inline input-field input-margin-bottom-fix">
-                                            <input class="center-align datepicker datepickerspecial final-date" type="text" id="finalDate{{assessmentTypeId}}" value={{Date}}>
-                                        </div>
+                                    <li class="row collection-item assessments-collapsible-nested">
+                                        <h6 class="col s11 offset-s1 assessment-field-display">Date:
+                                            <div class="inline input-field input-margin-bottom-fix assessment-input">
+                                                <input class="center-align datepicker datepickerspecial" type="text" id="finalDate{{assessmentTypeId}}" value={{Date}}>
+                                            </div>
+                                        </h6>
                                     </li>
-                                    <li class="collection-item assessments-collapsible-nested">
-                                        Knowledge:
-                                        <div class="inline input-field input-margin-bottom-fix">
-                                            <input class="center-align editable-assessment-fields k-final" id="finalK{{assessmentTypeId}}" value={{K}}>
-                                        </div>
+                                    <li class="row collection-item assessments-collapsible-nested">
+                                        <h6 class="col s11 offset-s1 assessment-field-display">Knowledge:
+                                            <div class="inline input-field input-margin-bottom-fix assessment-input">
+                                                <input class="center-align editable-assessment-fields k-final" id="finalK{{assessmentTypeId}}" value={{K}}>
+                                            </div>
+                                        </h6>
                                     </li>
-                                    <li class="collection-item assessments-collapsible-nested">
-                                        Application:
-                                        <div class="inline input-field input-margin-bottom-fix">
-                                            <input class="center-align editable-assessment-fields a-final" id="finalA{{assessmentTypeId}}" value={{A}}>
-                                        </div>
+                                    <li class="row collection-item assessments-collapsible-nested">
+                                        <h6 class="col s11 offset-s1 assessment-field-display">Application:
+                                            <div class="inline input-field input-margin-bottom-fix assessment-input">
+                                                <input class="center-align editable-assessment-fields a-final" id="finalA{{assessmentTypeId}}" value={{A}}>
+                                            </div>
+                                        </h6>
                                     </li>
-                                    <li class="collection-item assessments-collapsible-nested">
-                                        Thinking:
-                                        <div class="inline input-field input-margin-bottom-fix">
-                                            <input class="center-align editable-assessment-fields t-final" id="finalT{{assessmentTypeId}}" value={{T}}>
-                                        </div>
+                                    <li class="row collection-item assessments-collapsible-nested">
+                                        <h6 class="col s11 offset-s1 assessment-field-display">Thinking:
+                                            <div class="inline input-field input-margin-bottom-fix assessment-input">
+                                                <input class="center-align editable-assessment-fields t-final" id="finalT{{assessmentTypeId}}" value={{T}}>
+                                            </div>
+                                        </h6>
                                     </li>
-                                    <li class="collection-item assessments-collapsible-nested c-final-row">
-                                        Communication:
-                                        <div class="inline input-field input-margin-bottom-fix">
-                                            <input class="center-align editable-assessment-fields c-final" id="finalC{{assessmentTypeId}}" value={{C}}>
-                                        </div>
+                                    <li class="row collection-item assessments-collapsible-nested c-final-row">
+                                        <h6 class="col s11 offset-s1 assessment-field-display">Communication:
+                                            <div class="inline input-field input-margin-bottom-fix assessment-input">
+                                                <input class="center-align editable-assessment-fields c-final" id="finalC{{assessmentTypeId}}" value={{C}}>
+                                            </div>
+                                        </h6>
                                     </li>
                                     <input type="submit" style="display: none;" />
                                 </form>

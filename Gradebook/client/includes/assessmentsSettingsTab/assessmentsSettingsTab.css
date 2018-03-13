@@ -23,6 +23,10 @@
 
 .weightInput{
     text-align: center!important;
+    height: 50%!important;
+    width: 60%!important;
+    margin-top: 0.75rem!important;
+    margin-left: 15%!important;
 }
 
 .weightingList{
@@ -77,6 +81,8 @@
     height: 2rem;
     font-size: 1.64rem;
     text-align: center;
+    width: 50%;
+    margin-left: 22%;
 }
 
 .finalCourseWeight{
@@ -124,7 +130,7 @@
 }
 
 .coursePercentage, .finalPercentage{
-    font-size: 1.4rem;
+    font-size: 125%;
 }
 
 #toast-container {

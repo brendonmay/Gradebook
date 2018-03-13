@@ -1,5 +1,22 @@
 .editable-assessment-fields{
-    width: 3rem!important;
+    width: 2rem!important;
+    height: 1.5rem!important;
+}
+
+.datepickerspecial{
+    width: 80%!important;
+    height: 1.5rem!important;
+}
+
+.assessment-input{
+    /*This specifically works with px, not rem or precentages*/
+    margin-top: 19px!important;
+    margin-bottom: 16px!important;
+}
+
+.assessment-field-display{
+    margin-top: 0rem!important;
+    margin-bottom: 0rem!important;
 }
 
 .editable-assessment-fields:not([type]):focus:not([readonly]){
@@ -23,10 +40,13 @@
     color:#4caf50
 }
 
+.finalAssessmentsRow{
+    margin-bottom: 0%;
+}
+
 .assessments-collapsible{
     padding-top: 0rem!important;
     padding-bottom: 0rem!important;
-    height: 28rem;
 }
 
 .assessments-collapsible-nested{

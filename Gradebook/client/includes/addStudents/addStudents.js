@@ -121,7 +121,7 @@ function generateGradesArray() {
 
     for (i = 0; i < finalEvaluations.length; i++) {
         //check that final evaluation has been assigned
-        if (!(finalEvaluations[i].K == "N/A" && finalEvaluations[i].K == "N/A" && finalEvaluations[i].K == "N/A" && finalEvaluations[i].K == "N/A")){
+        if (!(finalEvaluations[i].K == "N/A" && finalEvaluations[i].A == "N/A" && finalEvaluations[i].T == "N/A" && finalEvaluations[i].C == "N/A")){
             var assessmentId = finalEvaluations[i].assessmentTypeId;
             var gradesObject = {
                 assessmentId: assessmentId,

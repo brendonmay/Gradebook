@@ -232,33 +232,3 @@ Template.categoryWeightingsTab.onRendered(function () {
         }
     });
 });
-
-
-        // errorPlacement: function (error, element) {
-        //     for (var i = 0; i < error.length; i++) {
-        //         var errorElement = new jQuery.fn.init(error[i]);
-        //         const isAddTo100Error = (errorElement[0].textContent == "Your Category Weightings must add up to 100%.");
-        //         console.log(errorElement);
-        //         console.log(i + " : " + errorElement[0].textContent.includes("100%"));
-        //         if (isAddTo100Error) {
-        //             const addTo100Errors = document.getElementsByClassName("addTo100ErrorPlacement");
-        //             if (addTo100Errors.length == 0) {
-        //                 var newElement = $('.addTo100InputError');
-        //                 var placement = $('.addTo100InputError').data('error');
-        //                 errorElement[0].classList.add("addTo100ErrorPlacement");
-        //                 if (placement) {
-        //                     $(placement).append(errorElement)
-        //                 } else {
-        //                     errorElement.insertAfter(newElement);
-        //                 }
-        //             }
-        //         } else {
-        //             var placement = $(element).data('error');
-        //             if (placement) {
-        //                 $(placement).append(errorElement)
-        //             } else {
-        //                 errorElement.insertAfter(element);
-        //             }
-        //         }
-        //     }
-        // }

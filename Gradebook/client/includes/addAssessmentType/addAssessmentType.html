@@ -5,13 +5,14 @@
             <form id="addAssessmentTypeForm" class="add-coursework-form col s12" onsubmit="return false">
                 <div class="row">
                     <div class='input-field input-margin-bottom-fix col s12'>
-                        <input id="add-coursework-type" type="text" name="courseWorkName" placeholder="Example: Homework">
+                        <input id="add-coursework-type" type="text" name="courseWorkName" placeholder="Example: Homework" data-error=".assessmentTypeNameError">
                         <label for="courseWorkName">Assessment Name</label>
+                        <div class="assessmentTypeNameError"></div>
                     </div>
                 </div>
                 <input type="submit" style="display: none;" />
                 <div class="modal-footer">
-                    <button class="add-coursework-form modal-action modal-close waves-effect waves-grey btn-flat" type="submit">Create Assessment Type</button>
+                    <button class="add-coursework-form modal-action waves-effect waves-grey btn-flat" type="submit">Create Assessment Type</button>
                 </div>
             </form>
         </div>
@@ -22,13 +23,14 @@
             <form id="addFinalTypeForm" class="add-final-form col s12" onsubmit="return false">
                 <div class="row">
                     <div class='input-field input-margin-bottom-fix col s12'>
-                        <input id="add-final-type" type="text" name="courseName" placeholder="Example: Final Essay">
-                        <label for="courseName">Assessment Name</label>
+                        <input id="add-final-type" type="text" name="finalCourseWorkName" placeholder="Example: Final Essay" data-error=".finalAssessmentNameError">
+                        <label for="finalCourseWorkName">Assessment Name</label>
+                        <div class="finalAssessmentNameError"></div>
                     </div>
                 </div>
                 <input type="submit" style="display: none;" />
                 <div class="modal-footer">
-                    <button class="add-final-form modal-action modal-close waves-effect waves-grey btn-flat" type="submit">Create Assessment Type</button>
+                    <button class="add-final-form modal-action waves-effect waves-grey btn-flat" type="submit">Create Assessment Type</button>
                 </div>
             </form>
         </div>

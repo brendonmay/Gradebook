@@ -325,21 +325,21 @@ Template.assessmentsTab.events({
             doneEditing();
         }
     },
-    'click .addNewCourseAssessmentTypeButton': function () {
+    'click #addCourseworkAssessmentType': function () {
         $('#addCourseWork').modal({
             dismissible: true,
             complete: function () {
-                document.getElementById('addAssessmentTypeForm').reset();
+                clearValidation(document.getElementById('addAssessmentTypeForm'));
             }
 
         });
         $('#addCourseWork').modal('open');
     },
-    'click .addFinalAssessmentTypeButton': function () {
+    'click #addFinalAssessmentType': function () {
         $('#addFinalWork').modal({
             dismissible: true,
             complete: function () {
-                document.getElementById('addFinalTypeForm').reset();
+                clearValidation(document.getElementById('addFinalTypeForm'));
             }
 
         });

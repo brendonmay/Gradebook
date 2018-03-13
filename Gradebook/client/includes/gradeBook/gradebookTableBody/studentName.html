@@ -23,45 +23,12 @@
                     </div>
                 </a>
             </td>
-            <td class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center"></td>
-            <td class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center"></td>
-            <td class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center"></td>
-            <td style="border-right: 2px solid black" class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center"></td>
-
-            <td class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center"></td>
-            <td class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center"></td>
-            <td class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center"></td>
-            <td style="border-right: 2px solid black" class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center"></td>
-
-            <td class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center"></td>
-            <td class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center"></td>
-            <td class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center"></td>
-            <td style="border-right: 2px solid black" class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center"></td>
-
-            <td class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center"></td>
-            <td class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center"></td>
-            <td class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center"></td>
-            <td style="border-right: 2px solid black" class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center"></td>
-
-            <td class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center"></td>
-            <td class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center"></td>
-            <td class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center"></td>
-            <td style="border-right: 2px solid black" class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center"></td>
-
-            <td class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center"></td>
-            <td class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center"></td>
-            <td class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center"></td>
-            <td style="border-right: 2px solid black" class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center"></td>
-
-            <td class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center"></td>
-            <td class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center"></td>
-            <td class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center"></td>
-            <td style="border-right: 2px solid black" class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center"></td>
-
-            <td class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center"></td>
-            <td class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center"></td>
-            <td class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center"></td>
-            <td style="border-right: 2px solid black" class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center"></td>
+            {{#each getStudentGradesForAssessments studentId}}
+                <td class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center" value="{{K}}"></td>
+                <td class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center" value="{{A}}"></td>
+                <td class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center" value="{{T}}"></td>
+                <td style="border-right: 2px solid black" class="studMarkTableCell tableCell input-field"> <input type="text" style="width: 50%; margin: 0; text-align: center" value="{{C}}"></td>
+            {{/each}}
         </tr>
     {{/each}}
 </template>

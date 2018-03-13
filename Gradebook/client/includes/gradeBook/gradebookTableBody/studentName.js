@@ -47,5 +47,20 @@ Template.studentName.helpers({
     getStudents: function () {
         let sortedStudentArray = generateSortedStudentArray();
         return generateArrayOfStudentObjects(sortedStudentArray)
+    },
+    getCurrentGrade: function(studentId){ //design this function last
+        return "98%"
+    },
+    getStudentGradesForAssessments: function(studentId){
+        let courseId = Session.get('courseId');
+        var students = Students.findOne({ownerId: Meteor.userId(), courseId: courseId}).students;
+        var grades = []
+        for (i = 0; i < students.length; i++){
+            if (students[i].studentId == studentId){
+                grades = students[i].grades;
+                i = students.length;
+            }
+        }
+        return grades
     }
 });

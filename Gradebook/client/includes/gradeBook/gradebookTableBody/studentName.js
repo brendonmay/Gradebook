@@ -47,5 +47,8 @@ Template.studentName.helpers({
     getStudents: function () {
         let sortedStudentArray = generateSortedStudentArray();
         return generateArrayOfStudentObjects(sortedStudentArray)
+    },
+    getCurrentGrade: function(studentId){ //design this function last
+        return "98%"
     }
 });

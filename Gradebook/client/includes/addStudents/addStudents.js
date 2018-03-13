@@ -126,15 +126,18 @@ function generateGradesArray() {
     }
 
     for (i = 0; i < finalEvaluations.length; i++) {
-        var assessmentId = finalEvaluations[i].assessmentTypeId;
-        var gradesObject = {
-            assessmentId: assessmentId,
-            K: "N/A",
-            A: "N/A",
-            T: "N/A",
-            C: "N/A"
-        };
-        grades[grades.length] = gradesObject;
+        //check that final evaluation has been assigned
+        if (!(finalEvaluations[i].K == "N/A" && finalEvaluations[i].K == "N/A" && finalEvaluations[i].K == "N/A" && finalEvaluations[i].K == "N/A")){
+            var assessmentId = finalEvaluations[i].assessmentTypeId;
+            var gradesObject = {
+                assessmentId: assessmentId,
+                K: "N/A",
+                A: "N/A",
+                T: "N/A",
+                C: "N/A"
+            };
+            grades[grades.length] = gradesObject;
+        }
     }
 
     return grades

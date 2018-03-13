@@ -2,12 +2,14 @@
 (i.e. colspan='1' for one category, colspan='2' for two categories, etc...-->
 
 <template name="assessmentNameHeader">
-    <th colspan="4" class='assessmentHeader'>
-        <div class="row mar-bot-none">
-            Unit 2 - Quiz 1 - Factoring
-        </div>
-        <div class="row mar-bot-none">
-            March 7, 2017
-        </div>
-    </th>
+    {{#each getAssessmentNames}}
+        <th colspan="4" class='assessmentHeader'>
+            <div class="row mar-bot-none">
+                {{assessmentName}}
+            </div>
+            <div class="row mar-bot-none">
+                Date: {{assessmentDate}}
+            </div>
+        </th>
+    {{/each}}
 </template>

@@ -300,6 +300,7 @@ Template.assessments.events({
                         }
                     }
                     Meteor.call('assessments.updateAssessments', currentCourseId, courseAssessmentsTypes);
+                    Meteor.call('students.deleteAssessment', Meteor.userId(), currentCourseId, assessmentId);
                 }
                 let removeAssessmentObj = Session.get("removeAssessmentObj");
                 removeAssessmentObj.removeCourse = "";

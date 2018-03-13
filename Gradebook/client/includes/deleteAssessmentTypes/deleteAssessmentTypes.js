@@ -53,7 +53,8 @@ Template.deleteCourseworkAssessmentType.events({
         //console.log(newcourseworkAssessmentTypes);
 
         //update the document with new array of assessmentType objects
-        Meteor.call('courseInformation.addNewCourseWork', currentCourseId, newcourseworkAssessmentTypes)
+        Meteor.call('courseInformation.addNewCourseWork', currentCourseId, newcourseworkAssessmentTypes);
+        Meteor.call('students.deleteCourseAssessmentType', Meteor.userId(), currentCourseId, selectedAssessmentTypeId);
 
         //close modal
         $('#deleteCourseworkAssessmentTypeModal').modal('close');
@@ -86,7 +87,8 @@ Template.deleteFinalAssessmentType.events({
         //console.log(newfinalAssessmentTypes);
 
         //update the document with new array of assessmentType objects
-        Meteor.call('courseInformation.addNewFinalWork', currentCourseId, newfinalAssessmentTypes)
+        Meteor.call('courseInformation.addNewFinalWork', currentCourseId, newfinalAssessmentTypes);
+        Meteor.call('students.deleteAssessment', Meteor.userId(), currentCourseId, selectedAssessmentTypeId);
 
         //close modal
         $('#deleteFinalAssessmentTypeModal').modal('close');

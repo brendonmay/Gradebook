@@ -1,0 +1,58 @@
+.editable-assessment-fields{
+    width: 2rem!important;
+    height: 1.5rem!important;
+}
+
+.datepickerspecial{
+    width: 80%!important;
+    height: 1.5rem!important;
+}
+
+.assessment-input{
+    /*This specifically works with px, not rem or precentages*/
+    margin-top: 19px!important;
+    margin-bottom: 16px!important;
+}
+
+.assessment-field-display{
+    margin-top: 0rem!important;
+    margin-bottom: 0rem!important;
+}
+
+.editable-assessment-fields:not([type]):focus:not([readonly]){
+    border-bottom-color: #827717;
+    box-shadow: 0 1px 0 0 #827717!important;
+}
+
+.icon-bluegrey{
+    color:#455a64
+}
+
+.icon-bluegrey:hover{
+    color:#ff5252
+}
+
+.icon-bluegrey-edit{
+    color:#455a64
+}
+
+.icon-bluegrey-edit:hover{
+    color:#4caf50
+}
+
+.finalAssessmentsRow{
+    margin-bottom: 0%;
+}
+
+.assessments-collapsible{
+    padding-top: 0rem!important;
+    padding-bottom: 0rem!important;
+}
+
+.assessments-collapsible-nested{
+    padding: 0rem!important;
+}
+
+.c-final-row{
+    border-bottom: 0px solid white!important;
+}

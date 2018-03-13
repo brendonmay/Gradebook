@@ -158,6 +158,9 @@ Template.assignFinal.events({
         //update the Assessments Collection
         Meteor.call('assessments.updateFinalAssessments', currentCourseId, assessmentObjects);
 
+        //update Students Collection
+        Meteor.call('students.addNewAssessment', Meteor.userId(), currentCourseId, assessmentTypeId);
+
         //clean up and close modal
         closeAssignFinalModal();
     },

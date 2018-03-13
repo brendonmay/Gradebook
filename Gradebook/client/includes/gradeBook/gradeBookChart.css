@@ -1,7 +1,7 @@
 .gradebookChart-container {
     position: relative;
     width: 100%;
-    min-height: 22vh !important;
+    min-height: 56vh !important;
     max-height: 79vh !important;
     /* height: 79vh!important; */
     overflow-y: scroll;

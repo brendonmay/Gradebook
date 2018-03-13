@@ -20,7 +20,7 @@
 -Functionality Issues
 	- When you change the year of a course, it will no longer be highlighted in the sideNav (redirect with clicks)
 	- Clear errors on closing of login and register modal
-	- When you add a new student, the last student on the list of the gradebook wont float as you scroll horizontally
+	- When you add a new student/assessment, the last student/assessment on the list of the gradebook wont float as you scroll horizontally/vertically
 	- In assessment tabs, if the date value is "", store it as N/A in the database. This needs to be fixed when adding a new assessment, assigning final evaluation, and when editting the dates via blur and submit.
 	
 	- Make it so that you cannot include the characters "," or "?" in the student first or last name.

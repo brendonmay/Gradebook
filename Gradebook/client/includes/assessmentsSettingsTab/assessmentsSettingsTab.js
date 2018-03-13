@@ -92,6 +92,51 @@ function doneEditing() { //works
     courseWeight.value = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseworkWeight;
     finalWeight.disabled = true;
     finalWeight.value = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).finalWeight;
+    clearValidation(document.getElementById('assessmentSettingsForm'));
+}
+
+function addValidationRulesOnInputs() {
+    $("#assessmentSettingsForm").validate({
+        errorClass: 'invalid',
+        validClass: 'jquery-validation-valid',
+        errorElement: 'div',
+        errorPlacement: function (error, element) {
+            var placement = $(element).data('error');
+            if (placement) {
+                $(placement).append(error);
+            } else {
+                error.insertAfter(element);
+            }
+        }
+    });
+    let currentCourseId = Session.get('courseId');
+    const courseworkAssessmentTypes = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseworkAssessmentTypes;
+    const finalAssessmentTypes = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).finalAssessmentTypes;
+
+    addValidationRules(courseworkAssessmentTypes, "c");
+    addValidationRules(finalAssessmentTypes, "f");
+}
+
+function addValidationRules(assessmentsObj, prefix) {
+    for (var i = 0; i < assessmentsObj.length; i++) {
+        //{{assessmentTypeId}}
+        var assessment = assessmentsObj[i];
+        const changeNameID = "#changeName" + prefix + assessment.assessmentTypeId;
+        const weightInputID = "#input" + prefix + assessment.assessmentTypeId;
+        $(changeNameID).rules("add", {
+            required: true,
+            messages: {
+                requried: "This field is Required"
+            }
+        });
+        $(weightInputID).rules("add", {
+            required: true,
+            messages: {
+                requried: "This field is Required"
+            }
+        });
+        console.log("changeNameID: " + changeNameID + " weightInputID: " + weightInputID);
+    }
 }
 
 Template.assessmentsTab.helpers({
@@ -120,6 +165,7 @@ Template.assessmentsTab.helpers({
 
 Template.assessmentsTab.onRendered(function () {
     $('.collapsible').collapsible();
+    addValidationRulesOnInputs();
 });
 
 Template.assessmentsTab.events({
@@ -250,6 +296,7 @@ Template.assessmentsTab.events({
 
         finalWeight.removeAttribute('disabled');
         courseWeight.removeAttribute('disabled');
+        addValidationRulesOnInputs();
     },
 
     'click .cancel-button': function () { //working

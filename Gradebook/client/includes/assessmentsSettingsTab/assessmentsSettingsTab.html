@@ -1,6 +1,6 @@
 <template name="assessmentsTab">
     <br>
-    <form class="col s12 assessmentsTabForm" onsubmit="return false">
+    <form class="col s12 assessmentsTabForm" id="assessmentSettingsForm" onsubmit="return false">
         <div class="row">
             <div class="col s5 assessmentContainer">
                 <ul class="collapsible" data-collapsible="expandable">
@@ -19,10 +19,12 @@
                             </a>
                             <i id="editc{{assessmentTypeId}}" class="material-icons icon-bluegrey-edit hide green-icon-placement">edit</i>
                             <p class="assessment-type-listing" id="displayc{{assessmentTypeId}}">{{assessmentType}}</p>
-                            <input class="assessment-type-input hide" id="changeNamec{{assessmentTypeId}}" value={{assessmentType}}>
+                            <input class="assessment-type-input hide" id="changeNamec{{assessmentTypeId}}" name=assessmentName{{assessmentTypeID}} value={{assessmentType}} data-error=".changeAssessmentTypeName-{{assessmentTypeId}}">
+                            <div class="changeAssessmentTypeName-{{assessmentTypeId}} changeAssessmentTypeName"></div>
                         </div>
                         <div class="col s2 collapsible-header input-field assessmentTypeWeight" style="cursor: initial; margin: 0rem">
-                            <input disabled id="inputc{{assessmentTypeId}}" class="weightInput" type="text" name={{assessmentType}} value={{assessmentWeight}}><div class="perc-div">%</div>
+                            <input disabled id="inputc{{assessmentTypeId}}" class="weightInput" type="text" name={{assessmentType}} value={{assessmentWeight}} data-error=".test{{assessmentType}}"><div class="perc-div">%</div>
+                            <div class="test{{assessmentType}}"></div>
                         </div>
                     </li>
                     {{/each}}
@@ -57,10 +59,12 @@
                             </a>
                             <i id="editf{{assessmentTypeId}}" class="material-icons icon-bluegrey-edit hide green-icon-placement">edit</i>
                             <p class="assessment-type-listing" id="displayf{{assessmentTypeId}}">{{assessmentType}}</p>
-                            <input class="assessment-type-input hide" id="changeNamef{{assessmentTypeId}}" value={{assessmentType}}>
+                            <input class="assessment-type-input hide" id="changeNamef{{assessmentTypeId}}" name=finalName{{assessmentTypeID}} value={{assessmentType}} data-error=".finalAssessmentChangeNameError{{assessmentTypeId}}">
+                            <div class="finalAssessmentChangeNameError{{assessmentTypeId}}"></div>
                         </div>
                         <div class="col s2 container collapsible-header input-field finalAssessmentWeight" style="cursor: initial; margin: 0rem">
-                            <input disabled id="inputf{{assessmentTypeId}}" class="weightInput" type="text" name={{assessmentType}} value={{assessmentWeight}}><div class="perc-div">%</div>
+                            <input disabled id="inputf{{assessmentTypeId}}" class="weightInput" type="text" name={{assessmentType}} value={{assessmentWeight}} data-error=".finalAssessmentInputError{{assessmentTypeId}}"><div class="perc-div">%</div>
+                            <div class="finalAssessmentInputError{{assessmentTypeId}}"></div>
                         </div>
                     </li>
                     {{/each}}

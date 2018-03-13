@@ -148,3 +148,7 @@
   .green-icon-placement{
       margin-top:.6rem
   }
+
+  .changeAssessmentTypeName {
+      color: #d32f2f !important;
+  }

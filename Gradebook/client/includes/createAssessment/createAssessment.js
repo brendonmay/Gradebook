@@ -201,6 +201,21 @@ Template.createAssessment.onRendered(function () {
     $.validator.addMethod('isPositive', (input) => {
         return (input >= 0);
     });
+    $.validator.addMethod('mustHaveOneKATC', (input) => {
+        var markK = document.getElementById("inputMarkK").value;
+        var markA = document.getElementById("inputMarkA").value;
+        var markT = document.getElementById("inputMarkT").value;
+        var markC = document.getElementById("inputMarkC").value;
+
+        if ((markK == "" || markK == "N/A") &&
+            (markA == "" || markA == "N/A") &&
+            (markT == "" || markT == "N/A") &&
+            (markC == "" || markC == "N/A")) {
+                return false;
+            }
+            return true;
+
+    });
     $('.createAssessmentModal').modal({
         dismissible: true, // Modal can be dismissed by clicking outside of the modal
         complete: function () {
@@ -213,19 +228,23 @@ Template.createAssessment.onRendered(function () {
         rules: {
             marksK: {
                 isInteger: true,
-                isPositive: true
+                isPositive: true,
+                mustHaveOneKATC: true
             },
             marksA: {
                 isInteger: true,
-                isPositive: true
+                isPositive: true,
+                mustHaveOneKATC: true
             },
             marksT: {
                 isInteger: true,
-                isPositive: true
+                isPositive: true,
+                mustHaveOneKATC: true
             },
             marksC: {
                 isInteger: true,
-                isPositive: true
+                isPositive: true,
+                mustHaveOneKATC: true
             },
             assessmentTypeSelect: {
                 required: true
@@ -237,19 +256,23 @@ Template.createAssessment.onRendered(function () {
         messages: {
             marksK: {
                 isInteger: "A selected category's mark must be an integer.",
-                isPositive: "A selected category's mark must be greater than 0."
+                isPositive: "A selected category's mark must be greater than 0.",
+                mustHaveOneKATC: "This assessment must use at least one category"
             },
             marksA: {
                 isInteger: "A selected category's mark must be an integer.",
-                isPositive: "A selected category's mark must be greater than 0."
+                isPositive: "A selected category's mark must be greater than 0.",
+                mustHaveOneKATC: "This assessment must use at least one category"
             },
             marksT: {
                 isInteger: "A selected category's mark must be an integer.",
-                isPositive: "A selected category's mark must be greater than 0."
+                isPositive: "A selected category's mark must be greater than 0.",
+                mustHaveOneKATC: "This assessment must use at least one category"
             },
             marksC: {
                 isInteger: "A selected category's mark must be an integer.",
-                isPositive: "A selected category's mark must be greater than 0."
+                isPositive: "A selected category's mark must be greater than 0.",
+                mustHaveOneKATC: "This assessment must use at least one category"
             }
         },
         errorElement: 'div',

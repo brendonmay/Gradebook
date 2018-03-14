@@ -242,7 +242,7 @@ Template.addStudents.events({
             dismissible: true, 
             complete: function() { 
                 $('#addStudentsModal').modal('open');
-                // document.getElementById("editStudentsModalForm").reset();
+                document.getElementById("editStudentsModalForm").reset();
             } 
           }
         );

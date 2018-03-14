@@ -6,6 +6,11 @@ import { CourseWeighting } from '../../../lib/collections.js';
 
 import '../../main.html';
 
+const requiredText = "Please fill in the required fields.";
+const isIntegerText = "A selected category's mark must be an integer.";
+const isPositiveText = "A selected category's mark must be greater than 0.";
+const addsTo100Text = "Coursework and Final Evaluations must add to 100";
+
 function doneEditing() { //works
     let editButtonElement = document.getElementById("edit-button");
     let saveButtonElement = document.getElementById("save-button");
@@ -95,19 +100,96 @@ function doneEditing() { //works
     clearValidation(document.getElementById('assessmentSettingsForm'));
 }
 
-function addValidationRulesOnInputs() {
+function addError(text, error) {
+    //document.getElementById('assessmentSettingsTabRequiredError').children.length;
+    var isRequired = false;
+    var isInteger = false;
+    var isPositive = false;
+    var addsTo100 = false;
+    var ele = document.getElementById('assessmentSettingsTabRequiredError').children;
+    if (ele.length == 0) {
+        $('#assessmentSettingsTabRequiredError').append(error);
+        return;
+    } 
+    for (var i = 0; i < ele.length; i++) {
+        if (ele[i].textContent == requiredText) isRequired = true;
+        if (ele[i].textContent == isIntegerText) isInteger = true;
+        if (ele[i].textContent == isPositiveText) isPositive = true;
+        if (ele[i].textContent == addsTo100Text) addsTo100 = true;
+    }
+    if (!isRequired && text == requiredText) {
+        $('#assessmentSettingsTabRequiredError').append(error);
+    } else if (!isInteger && text == isIntegerText) {
+        $('#assessmentSettingsTabRequiredError').append(error);
+    } else if (!isPositive && text == isPositiveText) {
+        $('#assessmentSettingsTabRequiredError').append(error);
+    } else if (!addsTo100 && text == addsTo100Text) {
+        $('#assessmentSettingsTabRequiredError').append(error);
+    }
+}
 
+function addValidationRulesOnInputs() {
+    $.validator.addMethod('isInteger', (input) => {
+        return (input == "N/A" || Math.floor(input) == input);
+    });
+    $.validator.addMethod('isPositive', (input) => {
+        return (input >= 0);
+    });
+    $.validator.addMethod('addsTo100', (input) => {
+        var courseWorkWeight = Number(document.getElementById('assessments-courseWorkWeight').value);
+        var finalWeight = Number(document.getElementById('assessments-finalWeight').value);
+
+        return finalWeight + courseWorkWeight == 100;
+    });
     $("#assessmentSettingsForm").validate({
         errorClass: 'invalid',
         validClass: 'jquery-validation-valid',
+        rules: {
+            finalWeight: {
+                required: true,
+                isInteger: true,
+                isPositive: true,
+                addsTo100: true
+            },
+            courseWorkWeight: {
+                required: true,
+                isInteger: true,
+                isPositive: true,
+                addsTo100: true
+            }
+        },
+        messages: {
+            finalWeight: {
+                required: requiredText,
+                isInteger: isIntegerText,
+                isPositive: isPositiveText,
+                addsTo100: addsTo100Text
+            },
+            courseWorkWeight: {
+                required: requiredText,
+                isInteger: isIntegerText,
+                isPositive: isPositiveText,
+                addsTo100: addsTo100Text
+            }
+        },
         errorElement: 'div',
         errorPlacement: function (error, element) {
-            var placement = $(element).data('error');
-            if (placement) {
-                $(placement).append(error);
-            } else {
-                error.insertAfter(element);
-            }
+            //for each error, need to determine WHAT error it is 
+            //then based on each case have a specific error div to add too
+            //check the error div if an item already exists 
+            //if not add it
+            //if yes, dont
+
+            var text = $(error)[0].textContent;
+            addError(text, error);
+
+            // var placement = $(element).data('error');
+            // if (placement) {
+            //     $(placement).append(error);
+            // }
+            // } else {
+            //     error.insertAfter(element);
+            // }
         }
     });
     let currentCourseId = Session.get('courseId');
@@ -120,23 +202,27 @@ function addValidationRulesOnInputs() {
 
 function addValidationRules(assessmentsObj, prefix) {
     for (var i = 0; i < assessmentsObj.length; i++) {
-        //{{assessmentTypeId}}
+
         var assessment = assessmentsObj[i];
         const changeNameID = "#changeName" + prefix + assessment.assessmentTypeId;
         const weightInputID = "#input" + prefix + assessment.assessmentTypeId;
         $(changeNameID).rules("add", {
             required: true,
             messages: {
-                required: "Please fill in the required fields"
+                required: requiredText
             }
         });
         $(weightInputID).rules("add", {
             required: true,
+            isInteger: true,
+            isPositive: true,
             messages: {
-                required: "Please fill in the required fields"
+                required: requiredText,
+                isInteger: isIntegerText,
+                isPositive: isPositiveText
+
             }
         });
-        console.log(changeNameID);
     }
 }
 

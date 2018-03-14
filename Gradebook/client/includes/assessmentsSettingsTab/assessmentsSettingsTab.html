@@ -9,7 +9,7 @@
                     </div>
                     <div class="col s2 collapsible-header blue-grey lighten-2 courseWeight" style="cursor: initial; padding: 0rem">
                         <h5 class="coursePercentage">
-                            <input disabled id="assessments-courseWorkWeight" type="text" value={{courseWorkWeight}}>%</h5>
+                            <input disabled id="assessments-courseWorkWeight" name="courseWorkWeight" type="text" value={{courseWorkWeight}}>%</h5>
                     </div>
                     {{#each courseAssessmentTypes}}
                     <li>
@@ -47,7 +47,7 @@
                     </div>
                     <div class="collapsible-header blue-grey lighten-2 finalCourseWeight" style="cursor: initial; padding: 0rem">
                         <h5 class="finalPercentage">
-                            <input disabled id="assessments-finalWeight" value={{finalWeight}}>%</h5>
+                            <input disabled id="assessments-finalWeight" name="finalWeight" value={{finalWeight}}>%</h5>
                     </div>
                     {{#each finalAssessmentTypes}}
                     <li>
@@ -80,7 +80,7 @@
             </div>
         </div>
         <input type="submit" style="display: none;" />
-        <div class="assessmentSettingsTabError" id="assessmentSettingsTabErrorID"></div>
+        <div class="assessmentSettingsTabError" id="assessmentSettingsTabRequiredError"></div>
         <div class="col s12">
             <div class="row">
                 <a id="save-button" class="waves-effect waves-green btn green col s1 offset-s4 save-button hide" type="submit">Save</a>

@@ -152,8 +152,10 @@
     color: #d32f2f !important;
 }
 
-.assessmentSettingsTabError {
-color: #d32f2f !important;
-text-align: right;
-width: 55%;
+#assessmentSettingsTabRequiredError {
+    color: #d32f2f !important;
+    text-align: center;
+    width: 90%;
+    padding-bottom: 15px;
 }
+

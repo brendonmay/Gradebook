@@ -18,16 +18,15 @@
 }
 
 .delete-courseworkAssessmentType, .delete-finalAssessmentType{
-    margin-top:.6rem;
+    margin-top:.85rem;
 }
 
 .weightInput{
-    margin: 0!important;
-    margin-left: 1.05rem!important;
-    margin-top:.55rem!important;
-    width: 1.7rem!important;
-    height: 1.7rem!important;
     text-align: center!important;
+    height: 50%!important;
+    width: 60%!important;
+    margin-top: 0.75rem!important;
+    margin-left: 15%!important;
 }
 
 .weightingList{
@@ -79,11 +78,11 @@
 }
 
 #assessments-courseWorkWeight, #assessments-finalWeight{
-    margin-left: 0.8rem;
     height: 2rem;
-    width: 2.7rem;
     font-size: 1.64rem;
     text-align: center;
+    width: 50%;
+    margin-left: 22%;
 }
 
 .finalCourseWeight{
@@ -131,7 +130,7 @@
 }
 
 .coursePercentage, .finalPercentage{
-    font-size: 1.4rem;
+    font-size: 125%;
 }
 
 #toast-container {
@@ -141,10 +140,11 @@
     left: auto!important;
   }
 
-  .assessment-type-listing{
-      margin-top: 0.93rem
-  }
+.assessment-type-listing{
+    margin-top: 0.93rem
+}
 
+<<<<<<< HEAD
   .green-icon-placement{
       margin-top:.6rem
   }
@@ -158,3 +158,8 @@
     text-align: right;
     width: 55%;
   }
+=======
+.green-icon-placement{
+    margin-top:.6rem
+}
+>>>>>>> origin/master

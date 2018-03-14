@@ -88,7 +88,7 @@ Template.createAssessment.events({
         event.preventDefault();
         let currentCourseId = Session.get('courseId');
         let assessmentType = document.getElementById("assessmentType").value;
-        let assessmentDate = document.getElementById("createNewAssessmentDate").value;
+        var assessmentDate = document.getElementById("createNewAssessmentDate").value;
         let assessmentName = document.getElementById("createNewAssessment").value;
 
         var markK = document.getElementById("inputMarkK").value;
@@ -108,6 +108,9 @@ Template.createAssessment.events({
         }
         if (markC != "N/A") {
             markC = Number(markC)
+        }
+        if (assessmentDate == ""){
+            assessmentDate = "N/A"
         }
 
         let courseworkAssessmentTypes = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseworkAssessmentTypes;

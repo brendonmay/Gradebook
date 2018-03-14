@@ -250,9 +250,9 @@ Template.addStudents.events({
             complete: function () {
                 clearAddStudentValidation();
                 $('#addStudentsModal').modal('open');
-                // document.getElementById("editStudentsModalForm").reset();
-            }
-        }
+                document.getElementById("editStudentsModalForm").reset();
+            } 
+          }
         );
         $('#editStudentModal').modal('open');
     }

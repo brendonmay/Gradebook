@@ -144,22 +144,16 @@
     margin-top: 0.93rem
 }
 
-<<<<<<< HEAD
-  .green-icon-placement{
-      margin-top:.6rem
-  }
-
-  .changeAssessmentTypeName {
-      color: #d32f2f !important;
-  }
-
-  .assessmentSettingsTabError {
-    color: #d32f2f !important;
-    text-align: right;
-    width: 55%;
-  }
-=======
 .green-icon-placement{
-    margin-top:.6rem
+      margin-top:.6rem
 }
->>>>>>> origin/master
+
+.changeAssessmentTypeName {
+    color: #d32f2f !important;
+}
+
+.assessmentSettingsTabError {
+color: #d32f2f !important;
+text-align: right;
+width: 55%;
+}

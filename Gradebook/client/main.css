@@ -96,7 +96,15 @@ input {
 
 .material-icons, .icon-text {
    /*Changed from middle, notify adam if it messess anything up*/
-  vertical-align: -webkit-baseline-middle; 
+  vertical-align: middle; 
+}
+
+.icon-bluegrey-edit{
+  color:#455a64
+}
+
+.icon-bluegrey-edit:hover{
+  color:#4caf50
 }
 
 .modal-content{
@@ -116,8 +124,4 @@ input {
   height: auto;
   top: 5% !important;
   overflow: visible;
-}
-
-.gradeBookChartHolder {
-  
 }

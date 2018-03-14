@@ -46,6 +46,30 @@ if (Meteor.isServer) {
                 }
             }
             Meteor.call('students.addNewStudent', ownerId, courseId, currentStudentsDocument)
-        }
+        },
+        'students.deleteAssessment'(ownerId, courseId, assessmentId){
+            var currentStudentsDocument = Students.findOne({ownerId: ownerId, courseId: courseId}).students;
+            for (i = 0; i < currentStudentsDocument.length; i++){
+                for(z = 0; z < currentStudentsDocument[i].grades.length; z++){
+                    if (currentStudentsDocument[i].grades[z].assessmentId == assessmentId){
+                        currentStudentsDocument[i].grades.splice(z, 1);
+                        z = currentStudentsDocument[i].grades.length;
+                    }
+                }
+            }
+            Meteor.call('students.addNewStudent', ownerId, courseId, currentStudentsDocument)
+        },
+        'students.deleteCourseAssessmentType'(ownerId, courseId, assessmentTypeId){
+            var currentStudentsDocument = Students.findOne({ownerId: ownerId, courseId: courseId}).students;
+            for (i = 0; i < currentStudentsDocument.length; i++){
+                for(z = 0; z < currentStudentsDocument[i].grades.length; z++){
+                    if (currentStudentsDocument[i].grades[z].assessmentId.slice(0, 2) == assessmentTypeId){
+                        currentStudentsDocument[i].grades.splice(z, 1);
+                        z--;
+                    }
+                }
+            }
+            Meteor.call('students.addNewStudent', ownerId, courseId, currentStudentsDocument)
+        } 
     });
 }

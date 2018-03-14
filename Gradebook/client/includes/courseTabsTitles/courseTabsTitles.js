@@ -8,9 +8,3 @@ import '../../main.html';
 Template.courseTabsTitles.onRendered(function () {
   this.$('.tabs').tabs();
 });
-
-Template.courseTabsTitles.events({
-  'click #courseSettingsTabId': function(){
-    document.getElementById("GS").parentElement.classList.add("active");
-  }
-});

@@ -42,34 +42,15 @@ if (Meteor.isServer) {
             }
         },
         'assessments.addNewAssessmentType'(currentCourseId, assessmentTypeObj) {
-            const assessments = Assessments.findOne({ "ownerId": Meteor.userId(), courseId: currentCourseId });
+            var courseAssessmentTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseAssessmentTypes;
             var newCourseAssessmentTypes = [];
-            for (var index = 0; index < assessmentTypeObj.length; index++) {
-                const assessmentId = assessmentTypeObj[index].assessmentTypeId;
-                var sameAssessmentIndex = -1;
-                for (var i = 0; i < assessments.courseAssessmentTypes.length; i++) {
-                    const assessment = assessments.courseAssessmentTypes[i];
-                    if (assessment.assessmentId == assessmentId) {
-                        sameAssessmentIndex = i;
-                        break;
+            for (i = 0; i < assessmentTypeObj.length; i++){
+                for (z = 0; z < courseAssessmentTypes.length; z++){
+                    if(assessmentTypeObj[i].assessmentTypeId == courseAssessmentTypes[z].assessmentTypeId){
+                        newCourseAssessmentTypes[newCourseAssessmentTypes.length] = courseAssessmentTypes[z];
+                        z = courseAssessmentTypes.length;
                     }
                 }
-                if (sameAssessmentIndex != -1) {
-                    const assessment = assessments.courseAssessmentTypes[sameAssessmentIndex].assessments;
-                    const assessmentType = {
-                        assessmentTypeId: assessmentId,
-                        assessments: assessment
-                    };
-                    newCourseAssessmentTypes.push(assessmentType);
-                }
-                else {
-                    const assessmentType = {
-                        assessmentTypeId: assessmentId,
-                        assessments: []
-                    };
-                    newCourseAssessmentTypes.push(assessmentType);
-                }
-
             }
             Assessments.update(
                 { "ownerId": Meteor.userId(), courseId: currentCourseId },

@@ -18,11 +18,11 @@
                             <ul class="collapsible collection" data-collapsible="accordion">
                                 {{#if hasCourseworkAssessments assessmentTypeId}} {{#each courseworkAssessments assessmentTypeId}}
                                 <li>
-                                    <div class="collapsible-header" id="{{../assessmentTypeId}}">
+                                    <div class="collapsible-header" name="collHead{{assessmentId}}" id="{{../assessmentTypeId}}">
                                         <a href="#!" class="icon-bluegrey deleteAssessmentType" id="{{assessmentId}}">
                                             <i class="material-icons">close</i>
                                         </a>
-                                        <i class="material-icons">arrow_drop_down</i>{{assessmentName}}</div>
+                                        <i class="material-icons">arrow_drop_down</i>{{assessmentName}}<span class="new badge blue-grey rename-assessment" id="{{assessmentId}}?LmUtGwN?{{assessmentName}}" data-badge-caption="Rename"></span></div>
                                     <div class="collapsible-body assessments-collapsible">
                                         <form class="edit-courseassessment-form" onsubmit="return false" onChange="" id="form{{assessmentId}}">
                                             <ul>

@@ -300,6 +300,7 @@ Template.assessments.events({
                         }
                     }
                     Meteor.call('assessments.updateAssessments', currentCourseId, courseAssessmentsTypes);
+                    Meteor.call('students.deleteAssessment', Meteor.userId(), currentCourseId, assessmentId);
                 }
                 let removeAssessmentObj = Session.get("removeAssessmentObj");
                 removeAssessmentObj.removeCourse = "";
@@ -343,7 +344,11 @@ Template.assessments.events({
         let markA = document.getElementById(aId).value;
         let markT = document.getElementById(tId).value;
         let markC = document.getElementById(cId).value;
-        let newDate = document.getElementById(dateId).value
+        var newDate = document.getElementById(dateId).value;
+
+        if (newDate == ""){
+            newDate = "N/A"
+        }
 
         //check that each variable is of the correct type/format
         if (!areMarkFieldsValid(markK, markA, markT, markC)) {
@@ -392,7 +397,11 @@ Template.assessments.events({
         let markA = document.getElementById(aId).value;
         let markT = document.getElementById(tId).value;
         let markC = document.getElementById(cId).value;
-        let newDate = document.getElementById(dateId).value
+        var newDate = document.getElementById(dateId).value;
+
+        if (newDate == ""){
+            newDate = "N/A"
+        }
 
         //check that each variable is of the correct type/format
         if (markK == "N/A" && markA == "N/A" && markT == "N/A" && markC == "N/A") {
@@ -466,7 +475,11 @@ Template.assessments.events({
         let markA = document.getElementById(aId).value;
         let markT = document.getElementById(tId).value;
         let markC = document.getElementById(cId).value;
-        let newDate = document.getElementById(dateId).value;
+        var newDate = document.getElementById(dateId).value;
+
+        if (newDate == ""){
+            newDate = "N/A"
+        }
 
         if (!areMarkFieldsValid(markK, markA, markT, markC)) {
             target.focus();
@@ -494,6 +507,27 @@ Template.assessments.events({
         //update collection
         var courseAssessmentTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseAssessmentTypes;
         updateAssessments(courseAssessmentTypes, assessmentTypeId, assessmentId, markK, markA, markT, markC, newDate);
+    },
+    'click .rename-assessment': function(){
+        var id = event.target.id;
+        var assessmentId = id.slice(0, id.indexOf("?LmUtGwN?"));
+        var assessmentName = id.slice(id.indexOf("?LmUtGwN?") + 9, id.length);
+        var element = document.getElementsByName("collHead" + assessmentId);
+     
+        element[0].click();
+
+        //store assessmentId and assessmentName in Session Variable
+        Session.set('selectedAssessment', {assessmentId, assessmentName});
+
+        //open modal
+        $('#renameAssessmentModal').modal({
+            dismissible: true, 
+            complete: function() { 
+                document.getElementById("renameAssessmentModalForm").reset();
+            } 
+          }
+        );
+        $('#renameAssessmentModal').modal('open');
     }
 });
 

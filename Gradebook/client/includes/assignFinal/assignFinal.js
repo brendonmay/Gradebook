@@ -96,7 +96,7 @@ Template.assignFinal.events({
     'submit .assignFinalForm': function () {
         let currentCourseId = Session.get('courseId');
         let assessmentType = document.getElementById("finalAssessmentType").value;
-        let assessmentDate = document.getElementById("createNewFinalAssessmentDate").value;
+        var assessmentDate = document.getElementById("createNewFinalAssessmentDate").value;
 
         var markK = document.getElementById("inputFinalMarkK").value;
         var markA = document.getElementById("inputFinalMarkA").value;
@@ -142,6 +142,9 @@ Template.assignFinal.events({
         }
         if (markC != "N/A") {
             markC = Number(markC)
+        }
+        if (assessmentDate == ""){
+            assessmentDate = "N/A"
         }
 
         //create new finalAssessmentTypes array for Assessments Collection.

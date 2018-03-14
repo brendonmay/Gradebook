@@ -2,34 +2,18 @@
 	- "Thanks for signing in! Add a course to get started!
 	- "Welcome Back! Select a course to get started!"
 	- Fix buttons placements in each of the settings tabs.
-	- Finish all of the styling in each of the settings tabs.
-	- Place some padding-right on "Thank you for logging in. You can now create a course." in sidenav
-	- Fix the placement of the info icon in the manage students modal
 	- Buttons in settings tab dont behave well as you change the size of the window. Possible suggested solution, use display=none instead of adding class "hide" when they shouldnt be there. This can be achieved with the setAttribute() functiion.
-	- In the Assessments Tab, the text directing you to Assessment Settings doesnt dynamically move
 	- Make it so that the gradebook has a different display if you have no students
 	- Gradebook sizing gets all weird after you add a new assessment, fixes if you zoom in and out.
-	- Change most (if not all) toasts to custom error messages via jQuery validation + MaterializeCSS. I have already installed jQuery validation. Note: it is not up to date! Due to this supposedly being very buggy I highly suggest we install the latest version.
-		-https://themeteorchef.com/tutorials/validating-forms-with-jquery-validation
-		-http://demo.geekslabs.com/materialize/v3.1/form-validation.html
-		-https://codepen.io/tdurant72/pen/vgyBjZ
-		-https://stackoverflow.com/questions/39313758/materialize-css-custom-form-validation-error-message
-		-https://jsfiddle.net/rz0zk5u6/2/
-		-if we have problem with selects:
-			-https://github.com/Dogfalo/materialize/issues/3440
 
 -Functionality Issues
 	- When you change the year of a course, it will no longer be highlighted in the sideNav (redirect with clicks)
-	- Clear errors on closing of login and register modal
 	- When you add a new student/assessment, the last student/assessment on the list of the gradebook wont float as you scroll horizontally/vertically
-	- In assessment tabs, if the date value is "", store it as N/A in the database. This needs to be fixed when adding a new assessment, assigning final evaluation, and when editting the dates via blur and submit.
-	- When you delete an assessment, it isnt removed from the grades array in the Students collection
-	- When you delete a final assessment Type, grades array in students collection should reflect that change.
-	
-	- Make it so that you cannot include the characters "," or "?" in the student first or last name.
-	- limit the first and last name length to 16 characters each
+	- Make it so that you can rename assessments.
+
 	- In each of the Settings' Tabs, check the input type to ensure only numbers can be inputted for the weights.
 	- Create new assessment modal error messages arent red for "Assessment Name" field
+	- You are currently able to create an assessment even if you did not assign any grade points for K, A, T, or C.
 
 -------------
 

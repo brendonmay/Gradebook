@@ -57,19 +57,23 @@ Template.editStudent.onRendered(function () {
         rules: {
             editStudentLastName: {
                 required: true,
-                containsIllegalCharacters: true
+                containsIllegalCharacters: true,
+                maxlength: 16
             },
             editStudentFirstName: {
                 required: true,
-                containsIllegalCharacters: true
+                containsIllegalCharacters: true,
+                maxlength: 16
             }
         },
         messages: {
             editStudentLastName: {
-                containsIllegalCharacters: "Names can only contain alphabet letters and dashes(-)"
+                containsIllegalCharacters: "Names can only contain alphabet letters and dashes(-)",
+                maxlength: "Last name cannot be longer then 16 characters"
             },
             editStudentFirstName: {
-                containsIllegalCharacters: "Names can only contain alphabet letters and dashes(-)"
+                containsIllegalCharacters: "Names can only contain alphabet letters and dashes(-)",
+                maxlength: "First name cannot be longer then 16 characters"
             }
         },
         errorElement: 'div',

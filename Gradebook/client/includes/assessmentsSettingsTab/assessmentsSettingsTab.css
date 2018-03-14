@@ -152,3 +152,9 @@
   .changeAssessmentTypeName {
       color: #d32f2f !important;
   }
+
+  .assessmentSettingsTabError {
+    color: #d32f2f !important;
+    text-align: right;
+    width: 55%;
+  }

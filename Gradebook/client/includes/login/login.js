@@ -63,7 +63,7 @@ Template.login.events({
     'click .cancel-button': function () {
         //clear the input fields
         var loginForm = document.getElementById('loginForm');
-        form.reset();
+        loginForm.reset();
         clearValidation(loginForm);
 
         removeLoginError();

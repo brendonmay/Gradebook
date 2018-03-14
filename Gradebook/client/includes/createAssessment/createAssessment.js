@@ -263,3 +263,4 @@ Template.createAssessment.onRendered(function () {
         }
     });
 });
+//cannot create assessment without one of KATC being filled 

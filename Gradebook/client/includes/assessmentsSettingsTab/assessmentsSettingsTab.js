@@ -96,6 +96,7 @@ function doneEditing() { //works
 }
 
 function addValidationRulesOnInputs() {
+
     $("#assessmentSettingsForm").validate({
         errorClass: 'invalid',
         validClass: 'jquery-validation-valid',
@@ -126,16 +127,16 @@ function addValidationRules(assessmentsObj, prefix) {
         $(changeNameID).rules("add", {
             required: true,
             messages: {
-                requried: "This field is Required"
+                required: "Please fill in the required fields"
             }
         });
         $(weightInputID).rules("add", {
             required: true,
             messages: {
-                requried: "This field is Required"
+                required: "Please fill in the required fields"
             }
         });
-        console.log("changeNameID: " + changeNameID + " weightInputID: " + weightInputID);
+        console.log(changeNameID);
     }
 }
 
@@ -191,7 +192,6 @@ Template.assessmentsTab.events({
             //console.log("set your weight to 0 before deleting");
         }
     },
-
     'click .delete-finalAssessmentType': function () { //works
         target = event.target;
         assessmentTypeId = target.parentElement.id;
@@ -213,7 +213,6 @@ Template.assessmentsTab.events({
             Materialize.toast('Set the weight of ' + assessmentTypeName + ' to 0% before deleting it.', 5000, 'amber darken-3');
         }
     },
-
     'click .edit-button': function () { //working
         let editButtonElement = document.getElementById("edit-button");
         let saveButtonElement = document.getElementById("save-button");
@@ -298,11 +297,9 @@ Template.assessmentsTab.events({
         courseWeight.removeAttribute('disabled');
         addValidationRulesOnInputs();
     },
-
     'click .cancel-button': function () { //working
         doneEditing();
     },
-
     'submit .assessmentsTabForm': function () { //working
         const currentCourseId = Session.get('courseId');
         const target = event.target;

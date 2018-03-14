@@ -285,19 +285,23 @@ Template.addStudents.onRendered(function () {
         rules: {
             lastName: {
                 required: true,
-                containsIllegalCharacters: true
+                containsIllegalCharacters: true,
+                maxlength: 16
             },
             firstName: {
                 required: true,
-                containsIllegalCharacters: true
+                containsIllegalCharacters: true,
+                maxlength: 16
             }
         },
         messages: {
             lastName: {
-                containsIllegalCharacters: "Names can only contain alphabet letters and dashes(-)"
+                containsIllegalCharacters: "Names can only contain alphabet letters and dashes(-)",
+                maxlength: "Last name cannot be longer then 16 characters"
             },
             firstName: {
-                containsIllegalCharacters: "Names can only contain alphabet letters and dashes(-)"
+                containsIllegalCharacters: "Names can only contain alphabet letters and dashes(-)",
+                maxlength: "First name cannot be longer then 16 characters"
             }
         },
         errorElement: 'div',

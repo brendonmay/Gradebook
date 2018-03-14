@@ -187,6 +187,21 @@ Template.assignFinal.onRendered(function () {
     $.validator.addMethod('isPositive', (input) => {
         return (input >= 0);
     });
+    $.validator.addMethod('mustHaveOneKATC', (input) => {
+        var markK = document.getElementById("inputMarkK").value;
+        var markA = document.getElementById("inputMarkA").value;
+        var markT = document.getElementById("inputMarkT").value;
+        var markC = document.getElementById("inputMarkC").value;
+
+        if ((markK == "" || markK == "N/A") &&
+            (markA == "" || markA == "N/A") &&
+            (markT == "" || markT == "N/A") &&
+            (markC == "" || markC == "N/A")) {
+                return false;
+            }
+            return true;
+
+    });
     $('.createAssessmentModal').modal({
         dismissible: true, // Modal can be dismissed by clicking outside of the modal
         complete: function () {
@@ -200,6 +215,7 @@ Template.assignFinal.onRendered(function () {
             marksKFinal: {
                 isInteger: true,
                 isPositive: true,
+                mustHaveOneKATC: true
             },
             marksAFinal: {
                 isInteger: true,
@@ -220,7 +236,8 @@ Template.assignFinal.onRendered(function () {
         messages: {
             marksKFinal: {
                 isInteger: "A selected category's mark must be an integer.",
-                isPositive: "A selected category's mark must be greater than 0."
+                isPositive: "A selected category's mark must be greater than 0.",
+                mustHaveOneKATC: "This assessment must use at least one category"
             },
             marksAFinal: {
                 isInteger: "A selected category's mark must be an integer.",

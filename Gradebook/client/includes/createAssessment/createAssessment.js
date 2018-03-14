@@ -236,18 +236,15 @@ Template.createAssessment.onRendered(function () {
             },
             marksA: {
                 isInteger: true,
-                isPositive: true,
-                mustHaveOneKATC: true
+                isPositive: true
             },
             marksT: {
                 isInteger: true,
-                isPositive: true,
-                mustHaveOneKATC: true
+                isPositive: true
             },
             marksC: {
                 isInteger: true,
-                isPositive: true,
-                mustHaveOneKATC: true
+                isPositive: true
             },
             assessmentTypeSelect: {
                 required: true
@@ -264,18 +261,15 @@ Template.createAssessment.onRendered(function () {
             },
             marksA: {
                 isInteger: "A selected category's mark must be an integer.",
-                isPositive: "A selected category's mark must be greater than 0.",
-                mustHaveOneKATC: "This assessment must use at least one category"
+                isPositive: "A selected category's mark must be greater than 0."
             },
             marksT: {
                 isInteger: "A selected category's mark must be an integer.",
-                isPositive: "A selected category's mark must be greater than 0.",
-                mustHaveOneKATC: "This assessment must use at least one category"
+                isPositive: "A selected category's mark must be greater than 0."
             },
             marksC: {
                 isInteger: "A selected category's mark must be an integer.",
-                isPositive: "A selected category's mark must be greater than 0.",
-                mustHaveOneKATC: "This assessment must use at least one category"
+                isPositive: "A selected category's mark must be greater than 0."
             }
         },
         errorElement: 'div',

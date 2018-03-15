@@ -181,30 +181,30 @@ Template.assessments.events({
                     document.getElementById('assignFinalFormId').reset();
 
                     document.getElementById("finalCheckboxK").removeAttribute("checked");
-                    document.getElementById("finalCheckboxK").value="N/A";
-                    document.getElementById("inputFinalMarkK").disabled="true";
-                    if(document.getElementById("inputFinalMarkK-error")){
+                    document.getElementById("finalCheckboxK").value = "N/A";
+                    document.getElementById("inputFinalMarkK").disabled = "true";
+                    if (document.getElementById("inputFinalMarkK-error")) {
                         document.getElementById("inputFinalMarkK-error").remove();
                     }
 
                     document.getElementById("finalCheckboxA").removeAttribute("checked");
-                    document.getElementById("finalCheckboxA").value="N/A";
-                    document.getElementById("inputFinalMarkA").disabled="true";
-                    if(document.getElementById("inputFinalMarkA-error")){
+                    document.getElementById("finalCheckboxA").value = "N/A";
+                    document.getElementById("inputFinalMarkA").disabled = "true";
+                    if (document.getElementById("inputFinalMarkA-error")) {
                         document.getElementById("inputFinalMarkA-error").remove();
                     }
 
                     document.getElementById("finalCheckboxT").removeAttribute("checked");
-                    document.getElementById("finalCheckboxT").value="N/A";
-                    document.getElementById("inputFinalMarkT").disabled="true";
-                    if(document.getElementById("inputFinalMarkT-error")){
+                    document.getElementById("finalCheckboxT").value = "N/A";
+                    document.getElementById("inputFinalMarkT").disabled = "true";
+                    if (document.getElementById("inputFinalMarkT-error")) {
                         document.getElementById("inputFinalMarkT-error").remove();
                     }
 
                     document.getElementById("finalCheckboxC").removeAttribute("checked");
-                    document.getElementById("finalCheckboxC").value="N/A";
-                    document.getElementById("inputFinalMarkC").disabled="true";
-                    if(document.getElementById("inputFinalMarkC-error")){
+                    document.getElementById("finalCheckboxC").value = "N/A";
+                    document.getElementById("inputFinalMarkC").disabled = "true";
+                    if (document.getElementById("inputFinalMarkC-error")) {
                         document.getElementById("inputFinalMarkC-error").remove();
                     }
                 }
@@ -223,36 +223,36 @@ Template.assessments.events({
                 document.getElementById('createAssessmentFormId').reset();
 
                 document.getElementById("checkboxK").removeAttribute("checked");
-                    document.getElementById("checkboxK").value="N/A";
-                    document.getElementById("inputMarkK").disabled="true";
-                    if(document.getElementById("inputMarkK-error")){
-                        document.getElementById("inputMarkK-error").remove();
-                    }
+                document.getElementById("checkboxK").value = "N/A";
+                document.getElementById("inputMarkK").disabled = "true";
+                if (document.getElementById("inputMarkK-error")) {
+                    document.getElementById("inputMarkK-error").remove();
+                }
 
-                    document.getElementById("checkboxA").removeAttribute("checked");
-                    document.getElementById("checkboxA").value="N/A";
-                    document.getElementById("inputMarkA").disabled="true";
-                    if(document.getElementById("inputMarkA-error")){
-                        document.getElementById("inputMarkA-error").remove();
-                    }
+                document.getElementById("checkboxA").removeAttribute("checked");
+                document.getElementById("checkboxA").value = "N/A";
+                document.getElementById("inputMarkA").disabled = "true";
+                if (document.getElementById("inputMarkA-error")) {
+                    document.getElementById("inputMarkA-error").remove();
+                }
 
-                    document.getElementById("checkboxT").removeAttribute("checked");
-                    document.getElementById("checkboxT").value="N/A";
-                    document.getElementById("inputMarkT").disabled="true";
-                    if(document.getElementById("inputMarkT-error")){
-                        document.getElementById("inputMarkT-error").remove();
-                    }
+                document.getElementById("checkboxT").removeAttribute("checked");
+                document.getElementById("checkboxT").value = "N/A";
+                document.getElementById("inputMarkT").disabled = "true";
+                if (document.getElementById("inputMarkT-error")) {
+                    document.getElementById("inputMarkT-error").remove();
+                }
 
-                    document.getElementById("checkboxC").removeAttribute("checked");
-                    document.getElementById("checkboxC").value="N/A";
-                    document.getElementById("inputMarkC").disabled="true";
-                    if(document.getElementById("inputMarkC-error")){
-                        document.getElementById("inputMarkC-error").remove();
-                    }
+                document.getElementById("checkboxC").removeAttribute("checked");
+                document.getElementById("checkboxC").value = "N/A";
+                document.getElementById("inputMarkC").disabled = "true";
+                if (document.getElementById("inputMarkC-error")) {
+                    document.getElementById("inputMarkC-error").remove();
+                }
 
-                    if(document.getElementById('createNewAssessment-error')){
-                        document.getElementById('createNewAssessment-error').remove();
-                    }
+                if (document.getElementById('createNewAssessment-error')) {
+                    document.getElementById('createNewAssessment-error').remove();
+                }
             }
         });
         $('#createAssessmentModal').modal('open');
@@ -346,7 +346,7 @@ Template.assessments.events({
         let markC = document.getElementById(cId).value;
         var newDate = document.getElementById(dateId).value;
 
-        if (newDate == ""){
+        if (newDate == "") {
             newDate = "N/A"
         }
 
@@ -377,6 +377,7 @@ Template.assessments.events({
         //update collection
         var courseAssessmentTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseAssessmentTypes;
         updateAssessments(courseAssessmentTypes, assessmentTypeId, assessmentId, markK, markA, markT, markC, newDate);
+        Session.set("gradebookUpdated", true);
     },
     'submit .edit-finalevaluation-form': function () {
         //determine which form has been changed
@@ -399,7 +400,7 @@ Template.assessments.events({
         let markC = document.getElementById(cId).value;
         var newDate = document.getElementById(dateId).value;
 
-        if (newDate == ""){
+        if (newDate == "") {
             newDate = "N/A"
         }
 
@@ -451,12 +452,13 @@ Template.assessments.events({
             }
         }
 
-        Meteor.call('assessments.updateFinalAssessments', currentCourseId, finalAssessmentTypes)
+        Meteor.call('assessments.updateFinalAssessments', currentCourseId, finalAssessmentTypes);
+        Session.set("gradebookUpdated", true);
 
         //at the end, push a message to the user saying the changes have been saved.
         Materialize.toast('Your changes have been saved', 3000, 'amber darken-3'); //make it so that toast includes assessment name
     },
-    'blur .editable-assessment-fields': function () {
+    'blur .course-edit-fields-blur': function () {
         let target = event.target;
         let formId = target.id;
         //assign all the new values to variables
@@ -477,7 +479,7 @@ Template.assessments.events({
         let markC = document.getElementById(cId).value;
         var newDate = document.getElementById(dateId).value;
 
-        if (newDate == ""){
+        if (newDate == "") {
             newDate = "N/A"
         }
 
@@ -507,25 +509,29 @@ Template.assessments.events({
         //update collection
         var courseAssessmentTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseAssessmentTypes;
         updateAssessments(courseAssessmentTypes, assessmentTypeId, assessmentId, markK, markA, markT, markC, newDate);
+        Session.set("gradebookUpdated", true);
     },
-    'click .rename-assessment': function(){
+    'blur .final-blur-class': function () {
+        document.getElementById("final-submit-button-changes").click();
+    },
+    'click .rename-assessment': function () {
         var id = event.target.id;
         var assessmentId = id.slice(0, id.indexOf("?LmUtGwN?"));
         var assessmentName = id.slice(id.indexOf("?LmUtGwN?") + 9, id.length);
         var element = document.getElementsByName("collHead" + assessmentId);
-     
+
         element[0].click();
 
         //store assessmentId and assessmentName in Session Variable
-        Session.set('selectedAssessment', {assessmentId, assessmentName});
+        Session.set('selectedAssessment', { assessmentId, assessmentName });
 
         //open modal
         $('#renameAssessmentModal').modal({
-            dismissible: true, 
-            complete: function() { 
+            dismissible: true,
+            complete: function () {
                 document.getElementById("renameAssessmentModalForm").reset();
-            } 
-          }
+            }
+        }
         );
         $('#renameAssessmentModal').modal('open');
     }

@@ -36,28 +36,28 @@
                                                 <li class="row collection-item assessments-collapsible-nested item-height">
                                                     <h6 class="col s11 offset-s1 assessment-field-display">Knowledge:
                                                         <div class="inline input-field input-margin-bottom-fix assessment-input">
-                                                            <input class="center-align editable-assessment-fields k" id="courseK{{assessmentId}}" value={{K}}>
+                                                            <input class="center-align editable-assessment-fields course-edit-fields-blur k" id="courseK{{assessmentId}}" value={{K}}>
                                                         </div>
                                                     </h6>
                                                 </li>
                                                 <li class="row collection-item assessments-collapsible-nested item-height">
                                                     <h6 class="col s11 offset-s1 assessment-field-display">Application:
                                                         <div class="inline input-field input-margin-bottom-fix assessment-input">
-                                                            <input class="center-align editable-assessment-fields a" id="courseA{{assessmentId}}" value={{A}}>
+                                                            <input class="center-align editable-assessment-fields course-edit-fields-blur a" id="courseA{{assessmentId}}" value={{A}}>
                                                         </div>
                                                     </h6>
                                                 </li>
                                                 <li class="row collection-item assessments-collapsible-nested item-height">
                                                     <h6 class="col s11 offset-s1 assessment-field-display">Thinking:
                                                         <div class="inline input-field input-margin-bottom-fix assessment-input">
-                                                            <input class="center-align editable-assessment-fields t" id="courseT{{assessmentId}}" value={{T}}>
+                                                            <input class="center-align editable-assessment-fields course-edit-fields-blur t" id="courseT{{assessmentId}}" value={{T}}>
                                                         </div>
                                                     </h6>
                                                 </li>
                                                 <li class="row collection-item assessments-collapsible-nested item-height">
                                                     <h6 class="col s11 offset-s1 assessment-field-display">Communication:
                                                         <div class="inline input-field input-margin-bottom-fix assessment-input">
-                                                            <input class="center-align editable-assessment-fields c" id="courseC{{assessmentId}}" value={{C}}>
+                                                            <input class="center-align editable-assessment-fields course-edit-fields-blur c" id="courseC{{assessmentId}}" value={{C}}>
                                                         </div>
                                                     </h6>
                                                 </li>
@@ -102,32 +102,32 @@
                                     <li class="row collection-item assessments-collapsible-nested">
                                         <h6 class="col s11 offset-s1 assessment-field-display">Knowledge:
                                             <div class="inline input-field input-margin-bottom-fix assessment-input">
-                                                <input class="center-align editable-assessment-fields k-final" id="finalK{{assessmentTypeId}}" value={{K}}>
+                                                <input class="center-align editable-assessment-fields final-blur-class k-final" id="finalK{{assessmentTypeId}}" value={{K}}>
                                             </div>
                                         </h6>
                                     </li>
                                     <li class="row collection-item assessments-collapsible-nested">
                                         <h6 class="col s11 offset-s1 assessment-field-display">Application:
                                             <div class="inline input-field input-margin-bottom-fix assessment-input">
-                                                <input class="center-align editable-assessment-fields a-final" id="finalA{{assessmentTypeId}}" value={{A}}>
+                                                <input class="center-align editable-assessment-fields final-blur-class a-final" id="finalA{{assessmentTypeId}}" value={{A}}>
                                             </div>
                                         </h6>
                                     </li>
                                     <li class="row collection-item assessments-collapsible-nested">
                                         <h6 class="col s11 offset-s1 assessment-field-display">Thinking:
                                             <div class="inline input-field input-margin-bottom-fix assessment-input">
-                                                <input class="center-align editable-assessment-fields t-final" id="finalT{{assessmentTypeId}}" value={{T}}>
+                                                <input class="center-align editable-assessment-fields final-blur-class t-final" id="finalT{{assessmentTypeId}}" value={{T}}>
                                             </div>
                                         </h6>
                                     </li>
                                     <li class="row collection-item assessments-collapsible-nested c-final-row">
                                         <h6 class="col s11 offset-s1 assessment-field-display">Communication:
                                             <div class="inline input-field input-margin-bottom-fix assessment-input">
-                                                <input class="center-align editable-assessment-fields c-final" id="finalC{{assessmentTypeId}}" value={{C}}>
+                                                <input class="center-align editable-assessment-fields final-blur-class c-final" id="finalC{{assessmentTypeId}}" value={{C}}>
                                             </div>
                                         </h6>
                                     </li>
-                                    <input type="submit" style="display: none;" />
+                                    <input type="submit" id="final-submit-button-changes" style="display: none;" />
                                 </form>
                                 {{else}}
                                 <p>You have yet to assign this assessment.</p>

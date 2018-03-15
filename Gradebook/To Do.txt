@@ -9,11 +9,14 @@
 -Functionality Issues
 	- When you change the year of a course, it will no longer be highlighted in the sideNav (redirect with clicks)
 	- When you add a new student/assessment, the last student/assessment on the list of the gradebook wont float as you scroll horizontally/vertically
-	- Make it so that you can rename assessments.
+	- Make it so that after you input a grade, you can hit enter and it will go to the next mark (skip disabled ones)
+	- After you input the last mark for a student, it jumps to the next row?
+	- Notifications for changes in final evaluation should only appear if a change has been made.
 
 	- In each of the Settings' Tabs, check the input type to ensure only numbers can be inputted for the weights.
 	- Create new assessment modal error messages arent red for "Assessment Name" field
 	- You are currently able to create an assessment even if you did not assign any grade points for K, A, T, or C.
+	- Make it so that you can only input numbers >= 0 or N/A into the gradebook
 
 	-Delete Coursework Assessment has white text with no banner/Add Course Work/Add Final Evaluation Work
 	-In create new coursework, when checkbox is clicked focus on input field 

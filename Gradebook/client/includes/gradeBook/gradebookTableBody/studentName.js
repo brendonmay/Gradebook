@@ -22,6 +22,17 @@ function generateSortedStudentArray() {
 
 }
 
+function insertGrade() {
+    const courseId = Session.get('courseId');
+    const inputId = event.target.id;
+    const category = inputId[0];
+    const studentId = inputId.slice(inputId.indexOf("?") + 1, inputId.indexOf("#"));
+    const assessmentId = inputId.slice(inputId.indexOf("#") + 1, inputId.length);
+    const grade = event.target.value;
+
+    Meteor.call('students.insertGrade', Meteor.userId(), courseId, category, studentId, assessmentId, grade);
+}
+
 function generateArrayOfStudentObjects(sortedStudentArray) {
     var arrayOfStudentObjects = [];
 
@@ -48,15 +59,15 @@ Template.studentName.helpers({
         let sortedStudentArray = generateSortedStudentArray();
         return generateArrayOfStudentObjects(sortedStudentArray)
     },
-    getCurrentGrade: function(studentId){ //design this function last
+    getCurrentGrade: function (studentId) { //design this function last
         return "98%"
     },
-    getStudentGradesForAssessments: function(studentId){
+    getStudentGradesForAssessments: function (studentId) {
         let courseId = Session.get('courseId');
-        var students = Students.findOne({ownerId: Meteor.userId(), courseId: courseId}).students;
+        var students = Students.findOne({ ownerId: Meteor.userId(), courseId: courseId }).students;
         var grades = []
-        for (i = 0; i < students.length; i++){
-            if (students[i].studentId == studentId){
+        for (i = 0; i < students.length; i++) {
+            if (students[i].studentId == studentId) {
                 grades = students[i].grades;
                 i = students.length;
             }
@@ -64,3 +75,30 @@ Template.studentName.helpers({
         return grades
     }
 });
+
+Template.studentName.events({
+    'blur .gradeInput': function () {
+        insertGrade()
+    },
+
+    'keyup .gradeInput': function () {
+        if (event.keyCode === 13) { //if enter is hit
+            var inputId = event.target.id;
+            var category = inputId[0];
+
+            if(category == "K"){
+                var newInputId = "A" + inputId.slice(1, inputId.length);
+                document.getElementById(newInputId).focus();
+            }
+            if(category == "A"){
+                var newInputId = "T" + inputId.slice(1, inputId.length);
+                document.getElementById(newInputId).focus();
+            }
+            if(category == "T"){
+                var newInputId = "C" + inputId.slice(1, inputId.length);
+                document.getElementById(newInputId).focus();
+            }
+            
+        }
+    }
+})

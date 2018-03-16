@@ -200,6 +200,7 @@ Template.createAssessment.events({
                 }
             }
         }
+        Session.set("gradebookUpdated", true);
         Meteor.call('assessments.updateAssessments', currentCourseId, newAssessmentObjects);
         closeCreateAssessmentModal();
     },

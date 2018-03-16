@@ -9,8 +9,7 @@
 -Functionality Issues
 	- When you change the year of a course, it will no longer be highlighted in the sideNav (redirect with clicks)
 	- When you add a new student/assessment, the last student/assessment on the list of the gradebook wont float as you scroll horizontally/vertically
-	- Make it so that after you input a grade, you can hit enter and it will go to the next mark (skip disabled ones)
-	- After you input the last mark for a student, it jumps to the next row?
+	- If you hit tab multiple times in gradebook (past the end of the row), datepicker pops up
 	- Notifications for changes in final evaluation should only appear if a change has been made.
 
 	- In each of the Settings' Tabs, check the input type to ensure only numbers can be inputted for the weights.

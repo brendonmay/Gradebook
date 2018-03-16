@@ -85,20 +85,124 @@ Template.studentName.events({
         if (event.keyCode === 13) { //if enter is hit
             var inputId = event.target.id;
             var category = inputId[0];
+            var studentId = inputId.slice(inputId.indexOf("?") + 1, inputId.indexOf("#"));
+            var sortedStudentArray = generateSortedStudentArray();
+            var sortedStudentObjects = generateArrayOfStudentObjects(sortedStudentArray);
+            var assessmentId = inputId.slice(inputId.indexOf("#") + 1, inputId.length);
 
-            if(category == "K"){
-                var newInputId = "A" + inputId.slice(1, inputId.length);
+            if (category == "K") {
+                var potentialNewInputId = "A" + inputId.slice(1, inputId.length);
+                if (!document.getElementById(potentialNewInputId).hasAttribute("disabled")) {
+                    document.getElementById(potentialNewInputId).focus();
+                    //console.log("A is not disabled");
+                }
+                else {
+                    var potentialNewInputId = "T" + inputId.slice(1, inputId.length);
+                    if (!document.getElementById(potentialNewInputId).hasAttribute("disabled")) {
+                        document.getElementById(potentialNewInputId).focus();
+                        //console.log("T is not disabled");
+                    }
+                    else {
+                        var potentialNewInputId = "C" + inputId.slice(1, inputId.length);
+                        if (!document.getElementById(potentialNewInputId).hasAttribute("disabled")) {
+                            document.getElementById(potentialNewInputId).focus();
+                            //console.log("C is not disabled");
+                        }
+                        else {
+                            //move to next row
+                            for (i = 0; i < sortedStudentObjects.length; i++) {
+                                if (sortedStudentObjects[i].studentId == studentId) {
+                                    //check it isnt the last student
+                                    if (i == (sortedStudentObjects.length - 1)) {
+                                        //console.log("last student");
+                                        return false
+                                    }
+                                    else {
+                                        studentId = sortedStudentObjects[i + 1].studentId;
+                                        i = sortedStudentObjects.length;
+                                    }
+                                }
+                            }
+                            var newInputId = "K?" + studentId + "#" + assessmentId;
+                            document.getElementById(newInputId).focus();
+                        }
+                    }
+                }
+            }
+            if (category == "A") {
+                var potentialNewInputId = "T" + inputId.slice(1, inputId.length);
+                if (!document.getElementById(potentialNewInputId).hasAttribute("disabled")) {
+                    document.getElementById(potentialNewInputId).focus();
+                    //console.log("T is not disabled");
+                }
+                else {
+                    var potentialNewInputId = "C" + inputId.slice(1, inputId.length);
+                    if (!document.getElementById(potentialNewInputId).hasAttribute("disabled")) {
+                        document.getElementById(potentialNewInputId).focus();
+                        //console.log("C is not disabled");
+                    }
+                    else {
+                        //move to next row
+                        for (i = 0; i < sortedStudentObjects.length; i++) {
+                            if (sortedStudentObjects[i].studentId == studentId) {
+                                //check it isnt the last student
+                                if (i == (sortedStudentObjects.length - 1)) {
+                                    //console.log("last student");
+                                    return false
+                                }
+                                else {
+                                    studentId = sortedStudentObjects[i + 1].studentId;
+                                    i = sortedStudentObjects.length;
+                                }
+                            }
+                        }
+                        var newInputId = "K?" + studentId + "#" + assessmentId;
+                        document.getElementById(newInputId).focus();
+                    }
+                }
+            }
+            if (category == "T") {
+                var potentialNewInputId = "C" + inputId.slice(1, inputId.length);
+                if (!document.getElementById(potentialNewInputId).hasAttribute("disabled")) {
+                    document.getElementById(potentialNewInputId).focus();
+                    //console.log("C is not disabled");
+                }
+                else {
+                    //move to next row
+                    for (i = 0; i < sortedStudentObjects.length; i++) {
+                        if (sortedStudentObjects[i].studentId == studentId) {
+                            //check it isnt the last student
+                            if (i == (sortedStudentObjects.length - 1)) {
+                                //console.log("last student");
+                                return false
+                            }
+                            else {
+                                studentId = sortedStudentObjects[i + 1].studentId;
+                                i = sortedStudentObjects.length;
+                            }
+                        }
+                    }
+                    var newInputId = "K?" + studentId + "#" + assessmentId;
+                    document.getElementById(newInputId).focus();
+                }
+            }
+            if (category == "C") {
+                for (i = 0; i < sortedStudentObjects.length; i++) {
+                    if (sortedStudentObjects[i].studentId == studentId) {
+                        //check it isnt the last student
+                        if (i == (sortedStudentObjects.length - 1)) {
+                            //console.log("last student");
+                            return false
+                        }
+                        else {
+                            studentId = sortedStudentObjects[i + 1].studentId;
+                            i = sortedStudentObjects.length;
+                        }
+                    }
+                }
+                var newInputId = "K?" + studentId + "#" + assessmentId;
                 document.getElementById(newInputId).focus();
             }
-            if(category == "A"){
-                var newInputId = "T" + inputId.slice(1, inputId.length);
-                document.getElementById(newInputId).focus();
-            }
-            if(category == "T"){
-                var newInputId = "C" + inputId.slice(1, inputId.length);
-                document.getElementById(newInputId).focus();
-            }
-            
         }
     }
 })

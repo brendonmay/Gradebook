@@ -64,19 +64,20 @@
                         Marks:
                     </div>
                     <div class='input-field input-margin-bottom-fix inline col s1 zero-margin-top' style="padding: 0">
-                        <input id="inputMarkK" type="text" name="marksK" value="N/A" class="center form-control" data-error=".errorMessage" disabled>
+                        <input id="inputMarkK" type="text" name="marksK" value="N/A" class="center form-control" data-error=".createAssessmentsErrorMessage" disabled>
                     </div>
                     <div class='input-field input-margin-bottom-fix inline col s1 offset-s1 zero-margin-top' style="padding: 0">
-                        <input id="inputMarkA" type="text" name="marksA" value="N/A" class="center form-control" data-error=".errorMessage" disabled>
+                        <input id="inputMarkA" type="text" name="marksA" value="N/A" class="center form-control" data-error=".createAssessmentsErrorMessage" disabled>
                     </div>
                     <div class='input-field input-margin-bottom-fix inline col s1 offset-s1 zero-margin-top' style="padding: 0">
-                        <input id="inputMarkT" type="text" name="marksT" value="N/A" class="center form-control" data-error=".errorMessage" disabled>
+                        <input id="inputMarkT" type="text" name="marksT" value="N/A" class="center form-control" data-error=".createAssessmentsErrorMessage" disabled>
                     </div>
                     <div class='input-field input-margin-bottom-fix inline col s1 offset-s1 zero-margin-top' style="padding: 0">
-                        <input id="inputMarkC" type="text" name="marksC" value="N/A" class="center form-control" data-error=".errorMessage" disabled>
+                        <input id="inputMarkC" type="text" name="marksC" value="N/A" class="center form-control" data-error=".createAssessmentsErrorMessage" disabled>
                     </div>
                 </div>
-                <div class="center errorMessage"></div>
+                <div class="center createAssessmentsErrorMessage"></div>
+                <div class="center" id="mustHaveOneErrorMessage" style="display: none;">This assessment must use at least one category</div>
                 <input type="submit" style="display: none;" />
                 <div class="modal-footer">
                     <button class="add-form modal-action waves-effect waves-grey btn-flat" type="submit">Create Assessment</button>

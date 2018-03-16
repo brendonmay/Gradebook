@@ -57,3 +57,13 @@
     color: #d32f2f;
     margin-bottom: 10px;
 }
+#mustHaveOneErrorMessage {
+    border-bottom: none !important; 
+    color: #d32f2f;
+    margin-bottom: 10px;
+}
+#finalMustHaveOneErrorMessage {
+    border-bottom: none !important; 
+    color: #d32f2f;
+    margin-bottom: 10px;
+}

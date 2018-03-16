@@ -10,6 +10,7 @@ import '../../main.html';
 
 function closeAssignFinalModal() {
     //clear the input fields
+    document.getElementById("finalMustHaveOneErrorMessage").style.display = "none";
     var form = document.getElementById("assignFinalFormId");
     form.reset();
     clearValidation(form);
@@ -94,6 +95,16 @@ Template.assignFinal.events({
         let finalAssessmentTypes = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).finalAssessmentTypes;
         var assessmentObjects = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).finalAssessmentTypes;
 
+        if ((markK == "" || markK == "N/A") &&
+            (markA == "" || markA == "N/A") &&
+            (markT == "" || markT == "N/A") &&
+            (markC == "" || markC == "N/A")) {
+
+            document.getElementById("finalMustHaveOneErrorMessage").style.display = "";
+            return false;
+        } else {
+            document.getElementById("finalMustHaveOneErrorMessage").style.display = "none";
+        }
 
         //find assessmentTypeId
         var assessmentTypeId = "";
@@ -115,7 +126,7 @@ Template.assignFinal.events({
         if (markC != "N/A") {
             markC = Number(markC)
         }
-        if (assessmentDate == ""){
+        if (assessmentDate == "") {
             assessmentDate = "N/A"
         }
 
@@ -197,9 +208,9 @@ Template.assignFinal.onRendered(function () {
             (markA == "" || markA == "N/A") &&
             (markT == "" || markT == "N/A") &&
             (markC == "" || markC == "N/A")) {
-                return false;
-            }
-            return true;
+            return false;
+        }
+        return true;
 
     });
     $('.createAssessmentModal').modal({

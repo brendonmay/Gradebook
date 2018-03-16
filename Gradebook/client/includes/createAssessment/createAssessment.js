@@ -9,6 +9,7 @@ import '../../main.html';
 
 function closeCreateAssessmentModal() {
     //clear the input fields
+    document.getElementById("mustHaveOneErrorMessage").style.display = "none";
     var form = document.getElementById("createAssessmentFormId");
     form.reset();
     clearValidation(form);
@@ -96,6 +97,16 @@ Template.createAssessment.events({
         var markT = document.getElementById("inputMarkT").value;
         var markC = document.getElementById("inputMarkC").value;
 
+        if ((markK == "" || markK == "N/A") &&
+            (markA == "" || markA == "N/A") &&
+            (markT == "" || markT == "N/A") &&
+            (markC == "" || markC == "N/A")) {
+
+            document.getElementById("mustHaveOneErrorMessage").style.display = "";
+            return false;
+        } else {
+            document.getElementById("mustHaveOneErrorMessage").style.display = "none";
+        }
 
         if (markK != "N/A") {
             markK = Number(markK)
@@ -109,9 +120,10 @@ Template.createAssessment.events({
         if (markC != "N/A") {
             markC = Number(markC)
         }
-        if (assessmentDate == ""){
+        if (assessmentDate == "") {
             assessmentDate = "N/A"
         }
+
 
         let courseworkAssessmentTypes = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseworkAssessmentTypes;
         let assessmentObjects = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseAssessmentTypes;
@@ -204,21 +216,6 @@ Template.createAssessment.onRendered(function () {
     $.validator.addMethod('isPositive', (input) => {
         return (input >= 0);
     });
-    $.validator.addMethod('mustHaveOneKATC', (input) => {
-        var markK = document.getElementById("inputMarkK").value;
-        var markA = document.getElementById("inputMarkA").value;
-        var markT = document.getElementById("inputMarkT").value;
-        var markC = document.getElementById("inputMarkC").value;
-
-        if ((markK == "" || markK == "N/A") &&
-            (markA == "" || markA == "N/A") &&
-            (markT == "" || markT == "N/A") &&
-            (markC == "" || markC == "N/A")) {
-                return false;
-            }
-            return true;
-
-    });
     $('.createAssessmentModal').modal({
         dismissible: true, // Modal can be dismissed by clicking outside of the modal
         complete: function () {
@@ -231,8 +228,7 @@ Template.createAssessment.onRendered(function () {
         rules: {
             marksK: {
                 isInteger: true,
-                isPositive: true,
-                mustHaveOneKATC: true
+                isPositive: true
             },
             marksA: {
                 isInteger: true,
@@ -256,8 +252,7 @@ Template.createAssessment.onRendered(function () {
         messages: {
             marksK: {
                 isInteger: "A selected category's mark must be an integer.",
-                isPositive: "A selected category's mark must be greater than 0.",
-                mustHaveOneKATC: "This assessment must use at least one category"
+                isPositive: "A selected category's mark must be greater than 0."
             },
             marksA: {
                 isInteger: "A selected category's mark must be an integer.",
@@ -283,4 +278,3 @@ Template.createAssessment.onRendered(function () {
         }
     });
 });
-//cannot create assessment without one of KATC being filled 

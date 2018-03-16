@@ -57,9 +57,9 @@ function areMarkFieldsValid(markK, markA, markT, markC) {
 }
 
 function updateAssessments(courseAssessmentTypes, assessmentTypeId, assessmentId, markK, markA, markT, markC, newDate) {
+    var fieldsChanged = false;
     let currentCourseId = Session.get('courseId');
     var courseName;
-    var fieldsChanged = false;
     var breakFromInside = false;
     for (i = 0; i < courseAssessmentTypes.length; i++) {
         if (courseAssessmentTypes[i].assessmentTypeId == assessmentTypeId) {
@@ -81,10 +81,44 @@ function updateAssessments(courseAssessmentTypes, assessmentTypeId, assessmentId
             if (breakFromInside) break;
         }
     }
+
     if (fieldsChanged) {
         Meteor.call('assessments.updateAssessments', currentCourseId, courseAssessmentTypes)
+
         //at the end, push a message to the user saying the changes have been saved.
         Materialize.toast('Your changes to ' + courseName + ' have been saved', 3000, 'amber darken-3'); //make it so that toast includes assessment name
+    }
+}
+
+function updateFinalAssessments(finalAssessmentTypes, assessmentTypeId, markK, markA, markT, markC, newDate) {
+    var fieldsChanged = false;
+    let currentCourseId = Session.get('courseId');
+    for (i = 0; i < finalAssessmentTypes.length; i++) {
+        if (finalAssessmentTypes[i].assessmentTypeId == assessmentTypeId) {
+            if (didFieldsChange(finalAssessmentTypes[i], markK, markA, markT, markC, newDate)) {
+                finalAssessmentTypes[i].K = markK;
+                finalAssessmentTypes[i].A = markA;
+                finalAssessmentTypes[i].T = markT;
+                finalAssessmentTypes[i].C = markC;
+                finalAssessmentTypes[i].Date = newDate;
+                fieldsChanged = true;
+            }
+            break;
+        }
+    }
+    if (fieldsChanged) {
+        var finalEvalName = getFinalEvalName(currentCourseId, assessmentTypeId);
+        Meteor.call('assessments.updateFinalAssessments', currentCourseId, finalAssessmentTypes)
+        Materialize.toast('Your changes to ' + finalEvalName + ' have been saved', 3000, 'amber darken-3'); //make it so that toast includes assessment name
+    }
+}
+
+function getFinalEvalName(courseID, assessmentTypeId) {
+    var finalEvaluations = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: courseID }).finalAssessmentTypes;
+    for (var i = 0; i < finalEvaluations.length; i++) {
+        if (finalEvaluations[i].assessmentTypeId == assessmentTypeId) {
+            return finalEvaluations[i].assessmentType;
+        }
     }
 }
 
@@ -512,7 +546,55 @@ Template.assessments.events({
         Session.set("gradebookUpdated", true);
     },
     'blur .final-blur-class': function () {
-        document.getElementById("final-submit-button-changes").click();
+        let target = event.target;
+        let formId = target.id;
+        //assign all the new values to variables
+        let assessmentTypeId = formId.substring(6);
+        let currentCourseId = Session.get('courseId');
+
+        let dateId = "finalDate" + assessmentTypeId;
+        let kId = "finalK" + assessmentTypeId;
+        let aId = "finalA" + assessmentTypeId;
+        let tId = "finalT" + assessmentTypeId;
+        let cId = "finalC" + assessmentTypeId;
+
+        let markK = document.getElementById(kId).value;
+        let markA = document.getElementById(aId).value;
+        let markT = document.getElementById(tId).value;
+        let markC = document.getElementById(cId).value;
+        var newDate = document.getElementById(dateId).value;
+
+        if (newDate == "") {
+            newDate = "N/A"
+        }
+
+        if (!areMarkFieldsValid(markK, markA, markT, markC)) {
+            target.focus();
+            target.classList.add('invalid');
+            return false;
+        } else {
+            if (target.classList.contains('invalid')) {
+                target.classList.remove('invalid');
+            }
+        }
+
+        if (markK != "N/A") {
+            markK = Number(markK)
+        }
+        if (markA != "N/A") {
+            markA = Number(markA)
+        }
+        if (markT != "N/A") {
+            markT = Number(markT)
+        }
+        if (markC != "N/A") {
+            markC = Number(markC)
+        }
+
+        //update collection
+        var finalAssessmentTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).finalAssessmentTypes;
+        updateFinalAssessments(finalAssessmentTypes, assessmentTypeId, markK, markA, markT, markC, newDate);
+        Session.set("gradebookUpdated", true);
     },
     'click .rename-assessment': function () {
         var id = event.target.id;

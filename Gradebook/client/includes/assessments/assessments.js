@@ -56,57 +56,60 @@ function areMarkFieldsValid(markK, markA, markT, markC) {
     return true;
 }
 
-function updateAssessments(courseAssessmentTypes, assessmentTypeId, assessmentId, markK, markA, markT, markC, newDate, type) {
+function updateAssessments(courseAssessmentTypes, assessmentTypeId, assessmentId, markK, markA, markT, markC, newDate) {
     var fieldsChanged = false;
     let currentCourseId = Session.get('courseId');
     var courseName;
-    if (type == "courses") {
-        var breakFromInside = false;
-        for (i = 0; i < courseAssessmentTypes.length; i++) {
-            if (courseAssessmentTypes[i].assessmentTypeId == assessmentTypeId) {
-                for (z = 0; z < courseAssessmentTypes[i].assessments.length; z++) {
-                    if (courseAssessmentTypes[i].assessments[z].assessmentId == assessmentId) {
-                        courseName = courseAssessmentTypes[i].assessments[z].assessmentName;
-                        if (didFieldsChange(courseAssessmentTypes[i].assessments[z], markK, markA, markT, markC, newDate)) {
-                            courseAssessmentTypes[i].assessments[z].K = markK;
-                            courseAssessmentTypes[i].assessments[z].A = markA;
-                            courseAssessmentTypes[i].assessments[z].T = markT;
-                            courseAssessmentTypes[i].assessments[z].C = markC;
-                            courseAssessmentTypes[i].assessments[z].Date = newDate;
-                            fieldsChanged = true;
-                        }
-                        break;
-                        breakFromInside = true;
+    var breakFromInside = false;
+    for (i = 0; i < courseAssessmentTypes.length; i++) {
+        if (courseAssessmentTypes[i].assessmentTypeId == assessmentTypeId) {
+            for (z = 0; z < courseAssessmentTypes[i].assessments.length; z++) {
+                if (courseAssessmentTypes[i].assessments[z].assessmentId == assessmentId) {
+                    courseName = courseAssessmentTypes[i].assessments[z].assessmentName;
+                    if (didFieldsChange(courseAssessmentTypes[i].assessments[z], markK, markA, markT, markC, newDate)) {
+                        courseAssessmentTypes[i].assessments[z].K = markK;
+                        courseAssessmentTypes[i].assessments[z].A = markA;
+                        courseAssessmentTypes[i].assessments[z].T = markT;
+                        courseAssessmentTypes[i].assessments[z].C = markC;
+                        courseAssessmentTypes[i].assessments[z].Date = newDate;
+                        fieldsChanged = true;
                     }
+                    break;
+                    breakFromInside = true;
                 }
-                if (breakFromInside) break;
             }
+            if (breakFromInside) break;
         }
-    } else if (type == "final") {
-        for (i = 0; i < courseAssessmentTypes.length; i++) {
-            if (courseAssessmentTypes[i].assessmentTypeId == assessmentTypeId) {
-                if (didFieldsChange(courseAssessmentTypes[i], markK, markA, markT, markC, newDate)) {
-                    courseAssessmentTypes[i].K = markK;
-                    courseAssessmentTypes[i].A = markA;
-                    courseAssessmentTypes[i].T = markT;
-                    courseAssessmentTypes[i].C = markC;
-                    courseAssessmentTypes[i].Date = newDate;
-                    fieldsChanged = true;
-                }
-                break;
+    }
+
+    if (fieldsChanged) {
+        Meteor.call('assessments.updateAssessments', currentCourseId, courseAssessmentTypes)
+
+        //at the end, push a message to the user saying the changes have been saved.
+        Materialize.toast('Your changes to ' + courseName + ' have been saved', 3000, 'amber darken-3'); //make it so that toast includes assessment name
+    }
+}
+
+function updateFinalAssessments(finalAssessmentTypes, assessmentTypeId, markK, markA, markT, markC, newDate) {
+    var fieldsChanged = false;
+    let currentCourseId = Session.get('courseId');
+    for (i = 0; i < finalAssessmentTypes.length; i++) {
+        if (finalAssessmentTypes[i].assessmentTypeId == assessmentTypeId) {
+            if (didFieldsChange(finalAssessmentTypes[i], markK, markA, markT, markC, newDate)) {
+                finalAssessmentTypes[i].K = markK;
+                finalAssessmentTypes[i].A = markA;
+                finalAssessmentTypes[i].T = markT;
+                finalAssessmentTypes[i].C = markC;
+                finalAssessmentTypes[i].Date = newDate;
+                fieldsChanged = true;
             }
+            break;
         }
     }
     if (fieldsChanged) {
-        if (type == "final") {
-            courseName = getFinalEvalName(currentCourseId, assessmentTypeId);
-            Meteor.call('assessments.updateFinalAssessments', currentCourseId, courseAssessmentTypes)
-        } else if (type == "courses") {
-            Meteor.call('assessments.updateAssessments', currentCourseId, courseAssessmentTypes)
-        }
-        
-        //at the end, push a message to the user saying the changes have been saved.
-        Materialize.toast('Your changes to ' + courseName + ' have been saved', 3000, 'amber darken-3'); //make it so that toast includes assessment name
+        var finalEvalName = getFinalEvalName(currentCourseId, assessmentTypeId);
+        Meteor.call('assessments.updateFinalAssessments', currentCourseId, finalAssessmentTypes)
+        Materialize.toast('Your changes to ' + finalEvalName + ' have been saved', 3000, 'amber darken-3'); //make it so that toast includes assessment name
     }
 }
 
@@ -124,7 +127,6 @@ function didFieldsChange(assessments, markK, markA, markT, markC, newDate) {
     if (assessments.A != markA) return true;
     if (assessments.T != markT) return true;
     if (assessments.C != markC) return true;
-    console.log(assessments.Date);
     if (assessments.Date != newDate) return true;
     return false;
 }
@@ -540,7 +542,7 @@ Template.assessments.events({
 
         //update collection
         var courseAssessmentTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseAssessmentTypes;
-        updateAssessments(courseAssessmentTypes, assessmentTypeId, assessmentId, markK, markA, markT, markC, newDate, "courses");
+        updateAssessments(courseAssessmentTypes, assessmentTypeId, assessmentId, markK, markA, markT, markC, newDate);
         Session.set("gradebookUpdated", true);
     },
     'blur .final-blur-class': function () {
@@ -591,7 +593,7 @@ Template.assessments.events({
 
         //update collection
         var finalAssessmentTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).finalAssessmentTypes;
-        updateAssessments(finalAssessmentTypes, assessmentTypeId, "", markK, markA, markT, markC, newDate, "final");
+        updateFinalAssessments(finalAssessmentTypes, assessmentTypeId, markK, markA, markT, markC, newDate);
         Session.set("gradebookUpdated", true);
     },
     'click .rename-assessment': function () {

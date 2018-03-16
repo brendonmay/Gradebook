@@ -7,6 +7,10 @@ import { Assessments } from '../../../lib/collections.js';
 
 import '../../main.html';
 
+const requiredText = "Please fill in the required fields.";
+const isIntegerText = "A selected category's mark must be an integer.";
+const isPositiveText = "A selected category's mark must be greater than 0.";
+
 function canAssignFinalEvaluation() {
     let currentCourseId = Session.get('courseId');
     let finalAssessmentTypes = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).finalAssessmentTypes;
@@ -131,10 +135,179 @@ function didFieldsChange(assessments, markK, markA, markT, markC, newDate) {
     return false;
 }
 
+function beginValidation() {
+    $.validator.addMethod('isInteger', (input) => {
+        return (input == "N/A" || Math.floor(input) == input);
+    });
+    $.validator.addMethod('isPositive', (input) => {
+        return (input >= 0);
+    });
+    $(".edit-courseassessment-form").validate({
+        errorClass: 'invalid',
+        validClass: 'jquery-validation-valid',
+        errorElement: 'div',
+        errorPlacement: function (error, element) {
+            // var text = $(error)[0].textContent;
+            // addError(text, error);
+            var placement = $(element).data('error');
+            if (placement) {
+                $(placement).append(error)
+            } else {
+                error.insertAfter(element);
+            }
+        }
+    });
+
+    let currentCourseId = Session.get('courseId');
+    const courseworkAssessmentTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseAssessmentTypes;
+    const finalAssessmentTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).finalAssessmentTypes;
+    addCourseValidationRules(courseworkAssessmentTypes);
+    addFinalValidationRules(finalAssessmentTypes);
+}
+
+function addFinalValidationRules(assessmentsObj) {
+    for (var i = 0; i < assessmentsObj.length; i++) {
+        var assessment = assessmentsObj[i];
+        var assessmentID = assessment.assessmentTypeId;
+        var formID = "#form" + assessmentID;
+        $(formID).validate({
+            errorClass: 'invalid',
+            validClass: 'jquery-validation-valid',
+            errorElement: 'div',
+            errorPlacement: function (error, element) {
+                // var text = $(error)[0].textContent;
+                // addError(text, error);
+                var placement = $(element).data('error');
+                if (placement) {
+                    $(placement).append(error)
+                } else {
+                    error.insertAfter(element);
+                }
+            }
+        });
+        const KField = "#finalK" + assessmentID;
+        const AField = "#finalA" + assessmentID;
+        const TField = "#finalT" + assessmentID;
+        const CField = "#finalC" + assessmentID;
+
+        $(KField).rules("add", {
+            required: true,
+            isInteger: true,
+            isPositive: true,
+            messages: {
+                required: requiredText,
+                isInteger: isIntegerText,
+                isPositive: isPositiveText
+            }
+        });
+        $(AField).rules("add", {
+            required: true,
+            isInteger: true,
+            isPositive: true,
+            messages: {
+                required: requiredText,
+                isInteger: isIntegerText,
+                isPositive: isPositiveText
+            }
+        });
+        $(TField).rules("add", {
+            required: true,
+            isInteger: true,
+            isPositive: true,
+            messages: {
+                required: requiredText,
+                isInteger: isIntegerText,
+                isPositive: isPositiveText
+            }
+        });
+        $(CField).rules("add", {
+            required: true,
+            isInteger: true,
+            isPositive: true,
+            messages: {
+                required: requiredText,
+                isInteger: isIntegerText,
+                isPositive: isPositiveText
+            }
+        });
+    }
+
+}
+
+function addCourseValidationRules(assessmentsObj) {
+    for (var i = 0; i < assessmentsObj.length; i++) {
+        for (var j = 0; j < assessmentsObj[i].assessments.length; j++) {
+            var assessment = assessmentsObj[i].assessments[j];
+            var formID = "#form" + assessment.assessmentId;
+            $(formID).validate({
+                errorClass: 'invalid',
+                validClass: 'jquery-validation-valid',
+                errorElement: 'div',
+                errorPlacement: function (error, element) {
+                    // var text = $(error)[0].textContent;
+                    // addError(text, error);
+                    var placement = $(element).data('error');
+                    if (placement) {
+                        $(placement).append(error)
+                    } else {
+                        error.insertAfter(element);
+                    }
+                }
+            });
+            const KField = "#courseK" + assessment.assessmentId;
+            const AField = "#courseA" + assessment.assessmentId;
+            const TField = "#courseT" + assessment.assessmentId;
+            const CField = "#courseC" + assessment.assessmentId;
+
+            $(KField).rules("add", {
+                required: true,
+                isInteger: true,
+                isPositive: true,
+                messages: {
+                    required: requiredText,
+                    isInteger: isIntegerText,
+                    isPositive: isPositiveText
+                }
+            });
+            $(AField).rules("add", {
+                required: true,
+                isInteger: true,
+                isPositive: true,
+                messages: {
+                    required: requiredText,
+                    isInteger: isIntegerText,
+                    isPositive: isPositiveText
+                }
+            });
+            $(TField).rules("add", {
+                required: true,
+                isInteger: true,
+                isPositive: true,
+                messages: {
+                    required: requiredText,
+                    isInteger: isIntegerText,
+                    isPositive: isPositiveText
+                }
+            });
+            $(CField).rules("add", {
+                required: true,
+                isInteger: true,
+                isPositive: true,
+                messages: {
+                    required: requiredText,
+                    isInteger: isIntegerText,
+                    isPositive: isPositiveText
+                }
+            });
+        }
+    }
+}
+
 Template.assessments.onRendered(function () {
     $(document).ready(function () {
         $('.collapsible').collapsible();
     });
+    beginValidation();
 });
 
 Template.assessments.helpers({

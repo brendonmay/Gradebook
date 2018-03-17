@@ -7,9 +7,9 @@ import { Assessments } from '../../../lib/collections.js';
 
 import '../../main.html';
 
-const requiredText = "Please fill in the required fields.";
-const isIntegerText = "A selected category's mark must be an integer.";
-const isPositiveText = "A selected category's mark must be greater than 0.";
+const requiredText = "Must contain a positive number or N/A"; //"Please fill in the required fields.";
+const isIntegerText = "Must contain a positive number or N/A"; // "A selected category's mark must be an integer.";
+const isPositiveText = "Must contain a positive number or N/A"; //"A selected category's mark must be greater than 0.";
 
 function canAssignFinalEvaluation() {
     let currentCourseId = Session.get('courseId');
@@ -140,7 +140,7 @@ function beginValidation() {
         return (input == "N/A" || Math.floor(input) == input);
     });
     $.validator.addMethod('isPositive', (input) => {
-        return (input >= 0);
+        return (input >= 0 || input == "N/A");
     });
     $(".edit-courseassessment-form").validate({
         errorClass: 'invalid',
@@ -769,6 +769,7 @@ Template.assessments.events({
         updateFinalAssessments(finalAssessmentTypes, assessmentTypeId, markK, markA, markT, markC, newDate);
         Session.set("gradebookUpdated", true);
     },
+
     'click .rename-assessment': function () {
         var id = event.target.id;
         var assessmentId = id.slice(0, id.indexOf("?LmUtGwN?"));

@@ -56,3 +56,8 @@
 .c-final-row{
     border-bottom: 0px solid white!important;
 }
+
+.courses-assessments-error {
+    color: #d32f2f !important;
+    padding-bottom: 10px;
+}

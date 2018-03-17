@@ -80,7 +80,9 @@ Template.studentName.events({
     'blur .gradeInput': function () {
         insertGrade()
     },
-
+    'click .gradeInput': function(){
+        event.target.setSelectionRange(0, event.target.value.length)
+    },
     'keyup .gradeInput': function () {
         if (event.keyCode === 13) { //if enter is hit
             var inputId = event.target.id;
@@ -94,18 +96,21 @@ Template.studentName.events({
                 var potentialNewInputId = "A" + inputId.slice(1, inputId.length);
                 if (!document.getElementById(potentialNewInputId).hasAttribute("disabled")) {
                     document.getElementById(potentialNewInputId).focus();
+                    document.getElementById(potentialNewInputId).setSelectionRange(0, document.getElementById(potentialNewInputId).value.length);
                     //console.log("A is not disabled");
                 }
                 else {
                     var potentialNewInputId = "T" + inputId.slice(1, inputId.length);
                     if (!document.getElementById(potentialNewInputId).hasAttribute("disabled")) {
                         document.getElementById(potentialNewInputId).focus();
+                        document.getElementById(potentialNewInputId).setSelectionRange(0, document.getElementById(potentialNewInputId).value.length);
                         //console.log("T is not disabled");
                     }
                     else {
                         var potentialNewInputId = "C" + inputId.slice(1, inputId.length);
                         if (!document.getElementById(potentialNewInputId).hasAttribute("disabled")) {
                             document.getElementById(potentialNewInputId).focus();
+                            document.getElementById(potentialNewInputId).setSelectionRange(0, document.getElementById(potentialNewInputId).value.length);
                             //console.log("C is not disabled");
                         }
                         else {
@@ -125,6 +130,7 @@ Template.studentName.events({
                             }
                             var newInputId = "K?" + studentId + "#" + assessmentId;
                             document.getElementById(newInputId).focus();
+                            document.getElementById(newInputId).setSelectionRange(0, document.getElementById(newInputId).value.length);
                         }
                     }
                 }
@@ -133,12 +139,14 @@ Template.studentName.events({
                 var potentialNewInputId = "T" + inputId.slice(1, inputId.length);
                 if (!document.getElementById(potentialNewInputId).hasAttribute("disabled")) {
                     document.getElementById(potentialNewInputId).focus();
+                    document.getElementById(potentialNewInputId).setSelectionRange(0, document.getElementById(potentialNewInputId).value.length);
                     //console.log("T is not disabled");
                 }
                 else {
                     var potentialNewInputId = "C" + inputId.slice(1, inputId.length);
                     if (!document.getElementById(potentialNewInputId).hasAttribute("disabled")) {
                         document.getElementById(potentialNewInputId).focus();
+                        document.getElementById(potentialNewInputId).setSelectionRange(0, document.getElementById(potentialNewInputId).value.length);
                         //console.log("C is not disabled");
                     }
                     else {
@@ -158,6 +166,7 @@ Template.studentName.events({
                         }
                         var newInputId = "K?" + studentId + "#" + assessmentId;
                         document.getElementById(newInputId).focus();
+                        document.getElementById(newInputId).setSelectionRange(0, document.getElementById(newInputId).value.length);
                     }
                 }
             }
@@ -165,6 +174,7 @@ Template.studentName.events({
                 var potentialNewInputId = "C" + inputId.slice(1, inputId.length);
                 if (!document.getElementById(potentialNewInputId).hasAttribute("disabled")) {
                     document.getElementById(potentialNewInputId).focus();
+                    document.getElementById(potentialNewInputId).setSelectionRange(0, document.getElementById(potentialNewInputId).value.length);
                     //console.log("C is not disabled");
                 }
                 else {
@@ -184,6 +194,7 @@ Template.studentName.events({
                     }
                     var newInputId = "K?" + studentId + "#" + assessmentId;
                     document.getElementById(newInputId).focus();
+                    document.getElementById(newInputId).setSelectionRange(0, document.getElementById(newInputId).value.length);
                 }
             }
             if (category == "C") {
@@ -202,6 +213,7 @@ Template.studentName.events({
                 }
                 var newInputId = "K?" + studentId + "#" + assessmentId;
                 document.getElementById(newInputId).focus();
+                document.getElementById(newInputId).setSelectionRange(0, document.getElementById(newInputId).value.length);
             }
         }
     }

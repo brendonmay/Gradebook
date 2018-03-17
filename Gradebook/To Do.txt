@@ -22,6 +22,7 @@
 
 	-Repopulate edit students modal when opened 
 	-Repopulate assessment settings when you hit edit 
+	-Repopulate change asssessment name modal when opened
 
 -------------
 

@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating';
 import { Accounts } from 'meteor/accounts-base';
 import { Assessments } from '../../../lib/collections.js';
+import jqueryValidation from 'jquery-validation';
 
 import '../../main.html';
 
@@ -44,4 +45,31 @@ Template.renameAssessment.events({
     'submit #renameAssessmentModalForm': function(){
         renameAssessment()
     }
-})
+});
+
+Template.renameAssessment.onRendered(function() {
+    $("#renameAssessmentModalForm").validate({
+        errorClass: 'invalid',
+        validClass: 'jquery-validation-valid',
+        rules: {
+            renameAssessmentName: {
+                required: true,
+                maxlength: 15
+            }
+        },
+        messages: {
+            courseName: {
+                maxlength: "Course Names cannot exceed 15 characters"
+            }
+        },
+        errorElement: 'div',
+        errorPlacement: function (error, element) {
+            var placement = $(element).data('error');
+            if (placement) {
+                $(placement).append(error)
+            } else {
+                error.insertAfter(element);
+            }
+        }
+    });
+});

@@ -65,6 +65,9 @@
                                                         </div>
                                                         <div class="courses-assessments-error courseC{{assessmentId}}Error"></div>                                                        
                                                     </h6>
+                                                    <div class="markFieldInvalid" id="markFieldInvalid{{assessmentId}}" style="display: none;">
+                                                            You must assess the students in at least one category.
+                                                    </div>
                                                 </li>
                                             </ul>
                                             <input type="submit" id="formSubmit{{assessmentId}}" style="display: none;" />
@@ -135,6 +138,9 @@
                                             </div>
                                             <div class="courses-assessments-error finalC{{assessmentTypeId}}"></div>
                                         </h6>
+                                        <div class="markFieldInvalid" id="finalMarkFieldInvalid{{assessmentTypeId}}" style="display: none;">
+                                                You must assess the students in at least one category.
+                                        </div>
                                     </li>
                                     <input type="submit" id="formSubmit{{assessmentTypeId}}" style="display: none;" />
                                 </form>

@@ -20,6 +20,9 @@
 	-Delete Coursework Assessment has white text with no banner/Add Course Work/Add Final Evaluation Work
 	-In create new coursework, when checkbox is clicked focus on input field 
 
+	-Repopulate edit students modal when opened 
+	-Repopulate assessment settings when you hit edit 
+
 -------------
 
 
@@ -35,3 +38,11 @@ Jquery-validation docs:
 		-https://jsfiddle.net/rz0zk5u6/2/
 		-if we have problem with selects: 
 			-https://github.com/Dogfalo/materialize/issues/3440
+
+
+General settings : need to remove error on cancel 
+Course Settings: remove underline colour when going from edit to non-editable
+Errors from login modal are transfering to register modal
+Create new assessment modal: On error 'choose assessment type' is not red
+Assessments Tab: On enter switch to next input field when valid and highlight the whole input text
+

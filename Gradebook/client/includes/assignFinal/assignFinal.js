@@ -198,7 +198,7 @@ Template.assignFinal.onRendered(function () {
         return (input == "N/A" || Math.floor(input) == input);
     });
     $.validator.addMethod('isPositive', (input) => {
-        return (input >= 0);
+        return (input > 0);
     });
     $('.createAssessmentModal').modal({
         dismissible: true, // Modal can be dismissed by clicking outside of the modal

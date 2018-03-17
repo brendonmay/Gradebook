@@ -10,7 +10,7 @@ const stringParam = "$%d$";
 const requiredText = "Please fill in the required fields.";
 const isIntegerText = "A selected category's mark must be an integer.";
 const isPositiveText = "A selected category's mark must be greater than 0.";
-const addsTo100Text = "Coursework and Final Evaluations must add to 100";
+const addsTo100Text = "Coursework and Final Evaluations must add to 100.";
 const finalAssessmentsEqualFinalWeightText = "Your Final Evaluation Weights should add up to $%d$%.";
 const courseWorkEqualCourseWeightText = "Your Coursework Weights should add up to $%d$%.";
 

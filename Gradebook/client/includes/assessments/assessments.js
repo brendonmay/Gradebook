@@ -43,17 +43,7 @@ function canAssignFinalEvaluation() {
 
 function areMarkFieldsValid(markK, markA, markT, markC) {
     if (markK == "N/A" && markA == "N/A" && markT == "N/A" && markC == "N/A") {
-        Materialize.toast('You must assess the students in at least one category.', 5000, 'amber darken-3');
-        return false
-    }
 
-    if (markK <= 0 || markA <= 0 || markT <= 0 || markC <= 0) {
-        Materialize.toast("A selected category's mark must be an integer greater than 0 or N/A.", 5000, 'amber darken-3');
-        return false
-    }
-
-    if (!((markK == "N/A" || Math.floor(markK) == markK) && (markA == "N/A" || Math.floor(markA) == markA) && (markT == "N/A" || Math.floor(markT) == markT) && (markC == "N/A" || Math.floor(markC) == markC))) {
-        Materialize.toast("A selected category's mark must be an integer greater than 0 or N/A.", 5000, 'amber darken-3');
         return false
     }
 
@@ -530,7 +520,7 @@ Template.assessments.events({
         $('.collapsible').collapsible();
     },
     'submit .edit-courseassessment-form': function () {
-        //determine which form has been changed
+        //determine which form has been changed 
         let target = event.target;
         let formId = target.id;
 
@@ -559,14 +549,12 @@ Template.assessments.events({
 
         //check that each variable is of the correct type/format
         if (!areMarkFieldsValid(markK, markA, markT, markC)) {
-            let focusedEle = document.activeElement;
-            focusedEle.classList.add('invalid');
+            var errorElement = document.getElementById("markFieldInvalid" + assessmentId);
+            errorElement.style.display = "";
             return false;
         } else {
-            let focusedEle = document.activeElement;
-            if (focusedEle.classList.contains('invalid')) {
-                focusedEle.classList.remove('invalid');
-            }
+            var errorElement = document.getElementById("markFieldInvalid" + assessmentId);
+            errorElement.style.display = "none";
         }
 
         if (markK != "N/A") {
@@ -587,6 +575,7 @@ Template.assessments.events({
         Session.set("gradebookUpdated", true);
     },
     'submit .edit-finalevaluation-form': function () {
+
         //determine which form has been changed
         let target = event.target;
         let formId = target.id;
@@ -611,25 +600,12 @@ Template.assessments.events({
             newDate = "N/A"
         }
 
-        //check that each variable is of the correct type/format
-        if (markK == "N/A" && markA == "N/A" && markT == "N/A" && markC == "N/A") {
-            Materialize.toast('You must assess the students in at least one category.', 5000, 'amber darken-3');
-            return false
-        }
-
-        if (markK <= 0 || markA <= 0 || markT <= 0 || markC <= 0) {
-            Materialize.toast("A selected category's mark must be an integer greater than 0 or N/A.", 5000, 'amber darken-3');
-            return false
-        }
-
-        if (!(
-            (markK == "N/A" || Math.floor(markK) == markK) &&
-            (markA == "N/A" || Math.floor(markA) == markA) &&
-            (markT == "N/A" || Math.floor(markT) == markT) &&
-            (markC == "N/A" || Math.floor(markC) == markC)
-        )) {
-            Materialize.toast("A selected category's mark must be an integer greater than 0 or N/A.", 5000, 'amber darken-3');
-            return false
+        if (!areMarkFieldsValid(markK, markA, markC, markT)) {
+            var errorElement = document.getElementById("finalMarkFieldInvalid" + assessmentTypeId);
+            errorElement.style.display = "";
+            return false;
+        } else {
+            errorElement.style.display = "none";
         }
 
         if (markK != "N/A") {
@@ -691,13 +667,12 @@ Template.assessments.events({
         }
 
         if (!areMarkFieldsValid(markK, markA, markT, markC)) {
-            target.focus();
-            target.classList.add('invalid');
+            var errorElement = document.getElementById("markFieldInvalid" + assessmentId);
+            errorElement.style.display = "";
             return false;
         } else {
-            if (target.classList.contains('invalid')) {
-                target.classList.remove('invalid');
-            }
+            var errorElement = document.getElementById("markFieldInvalid" + assessmentId);
+            errorElement.style.display = "none";
         }
 
         if (markK != "N/A") {
@@ -741,14 +716,12 @@ Template.assessments.events({
             newDate = "N/A"
         }
 
-        if (!areMarkFieldsValid(markK, markA, markT, markC)) {
-            target.focus();
-            target.classList.add('invalid');
+        if (!areMarkFieldsValid(markK, markA, markC, markT)) {
+            var errorElement = document.getElementById("finalMarkFieldInvalid" + assessmentTypeId);
+            errorElement.style.display = "";
             return false;
         } else {
-            if (target.classList.contains('invalid')) {
-                target.classList.remove('invalid');
-            }
+            errorElement.style.display = "none";
         }
 
         if (markK != "N/A") {
@@ -769,7 +742,6 @@ Template.assessments.events({
         updateFinalAssessments(finalAssessmentTypes, assessmentTypeId, markK, markA, markT, markC, newDate);
         Session.set("gradebookUpdated", true);
     },
-
     'click .rename-assessment': function () {
         var id = event.target.id;
         var assessmentId = id.slice(0, id.indexOf("?LmUtGwN?"));

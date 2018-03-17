@@ -44,6 +44,5 @@ Jquery-validation docs:
 General settings : need to remove error on cancel 
 Course Settings: remove underline colour when going from edit to non-editable
 Errors from login modal are transfering to register modal
-Create new assessment modal: On error 'choose assessment type' is not red
 Assessments Tab: On enter switch to next input field when valid and highlight the whole input text
 

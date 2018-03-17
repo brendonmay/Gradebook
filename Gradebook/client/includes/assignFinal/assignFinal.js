@@ -147,6 +147,8 @@ Template.assignFinal.events({
         //update Students Collection
         Meteor.call('students.addNewAssessment', Meteor.userId(), currentCourseId, assessmentTypeId);
 
+        Session.set("gradebookUpdated", true);
+
         //clean up and close modal
         closeAssignFinalModal();
     },

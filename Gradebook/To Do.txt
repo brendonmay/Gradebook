@@ -41,8 +41,6 @@ Jquery-validation docs:
 		-if we have problem with selects: 
 			-https://github.com/Dogfalo/materialize/issues/3440
 
-
-Errors from login modal are transfering to register modal
 Assessments Tab needs some more work:
 	-Weird fuctionality when inputting initial error -> gives "NAN" for null and is saving on incorrect input
 	-Still need to test multiple assessments and multiple assessment types 

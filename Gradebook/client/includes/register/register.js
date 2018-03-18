@@ -16,15 +16,21 @@ function doesEmailAlreadyExist(allEmails, userEmail) {
 
 Template.register.events({
     'click .cancel-button': function () {
+        var loginForm = document.getElementById('loginForm');
         var registerForm = document.getElementById("registerForm");
+        loginForm.reset();
         registerForm.reset();
+        clearValidation(loginForm);        
         clearValidation(registerForm);
         $('#registerModal').modal('close');
     },
 
     'click .back-button': function () {
+        var loginForm = document.getElementById('loginForm');
         var registerForm = document.getElementById("registerForm");
+        loginForm.reset();
         registerForm.reset();
+        clearValidation(loginForm);        
         clearValidation(registerForm);
 
         $('#registerModal').modal('close');

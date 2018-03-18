@@ -52,8 +52,11 @@ Template.login.events({
 
     'click .register': function () {
         var loginForm = document.getElementById('loginForm');
+        var registerForm = document.getElementById("registerForm");
         loginForm.reset();
-        clearValidation(loginForm);
+        registerForm.reset();
+        clearValidation(loginForm);        
+        clearValidation(registerForm);
 
         $('#registerModal').modal('open');
         removeLoginError();

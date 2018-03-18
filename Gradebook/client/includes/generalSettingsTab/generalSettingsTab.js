@@ -6,21 +6,36 @@ import jqueryValidation from 'jquery-validation';
 
 import '../../main.html';
 
-function getYearsArray(){
+function getYearsArray() {
     let currentYearRange = Session.get('courseYear');
-    let largeYear = currentYearRange.slice(5,9);
+    let largeYear = currentYearRange.slice(5, 9);
     let smallYear = largeYear - 1;
-    
+
     let yearOptions = [];
     var startingYear = smallYear - 2;
-    for (i = 0; i < 5; i++){
-        var lowYear =  startingYear;
+    for (i = 0; i < 5; i++) {
+        var lowYear = startingYear;
         var highYear = lowYear + 1;
         var yearRange = lowYear.toString() + "-" + highYear.toString();
         yearOptions[yearOptions.length] = yearRange;
         startingYear++;
     }
     return yearOptions
+}
+
+function clearPageValidation() {
+    var pageForm = document.getElementById('generalSettingsFormID');
+    clearValidation(pageForm);
+
+    var formElements = pageForm.elements;
+    for (var i = 0, element; element = formElements[i++];) {
+        if (element.classList.contains('invalid')) {
+            element.classList.remove("invalid");
+        } 
+        if (element.classList.contains('jquery-validation-valid')) {
+            element.classList.remove('jquery-validation-valid');
+        }
+    }
 }
 
 Template.generalSettingsTab.helpers({
@@ -34,16 +49,16 @@ Template.generalSettingsTab.helpers({
 
     getYearsBefore: function (currentYearRange) {
         //let currentYearRange = Session.get('courseYear');
-        let largeYear = currentYearRange.slice(5,9);
+        let largeYear = currentYearRange.slice(5, 9);
         let smallYear = largeYear - 1;
-        
+
         let yearOptions = [];
         var startingYear = smallYear - 2;
-        for (i = 0; i < 2; i++){
-            var lowYear =  startingYear;
+        for (i = 0; i < 2; i++) {
+            var lowYear = startingYear;
             var highYear = lowYear + 1;
             var yearRange = lowYear.toString() + "-" + highYear.toString();
-            yearOptions[yearOptions.length] = {year: yearRange};
+            yearOptions[yearOptions.length] = { year: yearRange };
             startingYear++;
         }
         return yearOptions
@@ -52,16 +67,16 @@ Template.generalSettingsTab.helpers({
 
     getYearsAfter: function (currentYearRange) {
         //let currentYearRange = Session.get('courseYear');
-        let largeYear = currentYearRange.slice(5,9);
+        let largeYear = currentYearRange.slice(5, 9);
         let smallYear = largeYear - 1;
-        
+
         let yearOptions = [];
         var startingYear = smallYear + 1;
-        for (i = 0; i < 2; i++){
-            var lowYear =  startingYear;
+        for (i = 0; i < 2; i++) {
+            var lowYear = startingYear;
             var highYear = lowYear + 1;
             var yearRange = lowYear.toString() + "-" + highYear.toString();
-            yearOptions[yearOptions.length] = {year: yearRange};
+            yearOptions[yearOptions.length] = { year: yearRange };
             startingYear++;
         }
         return yearOptions
@@ -87,6 +102,7 @@ Template.generalSettingsTab.events({
         courseName.removeAttribute('disabled');
         courseYearText.classList.add('hide');
         courseYearDropdown.classList.remove('hide');
+        clearPageValidation();
 
     },
     'submit .generalSettingsForm': function () {
@@ -102,53 +118,48 @@ Template.generalSettingsTab.events({
         let courseYearText = document.getElementById("yearTextId");
         let courseYearDropdown = document.getElementById("yearDropdownId");
 
-        // if (newCourseName.length > 15){
-        //     Materialize.toast('Your course name is too long.', 5000, 'amber darken-3');
-        //     return false
-        // }
-        // else{
-            editButtonElement.classList.remove("hide");
-            saveButtonElement.classList.add("hide");
-            cancelButtonElement.classList.add("hide");
-            courseYearText.classList.remove("hide");
-            courseYearDropdown.classList.add("hide");
-            courseName.disabled = true;
+        editButtonElement.classList.remove("hide");
+        saveButtonElement.classList.add("hide");
+        cancelButtonElement.classList.add("hide");
+        courseYearText.classList.remove("hide");
+        courseYearDropdown.classList.add("hide");
+        courseName.disabled = true;
 
-            const currentCourseId = Session.get('courseId');
+        const currentCourseId = Session.get('courseId');
 
-            var courseInfo = Courses.find({ ownerId: Meteor.userId() }, { _id: 0, ownerId: 0 });
-            var courseObj = [];
+        var courseInfo = Courses.find({ ownerId: Meteor.userId() }, { _id: 0, ownerId: 0 });
+        var courseObj = [];
 
-            courseInfo.forEach(
-                function (doc) {
-                    const docLength = doc.courses.length;
-                    let courses = doc.courses;
-                    for (var i = 0; i < docLength; i++) {
-                        if (courses[i].courseId == currentCourseId) {
-                            const newCourseInfo = {
-                                courseId: currentCourseId,
-                                courseName: newCourseName,
-                                courseYear: newCourseYear
-                            };
-                            courseObj.push(newCourseInfo);
-                        }
-                        else {
-                            courseObj.push(courses[i]);
-                        }
+        courseInfo.forEach(
+            function (doc) {
+                const docLength = doc.courses.length;
+                let courses = doc.courses;
+                for (var i = 0; i < docLength; i++) {
+                    if (courses[i].courseId == currentCourseId) {
+                        const newCourseInfo = {
+                            courseId: currentCourseId,
+                            courseName: newCourseName,
+                            courseYear: newCourseYear
+                        };
+                        courseObj.push(newCourseInfo);
+                    }
+                    else {
+                        courseObj.push(courses[i]);
                     }
                 }
-            );
-            Session.set('courseName', newCourseName);
-            Session.set('courseYear', newCourseYear);
-
-            Meteor.call('courses.updateCourseNameAndYear', currentCourseId, courseObj);
-
-            //highlight correct course after changing year
-            if (document.getElementById(oldCourseYear) != null){
-                document.getElementById(oldCourseYear).click();
-                document.getElementById(oldCourseYear).click();
             }
-        // }
+        );
+        Session.set('courseName', newCourseName);
+        Session.set('courseYear', newCourseYear);
+
+        Meteor.call('courses.updateCourseNameAndYear', currentCourseId, courseObj);
+
+        //highlight correct course after changing year
+        if (document.getElementById(oldCourseYear) != null) {
+            document.getElementById(oldCourseYear).click();
+            document.getElementById(oldCourseYear).click();
+        }
+        clearPageValidation();
         return false;
     },
     'click .cancel-general-settings': function () {
@@ -173,11 +184,11 @@ Template.generalSettingsTab.events({
         let yearsArray = getYearsArray();
 
         //find the option that is selected
-        for(i = 0; i < yearsArray.length; i++){
+        for (i = 0; i < yearsArray.length; i++) {
             let potentialId = "GS-Id" + yearsArray[i];
             let potentialSelectedOption = document.getElementById(potentialId);
-            if(potentialSelectedOption != null){
-                if (potentialSelectedOption.hasAttribute("active")){
+            if (potentialSelectedOption != null) {
+                if (potentialSelectedOption.hasAttribute("active")) {
                     potentialSelectedOption.removeAttribute("active");
                     break
                 }
@@ -187,8 +198,10 @@ Template.generalSettingsTab.events({
         //make currentyear get selected
         let currentYearSelectItem = document.getElementById("selectCurrentYear");
         currentYearSelectItem.selected = true;
+        clearPageValidation();
     },
-    'click .save-general-settings': function() {
+
+    'click .save-general-settings': function () {
         document.getElementById('submitGeneralSettings').click();
         return false;
     }
@@ -223,6 +236,6 @@ Template.generalSettingsTab.onRendered(function () {
             }
         }
     });
-    
+
     $('input#input_text, textarea#textarea1').characterCounter();
 });

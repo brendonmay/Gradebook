@@ -18,11 +18,26 @@ function getFinalWeight() {
     if (document.getElementById('assessments-finalWeight') == null) return "";
     return document.getElementById('assessments-finalWeight').value;
 }
+
 function getCourseWeight() {
     if (document.getElementById('assessments-courseWorkWeight') == null) return "";
     return document.getElementById('assessments-courseWorkWeight').value;
 }
 
+function clearPageValidation() {
+    var pageForm = document.getElementById('assessmentSettingsForm');
+    clearValidation(pageForm);
+
+    var formElements = pageForm.elements;
+    for (var i = 0, element; element = formElements[i++];) {
+        if (element.classList.contains('invalid')) {
+            element.classList.remove("invalid");
+        } 
+        if (element.classList.contains('jquery-validation-valid')) {
+            element.classList.remove('jquery-validation-valid');
+        }
+    }
+}
 
 function doneEditing() { //works
     let editButtonElement = document.getElementById("edit-button");
@@ -424,6 +439,7 @@ Template.assessmentsTab.events({
     },
     'click .cancel-button': function () { //working
         doneEditing();
+        clearPageValidation();
     },
     'submit .assessmentsTabForm': function () { //working
         const currentCourseId = Session.get('courseId');
@@ -465,7 +481,7 @@ Template.assessmentsTab.events({
 
         //doneEditing
         doneEditing();
-        
+        clearPageValidation();
     },
     'click #addCourseworkAssessmentType': function () {
         $('#addCourseWork').modal({
@@ -476,6 +492,7 @@ Template.assessmentsTab.events({
 
         });
         $('#addCourseWork').modal('open');
+        clearPageValidation();
     },
     'click #addFinalAssessmentType': function () {
         $('#addFinalWork').modal({
@@ -486,5 +503,6 @@ Template.assessmentsTab.events({
 
         });
         $('#addFinalWork').modal('open');
+        clearPageValidation();
     },
 });

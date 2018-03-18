@@ -41,8 +41,6 @@ Jquery-validation docs:
 			-https://github.com/Dogfalo/materialize/issues/3440
 
 
-General settings : need to remove error on cancel 
-Course Settings: remove underline colour when going from edit to non-editable
 Errors from login modal are transfering to register modal
 Assessments Tab: On enter switch to next input field when valid and highlight the whole input text
 

@@ -9,7 +9,18 @@ import jqueryValidation from 'jquery-validation';
 import '../../main.html';
 
 function clearCategoryWeightingsValidation() {
-    clearValidation(document.getElementById('categoryWeightingsFormID'));
+    var pageForm = document.getElementById('categoryWeightingsFormID');
+    clearValidation(pageForm);
+
+    var formElements = pageForm.elements;
+    for (var i = 0, element; element = formElements[i++];) {
+        if (element.classList.contains('invalid')) {
+            element.classList.remove("invalid");
+        } 
+        if (element.classList.contains('jquery-validation-valid')) {
+            element.classList.remove('jquery-validation-valid');
+        }
+    }
     removeAddTo100Error();
 }
 

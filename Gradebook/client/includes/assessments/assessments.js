@@ -7,6 +7,10 @@ import { Assessments } from '../../../lib/collections.js';
 
 import '../../main.html';
 
+const requiredText = "Must contain a positive number or N/A"; //"Please fill in the required fields.";
+const isIntegerText = "Must contain a positive number or N/A"; // "A selected category's mark must be an integer.";
+const isPositiveText = "Must contain a positive number or N/A"; //"A selected category's mark must be greater than 0.";
+
 function canAssignFinalEvaluation() {
     let currentCourseId = Session.get('courseId');
     let finalAssessmentTypes = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).finalAssessmentTypes;
@@ -39,17 +43,7 @@ function canAssignFinalEvaluation() {
 
 function areMarkFieldsValid(markK, markA, markT, markC) {
     if (markK == "N/A" && markA == "N/A" && markT == "N/A" && markC == "N/A") {
-        Materialize.toast('You must assess the students in at least one category.', 5000, 'amber darken-3');
-        return false
-    }
 
-    if (markK <= 0 || markA <= 0 || markT <= 0 || markC <= 0) {
-        Materialize.toast("A selected category's mark must be an integer greater than 0 or N/A.", 5000, 'amber darken-3');
-        return false
-    }
-
-    if (!((markK == "N/A" || Math.floor(markK) == markK) && (markA == "N/A" || Math.floor(markA) == markA) && (markT == "N/A" || Math.floor(markT) == markT) && (markC == "N/A" || Math.floor(markC) == markC))) {
-        Materialize.toast("A selected category's mark must be an integer greater than 0 or N/A.", 5000, 'amber darken-3');
         return false
     }
 
@@ -131,10 +125,179 @@ function didFieldsChange(assessments, markK, markA, markT, markC, newDate) {
     return false;
 }
 
+function beginValidation() {
+    $.validator.addMethod('isInteger', (input) => {
+        return (input == "N/A" || Math.floor(input) == input);
+    });
+    $.validator.addMethod('isPositive', (input) => {
+        return (input > 0 || input == "N/A");
+    });
+    $(".edit-courseassessment-form").validate({
+        errorClass: 'invalid',
+        validClass: 'jquery-validation-valid',
+        errorElement: 'div',
+        errorPlacement: function (error, element) {
+            // var text = $(error)[0].textContent;
+            // addError(text, error);
+            var placement = $(element).data('error');
+            if (placement) {
+                $(placement).append(error)
+            } else {
+                error.insertAfter(element);
+            }
+        }
+    });
+
+    let currentCourseId = Session.get('courseId');
+    const courseworkAssessmentTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseAssessmentTypes;
+    const finalAssessmentTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).finalAssessmentTypes;
+    addCourseValidationRules(courseworkAssessmentTypes);
+    addFinalValidationRules(finalAssessmentTypes);
+}
+
+function addFinalValidationRules(assessmentsObj) {
+    for (var i = 0; i < assessmentsObj.length; i++) {
+        var assessment = assessmentsObj[i];
+        var assessmentID = assessment.assessmentTypeId;
+        var formID = "#form" + assessmentID;
+        $(formID).validate({
+            errorClass: 'invalid',
+            validClass: 'jquery-validation-valid',
+            errorElement: 'div',
+            errorPlacement: function (error, element) {
+                // var text = $(error)[0].textContent;
+                // addError(text, error);
+                var placement = $(element).data('error');
+                if (placement) {
+                    $(placement).append(error)
+                } else {
+                    error.insertAfter(element);
+                }
+            }
+        });
+        const KField = "#finalK" + assessmentID;
+        const AField = "#finalA" + assessmentID;
+        const TField = "#finalT" + assessmentID;
+        const CField = "#finalC" + assessmentID;
+
+        $(KField).rules("add", {
+            required: true,
+            isInteger: true,
+            isPositive: true,
+            messages: {
+                required: requiredText,
+                isInteger: isIntegerText,
+                isPositive: isPositiveText
+            }
+        });
+        $(AField).rules("add", {
+            required: true,
+            isInteger: true,
+            isPositive: true,
+            messages: {
+                required: requiredText,
+                isInteger: isIntegerText,
+                isPositive: isPositiveText
+            }
+        });
+        $(TField).rules("add", {
+            required: true,
+            isInteger: true,
+            isPositive: true,
+            messages: {
+                required: requiredText,
+                isInteger: isIntegerText,
+                isPositive: isPositiveText
+            }
+        });
+        $(CField).rules("add", {
+            required: true,
+            isInteger: true,
+            isPositive: true,
+            messages: {
+                required: requiredText,
+                isInteger: isIntegerText,
+                isPositive: isPositiveText
+            }
+        });
+    }
+
+}
+
+function addCourseValidationRules(assessmentsObj) {
+    for (var i = 0; i < assessmentsObj.length; i++) {
+        for (var j = 0; j < assessmentsObj[i].assessments.length; j++) {
+            var assessment = assessmentsObj[i].assessments[j];
+            var formID = "#form" + assessment.assessmentId;
+            $(formID).validate({
+                errorClass: 'invalid',
+                validClass: 'jquery-validation-valid',
+                errorElement: 'div',
+                errorPlacement: function (error, element) {
+                    // var text = $(error)[0].textContent;
+                    // addError(text, error);
+                    var placement = $(element).data('error');
+                    if (placement) {
+                        $(placement).append(error)
+                    } else {
+                        error.insertAfter(element);
+                    }
+                }
+            });
+            const KField = "#courseK" + assessment.assessmentId;
+            const AField = "#courseA" + assessment.assessmentId;
+            const TField = "#courseT" + assessment.assessmentId;
+            const CField = "#courseC" + assessment.assessmentId;
+
+            $(KField).rules("add", {
+                required: true,
+                isInteger: true,
+                isPositive: true,
+                messages: {
+                    required: requiredText,
+                    isInteger: isIntegerText,
+                    isPositive: isPositiveText
+                }
+            });
+            $(AField).rules("add", {
+                required: true,
+                isInteger: true,
+                isPositive: true,
+                messages: {
+                    required: requiredText,
+                    isInteger: isIntegerText,
+                    isPositive: isPositiveText
+                }
+            });
+            $(TField).rules("add", {
+                required: true,
+                isInteger: true,
+                isPositive: true,
+                messages: {
+                    required: requiredText,
+                    isInteger: isIntegerText,
+                    isPositive: isPositiveText
+                }
+            });
+            $(CField).rules("add", {
+                required: true,
+                isInteger: true,
+                isPositive: true,
+                messages: {
+                    required: requiredText,
+                    isInteger: isIntegerText,
+                    isPositive: isPositiveText
+                }
+            });
+        }
+    }
+}
+
 Template.assessments.onRendered(function () {
     $(document).ready(function () {
         $('.collapsible').collapsible();
     });
+    beginValidation();
 });
 
 Template.assessments.helpers({
@@ -357,7 +520,7 @@ Template.assessments.events({
         $('.collapsible').collapsible();
     },
     'submit .edit-courseassessment-form': function () {
-        //determine which form has been changed
+        //determine which form has been changed 
         let target = event.target;
         let formId = target.id;
 
@@ -386,14 +549,12 @@ Template.assessments.events({
 
         //check that each variable is of the correct type/format
         if (!areMarkFieldsValid(markK, markA, markT, markC)) {
-            let focusedEle = document.activeElement;
-            focusedEle.classList.add('invalid');
+            var errorElement = document.getElementById("markFieldInvalid" + assessmentId);
+            errorElement.style.display = "";
             return false;
         } else {
-            let focusedEle = document.activeElement;
-            if (focusedEle.classList.contains('invalid')) {
-                focusedEle.classList.remove('invalid');
-            }
+            var errorElement = document.getElementById("markFieldInvalid" + assessmentId);
+            errorElement.style.display = "none";
         }
 
         if (markK != "N/A") {
@@ -414,6 +575,7 @@ Template.assessments.events({
         Session.set("gradebookUpdated", true);
     },
     'submit .edit-finalevaluation-form': function () {
+
         //determine which form has been changed
         let target = event.target;
         let formId = target.id;
@@ -438,25 +600,12 @@ Template.assessments.events({
             newDate = "N/A"
         }
 
-        //check that each variable is of the correct type/format
-        if (markK == "N/A" && markA == "N/A" && markT == "N/A" && markC == "N/A") {
-            Materialize.toast('You must assess the students in at least one category.', 5000, 'amber darken-3');
-            return false
-        }
-
-        if (markK <= 0 || markA <= 0 || markT <= 0 || markC <= 0) {
-            Materialize.toast("A selected category's mark must be an integer greater than 0 or N/A.", 5000, 'amber darken-3');
-            return false
-        }
-
-        if (!(
-            (markK == "N/A" || Math.floor(markK) == markK) &&
-            (markA == "N/A" || Math.floor(markA) == markA) &&
-            (markT == "N/A" || Math.floor(markT) == markT) &&
-            (markC == "N/A" || Math.floor(markC) == markC)
-        )) {
-            Materialize.toast("A selected category's mark must be an integer greater than 0 or N/A.", 5000, 'amber darken-3');
-            return false
+        if (!areMarkFieldsValid(markK, markA, markC, markT)) {
+            var errorElement = document.getElementById("finalMarkFieldInvalid" + assessmentTypeId);
+            errorElement.style.display = "";
+            return false;
+        } else {
+            errorElement.style.display = "none";
         }
 
         if (markK != "N/A") {
@@ -493,108 +642,23 @@ Template.assessments.events({
         Materialize.toast('Your changes have been saved', 3000, 'amber darken-3'); //make it so that toast includes assessment name
     },
     'blur .course-edit-fields-blur': function () {
+
         let target = event.target;
         let formId = target.id;
         //assign all the new values to variables
         let assessmentId = formId.substring(7);
-        let assessmentTypeId = assessmentId.substring(0, assessmentId.indexOf('-'));
-        let currentCourseId = Session.get('courseId');
 
-        //console.log("assessmentTypeId: " + assessmentTypeId + ". AssessmentId: " + assessmentId);
-        let dateId = "courseDate" + assessmentId;
-        let kId = "courseK" + assessmentId;
-        let aId = "courseA" + assessmentId;
-        let tId = "courseT" + assessmentId;
-        let cId = "courseC" + assessmentId;
-
-        let markK = document.getElementById(kId).value;
-        let markA = document.getElementById(aId).value;
-        let markT = document.getElementById(tId).value;
-        let markC = document.getElementById(cId).value;
-        var newDate = document.getElementById(dateId).value;
-
-        if (newDate == "") {
-            newDate = "N/A"
-        }
-
-        if (!areMarkFieldsValid(markK, markA, markT, markC)) {
-            target.focus();
-            target.classList.add('invalid');
-            return false;
-        } else {
-            if (target.classList.contains('invalid')) {
-                target.classList.remove('invalid');
-            }
-        }
-
-        if (markK != "N/A") {
-            markK = Number(markK)
-        }
-        if (markA != "N/A") {
-            markA = Number(markA)
-        }
-        if (markT != "N/A") {
-            markT = Number(markT)
-        }
-        if (markC != "N/A") {
-            markC = Number(markC)
-        }
-
-        //update collection
-        var courseAssessmentTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseAssessmentTypes;
-        updateAssessments(courseAssessmentTypes, assessmentTypeId, assessmentId, markK, markA, markT, markC, newDate);
-        Session.set("gradebookUpdated", true);
+        var form = document.getElementById("formSubmit" + assessmentId);
+        form.click();
     },
     'blur .final-blur-class': function () {
         let target = event.target;
         let formId = target.id;
         //assign all the new values to variables
         let assessmentTypeId = formId.substring(6);
-        let currentCourseId = Session.get('courseId');
 
-        let dateId = "finalDate" + assessmentTypeId;
-        let kId = "finalK" + assessmentTypeId;
-        let aId = "finalA" + assessmentTypeId;
-        let tId = "finalT" + assessmentTypeId;
-        let cId = "finalC" + assessmentTypeId;
-
-        let markK = document.getElementById(kId).value;
-        let markA = document.getElementById(aId).value;
-        let markT = document.getElementById(tId).value;
-        let markC = document.getElementById(cId).value;
-        var newDate = document.getElementById(dateId).value;
-
-        if (newDate == "") {
-            newDate = "N/A"
-        }
-
-        if (!areMarkFieldsValid(markK, markA, markT, markC)) {
-            target.focus();
-            target.classList.add('invalid');
-            return false;
-        } else {
-            if (target.classList.contains('invalid')) {
-                target.classList.remove('invalid');
-            }
-        }
-
-        if (markK != "N/A") {
-            markK = Number(markK)
-        }
-        if (markA != "N/A") {
-            markA = Number(markA)
-        }
-        if (markT != "N/A") {
-            markT = Number(markT)
-        }
-        if (markC != "N/A") {
-            markC = Number(markC)
-        }
-
-        //update collection
-        var finalAssessmentTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).finalAssessmentTypes;
-        updateFinalAssessments(finalAssessmentTypes, assessmentTypeId, markK, markA, markT, markC, newDate);
-        Session.set("gradebookUpdated", true);
+        var form = document.getElementById("formSubmit" + assessmentTypeId);
+        form.click();
     },
     'click .rename-assessment': function () {
         var id = event.target.id;

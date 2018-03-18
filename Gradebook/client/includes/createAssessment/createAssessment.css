@@ -42,12 +42,32 @@
     color: #d32f2f;
     margin-bottom: 10px;
 }
-.marks-error {
-    border-bottom: 1px solid #d32f2f !important;
-}
-.marks-valid {
-    border-bottom: 1px solid #4caf50 !important;
-}
+
 .marks-row {
     margin-bottom: 10px !important;
+}
+
+#assessmentType-error {
+    border-bottom: none !important; 
+    color: #d32f2f;
+    margin-bottom: 10px;
+}
+#createNewAssessment-error {
+    border-bottom: none !important; 
+    color: #d32f2f;
+    margin-bottom: 10px;
+}
+#mustHaveOneErrorMessage {
+    border-bottom: none !important; 
+    color: #d32f2f;
+    margin-bottom: 10px;
+}
+#finalMustHaveOneErrorMessage {
+    border-bottom: none !important; 
+    color: #d32f2f;
+    margin-bottom: 10px;
+}
+
+.createAssessmentsErrorMessage {
+    color: #d32f2f;
 }

@@ -1,9 +1,14 @@
-.errorMessageFinal {
+#registerEmail-error {
     border-bottom: none !important; 
     color: #d32f2f;
     margin-bottom: 10px;
 }
-#finalAssessmentType-error {
+#registerPassword-error {
+    border-bottom: none !important; 
+    color: #d32f2f;
+    margin-bottom: 10px;
+}
+#confirmPassword-error {
     border-bottom: none !important; 
     color: #d32f2f;
     margin-bottom: 10px;

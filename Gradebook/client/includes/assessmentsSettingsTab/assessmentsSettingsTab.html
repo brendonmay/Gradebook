@@ -1,6 +1,6 @@
 <template name="assessmentsTab">
     <br>
-    <form class="col s12 assessmentsTabForm" onsubmit="return false">
+    <form class="col s12 assessmentsTabForm" id="assessmentSettingsForm" onsubmit="return false">
         <div class="row">
             <div class="col s5 assessmentContainer">
                 <ul class="collapsible" data-collapsible="expandable">
@@ -9,7 +9,7 @@
                     </div>
                     <div class="col s2 collapsible-header blue-grey lighten-2 courseWeight" style="cursor: initial; padding: 0rem">
                         <h5 class="coursePercentage">
-                            <input disabled id="assessments-courseWorkWeight" type="text" value={{courseWorkWeight}}>%</h5>
+                            <input disabled id="assessments-courseWorkWeight" name="courseWorkWeight" type="text" value={{courseWorkWeight}}>%</h5>
                     </div>
                     {{#each courseAssessmentTypes}}
                     <li>
@@ -19,10 +19,10 @@
                             </a>
                             <i id="editc{{assessmentTypeId}}" class="material-icons icon-bluegrey-edit hide green-icon-placement">edit</i>
                             <p class="assessment-type-listing" id="displayc{{assessmentTypeId}}">{{assessmentType}}</p>
-                            <input class="assessment-type-input hide" id="changeNamec{{assessmentTypeId}}" value={{assessmentType}}>
+                            <input class="assessment-type-input hide" id="changeNamec{{assessmentTypeId}}" name=assessmentName{{assessmentTypeId}} value={{assessmentType}} data-error=".assessmentSettingsTabError">
                         </div>
                         <div class="col s2 collapsible-header input-field assessmentTypeWeight" style="cursor: initial; margin: 0rem">
-                            <input disabled id="inputc{{assessmentTypeId}}" class="weightInput" type="text" name={{assessmentType}} value={{assessmentWeight}}><div class="perc-div">%</div>
+                            <input disabled id="inputc{{assessmentTypeId}}" class="weightInput" type="text" name={{assessmentType}} value={{assessmentWeight}} data-error=".assessmentSettingsTabError"><div class="perc-div">%</div>
                         </div>
                     </li>
                     {{/each}}
@@ -47,7 +47,7 @@
                     </div>
                     <div class="collapsible-header blue-grey lighten-2 finalCourseWeight" style="cursor: initial; padding: 0rem">
                         <h5 class="finalPercentage">
-                            <input disabled id="assessments-finalWeight" value={{finalWeight}}>%</h5>
+                            <input disabled id="assessments-finalWeight" name="finalWeight" value={{finalWeight}}>%</h5>
                     </div>
                     {{#each finalAssessmentTypes}}
                     <li>
@@ -57,10 +57,10 @@
                             </a>
                             <i id="editf{{assessmentTypeId}}" class="material-icons icon-bluegrey-edit hide green-icon-placement">edit</i>
                             <p class="assessment-type-listing" id="displayf{{assessmentTypeId}}">{{assessmentType}}</p>
-                            <input class="assessment-type-input hide" id="changeNamef{{assessmentTypeId}}" value={{assessmentType}}>
+                            <input class="assessment-type-input hide" id="changeNamef{{assessmentTypeId}}" name=finalName{{assessmentTypeId}} value={{assessmentType}} data-error=".assessmentSettingsTabError">
                         </div>
                         <div class="col s2 container collapsible-header input-field finalAssessmentWeight" style="cursor: initial; margin: 0rem">
-                            <input disabled id="inputf{{assessmentTypeId}}" class="weightInput" type="text" name={{assessmentType}} value={{assessmentWeight}}><div class="perc-div">%</div>
+                            <input disabled id="inputf{{assessmentTypeId}}" class="weightInput" type="text" name={{assessmentType}} value={{assessmentWeight}} data-error=".assessmentSettingsTabError"><div class="perc-div">%</div>
                         </div>
                     </li>
                     {{/each}}
@@ -79,12 +79,13 @@
             <div class="col s1">
             </div>
         </div>
-
+        <input type="submit" style="display: none;" />
+        <div class="assessmentSettingsTabError" id="assessmentSettingsTabRequiredError"></div>
         <div class="col s12">
             <div class="row">
-                <button id="save-button" class="waves-effect waves-green btn green col s1 offset-s4 save-button hide" type="submit">Save</button>
-                <a id="edit-button" href="#!" class="waves-effect waves-grey btn blue-grey darken-1 col s2 offset-s5 edit-button">Edit</a>
-                <a id="cancel-button" href="#!" class="waves-effect waves-red btn red darken-2 col s1 offset-s1 cancel-button hide">Cancel</a>
+                <a id="save-button" class="waves-effect waves-green btn green col s1 offset-s4 save-button hide" type="submit">Save</a>
+                <a id="edit-button" class="waves-effect waves-grey btn blue-grey darken-1 col s2 offset-s5 edit-button">Edit</a>
+                <a id="cancel-button" class="waves-effect waves-red btn red darken-2 col s1 offset-s1 cancel-button hide">Cancel</a>
             </div>
         </div>
     </form>

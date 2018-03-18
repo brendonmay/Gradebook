@@ -8,12 +8,13 @@
                 <div class="row">
                     <div class="col s5 offset">
                         <div class="input-field input-margin-bottom-fix">
-                            <select id="assessmentType" name='assessmentTypeSelect' required>
+                            <select id="assessmentType" name='assessmentTypeSelect' data-error=".assessmentTypeError">
                                 <option value="" disabled selected>Choose Assessment Type</option>
                                 {{#each getAssessmentTypes}}
                                 <option value={{assessmentType}}>{{assessmentType}}</option>
                                 {{/each}}
                             </select>
+                            <div class="assessmentTypeError"></div>
                         </div>
                     </div>
                     <div class='input-field input-margin-bottom-fix col s5 offset-s1' style="padding: 0">
@@ -23,8 +24,9 @@
                 </div>
                 <div class="row pad-left-right-a">
                     <div class='input-field input-margin-bottom-fix col s12' style="padding: 0">
-                        <input id="createNewAssessment" type="text" name="assessmentName" placeholder="Example: Chapter 1 Unit Test" class="required">
+                        <input id="createNewAssessment" type="text" name="assessmentName" placeholder="Example: Chapter 1 Unit Test" data-error=".assessmentNameError">
                         <label for="createNewAssessment" style="left: 0">Assessment Name</label>
+                        <div class="assessmentNameError"></div>
                     </div>
                 </div>
                 <div class="row">
@@ -62,19 +64,20 @@
                         Marks:
                     </div>
                     <div class='input-field input-margin-bottom-fix inline col s1 zero-margin-top' style="padding: 0">
-                        <input id="inputMarkK" type="text" name="marksK" value="N/A" class="center form-control" data-error=".errorMessage" disabled>
+                        <input id="inputMarkK" type="text" name="marksK" value="N/A" class="center form-control" data-error=".createAssessmentsErrorMessage" disabled>
                     </div>
                     <div class='input-field input-margin-bottom-fix inline col s1 offset-s1 zero-margin-top' style="padding: 0">
-                        <input id="inputMarkA" type="text" name="marksA" value="N/A" class="center form-control" data-error=".errorMessage" disabled>
+                        <input id="inputMarkA" type="text" name="marksA" value="N/A" class="center form-control" data-error=".createAssessmentsErrorMessage" disabled>
                     </div>
                     <div class='input-field input-margin-bottom-fix inline col s1 offset-s1 zero-margin-top' style="padding: 0">
-                        <input id="inputMarkT" type="text" name="marksT" value="N/A" class="center form-control" data-error=".errorMessage" disabled>
+                        <input id="inputMarkT" type="text" name="marksT" value="N/A" class="center form-control" data-error=".createAssessmentsErrorMessage" disabled>
                     </div>
                     <div class='input-field input-margin-bottom-fix inline col s1 offset-s1 zero-margin-top' style="padding: 0">
-                        <input id="inputMarkC" type="text" name="marksC" value="N/A" class="center form-control" data-error=".errorMessage" disabled>
+                        <input id="inputMarkC" type="text" name="marksC" value="N/A" class="center form-control" data-error=".createAssessmentsErrorMessage" disabled>
                     </div>
                 </div>
-                <div class="center errorMessage"></div>
+                <div class="center createAssessmentsErrorMessage"></div>
+                <div class="center" id="mustHaveOneErrorMessage" style="display: none;">This assessment must use at least one category</div>
                 <input type="submit" style="display: none;" />
                 <div class="modal-footer">
                     <button class="add-form modal-action waves-effect waves-grey btn-flat" type="submit">Create Assessment</button>

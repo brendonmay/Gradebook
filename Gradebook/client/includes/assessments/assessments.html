@@ -29,40 +29,48 @@
                                                 <li class="row collection-item assessments-collapsible-nested item-height">
                                                     <h6 class="col s11 offset-s1 assessment-field-display">Date:
                                                         <div class="inline input-field input-margin-bottom-fix assessment-input">
-                                                            <input class="center-align datepicker datepickerspecial" type="text" id="courseDate{{assessmentId}}" value={{Date}}>
+                                                            <input class="center-align datepicker datepickerspecial" type="text"  id="courseDate{{assessmentId}}" value={{Date}}>
                                                         </div>
                                                     </h6>
                                                 </li>
                                                 <li class="row collection-item assessments-collapsible-nested item-height">
                                                     <h6 class="col s11 offset-s1 assessment-field-display">Knowledge:
                                                         <div class="inline input-field input-margin-bottom-fix assessment-input">
-                                                            <input class="center-align editable-assessment-fields course-edit-fields-blur k" id="courseK{{assessmentId}}" value={{K}}>
+                                                            <input class="center-align editable-assessment-fields course-edit-fields-blur k" name="NameCoursesK{{assessmentId}}" id="courseK{{assessmentId}}" value={{K}} data-error=".courseK{{assessmentId}}Error">
                                                         </div>
+                                                        <div class="courses-assessments-error courseK{{assessmentId}}Error"></div>
                                                     </h6>
                                                 </li>
                                                 <li class="row collection-item assessments-collapsible-nested item-height">
                                                     <h6 class="col s11 offset-s1 assessment-field-display">Application:
                                                         <div class="inline input-field input-margin-bottom-fix assessment-input">
-                                                            <input class="center-align editable-assessment-fields course-edit-fields-blur a" id="courseA{{assessmentId}}" value={{A}}>
+                                                            <input class="center-align editable-assessment-fields course-edit-fields-blur a" name="NameCoursesA{{assessmentId}}" id="courseA{{assessmentId}}" value={{A}} data-error=".courseA{{assessmentId}}Error">
                                                         </div>
+                                                        <div class="courses-assessments-error courseA{{assessmentId}}Error"></div>
                                                     </h6>
                                                 </li>
                                                 <li class="row collection-item assessments-collapsible-nested item-height">
                                                     <h6 class="col s11 offset-s1 assessment-field-display">Thinking:
                                                         <div class="inline input-field input-margin-bottom-fix assessment-input">
-                                                            <input class="center-align editable-assessment-fields course-edit-fields-blur t" id="courseT{{assessmentId}}" value={{T}}>
+                                                            <input class="center-align editable-assessment-fields course-edit-fields-blur t" name="NameCoursesT{{assessmentId}}" id="courseT{{assessmentId}}" value={{T}} data-error=".courseT{{assessmentId}}Error">
                                                         </div>
+                                                        <div class="courses-assessments-error courseT{{assessmentId}}Error"></div>
+                                                        
                                                     </h6>
                                                 </li>
                                                 <li class="row collection-item assessments-collapsible-nested item-height">
                                                     <h6 class="col s11 offset-s1 assessment-field-display">Communication:
                                                         <div class="inline input-field input-margin-bottom-fix assessment-input">
-                                                            <input class="center-align editable-assessment-fields course-edit-fields-blur c" id="courseC{{assessmentId}}" value={{C}}>
+                                                            <input class="center-align editable-assessment-fields course-edit-fields-blur c" name="NameCoursesC{{assessmentId}}" id="courseC{{assessmentId}}" value={{C}} data-error=".courseC{{assessmentId}}Error">
                                                         </div>
+                                                        <div class="courses-assessments-error courseC{{assessmentId}}Error"></div>                                                        
                                                     </h6>
+                                                    <div class="markFieldInvalid" id="markFieldInvalid{{assessmentId}}" style="display: none;">
+                                                            You must assess the students in at least one category.
+                                                    </div>
                                                 </li>
                                             </ul>
-                                            <input type="submit" style="display: none;" />
+                                            <input type="submit" id="formSubmit{{assessmentId}}" style="display: none;" />
                                         </form>
                                     </div>
                                 </li>
@@ -102,36 +110,44 @@
                                     <li class="row collection-item assessments-collapsible-nested">
                                         <h6 class="col s11 offset-s1 assessment-field-display">Knowledge:
                                             <div class="inline input-field input-margin-bottom-fix assessment-input">
-                                                <input class="center-align editable-assessment-fields final-blur-class k-final" id="finalK{{assessmentTypeId}}" value={{K}}>
+                                                <input class="center-align editable-assessment-fields final-blur-class k-final" name="NameFinalK{{assessmentTypeId}}" data-error=".finalK{{assessmentTypeId}}" id="finalK{{assessmentTypeId}}" value={{K}}>
                                             </div>
+                                            <div class="courses-assessments-error finalK{{assessmentTypeId}}"></div>
                                         </h6>
                                     </li>
                                     <li class="row collection-item assessments-collapsible-nested">
                                         <h6 class="col s11 offset-s1 assessment-field-display">Application:
                                             <div class="inline input-field input-margin-bottom-fix assessment-input">
-                                                <input class="center-align editable-assessment-fields final-blur-class a-final" id="finalA{{assessmentTypeId}}" value={{A}}>
+                                                <input class="center-align editable-assessment-fields final-blur-class a-final" name="NameFinalA{{assessmentTypeId}}" data-error=".finalA{{assessmentTypeId}}" id="finalA{{assessmentTypeId}}" value={{A}}>
                                             </div>
+                                            <div class="courses-assessments-error finalA{{assessmentTypeId}}"></div>
                                         </h6>
                                     </li>
                                     <li class="row collection-item assessments-collapsible-nested">
                                         <h6 class="col s11 offset-s1 assessment-field-display">Thinking:
                                             <div class="inline input-field input-margin-bottom-fix assessment-input">
-                                                <input class="center-align editable-assessment-fields final-blur-class t-final" id="finalT{{assessmentTypeId}}" value={{T}}>
+                                                <input class="center-align editable-assessment-fields final-blur-class t-final" name="NameFinalT{{assessmentTypeId}}" data-error=".finalT{{assessmentTypeId}}" id="finalT{{assessmentTypeId}}" value={{T}}>
                                             </div>
+                                            <div class="courses-assessments-error finalT{{assessmentTypeId}}"></div>
                                         </h6>
                                     </li>
                                     <li class="row collection-item assessments-collapsible-nested c-final-row">
                                         <h6 class="col s11 offset-s1 assessment-field-display">Communication:
                                             <div class="inline input-field input-margin-bottom-fix assessment-input">
-                                                <input class="center-align editable-assessment-fields final-blur-class c-final" id="finalC{{assessmentTypeId}}" value={{C}}>
+                                                <input class="center-align editable-assessment-fields final-blur-class c-final" name="NameFinalC{{assessmentTypeId}}" data-error=".finalC{{assessmentTypeId}}" id="finalC{{assessmentTypeId}}" value={{C}}>
                                             </div>
+                                            <div class="courses-assessments-error finalC{{assessmentTypeId}}"></div>
                                         </h6>
+                                        <div class="markFieldInvalid" id="finalMarkFieldInvalid{{assessmentTypeId}}" style="display: none;">
+                                                You must assess the students in at least one category.
+                                        </div>
                                     </li>
-                                    <input type="submit" id="final-submit-button-changes" style="display: none;" />
+                                    <input type="submit" id="formSubmit{{assessmentTypeId}}" style="display: none;" />
                                 </form>
                                 {{else}}
                                 <p>You have yet to assign this assessment.</p>
-                                {{/if}} {{/each}}
+                                {{/if}} 
+                                {{/each}}
                             </ul>
                         </div>
                     </div>

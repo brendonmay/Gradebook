@@ -35,7 +35,6 @@ function finalAssessmentAlreadyExists(newAssessment) {
 Template.addAssessmentType.events({
     //type of event is a submit, the element is a form with class add-form, when its called run a function
     'submit .add-final-form': function () {
-
         const newAssessment = document.getElementById('add-final-type').value;
         const currentCourseId = Session.get('courseId');
         if (finalAssessmentAlreadyExists(newAssessment)) {
@@ -75,6 +74,7 @@ Template.addAssessmentType.events({
         Meteor.call('courseInformation.addNewFinalWork', currentCourseId, finalAssessmentTypes);
 
         document.getElementById("addFinalTypeForm").reset();
+        clearTemplateValidation();
         //Close Modal
         $('#addFinalWork').modal('close');
     },
@@ -118,7 +118,47 @@ Template.addAssessmentType.events({
         Meteor.call('courseInformation.addNewCourseWork', currentCourseId, courseWorkAssessmentType);
 
         document.getElementById("addAssessmentTypeForm").reset();
+        clearTemplateValidation();
         //Close Modal
         $('#addCourseWork').modal('close');
     }
+});
+
+Template.addAssessmentType.onRendered(function () {
+    $("#addAssessmentTypeForm").validate({
+        errorClass: 'invalid',
+        validClass: 'jquery-validation-valid',
+        rules: {
+            courseWorkName: {
+                required: true
+            }
+        },
+        errorElement: 'div',
+        errorPlacement: function (error, element) {
+            var placement = $(element).data('error');
+            if (placement) {
+                $(placement).append(error);
+            } else {
+                error.insertAfter(element);
+            }
+        }
+    });
+    $("#addFinalTypeForm").validate({
+        errorClass: 'invalid',
+        validClass: 'jquery-validation-valid',
+        rules: {
+            finalCourseWorkName: {
+                required: true
+            }
+        },
+        errorElement: 'div',
+        errorPlacement: function (error, element) {
+            var placement = $(element).data('error');
+            if (placement) {
+                $(placement).append(error);
+            } else {
+                error.insertAfter(element);
+            }
+        }
+    });
 });

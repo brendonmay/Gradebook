@@ -175,7 +175,7 @@ Template.categoryWeightingsTab.onRendered(function () {
         return (input == "N/A" || Math.floor(input) == input);
     });
     $.validator.addMethod('isPositive', (input) => {
-        return (input >= 0);
+        return (input > 0);
     });
     $.validator.addMethod('addTo100', (input) => {
         if (!doCategoriesAddTo100()) {

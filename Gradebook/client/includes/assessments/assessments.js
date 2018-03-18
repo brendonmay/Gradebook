@@ -130,7 +130,7 @@ function beginValidation() {
         return (input == "N/A" || Math.floor(input) == input);
     });
     $.validator.addMethod('isPositive', (input) => {
-        return (input >= 0 || input == "N/A");
+        return (input > 0 || input == "N/A");
     });
     $(".edit-courseassessment-form").validate({
         errorClass: 'invalid',

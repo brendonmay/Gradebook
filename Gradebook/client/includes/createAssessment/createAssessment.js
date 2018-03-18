@@ -215,7 +215,8 @@ Template.createAssessment.onRendered(function () {
         return (input == "N/A" || Math.floor(input) == input);
     });
     $.validator.addMethod('isPositive', (input) => {
-        return (input > 0);
+        console.log(input);
+        return (input > 0 && input != "");
     });
     $('.createAssessmentModal').modal({
         dismissible: true, // Modal can be dismissed by clicking outside of the modal
@@ -228,18 +229,22 @@ Template.createAssessment.onRendered(function () {
         validClass: 'jquery-validation-valid',
         rules: {
             marksK: {
+                required: true,
                 isInteger: true,
                 isPositive: true
             },
             marksA: {
+                required: true,
                 isInteger: true,
                 isPositive: true
             },
             marksT: {
+                required: true,
                 isInteger: true,
                 isPositive: true
             },
             marksC: {
+                required: true,
                 isInteger: true,
                 isPositive: true
             },
@@ -270,6 +275,7 @@ Template.createAssessment.onRendered(function () {
         },
         errorElement: 'div',
         errorPlacement: function (error, element) {
+            document.getElementById("mustHaveOneErrorMessage").style.display = "none";
             var placement = $(element).data('error');
             if (placement) {
                 $(placement).append(error)

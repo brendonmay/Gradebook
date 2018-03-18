@@ -7,8 +7,12 @@
     z-index: 2;
 }
 
+td{
+    width:1%!important;
+}
+
 .categoryCell {
-    min-width: 70px; 
+    min-width: 70px;
     background-color: white; 
     text-align:center; 
     border: 1px solid black; 

@@ -203,7 +203,6 @@ Template.gradeBookChart.events({
             complete: function () {
                 document.getElementById('addStudentsModalForm').reset();
                 updateGradebookColors();
-                console.log("updated gradebook colors");
             }
 
         });

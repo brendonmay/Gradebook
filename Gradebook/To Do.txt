@@ -43,4 +43,7 @@ Jquery-validation docs:
 
 Errors from login modal are transfering to register modal
 Assessments Tab: On enter switch to next input field when valid and highlight the whole input text
+Assessments Tab needs some more work:
+	-Weird fuctionality when inputting initial error -> gives "NAN" for null and is saving on incorrect input
+	-Still need to test multiple assessments and multiple assessment types 
 

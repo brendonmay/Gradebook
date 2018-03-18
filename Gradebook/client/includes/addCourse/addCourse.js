@@ -124,7 +124,7 @@ Template.addCourse.onRendered(function () {
         },
         messages: {
             courseName: {
-                maxlength: "Course Names cannot exceed 15 characters"
+                maxlength: "Course Names cannot exceed 15 characters."
             }
         },
         errorElement: 'div',

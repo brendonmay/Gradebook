@@ -152,7 +152,6 @@ Template.assignFinal.events({
         //clean up and close modal
         closeAssignFinalModal();
     },
-
     'click .final-check-box': function () {
         let target = event.target;
         let elementId = target.id;

@@ -39,13 +39,29 @@ function doCategoriesAddTo100() {
 }
 
 function populateAddTo100Error() {
+
     const addTo100Errors = document.getElementById("addTo100InputErrorID");
+    addTo100Errors.innerHTML = "Your Category Weightings must add up to 100%. They currently add up to " + getCurrentCatWeight() + "%.";
     addTo100Errors.style.display = "";
 }
 
 function removeAddTo100Error() {
     const addTo100Errors = document.getElementById("addTo100InputErrorID");
     addTo100Errors.style.display = "none";
+}
+
+function getCurrentCatWeight() {
+    const knowledge = document.getElementById('knowledge').value;
+    const application = document.getElementById('application').value;
+    const thinking = document.getElementById('thinking').value;
+    const communication = document.getElementById('communication').value;
+
+    const knowledgeWeight = Number(knowledge);
+    const applicationWeight = Number(application);
+    const thinkingWeight = Number(thinking);
+    const communicationWeight = Number(communication);
+
+    return knowledgeWeight +applicationWeight + thinkingWeight + communicationWeight;
 }
 
 function finishedEditing() {

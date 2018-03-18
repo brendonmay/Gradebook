@@ -10,9 +10,9 @@ const stringParam = "$%d$";
 const requiredText = "Please fill in the required fields.";
 const isIntegerText = "A selected category's mark must be an integer.";
 const isPositiveText = "A selected category's mark must be greater than 0.";
-const addsTo100Text = "Coursework and Final Evaluations must add to 100.";
-const finalAssessmentsEqualFinalWeightText = "Your Final Evaluation Weights should add up to $%d$%.";
-const courseWorkEqualCourseWeightText = "Your Coursework Weights should add up to $%d$%.";
+const addsTo100Text = "Coursework and Final Evaluations must add to 100%. They currently add up to $%d$%.";
+const finalAssessmentsEqualFinalWeightText = "Your Final Evaluation Weights should add up to $%d$%. They currently add to $%d$%.";
+const courseWorkEqualCourseWeightText = "Your Coursework Weights should add up to $%d$%. They currently add to $%d$%.";
 
 function getFinalWeight() {
     if (document.getElementById('assessments-finalWeight') == null) return "";
@@ -24,6 +24,39 @@ function getCourseWeight() {
     return document.getElementById('assessments-courseWorkWeight').value;
 }
 
+function getTotalEvaluationWeight() {
+    const finalWeight = Number(getFinalWeight());
+    const courseWeight = Number(getCourseWeight());
+
+    return finalWeight + courseWeight;
+}
+
+function getCurrentFinalWeight() {
+    let currentCourseId = Session.get('courseId');
+    const finalAssessmentTypes = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).finalAssessmentTypes;
+    let finalWeightTotal = 0;
+
+    for (i = 0; i < finalAssessmentTypes.length; i++) {
+        let currentId = "inputf" + finalAssessmentTypes[i].assessmentTypeId;
+        let finalAssessmentTypeWeight = Number(document.getElementById(currentId).value);
+        finalWeightTotal = finalWeightTotal + finalAssessmentTypeWeight;
+    };
+    return finalWeightTotal;
+}
+
+function getCurrentCourseWeight() {
+    let currentCourseId = Session.get('courseId');
+    const courseworkAssessmentTypes = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseworkAssessmentTypes;
+        let courseWorkWeightTotal = 0;
+
+        for (i = 0; i < courseworkAssessmentTypes.length; i++) {
+            let currentId = "inputc" + courseworkAssessmentTypes[i].assessmentTypeId;
+            let courseAssessmentTypeWeight = Number(document.getElementById(currentId).value);
+            courseWorkWeightTotal = courseWorkWeightTotal + courseAssessmentTypeWeight;
+        };
+        return courseWorkWeightTotal;
+}
+
 function clearPageValidation() {
     var pageForm = document.getElementById('assessmentSettingsForm');
     clearValidation(pageForm);
@@ -32,7 +65,7 @@ function clearPageValidation() {
     for (var i = 0, element; element = formElements[i++];) {
         if (element.classList.contains('invalid')) {
             element.classList.remove("invalid");
-        } 
+        }
         if (element.classList.contains('jquery-validation-valid')) {
             element.classList.remove('jquery-validation-valid');
         }
@@ -41,7 +74,7 @@ function clearPageValidation() {
 
 function doneEditing() { //works
     let editButtonElement = document.getElementById("edit-button");
-    let saveButtonElement = document.getElementById("save-button");
+    let saveButtonElement = document.getElementById("assessments-save-button");
     let cancelButtonElement = document.getElementById("cancel-button");
 
     let addFinalAssessmentType = document.getElementById('finalAddAssessment');
@@ -128,6 +161,7 @@ function doneEditing() { //works
     clearValidation(document.getElementById('assessmentSettingsForm'));
 }
 
+
 function addError(text, error) {
     //document.getElementById('assessmentSettingsTabRequiredError').children.length;
     var isRequired = false;
@@ -136,16 +170,17 @@ function addError(text, error) {
     var addsTo100 = false;
     var finalAssessmentsAddUp = false;
     var courseAssessmentsAddUp = false;
-    const finalAssessmentString = finalAssessmentsEqualFinalWeightText.replace(stringParam, getFinalWeight());
-    const courseWeightString = courseWorkEqualCourseWeightText.replace(stringParam, getCourseWeight());
+    const finalAssessmentString = finalAssessmentsEqualFinalWeightText.replace(stringParam, getFinalWeight()).replace(stringParam, getCurrentFinalWeight());
+    const courseWeightString = courseWorkEqualCourseWeightText.replace(stringParam, getCourseWeight()).replace(stringParam, getCurrentCourseWeight());
+    const addsTo100String = addsTo100Text.replace(stringParam, getTotalEvaluationWeight());
     var ele = document.getElementById('assessmentSettingsTabRequiredError').children;
 
     for (var i = 0; i < ele.length; i++) {
         if (ele[i].textContent == requiredText) isRequired = true;
         if (ele[i].textContent == isIntegerText) isInteger = true;
         if (ele[i].textContent == isPositiveText) isPositive = true;
-        if (ele[i].textContent == addsTo100Text) addsTo100 = true;
-        if (ele[i].textContent == finalAssessmentString) finalAssessmentsAddUp = true; 
+        if (ele[i].textContent == addsTo100String) addsTo100 = true;
+        if (ele[i].textContent == finalAssessmentString) finalAssessmentsAddUp = true;
         if (ele[i].textContent == courseWeightString) courseAssessmentsAddUp = true;
     }
     if (!isRequired && text == requiredText) {
@@ -154,7 +189,7 @@ function addError(text, error) {
         $('#assessmentSettingsTabRequiredError').append(error);
     } else if (!isPositive && text == isPositiveText) {
         $('#assessmentSettingsTabRequiredError').append(error);
-    } else if (!addsTo100 && text == addsTo100Text) {
+    } else if (!addsTo100 && text == addsTo100String) {
         $('#assessmentSettingsTabRequiredError').append(error);
     } else if (!finalAssessmentsAddUp && text == finalAssessmentString) {
         $('#assessmentSettingsTabRequiredError').append(error);
@@ -170,17 +205,19 @@ function addValidationRulesOnInputs() {
     $.validator.addMethod('isPositive', (input) => {
         return (input >= 0);
     });
-    $.validator.addMethod('addsTo100', (input) => {
+    $.validator.addMethod('addsTo100', function (input) {
         var courseWorkWeight = Number(document.getElementById('assessments-courseWorkWeight').value);
         var finalWeight = Number(document.getElementById('assessments-finalWeight').value);
 
         return finalWeight + courseWorkWeight == 100;
+    }, function (input) {
+        return addsTo100Text.replace(stringParam, getTotalEvaluationWeight());
     });
-    $.validator.addMethod('finalAssessmentsEqualFinalWeight', function(value) {
+    $.validator.addMethod('finalAssessmentsEqualFinalWeight', function (value) {
+        let currentCourseId = Session.get('courseId');
         const finalAssessmentTypes = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).finalAssessmentTypes;
         let finalWeightTotal = 0;
         let finalWeight = Number(document.getElementById("assessments-finalWeight").value);
-        //console.log("newFinalWeight: " + newFinalWeight);
 
         for (i = 0; i < finalAssessmentTypes.length; i++) {
             let currentId = "inputf" + finalAssessmentTypes[i].assessmentTypeId;
@@ -189,9 +226,10 @@ function addValidationRulesOnInputs() {
         };
         return finalWeight == finalWeightTotal;
     }, function (value) {
-        return "Your Final Evaluation Weights should add up to $%d$%.".replace(stringParam, getFinalWeight());
+        return finalAssessmentsEqualFinalWeightText.replace(stringParam, getFinalWeight()).replace(stringParam, getCurrentFinalWeight());
     });
-    $.validator.addMethod('courseWorkEqualCourseWeight', function(value) {
+    $.validator.addMethod('courseWorkEqualCourseWeight', function (value) {
+        let currentCourseId = Session.get('courseId');
         const courseworkAssessmentTypes = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseworkAssessmentTypes;
         let courseWorkWeightTotal = 0;
         let courseWorkWeight = Number(document.getElementById("assessments-courseWorkWeight").value);
@@ -203,7 +241,7 @@ function addValidationRulesOnInputs() {
         };
         return courseWorkWeight == courseWorkWeightTotal;
     }, function (value) {
-        return "Your Coursework Weights should add up to $%d$%.".replace(stringParam, getCourseWeight());
+        return courseWorkEqualCourseWeightText.replace(stringParam, getCourseWeight()).replace(stringParam, getCurrentCourseWeight());
     });
     $("#assessmentSettingsForm").validate({
         errorClass: 'invalid',
@@ -229,13 +267,11 @@ function addValidationRulesOnInputs() {
                 required: requiredText,
                 isInteger: isIntegerText,
                 isPositive: isPositiveText,
-                addsTo100: addsTo100Text,
             },
             courseWorkWeight: {
                 required: requiredText,
                 isInteger: isIntegerText,
                 isPositive: isPositiveText,
-                addsTo100: addsTo100Text,
             }
         },
         errorElement: 'div',
@@ -355,7 +391,7 @@ Template.assessmentsTab.events({
     },
     'click .edit-button': function () { //working
         let editButtonElement = document.getElementById("edit-button");
-        let saveButtonElement = document.getElementById("save-button");
+        let saveButtonElement = document.getElementById("assessments-save-button");
         let cancelButtonElement = document.getElementById("cancel-button");
 
         let addFinalAssessmentType = document.getElementById('finalAddAssessment');
@@ -471,7 +507,7 @@ Template.assessmentsTab.events({
             let finalAssessmentTypeObject = { assessmentType: finalAssessmentTypeName, assessmentWeight: finalAssessmentTypeWeight, assessmentTypeId: finalAssessmentTypes[i].assessmentTypeId };
             newfinalAssessmentTypes[newfinalAssessmentTypes.length] = finalAssessmentTypeObject;
         }
-        
+
         //update assessmentTypeWeights
         Meteor.call('courseInformation.updateCourseWork', currentCourseId, newcourseworkAssessmentTypes);
         Meteor.call('courseInformation.updateFinalWork', currentCourseId, newfinalAssessmentTypes);
@@ -505,4 +541,8 @@ Template.assessmentsTab.events({
         $('#addFinalWork').modal('open');
         clearPageValidation();
     },
+    'click #assessments-save-button': function () {
+        document.getElementById('assessmentSettingsTabSubmit').click();
+        return false;
+    }
 });

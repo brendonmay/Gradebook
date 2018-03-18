@@ -642,105 +642,23 @@ Template.assessments.events({
         Materialize.toast('Your changes have been saved', 3000, 'amber darken-3'); //make it so that toast includes assessment name
     },
     'blur .course-edit-fields-blur': function () {
+
         let target = event.target;
         let formId = target.id;
         //assign all the new values to variables
         let assessmentId = formId.substring(7);
-        let assessmentTypeId = assessmentId.substring(0, assessmentId.indexOf('-'));
-        let currentCourseId = Session.get('courseId');
 
-        //console.log("assessmentTypeId: " + assessmentTypeId + ". AssessmentId: " + assessmentId);
-        let dateId = "courseDate" + assessmentId;
-        let kId = "courseK" + assessmentId;
-        let aId = "courseA" + assessmentId;
-        let tId = "courseT" + assessmentId;
-        let cId = "courseC" + assessmentId;
-
-        let markK = document.getElementById(kId).value;
-        let markA = document.getElementById(aId).value;
-        let markT = document.getElementById(tId).value;
-        let markC = document.getElementById(cId).value;
-        var newDate = document.getElementById(dateId).value;
-
-        if (newDate == "") {
-            newDate = "N/A"
-        }
-
-        if (!areMarkFieldsValid(markK, markA, markT, markC)) {
-            var errorElement = document.getElementById("markFieldInvalid" + assessmentId);
-            errorElement.style.display = "";
-            return false;
-        } else {
-            var errorElement = document.getElementById("markFieldInvalid" + assessmentId);
-            errorElement.style.display = "none";
-        }
-
-        if (markK != "N/A") {
-            markK = Number(markK)
-        }
-        if (markA != "N/A") {
-            markA = Number(markA)
-        }
-        if (markT != "N/A") {
-            markT = Number(markT)
-        }
-        if (markC != "N/A") {
-            markC = Number(markC)
-        }
-
-        //update collection
-        var courseAssessmentTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseAssessmentTypes;
-        updateAssessments(courseAssessmentTypes, assessmentTypeId, assessmentId, markK, markA, markT, markC, newDate);
-        Session.set("gradebookUpdated", true);
+        var form = document.getElementById("formSubmit" + assessmentId);
+        form.click();
     },
     'blur .final-blur-class': function () {
         let target = event.target;
         let formId = target.id;
         //assign all the new values to variables
         let assessmentTypeId = formId.substring(6);
-        let currentCourseId = Session.get('courseId');
 
-        let dateId = "finalDate" + assessmentTypeId;
-        let kId = "finalK" + assessmentTypeId;
-        let aId = "finalA" + assessmentTypeId;
-        let tId = "finalT" + assessmentTypeId;
-        let cId = "finalC" + assessmentTypeId;
-
-        let markK = document.getElementById(kId).value;
-        let markA = document.getElementById(aId).value;
-        let markT = document.getElementById(tId).value;
-        let markC = document.getElementById(cId).value;
-        var newDate = document.getElementById(dateId).value;
-
-        if (newDate == "") {
-            newDate = "N/A"
-        }
-
-        if (!areMarkFieldsValid(markK, markA, markC, markT)) {
-            var errorElement = document.getElementById("finalMarkFieldInvalid" + assessmentTypeId);
-            errorElement.style.display = "";
-            return false;
-        } else {
-            errorElement.style.display = "none";
-        }
-
-        if (markK != "N/A") {
-            markK = Number(markK)
-        }
-        if (markA != "N/A") {
-            markA = Number(markA)
-        }
-        if (markT != "N/A") {
-            markT = Number(markT)
-        }
-        if (markC != "N/A") {
-            markC = Number(markC)
-        }
-
-        //update collection
-        var finalAssessmentTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).finalAssessmentTypes;
-        updateFinalAssessments(finalAssessmentTypes, assessmentTypeId, markK, markA, markT, markC, newDate);
-        Session.set("gradebookUpdated", true);
+        var form = document.getElementById("formSubmit" + assessmentTypeId);
+        form.click();
     },
     'click .rename-assessment': function () {
         var id = event.target.id;

@@ -41,6 +41,4 @@ Jquery-validation docs:
 		-if we have problem with selects: 
 			-https://github.com/Dogfalo/materialize/issues/3440
 
-Assessments Tab needs some more work:
-	-Save overwrite on tab functionality 
 

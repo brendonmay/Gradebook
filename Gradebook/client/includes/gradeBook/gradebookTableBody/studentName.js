@@ -80,7 +80,7 @@ Template.studentName.events({
     'blur .gradeInput': function () {
         insertGrade()
     },
-    'click .gradeInput': function(){
+    'click .gradeInput': function () {
         event.target.setSelectionRange(0, event.target.value.length)
     },
     'keyup .gradeInput': function () {
@@ -128,9 +128,29 @@ Template.studentName.events({
                                     }
                                 }
                             }
-                            var newInputId = "K?" + studentId + "#" + assessmentId;
-                            document.getElementById(newInputId).focus();
-                            document.getElementById(newInputId).setSelectionRange(0, document.getElementById(newInputId).value.length);
+                            var newInputIdK = "K?" + studentId + "#" + assessmentId;
+                            var newInputIdA = "A?" + studentId + "#" + assessmentId;
+                            var newInputIdT = "T?" + studentId + "#" + assessmentId;
+                            var newInputIdC = "C?" + studentId + "#" + assessmentId;
+                            if (!document.getElementById(newInputIdK).hasAttribute("disabled")) {
+                                document.getElementById(newInputIdK).focus();
+                                document.getElementById(newInputIdK).setSelectionRange(0, document.getElementById(newInputIdK).value.length);
+                            }
+                            else if (!document.getElementById(newInputIdA).hasAttribute("disabled")) {
+                                document.getElementById(newInputIdA).focus();
+                                document.getElementById(newInputIdA).setSelectionRange(0, document.getElementById(newInputIdA).value.length);
+
+                            }
+                            else if (!document.getElementById(newInputIdT).hasAttribute("disabled")) {
+                                document.getElementById(newInputIdT).focus();
+                                document.getElementById(newInputIdT).setSelectionRange(0, document.getElementById(newInputIdT).value.length);
+
+                            }
+                            else if (!document.getElementById(newInputIdC).hasAttribute("disabled")) {
+                                document.getElementById(newInputIdC).focus();
+                                document.getElementById(newInputIdC).setSelectionRange(0, document.getElementById(newInputIdC).value.length);
+
+                            }
                         }
                     }
                 }
@@ -164,9 +184,29 @@ Template.studentName.events({
                                 }
                             }
                         }
-                        var newInputId = "K?" + studentId + "#" + assessmentId;
-                        document.getElementById(newInputId).focus();
-                        document.getElementById(newInputId).setSelectionRange(0, document.getElementById(newInputId).value.length);
+                        var newInputIdK = "K?" + studentId + "#" + assessmentId;
+                        var newInputIdA = "A?" + studentId + "#" + assessmentId;
+                        var newInputIdT = "T?" + studentId + "#" + assessmentId;
+                        var newInputIdC = "C?" + studentId + "#" + assessmentId;
+                        if (!document.getElementById(newInputIdK).hasAttribute("disabled")) {
+                            document.getElementById(newInputIdK).focus();
+                            document.getElementById(newInputIdK).setSelectionRange(0, document.getElementById(newInputIdK).value.length);
+                        }
+                        else if (!document.getElementById(newInputIdA).hasAttribute("disabled")) {
+                            document.getElementById(newInputIdA).focus();
+                            document.getElementById(newInputIdA).setSelectionRange(0, document.getElementById(newInputIdA).value.length);
+
+                        }
+                        else if (!document.getElementById(newInputIdT).hasAttribute("disabled")) {
+                            document.getElementById(newInputIdT).focus();
+                            document.getElementById(newInputIdT).setSelectionRange(0, document.getElementById(newInputIdT).value.length);
+
+                        }
+                        else if (!document.getElementById(newInputIdC).hasAttribute("disabled")) {
+                            document.getElementById(newInputIdC).focus();
+                            document.getElementById(newInputIdC).setSelectionRange(0, document.getElementById(newInputIdC).value.length);
+
+                        }
                     }
                 }
             }
@@ -192,9 +232,29 @@ Template.studentName.events({
                             }
                         }
                     }
-                    var newInputId = "K?" + studentId + "#" + assessmentId;
-                    document.getElementById(newInputId).focus();
-                    document.getElementById(newInputId).setSelectionRange(0, document.getElementById(newInputId).value.length);
+                    var newInputIdK = "K?" + studentId + "#" + assessmentId;
+                    var newInputIdA = "A?" + studentId + "#" + assessmentId;
+                    var newInputIdT = "T?" + studentId + "#" + assessmentId;
+                    var newInputIdC = "C?" + studentId + "#" + assessmentId;
+                    if (!document.getElementById(newInputIdK).hasAttribute("disabled")) {
+                        document.getElementById(newInputIdK).focus();
+                        document.getElementById(newInputIdK).setSelectionRange(0, document.getElementById(newInputIdK).value.length);
+                    }
+                    else if (!document.getElementById(newInputIdA).hasAttribute("disabled")) {
+                        document.getElementById(newInputIdA).focus();
+                        document.getElementById(newInputIdA).setSelectionRange(0, document.getElementById(newInputIdA).value.length);
+
+                    }
+                    else if (!document.getElementById(newInputIdT).hasAttribute("disabled")) {
+                        document.getElementById(newInputIdT).focus();
+                        document.getElementById(newInputIdT).setSelectionRange(0, document.getElementById(newInputIdT).value.length);
+
+                    }
+                    else if (!document.getElementById(newInputIdC).hasAttribute("disabled")) {
+                        document.getElementById(newInputIdC).focus();
+                        document.getElementById(newInputIdC).setSelectionRange(0, document.getElementById(newInputIdC).value.length);
+
+                    }
                 }
             }
             if (category == "C") {
@@ -211,9 +271,29 @@ Template.studentName.events({
                         }
                     }
                 }
-                var newInputId = "K?" + studentId + "#" + assessmentId;
-                document.getElementById(newInputId).focus();
-                document.getElementById(newInputId).setSelectionRange(0, document.getElementById(newInputId).value.length);
+                var newInputIdK = "K?" + studentId + "#" + assessmentId;
+                var newInputIdA = "A?" + studentId + "#" + assessmentId;
+                var newInputIdT = "T?" + studentId + "#" + assessmentId;
+                var newInputIdC = "C?" + studentId + "#" + assessmentId;
+                if (!document.getElementById(newInputIdK).hasAttribute("disabled")) {
+                    document.getElementById(newInputIdK).focus();
+                    document.getElementById(newInputIdK).setSelectionRange(0, document.getElementById(newInputIdK).value.length);
+                }
+                else if (!document.getElementById(newInputIdA).hasAttribute("disabled")) {
+                    document.getElementById(newInputIdA).focus();
+                    document.getElementById(newInputIdA).setSelectionRange(0, document.getElementById(newInputIdA).value.length);
+
+                }
+                else if (!document.getElementById(newInputIdT).hasAttribute("disabled")) {
+                    document.getElementById(newInputIdT).focus();
+                    document.getElementById(newInputIdT).setSelectionRange(0, document.getElementById(newInputIdT).value.length);
+
+                }
+                else if (!document.getElementById(newInputIdC).hasAttribute("disabled")) {
+                    document.getElementById(newInputIdC).focus();
+                    document.getElementById(newInputIdC).setSelectionRange(0, document.getElementById(newInputIdC).value.length);
+
+                }
             }
         }
     }

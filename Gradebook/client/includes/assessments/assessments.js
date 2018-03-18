@@ -7,9 +7,9 @@ import { Assessments } from '../../../lib/collections.js';
 
 import '../../main.html';
 
-const requiredText = "Must contain a positive number or N/A"; //"Please fill in the required fields.";
-const isIntegerText = "Must contain a positive number or N/A"; // "A selected category's mark must be an integer.";
-const isPositiveText = "Must contain a positive number or N/A"; //"A selected category's mark must be greater than 0.";
+const requiredText = "Must contain a positive number or N/A."; //"Please fill in the required fields.";
+const isIntegerText = "Must contain a positive number or N/A."; // "A selected category's mark must be an integer.";
+const isPositiveText = "Must contain a positive number or N/A."; //"A selected category's mark must be greater than 0.";
 
 function canAssignFinalEvaluation() {
     let currentCourseId = Session.get('courseId');
@@ -43,10 +43,8 @@ function canAssignFinalEvaluation() {
 
 function areMarkFieldsValid(markK, markA, markT, markC) {
     if (markK == "N/A" && markA == "N/A" && markT == "N/A" && markC == "N/A") {
-
         return false
     }
-
     return true;
 }
 
@@ -75,7 +73,6 @@ function updateAssessments(courseAssessmentTypes, assessmentTypeId, assessmentId
             if (breakFromInside) break;
         }
     }
-
     if (fieldsChanged) {
         Meteor.call('assessments.updateAssessments', currentCourseId, courseAssessmentTypes)
 
@@ -404,6 +401,7 @@ Template.assessments.events({
                     if (document.getElementById("inputFinalMarkC-error")) {
                         document.getElementById("inputFinalMarkC-error").remove();
                     }
+                    beginValidation();
                 }
             });
             $('#assignFinalModal').modal('open');
@@ -452,7 +450,7 @@ Template.assessments.events({
                 }
             }
         });
-        $('#createAssessmentModal').modal('open');
+        $('#createAssessmentModal').modal('open');     
         $('select').material_select();
     },
     'click .deleteFinalEval': function () {

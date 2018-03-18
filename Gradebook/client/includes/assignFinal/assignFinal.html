@@ -8,12 +8,13 @@
                 <div class="row">
                     <div class="col s5 offset">
                         <div class="input-field input-margin-bottom-fix">
-                            <select id="finalAssessmentType" name='finalAssessmentTypeSelect' class="required">
+                            <select id="finalAssessmentType" name='finalAssessmentTypeSelect' data-error=".finalAssessmentTypeSelectError">
                                 <option value="" disabled selected>Choose Final Evaluation</option>
                                 {{#each getAssessmentTypes}}
                                 <option value={{assessmentType}}>{{assessmentType}}</option>
                                 {{/each}}
                             </select>
+                            <div class="finalAssessmentTypeSelectError"></div>
                         </div>
                     </div>
                     <div class='input-field input-margin-bottom-fix col s5 offset-s1' style="padding: 0">
@@ -69,6 +70,7 @@
                     </div>
                 </div>
                 <div class="center errorMessageFinal"></div>
+                <div class="center" id="finalMustHaveOneErrorMessage" style="display: none;">This final assessment must use at least one category</div>
                 <input type="submit" style="display: none;" />
                 <div class="modal-footer">
                     <button class="add-form modal-action waves-effect waves-grey btn-flat" type="submit">Assign Evaluation</button>

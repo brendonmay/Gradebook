@@ -5,23 +5,11 @@ import { Accounts } from 'meteor/accounts-base';
 import { CourseWeighting } from '../../../lib/collections.js';
 import { Assessments } from '../../../lib/collections.js';
 import jqueryValidation from 'jquery-validation';
-
 import '../../main.html';
-
-function clearValidation(formElement) {
-    //Internal $.validator is exposed through $(form).validate()
-    var validator = $(formElement).validate();
-    //Iterate through named elements inside of the form, and mark them as error free
-    $('[name]', formElement).each(function () {
-        validator.successList.push(this);//mark as error free
-        validator.showErrors();//remove error messages if present
-    });
-    validator.resetForm();//remove error class on name elements and clear history
-    validator.reset();//remove all error and success data
-}
 
 function closeCreateAssessmentModal() {
     //clear the input fields
+    document.getElementById("mustHaveOneErrorMessage").style.display = "none";
     var form = document.getElementById("createAssessmentFormId");
     form.reset();
     clearValidation(form);
@@ -109,6 +97,16 @@ Template.createAssessment.events({
         var markT = document.getElementById("inputMarkT").value;
         var markC = document.getElementById("inputMarkC").value;
 
+        if ((markK == "" || markK == "N/A") &&
+            (markA == "" || markA == "N/A") &&
+            (markT == "" || markT == "N/A") &&
+            (markC == "" || markC == "N/A")) {
+
+            document.getElementById("mustHaveOneErrorMessage").style.display = "";
+            return false;
+        } else {
+            document.getElementById("mustHaveOneErrorMessage").style.display = "none";
+        }
 
         if (markK != "N/A") {
             markK = Number(markK)
@@ -122,9 +120,10 @@ Template.createAssessment.events({
         if (markC != "N/A") {
             markC = Number(markC)
         }
-        if (assessmentDate == ""){
+        if (assessmentDate == "") {
             assessmentDate = "N/A"
         }
+
 
         let courseworkAssessmentTypes = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseworkAssessmentTypes;
         let assessmentObjects = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseAssessmentTypes;
@@ -216,7 +215,8 @@ Template.createAssessment.onRendered(function () {
         return (input == "N/A" || Math.floor(input) == input);
     });
     $.validator.addMethod('isPositive', (input) => {
-        return (input >= 0);
+        console.log(input);
+        return (input > 0 && input != "");
     });
     $('.createAssessmentModal').modal({
         dismissible: true, // Modal can be dismissed by clicking outside of the modal
@@ -226,23 +226,33 @@ Template.createAssessment.onRendered(function () {
     });
     $("#createAssessmentFormId").validate({
         errorClass: 'invalid',
-        validClass: 'marks-valid',
+        validClass: 'jquery-validation-valid',
         rules: {
             marksK: {
+                required: true,
                 isInteger: true,
                 isPositive: true
             },
             marksA: {
+                required: true,
                 isInteger: true,
                 isPositive: true
             },
             marksT: {
+                required: true,
                 isInteger: true,
                 isPositive: true
             },
             marksC: {
+                required: true,
                 isInteger: true,
                 isPositive: true
+            },
+            assessmentTypeSelect: {
+                required: true
+            },
+            assessmentName: {
+                required: true
             }
         },
         messages: {
@@ -265,6 +275,7 @@ Template.createAssessment.onRendered(function () {
         },
         errorElement: 'div',
         errorPlacement: function (error, element) {
+            document.getElementById("mustHaveOneErrorMessage").style.display = "none";
             var placement = $(element).data('error');
             if (placement) {
                 $(placement).append(error)

@@ -18,7 +18,28 @@
 	- You are currently able to create an assessment even if you did not assign any grade points for K, A, T, or C.
 	- Make it so that you can only input numbers >= 0 or N/A into the gradebook
 
+	-Delete Coursework Assessment has white text with no banner/Add Course Work/Add Final Evaluation Work
+	-In create new coursework, when checkbox is clicked focus on input field 
+
+	-Repopulate edit students modal when opened 
+	-Repopulate assessment settings when you hit edit 
+	-Repopulate change asssessment name modal when opened
+	-Assessments Tab: On enter switch to next input field when valid and highlight the whole input text
+
 -------------
+
+
+-Figure out why I can't add script with src includes/globalFunctions/clearValidation.js 
 
 Good web documents:
 	Using Dynamic Templates in Meteor: https://themeteorchef.com/tutorials/using-dynamic-templates
+Jquery-validation docs:
+		-https://themeteorchef.com/tutorials/validating-forms-with-jquery-validation
+		-http://demo.geekslabs.com/materialize/v3.1/form-validation.html
+		-https://codepen.io/tdurant72/pen/vgyBjZ
+		-https://stackoverflow.com/questions/39313758/materialize-css-custom-form-validation-error-message
+		-https://jsfiddle.net/rz0zk5u6/2/
+		-if we have problem with selects: 
+			-https://github.com/Dogfalo/materialize/issues/3440
+
+

@@ -29,3 +29,29 @@
 .weightingHeadings{
     font-size: 2em;
 }
+
+.addTo100Row {
+    border-bottom: 0 !important;
+    color: #d32f2f !important;
+    position: relative;
+    width: 100%;
+}
+
+.addTo100InputError {
+    padding-top: 15px;
+    width: 100%;
+    color: #d32f2f !important;
+}
+
+#knowledge-error {
+    color: #d32f2f !important;
+}
+#application-error {
+    color: #d32f2f !important;
+}
+#thinking-error {
+    color: #d32f2f !important;
+}
+#communication-error {
+    color: #d32f2f !important;
+}

@@ -2,3 +2,10 @@
     height: auto;
     overflow: visible;
 }
+
+#addCourseNameModal-error {
+    color: #d32f2f;
+}
+#courseYear-error {
+    color: #d32f2f;
+}

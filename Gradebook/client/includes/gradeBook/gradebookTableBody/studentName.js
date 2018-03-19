@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Students } from '../../../../lib/collections.js';
+import { Assessments } from '../../../../lib/collections.js';
 import { Accounts } from 'meteor/accounts-base';
 
 function generateSortedStudentArray() {
@@ -56,13 +57,278 @@ function generateArrayOfStudentObjects(sortedStudentArray) {
     return arrayOfStudentObjects
 }
 
+function organizeStudentGrades(ownerId, courseId, studentId){
+    var studentsArray = Students.findOne({ownerId, courseId}).students;
+    var studentGrades = [];
+    var organizedStudentGrades = [];
+    for ( i = 0; i < studentsArray.length; i++){
+        if (studentId == studentsArray[i].studentId){
+            studentGrades = studentsArray[i].grades;
+            i = studentsArray.length;
+        }
+    }
+    for ( i = 0; i < studentGrades.length; i++){
+        var assessmentId = studentGrades[i].assessmentId;
+        var K = studentGrades[i].K;
+        var A = studentGrades[i].A;
+        var T = studentGrades[i].T;
+        var C = studentGrades[i].C;
+
+        var assessmentType = '';
+        if (assessmentId[0] != "f"){
+            assessmentType = assessmentId.slice(0, assessmentId.indexOf("-"));
+        }
+        else{
+            assessmentType = assessmentId;
+        }
+
+        var studentGradeObject = {
+            assessmentId,
+            K,
+            A,
+            T,
+            C
+        }
+
+        if (organizedStudentGrades[assessmentType] == null){
+            organizedStudentGrades[assessmentType] = [studentGradeObject]
+        }
+        else{
+            var numberOfAssessments = organizedStudentGrades[assessmentType].length
+            organizedStudentGrades[assessmentType][numberOfAssessments] = studentGradeObject
+        }
+    }
+
+    return organizedStudentGrades
+
+}
+
+function add(a, b) {
+    return a + b;
+}
+
+function calculateAsessmentTypeGrades(ownerId, courseId, organizedStudentGrades){
+    var assessmentTypes = Object.keys(organizedStudentGrades);
+    for ( i = 0; i < assessmentTypes.length; i++){
+        var assessmentType = assessmentTypes[i];
+        var KGrades = [];
+        var AGrades = [];
+        var TGrades = [];
+        var CGrades = [];
+
+        var exclusions = {};
+
+        for ( z = 0; z < organizedStudentGrades[assessmentType].length; z++){
+            var assessmentId = organizedStudentGrades[assessmentType][z].assessmentId;
+            exclusions[assessmentId] = []
+
+            if (organizedStudentGrades[assessmentType][z].K != "N/A"){
+                KGrades[KGrades.length] = Number(organizedStudentGrades[assessmentType][z].K);
+            }
+            if (organizedStudentGrades[assessmentType][z].A != "N/A"){
+                AGrades[AGrades.length] = Number(organizedStudentGrades[assessmentType][z].A);
+            }
+            if (organizedStudentGrades[assessmentType][z].T != "N/A"){
+                TGrades[TGrades.length] = Number(organizedStudentGrades[assessmentType][z].T);
+            }
+            if (organizedStudentGrades[assessmentType][z].C != "N/A"){
+                CGrades[CGrades.length] = Number(organizedStudentGrades[assessmentType][z].C);
+            }
+            
+            if (organizedStudentGrades[assessmentType][z].K == "N/A"){
+                var length = exclusions[assessmentId].length;
+                exclusions[assessmentId][length] = "K";
+            }
+            if (organizedStudentGrades[assessmentType][z].A == "N/A"){
+                var length = exclusions[assessmentId].length;
+                exclusions[assessmentId][length] = "A";
+            }
+            if (organizedStudentGrades[assessmentType][z].T == "N/A"){
+                var length = exclusions[assessmentId].length;
+                exclusions[assessmentId][length] = "T";
+            }
+            if (organizedStudentGrades[assessmentType][z].C == "N/A"){
+                var length = exclusions[assessmentId].length;
+                exclusions[assessmentId][length] = "C";
+            }
+        }
+        var KSumOfStudentMarks = Number(KGrades.reduce(add, 0));
+        var ASumOfStudentMarks = Number(AGrades.reduce(add, 0));
+        var TSumOfStudentMarks = Number(TGrades.reduce(add, 0));
+        var CSumOfStudentMarks = Number(CGrades.reduce(add, 0));
+
+        var KSumOfExcludedMarks = 0;
+        var ASumOfExcludedMarks = 0;
+        var TSumOfExcludedMarks = 0;
+        var CSumOfExcludedMarks = 0;
+
+        var KTotalMarks = 0;
+        var ATotalMarks = 0;
+        var TTotalMarks = 0;
+        var CTotalMarks = 0;
+
+        var excludedAssessments = Object.keys(exclusions);
+
+        for ( z = 0; z < excludedAssessments.length; z++){
+            var assessmentId = excludedAssessments[z];
+            for (j = 0; j < exclusions[assessmentId].length; j++){
+                var excludedCategory = exclusions[assessmentId][j];
+                //look up how many marks the category is worth
+                if(assessmentId[0] != "f"){
+                    var courseAssessmentTypes = Assessments.findOne({ownerId, courseId}).courseAssessmentTypes;
+                    for ( k = 0; k < courseAssessmentTypes.length; k++){
+                        if ( courseAssessmentTypes[k].assessmentTypeId == assessmentType ){
+                            var assessments = courseAssessmentTypes[k].assessments;
+                            for (y = 0; y < assessments.length; y++){
+                                if (assessments[y].assessmentId == assessmentId){
+                                    if ( excludedCategory == "K"){
+                                        if (assessments[y].K != "N/A"){
+                                            KSumOfExcludedMarks = KSumOfExcludedMarks + Number(assessments[y].K);
+                                        }
+                                    }
+                                    if ( excludedCategory == "A"){
+                                        if (assessments[y].A != "N/A"){
+                                            ASumOfExcludedMarks = ASumOfExcludedMarks + Number(assessments[y].A);
+                                        }
+                                    }
+                                    if ( excludedCategory == "T"){
+                                        if (assessments[y].T != "N/A"){
+                                            TSumOfExcludedMarks = TSumOfExcludedMarks + Number(assessments[y].T);
+                                        }
+                                    }
+                                    if ( excludedCategory == "C"){
+                                        if (assessments[y].C != "N/A"){
+                                            CSumOfExcludedMarks = CSumOfExcludedMarks + Number(assessments[y].C);
+                                        }
+                                    }
+                                    // y = assessments.length;
+                                }
+                            }
+                            k = courseAssessmentTypes.length;
+                        }
+                    }
+                }
+                else{
+                    var finalAssessmentTypes = Assessments.findOne({ownerId, courseId}).finalAssessmentTypes;
+                    for ( k = 0; k < finalAssessmentTypes.length; k++){
+                        if (finalAssessmentTypes[k].assessmentTypeId == assessmentType){
+                            if ( excludedCategory == "K"){
+                                if (finalAssessmentTypes[k].K != "N/A"){
+                                    KSumOfExcludedMarks = KSumOfExcludedMarks + Number(finalAssessmentTypes[k].K);
+                                }
+                            }
+                            if ( excludedCategory == "A"){
+                                if (finalAssessmentTypes[k].A != "N/A"){
+                                    ASumOfExcludedMarks = ASumOfExcludedMarks + Number(finalAssessmentTypes[k].A);
+                                }
+                            }
+                            if ( excludedCategory == "T"){
+                                if (finalAssessmentTypes[k].T != "N/A"){
+                                    TSumOfExcludedMarks = TSumOfExcludedMarks + Number(finalAssessmentTypes[k].T);
+                                }
+                            }
+                            if ( excludedCategory == "K"){
+                                if (finalAssessmentTypes[k].C != "N/A"){
+                                    CSumOfExcludedMarks = CSumOfExcludedMarks + Number(finalAssessmentTypes[k].C);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (assessmentType[0] != "f"){
+            var courseAssessmentTypes = Assessments.findOne({ownerId, courseId}).courseAssessmentTypes;
+            for (q = 0; q < courseAssessmentTypes.length; q++){
+                if(courseAssessmentTypes[q].assessmentTypeId == assessmentType){
+                    var assessments = courseAssessmentTypes[q].assessments;
+                    for (g = 0; g < assessments.length; g++){
+                        if (assessments[g].K != "N/A"){
+                            KTotalMarks = KTotalMarks + Number(assessments[g].K);
+                        }
+                        if (assessments[g].A != "N/A"){
+                            ATotalMarks = ATotalMarks + Number(assessments[g].A);
+                        }
+                        if (assessments[g].T != "N/A"){
+                            TTotalMarks = TTotalMarks + Number(assessments[g].T);
+                        }
+                        if (assessments[g].C != "N/A"){
+                            CTotalMarks = CTotalMarks + Number(assessments[g].C);
+                        }
+                    }
+                    q = courseAssessmentTypes.length;
+                }
+            }
+        }
+        else{
+            var finalAssessmentTypes = Assessments.findOne({ownerId, courseId}).finalAssessmentTypes;
+            for (g = 0; g < finalAssessmentTypes.length; g++){
+                if(finalAssessmentTypes[g].assessmentTypeId == assessmentType){
+                    if (finalAssessmentTypes[g].K != "N/A"){
+                        KTotalMarks = KTotalMarks + Number(finalAssessmentTypes[g].K);
+                    }
+                    if (finalAssessmentTypes[g].A != "N/A"){
+                        ATotalMarks = ATotalMarks + Number(finalAssessmentTypes[g].A);
+                    }
+                    if (finalAssessmentTypes[g].T != "N/A"){
+                        TTotalMarks = TTotalMarks + Number(finalAssessmentTypes[g].T);
+                    }
+                    if (finalAssessmentTypes[g].C != "N/A"){
+                        CTotalMarks = CTotalMarks + Number(finalAssessmentTypes[g].C);
+                    }
+                    g = finalAssessmentTypes.length;
+                }
+            }
+        }
+
+        var KassessmentTypeGrade = KSumOfStudentMarks/(KTotalMarks - KSumOfExcludedMarks);
+        var AassessmentTypeGrade = ASumOfStudentMarks/(ATotalMarks - ASumOfExcludedMarks);
+        var TassessmentTypeGrade = TSumOfStudentMarks/(TTotalMarks - TSumOfExcludedMarks);
+        var CassessmentTypeGrade = CSumOfStudentMarks/(CTotalMarks - CSumOfExcludedMarks);
+
+        //if totalmarks == 0 we set it to N/A
+        if (isNaN(KassessmentTypeGrade)){
+            KassessmentTypeGrade = "N/A"
+        }
+        if (isNaN(AassessmentTypeGrade)){
+            AassessmentTypeGrade = "N/A"
+        }
+        if (isNaN(TassessmentTypeGrade)){
+            TassessmentTypeGrade = "N/A"
+        }
+        if (isNaN(CassessmentTypeGrade)){
+            CassessmentTypeGrade = "N/A"
+        }
+
+        console.log(KassessmentTypeGrade, AassessmentTypeGrade, TassessmentTypeGrade, CassessmentTypeGrade);
+
+    }
+}
+
+function calculateFinalEvaluationGrade(ownerId, courseId, organizedStudentGrades){
+
+}
+
+function calculateFinalGrade(ownerId, courseId, studentId){
+
+}
+
 Template.studentName.helpers({
     getStudents: function () {
         let sortedStudentArray = generateSortedStudentArray();
         return generateArrayOfStudentObjects(sortedStudentArray)
     },
-    getCurrentGrade: function (studentId) { //design this function last
+    getCurrentGrade: function (studentId) {
+        let ownerId = Meteor.userId();
+        let courseId = Session.get('courseId');
+
+        var organizedStudentGrades = organizeStudentGrades(ownerId, courseId, studentId);
+
+        calculateAsessmentTypeGrades(ownerId, courseId, organizedStudentGrades);
+
         return "98%"
+
+    
     },
     getStudentGradesForAssessments: function (studentId) {
         let courseId = Session.get('courseId');

@@ -213,11 +213,10 @@ Template.sideNavDropDown.events({
             }
         });
         promiseToUpdateGradebook.then(function(){
-            var delayInMilliseconds = 125;
+            var delayInMilliseconds = 10;
             setTimeout(function() {
                 updateGradebookColors();
                 $("#main_table").tableHeadFixer({ "left": 1, 'head': true });
-                console.log("Gradebook colors updated.");
               }, delayInMilliseconds);
         }).catch(function(){
             console.log("Gradebook colors not updated.");

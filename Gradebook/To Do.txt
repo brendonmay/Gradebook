@@ -17,7 +17,6 @@
 	-Repopulate edit students modal when opened 
 	-Repopulate assessment settings when you hit edit 
 	-Repopulate change asssessment name modal when opened
-	-Assessments Tab: On enter switch to next input field when valid and highlight the whole input text
 	
 -------------
 

@@ -9,7 +9,7 @@
             </li>
             {{#each courseworkAssessmentTypes}}
             <li>
-                <div class="collapsible-header">
+                <div class="collapsible-header" id="{{assessmentTypeId}}?dropdownId">
                     <i class="material-icons">arrow_drop_down</i>{{assessmentType}}
                 </div>
                 <div class="collapsible-body">
@@ -22,7 +22,7 @@
                                         <a href="#!" class="icon-bluegrey deleteAssessmentType" id="{{assessmentId}}">
                                             <i class="material-icons">close</i>
                                         </a>
-                                        <i class="material-icons">arrow_drop_down</i>{{assessmentName}}<span class="new badge blue-grey rename-assessment" id="{{assessmentId}}?LmUtGwN?{{assessmentName}}" data-badge-caption="Rename"></span></div>
+                                        <i class="material-icons" id="{{assessmentId}}?dropdownAss">arrow_drop_down</i>{{assessmentName}}<span class="new badge blue-grey rename-assessment" id="{{assessmentId}}?LmUtGwN?{{assessmentName}}" data-badge-caption="Rename"></span></div>
                                     <div class="collapsible-body assessments-collapsible">
                                         <form class="edit-courseassessment-form" onsubmit="return false" onChange="" id="form{{assessmentId}}">
                                             <ul>
@@ -92,7 +92,7 @@
             </li>
             {{#each finalAssessmentTypes}}
             <li>
-                <div class="collapsible-header">
+                <div class="collapsible-header" id="{{assessmentTypeId}}?dropdownId">
                     <i class="material-icons">arrow_drop_down</i>{{assessmentType}}</div>
                 <div class="collapsible-body assessments-collapsible">
                     <div class="row finalAssessmentsRow">

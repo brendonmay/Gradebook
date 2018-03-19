@@ -16,14 +16,14 @@ function arrayOfStudentIds() {
   return arrayofStudentIds
 };
 
-function findOldStudentGradeValue(studentId, assessmentId, category, ownerId, courseId){
+function findOldStudentGradeValue(studentId, assessmentId, category, ownerId, courseId) {
   var students = Students.findOne({ ownerId: ownerId, courseId: courseId }).students;
   var oldValue = 0;
   for (j = 0; j < students.length; j++) {
-    if(students[j].studentId == studentId){
+    if (students[j].studentId == studentId) {
       var grades = students[j].grades;
-      for(k = 0; k < grades.length; k++){
-        if (grades[k].assessmentId == assessmentId){
+      for (k = 0; k < grades.length; k++) {
+        if (grades[k].assessmentId == assessmentId) {
           oldValue = grades[k][category];
           k = grades.length;
           j = students.length;
@@ -49,10 +49,18 @@ function updateGradebookColors() {
       categoryCells[i].style = "background-color: #9e9e9e";
 
       for (z = 0; z < arrayofStudentIds.length; z++) {
-        var studentId = arrayofStudentIds[z];
-        document.getElementById(category + "?" + studentId + "#" + assessmentId).parentElement.style = "background-color: #9e9e9e";
-        document.getElementById(category + "?" + studentId + "#" + assessmentId).disabled = "true";
-        document.getElementById(category + "?" + studentId + "#" + assessmentId).value = "N/A";
+        if (category == "C") {
+          var studentId = arrayofStudentIds[z];
+          document.getElementById(category + "?" + studentId + "#" + assessmentId).parentElement.style = "background-color: #9e9e9e; border-right: 2px solid black";
+          document.getElementById(category + "?" + studentId + "#" + assessmentId).disabled = "true";
+          document.getElementById(category + "?" + studentId + "#" + assessmentId).value = "N/A";
+        }
+        else {
+          var studentId = arrayofStudentIds[z];
+          document.getElementById(category + "?" + studentId + "#" + assessmentId).parentElement.style = "background-color: #9e9e9e";
+          document.getElementById(category + "?" + studentId + "#" + assessmentId).disabled = "true";
+          document.getElementById(category + "?" + studentId + "#" + assessmentId).value = "N/A";
+        }
       }
     }
     if (categoryValue != "-") { //adds color to enabled ones; work here
@@ -64,6 +72,9 @@ function updateGradebookColors() {
         document.getElementById(category + "?" + studentId + "#" + assessmentId).removeAttribute("disabled");
         var oldValue = findOldStudentGradeValue(studentId, assessmentId, category, Meteor.userId(), courseId);
         document.getElementById(category + "?" + studentId + "#" + assessmentId).value = oldValue;
+        if (category == "C") {
+          document.getElementById(category + "?" + studentId + "#" + assessmentId).parentElement.style = "border-right: 2px solid black";
+        }
       }
     }
   }
@@ -74,10 +85,10 @@ Template.courseTabsTitles.onRendered(function () {
 });
 
 Template.courseTabsTitles.events({
-  'click #gradeBookCourseTab': function(){
+  'click #gradeBookCourseTab': function () {
     //check if a change has been made first by referring to Session Variable
     var updateCheck = Session.get("gradebookUpdated");
-    if (updateCheck){
+    if (updateCheck) {
       updateGradebookColors();
       Session.set("gradebookUpdated", false);
     }

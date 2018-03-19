@@ -52,10 +52,18 @@ function updateGradebookColors() {
             categoryCells[i].style = "background-color: #9e9e9e";
 
             for (z = 0; z < arrayofStudentIds.length; z++) {
-                var studentId = arrayofStudentIds[z];
-                document.getElementById(category + "?" + studentId + "#" + assessmentId).parentElement.style = "background-color: #9e9e9e";
-                document.getElementById(category + "?" + studentId + "#" + assessmentId).disabled = "true";
-                document.getElementById(category + "?" + studentId + "#" + assessmentId).value = "N/A";
+                if (category == "C") {
+                    var studentId = arrayofStudentIds[z];
+                    document.getElementById(category + "?" + studentId + "#" + assessmentId).parentElement.style = "background-color: #9e9e9e; border-right: 2px solid black";
+                    document.getElementById(category + "?" + studentId + "#" + assessmentId).disabled = "true";
+                    document.getElementById(category + "?" + studentId + "#" + assessmentId).value = "N/A";
+                }
+                else {
+                    var studentId = arrayofStudentIds[z];
+                    document.getElementById(category + "?" + studentId + "#" + assessmentId).parentElement.style = "background-color: #9e9e9e";
+                    document.getElementById(category + "?" + studentId + "#" + assessmentId).disabled = "true";
+                    document.getElementById(category + "?" + studentId + "#" + assessmentId).value = "N/A";
+                }
             }
         }
         if (categoryValue != "-") { //adds color to enabled ones; work here
@@ -67,6 +75,9 @@ function updateGradebookColors() {
                 document.getElementById(category + "?" + studentId + "#" + assessmentId).removeAttribute("disabled");
                 var oldValue = findOldStudentGradeValue(studentId, assessmentId, category, Meteor.userId(), courseId);
                 document.getElementById(category + "?" + studentId + "#" + assessmentId).value = oldValue;
+                if (category == "C") {
+                    document.getElementById(category + "?" + studentId + "#" + assessmentId).parentElement.style = "border-right: 2px solid black";
+                }
             }
         }
     }
@@ -103,9 +114,7 @@ function canAssignFinalEvaluation() {
 }
 
 Template.gradeBookChart.onRendered(function () {
-    $("#main_table").tableHeadFixer({ "left": 1 });
-    $("#main_table").floatThead();
-    //document.getElementsByClassName('floatThead-wrapper')[0].parentElement.style.width = "100%";
+    $("#main_table").tableHeadFixer({ "left": 1, 'head': true });
 });
 
 Template.gradeBookChart.events({

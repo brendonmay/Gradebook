@@ -7,13 +7,11 @@
 
 -Functionality Issues
 	- When you change the year of a course, it will no longer be highlighted in the sideNav (redirect with clicks?)
-	- When you add a new student/assessment, the last student/assessment on the list of the gradebook wont float as you scroll horizontally/vertically
 	- If you hit tab multiple times in gradebook (past the end of the row), datepicker pops up
 	- Notifications for changes in final evaluation should only appear if a change has been made.
-	- Make it so that if they put an invalid input into the gradebook, it doesnt get pushed to the collection, and the cell becomes red
+	- Make it so that if they put an invalid input (you can only input numbers >= 0 or N/A) into the gradebook, it doesnt get pushed to the collection, and the cell becomes red
 	- Make sure assessments tab jquery is thoroughly tested.
 	- Assessments tab blur function for final evaluations is broken, wont save to collection.
-	- Make it so that you can only input numbers >= 0 or N/A into the gradebook
 	- When you create a new course, in the most recent year relative to the other courses you have, and its the first course of that year, upon creation, the new course will be highlighted in the sidenav, but the mainview wont update.
 
 	-Repopulate edit students modal when opened 

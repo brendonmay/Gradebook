@@ -160,6 +160,9 @@ Template.gradeBookChart.events({
                         document.getElementById("inputFinalMarkC-error").remove();
                     }
                     updateGradebookColors();
+                    setTimeout(function () {
+                        $("#main_table").tableHeadFixer({ "left": 1, 'head': true });
+                    }, 5);
                 }
             });
             $('#assignFinalModal').modal('open');
@@ -207,11 +210,7 @@ Template.gradeBookChart.events({
                     document.getElementById('createNewAssessment-error').remove();
                 }
                 updateGradebookColors();
-                document.getElementById("assessmentsTabId").click();
-                setTimeout(function() {
-                    document.getElementById("gradeBookCourseTab").click();
-                }, 5);
-                setTimeout(function() {
+                setTimeout(function () {
                     $("#main_table").tableHeadFixer({ "left": 1, 'head': true });
                 }, 5);
             }
@@ -225,11 +224,7 @@ Template.gradeBookChart.events({
             complete: function () {
                 document.getElementById('addStudentsModalForm').reset();
                 updateGradebookColors();
-                document.getElementById("assessmentsTabId").click();
-                setTimeout(function() {
-                    document.getElementById("gradeBookCourseTab").click();
-                }, 10);
-                setTimeout(function() {
+                setTimeout(function () {
                     $("#main_table").tableHeadFixer({ "left": 1, 'head': true });
                 }, 5);
             }

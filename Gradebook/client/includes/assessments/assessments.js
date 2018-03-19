@@ -567,7 +567,7 @@ Template.assessments.events({
         if (markC != "N/A") {
             markC = Number(markC)
         }
-        //update collection
+        
         var courseAssessmentTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseAssessmentTypes;
         updateAssessments(courseAssessmentTypes, assessmentTypeId, assessmentId, markK, markA, markT, markC, newDate);
         Session.set("gradebookUpdated", true);
@@ -603,6 +603,7 @@ Template.assessments.events({
             errorElement.style.display = "";
             return false;
         } else {
+            var errorElement = document.getElementById("finalMarkFieldInvalid" + assessmentTypeId);
             errorElement.style.display = "none";
         }
 
@@ -619,25 +620,11 @@ Template.assessments.events({
             markC = Number(markC)
         }
 
-        //update collection
         var finalAssessmentTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).finalAssessmentTypes;
 
-        for (i = 0; i < finalAssessmentTypes.length; i++) {
-            if (finalAssessmentTypes[i].assessmentTypeId == assessmentTypeId) {
-                finalAssessmentTypes[i].K = markK;
-                finalAssessmentTypes[i].A = markA;
-                finalAssessmentTypes[i].T = markT;
-                finalAssessmentTypes[i].C = markC;
-                finalAssessmentTypes[i].Date = newDate;
-                break;
-            }
-        }
-
         Meteor.call('assessments.updateFinalAssessments', currentCourseId, finalAssessmentTypes);
+        updateFinalAssessments(finalAssessmentTypes, assessmentTypeId, markK, markA, markT, markC, newDate)
         Session.set("gradebookUpdated", true);
-
-        //at the end, push a message to the user saying the changes have been saved.
-        Materialize.toast('Your changes have been saved', 3000, 'amber darken-3'); //make it so that toast includes assessment name
     },
     'blur .course-edit-fields-blur': function () {
 

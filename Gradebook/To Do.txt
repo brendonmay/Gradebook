@@ -4,21 +4,16 @@
 	- Fix buttons placements in each of the settings tabs.
 	- Buttons in settings tab dont behave well as you change the size of the window. Possible suggested solution, use display=none instead of adding class "hide" when they shouldnt be there. This can be achieved with the setAttribute() functiion.
 	- Make it so that the gradebook has a different display if you have no students
-	- Gradebook sizing gets all weird after you add a new assessment, fixes if you zoom in and out.
 
 -Functionality Issues
-	- When you change the year of a course, it will no longer be highlighted in the sideNav (redirect with clicks)
+	- When you change the year of a course, it will no longer be highlighted in the sideNav (redirect with clicks?)
 	- When you add a new student/assessment, the last student/assessment on the list of the gradebook wont float as you scroll horizontally/vertically
 	- If you hit tab multiple times in gradebook (past the end of the row), datepicker pops up
 	- Notifications for changes in final evaluation should only appear if a change has been made.
-
-	- In each of the Settings' Tabs, check the input type to ensure only numbers can be inputted for the weights.
-	- Create new assessment modal error messages arent red for "Assessment Name" field
-	- You are currently able to create an assessment even if you did not assign any grade points for K, A, T, or C.
+	- Make it so that if they put an invalid input into the gradebook, it doesnt get pushed to the collection, and the cell becomes red
+	- Make sure assessments tab jquery is thoroughly tested.
+	- Assessments tab blur function for final evaluations is broken, wont save to collection.
 	- Make it so that you can only input numbers >= 0 or N/A into the gradebook
-
-	-Delete Coursework Assessment has white text with no banner/Add Course Work/Add Final Evaluation Work
-	-In create new coursework, when checkbox is clicked focus on input field 
 
 	-Repopulate edit students modal when opened 
 	-Repopulate assessment settings when you hit edit 

@@ -334,7 +334,7 @@
                         m[ty][tx] = true;
                     }
                 }
-                var pos = {top: y, left: x};
+                var pos = { top: y, left: x };
                 $cell.data("cellPos", pos);
             });
         });

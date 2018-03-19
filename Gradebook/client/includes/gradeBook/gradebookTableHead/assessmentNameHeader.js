@@ -16,7 +16,7 @@ function arrayOfStudentIds() {
     return arrayofStudentIds
 };
 
-function setGradebookColors(){
+function setGradebookColors() {
     var categoryCells = document.getElementsByClassName("categoryCell");
     var arrayofStudentIds = arrayOfStudentIds();
 
@@ -30,10 +30,18 @@ function setGradebookColors(){
             categoryCells[i].style = "background-color: #9e9e9e";
 
             for (z = 0; z < arrayofStudentIds.length; z++) {
-                var studentId = arrayofStudentIds[z];
-                document.getElementById(category + "?" + studentId + "#" + assessmentId).parentElement.style = "background-color: #9e9e9e";
-                document.getElementById(category + "?" + studentId + "#" + assessmentId).disabled = "true";
-                document.getElementById(category + "?" + studentId + "#" + assessmentId).value = "N/A";
+                if (category == "C"){
+                    var studentId = arrayofStudentIds[z];
+                    document.getElementById(category + "?" + studentId + "#" + assessmentId).parentElement.style = "background-color: #9e9e9e; border-right: 2px solid black";
+                    document.getElementById(category + "?" + studentId + "#" + assessmentId).disabled = "true";
+                    document.getElementById(category + "?" + studentId + "#" + assessmentId).value = "N/A";
+                }
+                else{
+                    var studentId = arrayofStudentIds[z];
+                    document.getElementById(category + "?" + studentId + "#" + assessmentId).parentElement.style = "background-color: #9e9e9e";
+                    document.getElementById(category + "?" + studentId + "#" + assessmentId).disabled = "true";
+                    document.getElementById(category + "?" + studentId + "#" + assessmentId).value = "N/A";
+                }
             }
         }
     }
@@ -146,6 +154,90 @@ Template.assessmentNameHeader.helpers({
     }
 });
 
-Template.assessmentNameHeader.onRendered(function(){
+Template.assessmentNameHeader.events({
+    'click .gradebook-edit-ass-icon': function () {
+        var id = event.target.parentElement.id;
+        var assessmentId = id.slice(id.indexOf('?') + 1, id.length);
+        if (!(assessmentId[0] == "f")) {
+            var assessmentTypeId = assessmentId.slice(0, assessmentId.indexOf('-'));
+            document.getElementById("assessmentsTabId").click();
+
+            var assessmentTypeHeader = document.getElementById(assessmentTypeId + "?dropdownId");
+            if (!(assessmentTypeHeader.classList.contains("active"))) {
+                assessmentTypeHeader.click();
+            }
+
+            var assessmentIdHeader = document.getElementById(assessmentId + "?dropdownAss");
+            if (!(assessmentIdHeader.parentElement.classList.contains("active"))) {
+                assessmentIdHeader.click();
+            }
+
+            document.getElementById("courseK" + assessmentId).focus();
+
+        }
+        else {
+            document.getElementById("assessmentsTabId").click();
+
+            var assessmentTypeHeader = document.getElementById(assessmentId + "?dropdownId");
+            if (!(assessmentTypeHeader.classList.contains("active"))) {
+                assessmentTypeHeader.click();
+            }
+            document.getElementById("finalK" + assessmentId).focus();
+        }
+    },
+    'click .gradebook-del-ass-icon': function () {
+        var id = event.target.parentElement.id;
+        let currentCourseId = Session.get('courseId');
+        var assessmentId = id.slice(id.indexOf('?') + 1, id.length);
+        //if deleting coursework
+        if (assessmentId[0] != "f") {
+            var assessmentTypeId = assessmentId.slice(0, assessmentId.indexOf("-"));
+            var removeAssessmentObj = {
+                assessmentTypeId: assessmentTypeId,
+                assessmentId: assessmentId,
+                removeCourse: ""
+            };
+            Session.set("removeAssessmentObj", removeAssessmentObj);
+
+            $('.delete-courseworkAssessment-modal').modal({
+                complete: function () {
+                    if (Session.get('removeAssessmentObj').removeCourse == "yes") {
+                        var courseAssessmentsTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseAssessmentTypes;
+                        for (var i = 0; i < courseAssessmentsTypes.length; i++) {
+                            if (courseAssessmentsTypes[i].assessmentTypeId == assessmentTypeId) {
+                                let assessmentType = courseAssessmentsTypes[i].assessments;
+                                for (var j = 0; j < assessmentType.length; j++) {
+                                    if (assessmentType[j].assessmentId == assessmentId) {
+                                        assessmentType.splice(j, 1);
+                                        break;
+                                    }
+                                }
+                                courseAssessmentsTypes[i].assessments = assessmentType;
+                                break;
+                            }
+                        }
+                        Meteor.call('assessments.updateAssessments', currentCourseId, courseAssessmentsTypes);
+                        Meteor.call('students.deleteAssessment', Meteor.userId(), currentCourseId, assessmentId);
+                    }
+                    let removeAssessmentObj = Session.get("removeAssessmentObj");
+                    removeAssessmentObj.removeCourse = "";
+                    Session.set("removeAssessmentObj", removeAssessmentObj);
+                    $('#deleteCourseworkAssessmentModal').modal('close');
+                }
+            });
+            $('#deleteCourseworkAssessmentModal').modal('open');
+        }
+        //if deleting final evaluation
+        else {
+            let courseSettings = document.getElementById("courseSettingsTabId");
+            courseSettings.click();
+            let assessmentSettings = document.getElementById("ASClick");
+            assessmentSettings.click();
+            Materialize.toast('You can delete Final Evaluations from this page.', 5000, 'amber darken-3');
+        }
+    }
+});
+
+Template.assessmentNameHeader.onRendered(function () {
     setGradebookColors();
 });

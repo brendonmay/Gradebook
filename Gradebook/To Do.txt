@@ -13,7 +13,7 @@
 	- Make sure assessments tab jquery is thoroughly tested.
 	- Assessments tab blur function for final evaluations is broken, wont save to collection.
 	- When you create a new course, in the most recent year relative to the other courses you have, and its the first course of that year, upon creation, the new course will be highlighted in the sidenav, but the mainview wont update.
-	- When you delete an assessment from the gradebook, updategradebookcolors
+	- When you delete an assessment from the gradebook, updategradebookcolors, probably also re-fix headers
 
 	-Repopulate edit students modal when opened 
 	-Repopulate assessment settings when you hit edit 

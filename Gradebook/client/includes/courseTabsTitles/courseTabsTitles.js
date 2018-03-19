@@ -98,5 +98,9 @@ Template.courseTabsTitles.events({
       updateGradebookColors();
       Session.set("gradebookUpdated", false);
     }
+    setTimeout(function() {
+      $("#main_table").tableHeadFixer({ "left": 1, 'head': true });
+    }, 10);
+
   }
 })

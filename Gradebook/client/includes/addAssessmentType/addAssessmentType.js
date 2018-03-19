@@ -6,6 +6,11 @@ import { CourseWeighting } from '../../../lib/collections.js';
 
 import '../../main.html';
 
+function clearTemplateValidation() {
+    var form = document.getElementById('addAssessmentTypeForm');
+    clearValidation(form);
+}
+
 function assessmentAlreadyExists(newAssessment) {
     const courseId = Session.get("courseId");
     if (courseId == 0) return;

@@ -15,12 +15,16 @@ td{
     width:1%!important;
 }
 
+.CHeaderBorder{
+    border-right:1px solid black;
+}
+
 .categoryCell {
     min-width: 70px;
     background-color: white; 
     text-align:center; 
-    border: 1px solid black; 
-    border-top: 2px solid black;
+    border-left: 1px solid black; 
+    border-bottom: 1px solid black;
     z-index: 2;
 }
 

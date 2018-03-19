@@ -14,7 +14,9 @@ function generateSortedStudentArray() {
         let firstName = studentsDocument[i].studentFirstName;
         let studentId = studentsDocument[i].studentId;
 
-        unsortedStudentArray[unsortedStudentArray.length] = lastName + ", " + firstName + "?" + studentId;
+        if (studentId != "s-0"){
+            unsortedStudentArray[unsortedStudentArray.length] = lastName + ", " + firstName + "?" + studentId;
+        }
     }
 
     let sortedStudentArray = unsortedStudentArray.sort();

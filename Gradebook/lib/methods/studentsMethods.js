@@ -25,7 +25,12 @@ if (Meteor.isServer) {
             Students.insert({
                 ownerId: ownerId,
                 courseId: courseId,
-                students: []
+                students: [{
+                    studentLastName: "",
+                    studentFirstName: "",
+                    studentId: "s-0",
+                    grades: []
+                  }]
             })
         },
         'students.addNewStudent'(ownerId, courseId, newStudentsDocument) {

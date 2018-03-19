@@ -32,15 +32,19 @@ function setGradebookColors() {
             for (z = 0; z < arrayofStudentIds.length; z++) {
                 if (category == "C"){
                     var studentId = arrayofStudentIds[z];
-                    document.getElementById(category + "?" + studentId + "#" + assessmentId).parentElement.style = "background-color: #9e9e9e; border-right: 2px solid black";
-                    document.getElementById(category + "?" + studentId + "#" + assessmentId).disabled = "true";
-                    document.getElementById(category + "?" + studentId + "#" + assessmentId).value = "N/A";
+                    if (studentId != "s-0"){
+                        document.getElementById(category + "?" + studentId + "#" + assessmentId).parentElement.style = "background-color: #9e9e9e; border-right: 2px solid black";
+                        document.getElementById(category + "?" + studentId + "#" + assessmentId).disabled = "true";
+                        document.getElementById(category + "?" + studentId + "#" + assessmentId).value = "N/A";
+                    }
                 }
                 else{
                     var studentId = arrayofStudentIds[z];
-                    document.getElementById(category + "?" + studentId + "#" + assessmentId).parentElement.style = "background-color: #9e9e9e";
-                    document.getElementById(category + "?" + studentId + "#" + assessmentId).disabled = "true";
-                    document.getElementById(category + "?" + studentId + "#" + assessmentId).value = "N/A";
+                    if (studentId != "s-0"){
+                        document.getElementById(category + "?" + studentId + "#" + assessmentId).parentElement.style = "background-color: #9e9e9e";
+                        document.getElementById(category + "?" + studentId + "#" + assessmentId).disabled = "true";
+                        document.getElementById(category + "?" + studentId + "#" + assessmentId).value = "N/A";
+                    }
                 }
             }
         }

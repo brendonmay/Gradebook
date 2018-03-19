@@ -114,7 +114,7 @@ function canAssignFinalEvaluation() {
 }
 
 Template.gradeBookChart.onRendered(function () {
-    $("#main_table").tableHeadFixer({ "left": 1, 'head': true });
+    // $("#main_table").tableHeadFixer({ "left": 1, 'head': true });
 });
 
 Template.gradeBookChart.events({

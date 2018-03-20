@@ -4,18 +4,34 @@
 	- Fix buttons placements in each of the settings tabs.
 	- Buttons in settings tab dont behave well as you change the size of the window. Possible suggested solution, use display=none instead of adding class "hide" when they shouldnt be there. This can be achieved with the setAttribute() functiion.
 	- Make it so that the gradebook has a different display if you have no students
-	- Gradebook sizing gets all weird after you add a new assessment, fixes if you zoom in and out.
 
 -Functionality Issues
-	- When you change the year of a course, it will no longer be highlighted in the sideNav (redirect with clicks)
-	- When you add a new student/assessment, the last student/assessment on the list of the gradebook wont float as you scroll horizontally/vertically
-	- Make it so that you can rename assessments.
+	- When you change the year of a course, it will no longer be highlighted in the sideNav (redirect with clicks?)
+	- If you hit tab multiple times in gradebook (past the end of the row), datepicker pops up
+	- Notifications for changes in final evaluation should only appear if a change has been made.
+	- Make it so that if they put an invalid input (you can only input numbers >= 0 or N/A) into the gradebook, it doesnt get pushed to the collection, and the cell becomes red
+	- Make sure assessments tab jquery is thoroughly tested.
+	- Assessments tab blur function for final evaluations is broken, wont save to collection.
+	- When you create a new course, in the most recent year relative to the other courses you have, and its the first course of that year, upon creation, the new course will be highlighted in the sidenav, but the mainview wont update.
 
-	- In each of the Settings' Tabs, check the input type to ensure only numbers can be inputted for the weights.
-	- Create new assessment modal error messages arent red for "Assessment Name" field
-	- You are currently able to create an assessment even if you did not assign any grade points for K, A, T, or C.
-
+	-Repopulate edit students modal when opened 
+	-Repopulate assessment settings when you hit edit 
+	-Repopulate change asssessment name modal when opened
+	
 -------------
+
+
+-Figure out why I can't add script with src includes/globalFunctions/clearValidation.js 
 
 Good web documents:
 	Using Dynamic Templates in Meteor: https://themeteorchef.com/tutorials/using-dynamic-templates
+Jquery-validation docs:
+		-https://themeteorchef.com/tutorials/validating-forms-with-jquery-validation
+		-http://demo.geekslabs.com/materialize/v3.1/form-validation.html
+		-https://codepen.io/tdurant72/pen/vgyBjZ
+		-https://stackoverflow.com/questions/39313758/materialize-css-custom-form-validation-error-message
+		-https://jsfiddle.net/rz0zk5u6/2/
+		-if we have problem with selects: 
+			-https://github.com/Dogfalo/materialize/issues/3440
+
+

@@ -2,3 +2,9 @@
     color:#616161;
     padding: .5em;
 }
+#generalSettingsCourseName-error {
+    color: #d32f2f !important;
+}
+#generalSettings-courseYear-error {
+    color: #d32f2f !important;
+}

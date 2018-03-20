@@ -1,9 +1,14 @@
 #login-email-error { 
-    /* color: #d32f2f !important; */
+    color: #d32f2f !important;
 }
-.user-loginEmail {
+
+#login-password-error { 
+    color: #d32f2f !important;
+}
+
+/* .user-loginEmail {
     margin-bottom: 0 !important;
 }
 .email-input {
     margin-bottom: 20px;
-}
+} */

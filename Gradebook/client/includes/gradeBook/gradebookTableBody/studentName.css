@@ -1,7 +1,7 @@
 .studNameCell{
     border-right: 1px double black !important;
     min-width:200px;
-    border-bottom: 1px dashed green;
+    border-bottom: 1px solid grey;
     z-index: 1;
 }
 
@@ -31,4 +31,5 @@
 
 .mar-bot-none{
     margin-bottom:0!important;
+    padding-top:0!important;
 }

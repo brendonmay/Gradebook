@@ -145,5 +145,17 @@
 }
 
 .green-icon-placement{
-    margin-top:.6rem
+      margin-top:.6rem
 }
+
+.changeAssessmentTypeName {
+    color: #d32f2f !important;
+}
+
+#assessmentSettingsTabRequiredError {
+    color: #d32f2f !important;
+    text-align: center;
+    width: 90%;
+    padding-bottom: 15px;
+}
+

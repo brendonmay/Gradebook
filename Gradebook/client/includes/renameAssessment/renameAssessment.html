@@ -7,9 +7,10 @@
                 </p>
                 <form id="renameAssessmentModalForm" onsubmit="return false">
                     <div class="row">
-                        <div class='input-field input-margin-bottom-fix col s8 offset-s2' style="padding: 0">
-                            <input id="editAssessmentName" type="text" placeholder="{{getAssessmentName}}" required>
+                        <div class='input-field input-margin-bottom-fix col s9 offset-s1' style="padding: 0">
+                            <input id="editAssessmentName" type="text" placeholder="{{getAssessmentName}}" name="renameAssessmentName" data-error=".renameAssessmentError">
                             <label for="editAssessmentName" class="active" style="left: 0">Assessment Name</label>
+                            <div class="renameAssessmentError"></div>
                         </div>
                     </div>
                     <input type="submit" onsubmit="return false" style="display: none;" />

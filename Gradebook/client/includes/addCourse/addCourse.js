@@ -4,6 +4,7 @@ import { Courses } from '../../../lib/collections.js';
 import { CourseWeighting } from '../../../lib/collections.js';
 import { Accounts } from 'meteor/accounts-base';
 import { Assessments } from '../../../lib/collections.js';
+import jqueryValidation from 'jquery-validation';
 
 import '../../main.html';
 
@@ -80,6 +81,7 @@ Template.addCourse.events({
         return false
     },
     'click .addCourseCancel': function() {
+        closeAddCourseModal();
         $('#addModal').modal('close');
     }
 
@@ -108,4 +110,31 @@ Template.addCourse.onRendered(function () {
         } 
       }
     );
+    $("#addCourseModalForm").validate({
+        errorClass: 'invalid',
+        validClass: 'jquery-validation-valid',
+        rules: {
+            courseName: {
+                required: true,
+                maxlength: 15
+            },
+            courseYearSelect: {
+                required: true,
+            }
+        },
+        messages: {
+            courseName: {
+                maxlength: "Course Names cannot exceed 15 characters."
+            }
+        },
+        errorElement: 'div',
+        errorPlacement: function (error, element) {
+            var placement = $(element).data('error');
+            if (placement) {
+                $(placement).append(error)
+            } else {
+                error.insertAfter(element);
+            }
+        }
+    });
 });

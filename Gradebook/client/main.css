@@ -93,6 +93,15 @@ input {
 .input-field .div.error {
   color: #d32f2f;
 }
+input {
+  margin-bottom: 0 !important;
+}
+.input-margin-bottom-fix {
+  margin-bottom: 20px !important;
+}
+.validation-red-text {
+  color: #d32f2f !important;
+}
 
 .material-icons, .icon-text {
    /*Changed from middle, notify adam if it messess anything up*/
@@ -124,4 +133,12 @@ input {
   height: auto;
   top: 5% !important;
   overflow: visible;
+}
+
+/* 
+ * For JQuery Validation
+ */
+
+.jquery-validation-valid {
+  border-bottom: 1px solid #4caf50 !important;
 }

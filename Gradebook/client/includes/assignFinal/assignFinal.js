@@ -8,20 +8,9 @@ import jqueryValidation from 'jquery-validation';
 
 import '../../main.html';
 
-function clearValidation(formElement) {
-    //Internal $.validator is exposed through $(form).validate()
-    var validator = $(formElement).validate();
-    //Iterate through named elements inside of the form, and mark them as error free
-    $('[name]', formElement).each(function () {
-        validator.successList.push(this);//mark as error free
-        validator.showErrors();//remove error messages if present
-    });
-    validator.resetForm();//remove error class on name elements and clear history
-    validator.reset();//remove all error and success data
-}
-
 function closeAssignFinalModal() {
     //clear the input fields
+    document.getElementById("finalMustHaveOneErrorMessage").style.display = "none";
     var form = document.getElementById("assignFinalFormId");
     form.reset();
     clearValidation(form);
@@ -106,6 +95,16 @@ Template.assignFinal.events({
         let finalAssessmentTypes = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).finalAssessmentTypes;
         var assessmentObjects = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).finalAssessmentTypes;
 
+        if ((markK == "" || markK == "N/A") &&
+            (markA == "" || markA == "N/A") &&
+            (markT == "" || markT == "N/A") &&
+            (markC == "" || markC == "N/A")) {
+
+            document.getElementById("finalMustHaveOneErrorMessage").style.display = "";
+            return false;
+        } else {
+            document.getElementById("finalMustHaveOneErrorMessage").style.display = "none";
+        }
 
         //find assessmentTypeId
         var assessmentTypeId = "";
@@ -113,22 +112,6 @@ Template.assignFinal.events({
             if (finalAssessmentTypes[i].assessmentType == assessmentType) {
                 assessmentTypeId = finalAssessmentTypes[i].assessmentTypeId
             }
-        }
-
-        //checks
-        if (markK == "N/A" && markA == "N/A" && markT == "N/A" && markC == "N/A") {
-            Materialize.toast('You must assess the students in at least one category.', 5000, 'amber darken-3');
-            return false
-        }
-
-        if (markK <= 0 || markA <= 0 || markT <= 0 || markC <= 0) {
-            Materialize.toast("A selected category's mark must be an integer greater than 0.", 5000, 'amber darken-3');
-            return false
-        }
-
-        if (!((markK == "N/A" || Math.floor(markK) == markK) && (markA == "N/A" || Math.floor(markA) == markA) && (markT == "N/A" || Math.floor(markT) == markT) && (markC == "N/A" || Math.floor(markC) == markC))) {
-            Materialize.toast("A selected category's mark must be an integer greater than 0.", 5000, 'amber darken-3');
-            return false
         }
 
         if (markK != "N/A") {
@@ -143,7 +126,7 @@ Template.assignFinal.events({
         if (markC != "N/A") {
             markC = Number(markC)
         }
-        if (assessmentDate == ""){
+        if (assessmentDate == "") {
             assessmentDate = "N/A"
         }
 
@@ -164,10 +147,11 @@ Template.assignFinal.events({
         //update Students Collection
         Meteor.call('students.addNewAssessment', Meteor.userId(), currentCourseId, assessmentTypeId);
 
+        Session.set("gradebookUpdated", true);
+
         //clean up and close modal
         closeAssignFinalModal();
     },
-
     'click .final-check-box': function () {
         let target = event.target;
         let elementId = target.id;
@@ -213,7 +197,7 @@ Template.assignFinal.onRendered(function () {
         return (input == "N/A" || Math.floor(input) == input);
     });
     $.validator.addMethod('isPositive', (input) => {
-        return (input >= 0);
+        return (input > 0);
     });
     $('.createAssessmentModal').modal({
         dismissible: true, // Modal can be dismissed by clicking outside of the modal
@@ -223,11 +207,11 @@ Template.assignFinal.onRendered(function () {
     });
     $("#assignFinalFormId").validate({
         errorClass: 'invalid',
-        validClass: 'final-marks-valid',
+        validClass: 'jquery-validation-valid',
         rules: {
             marksKFinal: {
                 isInteger: true,
-                isPositive: true,
+                isPositive: true
             },
             marksAFinal: {
                 isInteger: true,
@@ -240,6 +224,9 @@ Template.assignFinal.onRendered(function () {
             marksCFinal: {
                 isInteger: true,
                 isPositive: true
+            },
+            finalAssessmentTypeSelect: {
+                required: true
             }
         },
         messages: {

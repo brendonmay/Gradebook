@@ -198,8 +198,8 @@ Template.sideNavDropDown.events({
             if (document.getElementById('gradeBookCourseTab')) { //this allows us to navigate back to gradebook page when new course is clicked
                 document.getElementById('gradeBookCourseTab').click();
             }
-            if (document.getElementById('GS')) {
-                document.getElementById('GS').click();
+            if (document.getElementById('GSClick')) {
+                document.getElementById('GSClick').click();
                 Session.set('settingScreenText', "General Settings");
             }
 

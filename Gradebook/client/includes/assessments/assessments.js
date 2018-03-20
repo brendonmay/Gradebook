@@ -690,6 +690,10 @@ Template.assessments.events({
                     nextInputField.focus();
                     nextInputField.setSelectionRange(0, nextInputField.value.length);
                     break;
+                case "C":
+                    var form = document.getElementById("formSubmit" + assessmentTypeID);
+                    form.click();
+                    break;
                 default:
                     break;
             }
@@ -717,6 +721,10 @@ Template.assessments.events({
                     var nextInputField = document.getElementById("courseC" + assessmentTypeID);
                     nextInputField.focus();
                     nextInputField.setSelectionRange(0, nextInputField.value.length);
+                    break;
+                case "C":
+                    var form = document.getElementById("formSubmit" + assessmentTypeID);
+                    form.click();
                     break;
                 default:
                     break;

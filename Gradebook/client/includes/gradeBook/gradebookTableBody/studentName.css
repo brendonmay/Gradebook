@@ -41,3 +41,18 @@
 .adj-grade-pos{
     margin-left:4%!important;
 }
+
+.studMarkTableCell{
+    min-width: 70px !important;
+    border: .5px solid grey;
+}
+
+.studMarkInput {
+    width: 50%;
+    margin: 0; 
+    text-align: center;
+}
+
+.studMarkInvalid {
+    color: #d32f2f !important;
+}

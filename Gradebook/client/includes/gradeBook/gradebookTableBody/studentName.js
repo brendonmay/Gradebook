@@ -33,8 +33,9 @@ function insertGrade() {
     const studentId = inputId.slice(inputId.indexOf("?") + 1, inputId.indexOf("#"));
     const assessmentId = inputId.slice(inputId.indexOf("#") + 1, inputId.length);
     const grade = event.target.value;
-
-    Meteor.call('students.insertGrade', Meteor.userId(), courseId, category, studentId, assessmentId, grade);
+    if (checkValidationOfInput(inputId)) {
+         Meteor.call('students.insertGrade', Meteor.userId(), courseId, category, studentId, assessmentId, grade);
+    }
 }
 
 function generateArrayOfStudentObjects(sortedStudentArray) {
@@ -477,6 +478,32 @@ function calculateFinalGrade(ownerId, courseId, assessmentTypeGrades){
     return Number(finalGrade.toFixed(2))
 }
 
+function checkValidationOfInput(inputID) {
+    var input = document.getElementById(inputID);
+    if (input == null) return false;
+    const inputVal = input.value;
+
+    //return (input == "N/A" || Math.floor(input) == input); return (input > 0 || input == "N/A");
+    if (inputVal == "N/A" || !isNaN(inputVal) || (Number(inputVal) >= 0 && inputVal != "")) {
+        if (input.classList.contains("invalid")) {
+            input.classList.remove("invalid")
+        }
+        if (input.classList.contains("studMarkInvalid")) {
+            input.classList.remove("studMarkInvalid")
+        }
+        return true;
+    } else { //invalid 
+        if (!input.classList.contains("invalid")) {
+            input.classList.add("invalid")
+        }
+        if (!input.classList.contains("studMarkInvalid")) {
+            input.classList.add("studMarkInvalid")
+        }
+        input.focus();
+        return false;
+    }
+}
+
 Template.studentName.helpers({
     getStudents: function () {
         let sortedStudentArray = generateSortedStudentArray();
@@ -749,4 +776,4 @@ Template.studentName.events({
             }
         }
     }
-})
+});

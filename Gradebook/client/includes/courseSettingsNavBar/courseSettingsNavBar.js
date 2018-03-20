@@ -27,7 +27,9 @@ Template.courseSettingsNavBar.events({
         assessmentsElement.parentElement.classList.remove("active");
         categoryElement.parentElement.classList.remove("active");
 
-        var listElement = target.parentElement.parentElement;
+        var targetID = target.id;
+        var listContainerID = targetID.slice(0,2) + "ClickElement"
+        var listElement = document.getElementById(listContainerID);
         listElement.classList.add("active");
 
         if (settingId == "CW") {

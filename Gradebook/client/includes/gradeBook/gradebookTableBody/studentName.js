@@ -588,6 +588,10 @@ Template.studentName.events({
                                 document.getElementById(newInputIdC).setSelectionRange(0, document.getElementById(newInputIdC).value.length);
 
                             }
+                            else {
+                                document.getElementById(inputId).blur();
+                                document.getElementById(inputId).focus();
+                            }
                         }
                     }
                 }
@@ -644,6 +648,10 @@ Template.studentName.events({
                             document.getElementById(newInputIdC).setSelectionRange(0, document.getElementById(newInputIdC).value.length);
 
                         }
+                        else {
+                            document.getElementById(inputId).blur();
+                            document.getElementById(inputId).focus();
+                        }
                     }
                 }
             }
@@ -692,6 +700,10 @@ Template.studentName.events({
                         document.getElementById(newInputIdC).setSelectionRange(0, document.getElementById(newInputIdC).value.length);
 
                     }
+                    else {
+                        document.getElementById(inputId).blur();
+                        document.getElementById(inputId).focus();
+                    }
                 }
             }
             if (category == "C") {
@@ -729,7 +741,10 @@ Template.studentName.events({
                 else if (!document.getElementById(newInputIdC).hasAttribute("disabled")) {
                     document.getElementById(newInputIdC).focus();
                     document.getElementById(newInputIdC).setSelectionRange(0, document.getElementById(newInputIdC).value.length);
-
+                } 
+                else {
+                    document.getElementById(inputId).blur();
+                    document.getElementById(inputId).focus();
                 }
             }
         }

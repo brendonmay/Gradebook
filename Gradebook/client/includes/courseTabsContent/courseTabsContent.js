@@ -5,7 +5,7 @@ import { Accounts } from 'meteor/accounts-base';
 
 import '../../main.html';
 
-Template.courseTabsContent.onRendered( function() {
+Template.courseTabsContent.onRendered(function () {
   $('.dropdown-button').dropdown();
   $('input#input_text, textarea#textarea1').characterCounter();
   $('select').material_select();
@@ -38,11 +38,11 @@ Template.courseTabsContent.helpers({
 
   assessmentsSelected: function () {
     return Session.get('settingScreenText') == "Assessments";
-  },
+  }
 });
 
 Template.courseTabsContent.onRendered(function () {
-  $(document).ready(function() {
-      $('select').material_select();
+  $(document).ready(function () {
+    $('select').material_select();
   });
 });

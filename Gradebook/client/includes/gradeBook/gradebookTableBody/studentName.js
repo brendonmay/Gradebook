@@ -3,6 +3,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Students } from '../../../../lib/collections.js';
 import { Assessments } from '../../../../lib/collections.js';
 import { Accounts } from 'meteor/accounts-base';
+import { CourseWeighting } from '../../../../lib/collections.js';
 
 function generateSortedStudentArray() {
     let courseId = Session.get('courseId');
@@ -107,8 +108,125 @@ function add(a, b) {
     return a + b;
 }
 
+function getWeightedAverage(K, A, T, C, WeightK, WeightA, WeightT, WeightC){
+    if (K != "N/A" && A != "N/A" && T != "N/A" && C != "N/A"){
+        var weightedAverage = K*WeightK + A*WeightA + T*WeightT + C*WeightC;
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K == "N/A" && A != "N/A" && T != "N/A" && C != "N/A"){
+        var newWeightC = (100*WeightC)/(WeightA + WeightT + WeightC);
+        var newWeightA = (WeightA/WeightC)*newWeightC;
+        var newWeightT = (WeightT/WeightC)*newWeightC;
+
+        var weightedAverage = A*newWeightA + T*newWeightT + C*newWeightC;
+
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K != "N/A" && A == "N/A" && T != "N/A" && C != "N/A"){
+        var newWeightC = (100*WeightC)/(WeightK + WeightT + WeightC);
+        var newWeightK = (WeightK/WeightC)*newWeightC;
+        var newWeightT = (WeightT/WeightC)*newWeightC;
+
+        var weightedAverage = K*newWeightK + T*newWeightT + C*newWeightC;
+        
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K != "N/A" && A != "N/A" && T == "N/A" && C != "N/A"){
+        var newWeightC = (100*WeightC)/(WeightA + WeightK + WeightC);
+        var newWeightK = (WeightK/WeightC)*newWeightC;
+        var newWeightA = (WeightA/WeightC)*newWeightC;
+
+        var weightedAverage = K*newWeightK + A*newWeightA + C*newWeightC;
+        
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K != "N/A" && A != "N/A" && T != "N/A" && C == "N/A"){
+        var newWeightT = (100*WeightT)/(WeightK + WeightT + WeightA);
+        var newWeightK = (WeightK/WeightT)*newWeightT;
+        var newWeightA = (WeightA/WeightT)*newWeightT;
+
+        var weightedAverage = K*newWeightK + A*newWeightA + T*newWeightT;
+        
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K == "N/A" && A == "N/A" && T != "N/A" && C != "N/A"){
+        var newWeightT = (100*WeightT)/(WeightT+WeightC);
+        var newWeightC = (WeightC/WeightT)*newWeightT;
+
+        var weightedAverage = T*newWeightT + C*newWeightC;
+
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K == "N/A" && A != "N/A" && T == "N/A" && C != "N/A"){
+        var newWeightA = (100*WeightA)/(WeightA+WeightC);
+        var newWeightC = (WeightC/WeightA)*newWeightA;
+
+        var weightedAverage = A*newWeightA + C*newWeightC;
+
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K == "N/A" && A != "N/A" && T != "N/A" && C == "N/A"){
+        var newWeightA = (100*WeightA)/(WeightA+WeightT);
+        var newWeightT = (WeightT/WeightA)*newWeightA;
+
+        var weightedAverage = A*newWeightA + T*newWeightT;
+
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K != "N/A" && A == "N/A" && T == "N/A" && C != "N/A"){
+        var newWeightK = (100*WeightK)/(WeightK+WeightC);
+        var newWeightC = (WeightC/WeightK)*newWeightK;
+
+        var weightedAverage = C*newWeightC + K*newWeightK;
+
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K != "N/A" && A == "N/A" && T != "N/A" && C == "N/A"){
+        var newWeightK = (100*WeightK)/(WeightK+WeightT);
+        var newWeightT = (WeightT/WeightK)*newWeightK;
+
+        var weightedAverage = T*newWeightT + K*newWeightK;
+
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K != "N/A" && A != "N/A" && T == "N/A" && C == "N/A"){
+        var newWeightA = (100*WeightA)/(WeightK+WeightA);
+        var newWeightK = (WeightK/WeightA)*newWeightA;
+
+        var weightedAverage = A*newWeightA + K*newWeightK;
+
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K != "N/A" && A == "N/A" && T == "N/A" && C == "N/A"){
+        var weightedAverage = 100*K;
+
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K == "N/A" && A != "N/A" && T == "N/A" && C == "N/A"){
+        var weightedAverage = 100*A;
+
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K == "N/A" && A == "N/A" && T != "N/A" && C == "N/A"){
+        var weightedAverage = 100*T;
+
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K == "N/A" && A == "N/A" && T == "N/A" && C != "N/A"){
+        var weightedAverage = 100*C;
+
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K == "N/A" && A == "N/A" && T == "N/A" && C == "N/A"){
+        var weightedAverage = "N/A";
+
+        return weightedAverage
+    }
+}
+
 function calculateAsessmentTypeGrades(ownerId, courseId, organizedStudentGrades){
     var assessmentTypes = Object.keys(organizedStudentGrades);
+    var assessmentTypeGrades = {};
     for ( i = 0; i < assessmentTypes.length; i++){
         var assessmentType = assessmentTypes[i];
         var KGrades = [];
@@ -201,7 +319,6 @@ function calculateAsessmentTypeGrades(ownerId, courseId, organizedStudentGrades)
                                             CSumOfExcludedMarks = CSumOfExcludedMarks + Number(assessments[y].C);
                                         }
                                     }
-                                    // y = assessments.length;
                                 }
                             }
                             k = courseAssessmentTypes.length;
@@ -300,17 +417,64 @@ function calculateAsessmentTypeGrades(ownerId, courseId, organizedStudentGrades)
             CassessmentTypeGrade = "N/A"
         }
 
-        console.log(KassessmentTypeGrade, AassessmentTypeGrade, TassessmentTypeGrade, CassessmentTypeGrade);
+        var WeightK = Session.get('knowledgeWeight');
+        var WeightA = Session.get('applicationWeight');
+        var WeightT = Session.get('thinkingWeight');
+        var WeightC = Session.get('communicationWeight');
+
+        //Current Overall Grade for AssessmentType
+        var weightedAverage = getWeightedAverage(KassessmentTypeGrade, AassessmentTypeGrade, TassessmentTypeGrade, CassessmentTypeGrade, WeightK, WeightA, WeightT, WeightC);
+        var assessmentTypeWeighting = 0;
+
+        //AssessmentTypeWeight for Course
+        if (assessmentType[0] != "f"){
+            var courseworkWeightings = CourseWeighting.findOne({ownerId, courseId}).courseworkAssessmentTypes;
+            for (y = 0; y < courseworkWeightings.length; y++){
+                if(courseworkWeightings[y].assessmentTypeId == assessmentType){
+                    assessmentTypeWeighting = courseworkWeightings[y].assessmentWeight;
+                    y = courseworkWeightings.length;
+                }
+            }
+        }
+        else{  
+            var finalWeightings = CourseWeighting.findOne({ownerId, courseId}).finalAssessmentTypes;
+            for ( y = 0; y < finalWeightings.length; y++){
+                if (finalWeightings[y].assessmentTypeId == assessmentType){
+                    assessmentTypeWeighting = finalWeightings[y].assessmentWeight;
+                    y = finalWeightings.length;
+                }
+            }
+
+        }
+
+        assessmentTypeGrades[assessmentType] = [weightedAverage, assessmentTypeWeighting/100];
 
     }
+    return assessmentTypeGrades //{c1: [86, .30], c2: [88, .30], f1: [98, .40]} [grade, weight]
 }
 
-function calculateFinalEvaluationGrade(ownerId, courseId, organizedStudentGrades){
+function calculateFinalGrade(ownerId, courseId, assessmentTypeGrades){
+    var assessmentTypes = Object.keys(assessmentTypeGrades);
+    var currentGrade = 0;
+    var totalWeight = 0;
+    for (i = 0; i < assessmentTypes.length; i++){
+        var assessmentType = assessmentTypes[i];
+        var gradeArray = assessmentTypeGrades[assessmentType];
+        if ( gradeArray[0] != "N/A"){
+            currentGrade = currentGrade + ((Number(gradeArray[0])) * (Number(gradeArray[1])));
+            totalWeight = totalWeight + (Number(gradeArray[1]));
+        }
+    }
+    
+    var calculatedWeight = 1/totalWeight;
 
-}
+    if (totalWeight == 0){
+        return "N/A"
+    }
 
-function calculateFinalGrade(ownerId, courseId, studentId){
+    var finalGrade = currentGrade*calculatedWeight;
 
+    return Number(finalGrade.toFixed(2))
 }
 
 Template.studentName.helpers({
@@ -324,11 +488,16 @@ Template.studentName.helpers({
 
         var organizedStudentGrades = organizeStudentGrades(ownerId, courseId, studentId);
 
-        calculateAsessmentTypeGrades(ownerId, courseId, organizedStudentGrades);
+        var assessmentTypeGrades = calculateAsessmentTypeGrades(ownerId, courseId, organizedStudentGrades);
 
-        return "98%"
+        var finalGrade = calculateFinalGrade(ownerId, courseId, assessmentTypeGrades)
 
-    
+        if (finalGrade != "N/A" ){
+            return finalGrade + "%"
+        }
+        else{
+            return "N/A"
+        }
     },
     getStudentGradesForAssessments: function (studentId) {
         let courseId = Session.get('courseId');

@@ -12,8 +12,11 @@
 	- Make it so that if they put an invalid input (you can only input numbers >= 0 or N/A) into the gradebook, it doesnt get pushed to the collection, and the cell becomes red
 	- Make sure assessments tab jquery is thoroughly tested.
 	- Assessments tab blur function for final evaluations is broken, wont save to collection.
-	- When you create a new course, in the most recent year relative to the other courses you have, and its the first course of that year, upon creation, the new course will be highlighted in the sidenav, but the mainview wont update.
+	- When you create a new course in the most recent year relative to the other courses you have, and its the first course of that year, upon creation, the new course will be highlighted in the sidenav, but the mainview wont update.
 	- When you delete an assessment from the gradebook, updategradebookcolors, probably also re-fix headers
+	- on the final row of the gradebook, when you hit enter, the focus doesnt move as intended, but its not being submitted to collection.
+	- When you create a new assessmentType, its not updating the assessments collection.
+	- when you click course settings, if no other sub-menu is highlighted, highlight general settings
 
 	-Repopulate edit students modal when opened 
 	-Repopulate assessment settings when you hit edit 

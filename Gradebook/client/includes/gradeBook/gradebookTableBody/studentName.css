@@ -29,7 +29,15 @@
     margin-top:10px!important;
 }
 
+.K-input-grade{
+    border-left: 1px solid black;
+}
+
 .mar-bot-none{
     margin-bottom:0!important;
     padding-top:0!important;
+}
+
+.adj-grade-pos{
+    margin-left:4%!important;
 }

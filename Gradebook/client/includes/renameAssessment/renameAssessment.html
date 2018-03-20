@@ -1,24 +1,24 @@
 <template name="renameAssessment">
-        <div id="renameAssessmentModal" class="modal">
-            <div class="modal-content">
-                <h4>Rename Assessment</h4>
-                <p>Below you can change the name of 
-                    <u>{{getAssessmentName}}</u>:
-                </p>
-                <form id="renameAssessmentModalForm" onsubmit="return false">
-                    <div class="row">
-                        <div class='input-field input-margin-bottom-fix col s9 offset-s1' style="padding: 0">
-                            <input id="editAssessmentName" type="text" placeholder="{{getAssessmentName}}" name="renameAssessmentName" data-error=".renameAssessmentError">
-                            <label for="editAssessmentName" class="active" style="left: 0">Assessment Name</label>
-                            <div class="renameAssessmentError"></div>
-                        </div>
+    <div id="renameAssessmentModal" class="modal">
+        <div class="modal-content">
+            <h4>Rename Assessment</h4>
+            <p>Below you can change the name of
+                <u>{{getAssessmentName}}</u>:
+            </p>
+            <form id="renameAssessmentModalForm" onsubmit="return false">{{fillAssessmentName}}
+                <div class="row">
+                    <div class='input-field input-margin-bottom-fix col s9 offset-s1' style="padding: 0">
+                        <label for="editAssessmentName" class="active" style="left: 0">Assessment Name</label>
+                        <input id="editAssessmentName" type="text" value={{getAssessmentName}} name="renameAssessmentName" data-error=".renameAssessmentError">
+                        <div class="renameAssessmentError"></div>
                     </div>
-                    <input type="submit" onsubmit="return false" style="display: none;" />
-                    <div class="modal-footer">
-                        <a href="#!" id="save-changes-edit-assessmentName" class="waves-effect waves-grey btn-flat">Save Changes</a>
-                        <a href="#!" class="modal-action modal-close waves-effect waves-grey btn-flat">Cancel</a>
-                    </div>
-                </form>
-            </div>
+                </div>
+                <input type="submit" onsubmit="return false" style="display: none;" />
+                <div class="modal-footer">
+                    <a href="#!" id="save-changes-edit-assessmentName" class="waves-effect waves-grey btn-flat">Save Changes</a>
+                    <a href="#!" class="modal-action modal-close waves-effect waves-grey btn-flat">Cancel</a>
+                </div>
+            </form>
         </div>
-    </template>
+    </div>
+</template>

@@ -1,14 +1,16 @@
--Bugs/Things To Do
+-Styling
 	- "Thanks for signing in! Add a course to get started!
 	- "Welcome Back! Select a course to get started!"
 	- Make it so that the gradebook has a different display if you have no students
+
+-Functionality
 	- When you change the year of a course, it will no longer be highlighted in the sideNav (redirect with clicks?)
 	- If you hit tab multiple times in gradebook (past the end of the row), datepicker pops up
 	- Make it so that if they put an invalid input (you can only input numbers >= 0 or N/A) into the gradebook, it doesnt get pushed to the collection, and the cell becomes red
-	- Make sure assessments tab jquery is thoroughly tested.
 	- When you create a new course in the most recent year relative to the other courses you have, and its the first course of that year, upon creation, the new course will be highlighted in the sidenav, but the mainview wont update.
 	- When you delete an assessment from the gradebook, updategradebookcolors, probably also re-fix headers
-	- When you create a new assessmentType, its not updating the assessments collection.
+	- Rename assessment modal & rename student modal styling conflicts, label overlapping input value. Occurs after you open modal, delete content, cancel, then reopen.
+	- If you click on the padding-right or left of any of the items in the course settings menu (general settings, etc), you dont get directed to the page, and the active class is removed.
 
 -------------
 -Figure out why I can't add script with src includes/globalFunctions/clearValidation.js 

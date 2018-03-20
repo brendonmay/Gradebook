@@ -652,14 +652,15 @@ Template.assessments.events({
         var element = document.getElementsByName("collHead" + assessmentId);
 
         element[0].click();
-
+        Session.set('selectedAssessment', { assessmentId: "assessmentId", assessmentName: "assessmentName" });
         //store assessmentId and assessmentName in Session Variable
-        Session.set('selectedAssessment', { assessmentId, assessmentName });
+        Session.set('selectedAssessment', { assessmentId: assessmentId, assessmentName: assessmentName });
 
         //open modal
         $('#renameAssessmentModal').modal({
             dismissible: true,
             complete: function () {
+                clearValidation(document.getElementById("renameAssessmentModalForm"));
                 document.getElementById("renameAssessmentModalForm").reset();
             }
         }

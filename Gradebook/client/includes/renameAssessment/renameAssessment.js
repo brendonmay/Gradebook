@@ -35,6 +35,10 @@ Template.renameAssessment.helpers({
     getAssessmentName: function(){
         var assessmentName = Session.get('selectedAssessment').assessmentName;
         return assessmentName
+    },
+    fillAssessmentName: function() {
+        document.getElementById('editAssessmentName').value = Session.get('selectedAssessment').assessmentName;
+        return "";
     }
 });
 

@@ -1,11 +1,7 @@
--Styling Issues
+-Bugs/Things To Do
 	- "Thanks for signing in! Add a course to get started!
 	- "Welcome Back! Select a course to get started!"
-	- Fix buttons placements in each of the settings tabs.
-	- Buttons in settings tab dont behave well as you change the size of the window. Possible suggested solution, use display=none instead of adding class "hide" when they shouldnt be there. This can be achieved with the setAttribute() functiion.
 	- Make it so that the gradebook has a different display if you have no students
-
--Functionality Issues
 	- When you change the year of a course, it will no longer be highlighted in the sideNav (redirect with clicks?)
 	- If you hit tab multiple times in gradebook (past the end of the row), datepicker pops up
 	- Notifications for changes in final evaluation should only appear if a change has been made.
@@ -18,24 +14,5 @@
 	- When you create a new assessmentType, its not updating the assessments collection.
 	- when you click course settings, if no other sub-menu is highlighted, highlight general settings
 
-	-Repopulate edit students modal when opened 
-	-Repopulate assessment settings when you hit edit 
-	-Repopulate change asssessment name modal when opened
-	
 -------------
-
-
 -Figure out why I can't add script with src includes/globalFunctions/clearValidation.js 
-
-Good web documents:
-	Using Dynamic Templates in Meteor: https://themeteorchef.com/tutorials/using-dynamic-templates
-Jquery-validation docs:
-		-https://themeteorchef.com/tutorials/validating-forms-with-jquery-validation
-		-http://demo.geekslabs.com/materialize/v3.1/form-validation.html
-		-https://codepen.io/tdurant72/pen/vgyBjZ
-		-https://stackoverflow.com/questions/39313758/materialize-css-custom-form-validation-error-message
-		-https://jsfiddle.net/rz0zk5u6/2/
-		-if we have problem with selects: 
-			-https://github.com/Dogfalo/materialize/issues/3440
-
-

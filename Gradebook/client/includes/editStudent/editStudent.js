@@ -12,10 +12,14 @@ Template.editStudent.helpers({
     getFirstName: function(){
         return Session.get('selectedStudent').firstName;
     },
-
     getLastName: function(){
         return Session.get('selectedStudent').lastName;
     },
+    populateNameFields: function() {
+        document.getElementById('editStudentFirstName').value = Session.get('selectedStudent').firstName;
+        document.getElementById('editStudentLastName').value = Session.get('selectedStudent').lastName;
+        return "";
+    }
 });
 
 Template.editStudent.events({
@@ -68,12 +72,12 @@ Template.editStudent.onRendered(function () {
         },
         messages: {
             editStudentLastName: {
-                containsIllegalCharacters: "Names can only contain alphabet letters and dashes(-)",
-                maxlength: "Last name cannot be longer then 16 characters"
+                containsIllegalCharacters: "Names can only contain alphabet letters and dashes(-).",
+                maxlength: "Last name cannot be longer then 16 characters."
             },
             editStudentFirstName: {
-                containsIllegalCharacters: "Names can only contain alphabet letters and dashes(-)",
-                maxlength: "First name cannot be longer then 16 characters"
+                containsIllegalCharacters: "Names can only contain alphabet letters and dashes(-).",
+                maxlength: "First name cannot be longer then 16 characters."
             }
         },
         errorElement: 'div',

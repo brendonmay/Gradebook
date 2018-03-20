@@ -161,7 +161,6 @@ function doneEditing() { //works
     clearValidation(document.getElementById('assessmentSettingsForm'));
 }
 
-
 function addError(text, error) {
     //document.getElementById('assessmentSettingsTabRequiredError').children.length;
     var isRequired = false;
@@ -427,6 +426,7 @@ Template.assessmentsTab.events({
             let inputCourseId = "inputc" + courseworkAssessmentTypes[i].assessmentTypeId;
             let assessmentTypeWeightCourse = document.getElementById(inputCourseId);
             assessmentTypeWeightCourse.removeAttribute('disabled');
+            assessmentTypeWeightCourse.value = courseworkAssessmentTypes[i].assessmentWeight;
 
             //hide display assessment-type
             let courseDisplayId = "displayc" + courseworkAssessmentTypes[i].assessmentTypeId;
@@ -437,6 +437,7 @@ Template.assessmentsTab.events({
             let courseInputId = "changeNamec" + courseworkAssessmentTypes[i].assessmentTypeId;
             let courseInput = document.getElementById(courseInputId);
             courseInput.classList.remove('hide');
+            courseInput.value = courseworkAssessmentTypes[i].assessmentType;
         };
 
         for (i = 0; i < finalAssessmentTypes.length; i++) {
@@ -454,6 +455,7 @@ Template.assessmentsTab.events({
             let inputFinalId = "inputf" + finalAssessmentTypes[i].assessmentTypeId;
             let assessmentTypeWeightFinal = document.getElementById(inputFinalId);
             assessmentTypeWeightFinal.removeAttribute('disabled');
+            assessmentTypeWeightFinal.value = finalAssessmentTypes[i].assessmentWeight;
 
             //hide display assessment-type
             let finalDisplayId = "displayf" + finalAssessmentTypes[i].assessmentTypeId;
@@ -464,6 +466,7 @@ Template.assessmentsTab.events({
             let finalInputId = "changeNamef" + finalAssessmentTypes[i].assessmentTypeId;
             let finalInput = document.getElementById(finalInputId);
             finalInput.classList.remove('hide');
+            finalInput.value = finalAssessmentTypes[i].assessmentType;
         };
 
         let courseWeight = document.getElementById('assessments-courseWorkWeight');

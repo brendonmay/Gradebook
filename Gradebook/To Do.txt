@@ -13,6 +13,8 @@
 	- on the final row of the gradebook, when you hit enter, the focus doesnt move as intended, but its not being submitted to collection.
 	- When you create a new assessmentType, its not updating the assessments collection.
 	- when you click course settings, if no other sub-menu is highlighted, highlight general settings
+	- rename assessment modal styling conflict with label and value
+	- rename student modal styling conflict with label and value
 
 -------------
 -Figure out why I can't add script with src includes/globalFunctions/clearValidation.js 

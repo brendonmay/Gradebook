@@ -227,6 +227,9 @@ Template.addStudents.events({
         }
         );
         $('#editStudentModal').modal('open');
+        setTimeout(function(){
+            Materialize.updateTextFields();
+        }, 10)
     }
 });
 

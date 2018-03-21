@@ -154,12 +154,25 @@ Template.generalSettingsTab.events({
 
         Meteor.call('courses.updateCourseNameAndYear', currentCourseId, courseObj);
 
-        //highlight correct course after changing year
-        if (document.getElementById(oldCourseYear) != null) {
-            document.getElementById(oldCourseYear).click();
-            document.getElementById(oldCourseYear).click();
-        }
         clearPageValidation();
+
+        //highlight correct course after changing year
+        
+        var activeElements = document.getElementsByClassName("active");
+        if(oldCourseYear != newCourseYear){
+            var courseId = Session.get('courseId');
+            for (i = 0; i < activeElements.length; i++){
+                activeElements[0].classList.remove("active");
+                activeElements[0].classList.remove("green");
+            }    
+            setTimeout(function(){
+                document.getElementById(newCourseYear).click();
+                setTimeout(function() {
+                    document.getElementById(courseId).parentElement.classList.add("active");
+                    document.getElementById(courseId).parentElement.classList.add("green");
+                }, 10);
+            }, 5);
+        }
         return false;
     },
     'click .cancel-general-settings': function () {

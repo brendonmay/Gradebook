@@ -80,7 +80,7 @@ Template.studentReports.onRendered(function () {
 });
 
 Template.studentReports.events({
-    'click #testclick': function(){
+    'click .studentSideNavElements': function(){
         $('#assessmentTypeBarGraph').empty();
         drawAssessmentTypeBarGraph();
 

@@ -161,6 +161,7 @@ function doneEditing() { //works
     clearValidation(document.getElementById('assessmentSettingsForm'));
 }
 
+
 function addError(text, error) {
     //document.getElementById('assessmentSettingsTabRequiredError').children.length;
     var isRequired = false;

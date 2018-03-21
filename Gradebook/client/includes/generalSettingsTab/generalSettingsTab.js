@@ -31,7 +31,7 @@ function clearPageValidation() {
     for (var i = 0, element; element = formElements[i++];) {
         if (element.classList.contains('invalid')) {
             element.classList.remove("invalid");
-        } 
+        }
         if (element.classList.contains('jquery-validation-valid')) {
             element.classList.remove('jquery-validation-valid');
         }
@@ -157,17 +157,17 @@ Template.generalSettingsTab.events({
         clearPageValidation();
 
         //highlight correct course after changing year
-        
+
         var activeElements = document.getElementsByClassName("active");
-        if(oldCourseYear != newCourseYear){
+        if (oldCourseYear != newCourseYear) {
             var courseId = Session.get('courseId');
-            for (i = 0; i < activeElements.length; i++){
+            for (i = 0; i < activeElements.length; i++) {
                 activeElements[0].classList.remove("active");
                 activeElements[0].classList.remove("green");
-            }    
-            setTimeout(function(){
+            }
+            setTimeout(function () {
                 document.getElementById(newCourseYear).click();
-                setTimeout(function() {
+                setTimeout(function () {
                     document.getElementById(courseId).parentElement.classList.add("active");
                     document.getElementById(courseId).parentElement.classList.add("green");
                 }, 10);

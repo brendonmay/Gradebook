@@ -450,7 +450,7 @@ Template.assessments.events({
                 }
             }
         });
-        $('#createAssessmentModal').modal('open');
+        $('#createAssessmentModal').modal('open');     
         $('select').material_select();
     },
     'click .deleteFinalEval': function () {

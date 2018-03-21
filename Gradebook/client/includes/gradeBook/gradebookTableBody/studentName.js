@@ -584,6 +584,7 @@ Template.studentName.events({
                                     //check it isnt the last student
                                     if (i == (sortedStudentObjects.length - 1)) {
                                         //console.log("last student");
+                                        insertGrade();
                                         return false
                                     }
                                     else {
@@ -615,10 +616,6 @@ Template.studentName.events({
                                 document.getElementById(newInputIdC).setSelectionRange(0, document.getElementById(newInputIdC).value.length);
 
                             }
-                            else {
-                                document.getElementById(inputId).blur();
-                                document.getElementById(inputId).focus();
-                            }
                         }
                     }
                 }
@@ -644,6 +641,7 @@ Template.studentName.events({
                                 //check it isnt the last student
                                 if (i == (sortedStudentObjects.length - 1)) {
                                     //console.log("last student");
+                                    insertGrade();
                                     return false
                                 }
                                 else {
@@ -675,10 +673,6 @@ Template.studentName.events({
                             document.getElementById(newInputIdC).setSelectionRange(0, document.getElementById(newInputIdC).value.length);
 
                         }
-                        else {
-                            document.getElementById(inputId).blur();
-                            document.getElementById(inputId).focus();
-                        }
                     }
                 }
             }
@@ -696,6 +690,7 @@ Template.studentName.events({
                             //check it isnt the last student
                             if (i == (sortedStudentObjects.length - 1)) {
                                 //console.log("last student");
+                                insertGrade();
                                 return false
                             }
                             else {
@@ -727,10 +722,6 @@ Template.studentName.events({
                         document.getElementById(newInputIdC).setSelectionRange(0, document.getElementById(newInputIdC).value.length);
 
                     }
-                    else {
-                        document.getElementById(inputId).blur();
-                        document.getElementById(inputId).focus();
-                    }
                 }
             }
             if (category == "C") {
@@ -739,6 +730,7 @@ Template.studentName.events({
                         //check it isnt the last student
                         if (i == (sortedStudentObjects.length - 1)) {
                             //console.log("last student");
+                            insertGrade();
                             return false
                         }
                         else {
@@ -769,10 +761,6 @@ Template.studentName.events({
                     document.getElementById(newInputIdC).focus();
                     document.getElementById(newInputIdC).setSelectionRange(0, document.getElementById(newInputIdC).value.length);
                 } 
-                else {
-                    document.getElementById(inputId).blur();
-                    document.getElementById(inputId).focus();
-                }
             }
         }
     }

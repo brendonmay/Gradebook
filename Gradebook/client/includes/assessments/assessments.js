@@ -666,6 +666,9 @@ Template.assessments.events({
         }
         );
         $('#renameAssessmentModal').modal('open');
+        setTimeout(function(){
+            Materialize.updateTextFields();
+        }, 10)
     },
     'keyup .finalAssessmentInput': function () {
         if (event.keyCode === 13) { //if enter is hit

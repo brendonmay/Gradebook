@@ -2,17 +2,29 @@
     border-bottom: 1px solid black;
     border-left: 1px solid black;
     border-right: 1px solid black;
-    padding-top:10px!important;
+    padding-top:0px!important;
     padding-bottom:10px!important;
     z-index: 2;
 }
 
+table{
+    box-sizing: content-box!important;
+}
+
+td{
+    width:1%!important;
+}
+
+.CHeaderBorder{
+    border-right:1px solid black;
+}
+
 .categoryCell {
-    min-width: 70px; 
+    min-width: 70px;
     background-color: white; 
     text-align:center; 
-    border: 1px solid black; 
-    border-top: 2px solid black;
+    border-left: 1px solid black; 
+    border-bottom: 1px solid black;
     z-index: 2;
 }
 

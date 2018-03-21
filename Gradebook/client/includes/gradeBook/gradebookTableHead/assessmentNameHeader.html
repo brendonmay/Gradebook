@@ -6,6 +6,14 @@
         <th class="studNameCell studentBlankCellBorder studentsCell"></th>
         {{#each getAssessmentNames}}
         <th colspan="4" class='assessmentHeader'>
+            <div class="row mar-bot-none top-right-corn">
+                <a href="#!" class="right gradebook-del-ass-icon" id="gradebook-del?{{assessmentId}}">
+                    <i class="material-icons icon-bluegrey" style="font-size: 20px">close</i>
+                </a>
+                <a href="#!" class="right gradebook-edit-ass-icon" id="gradebook-edit?{{assessmentId}}">
+                    <i class="material-icons icon-bluegrey-edit" style="font-size: 20px">edit</i>
+                </a>
+            </div>
             <div class="row mar-bot-none">
                 {{assessmentName}}
             </div>
@@ -21,7 +29,7 @@
         <th class="tableCell categoryCell K" id="K?categoryAmount#{{assessmentId}}%{{K}}">K ({{K}})</th>
         <th class="tableCell categoryCell A" id="A?categoryAmount#{{assessmentId}}%{{A}}">A ({{A}})</th>
         <th class="tableCell categoryCell T" id="T?categoryAmount#{{assessmentId}}%{{T}}">T ({{T}})</th>
-        <th class="tableCell categoryCell C" id="C?categoryAmount#{{assessmentId}}%{{C}}">C ({{C}})</th>
+        <th class="tableCell categoryCell C CHeaderBorder" id="C?categoryAmount#{{assessmentId}}%{{C}}">C ({{C}})</th>
         {{/each}}
     </tr>
 </template>

@@ -7,28 +7,36 @@
 
 <template name="studentName">
     {{#each getStudents}}
-        <tr>
-            <td class='studNameCell tableCell'>
-                <a class="studName">
-                    <div class="col s8">
-                        <div class="row mar-bot-none">
-                            {{lastName}}
-                        </div>
-                        <div class="row mar-bot-none">
-                            {{firstName}}
-                        </div>
+    <tr>
+        <td class='studNameCell tableCell'>
+            <a class="studName">
+                <div class="col s8">
+                    <div class="row mar-bot-none">
+                        {{lastName}}
                     </div>
-                    <div class="col offset-s1 s2 cus-mar-col">
-                        {{getCurrentGrade studentId}}
+                    <div class="row mar-bot-none">
+                        {{firstName}}
                     </div>
-                </a>
-            </td>
-            {{#each getStudentGradesForAssessments studentId}}
-                <td class="studMarkTableCell tableCell input-field"> <input id="K?{{../studentId}}#{{assessmentId}}" class="gradeInput" type="text" style="width: 50%; margin: 0; text-align: center" value="{{K}}"></td>
-                <td class="studMarkTableCell tableCell input-field"> <input id="A?{{../studentId}}#{{assessmentId}}" class="gradeInput" type="text" style="width: 50%; margin: 0; text-align: center" value="{{A}}"></td>
-                <td class="studMarkTableCell tableCell input-field"> <input id="T?{{../studentId}}#{{assessmentId}}" class="gradeInput" type="text" style="width: 50%; margin: 0; text-align: center" value="{{T}}"></td>
-                <td style="border-right: 2px solid black" class="studMarkTableCell tableCell input-field"> <input id="C?{{../studentId}}#{{assessmentId}}" class="gradeInput" type="text" style="width: 50%; margin: 0; text-align: center" value="{{C}}"></td>
-            {{/each}}
-        </tr>
+                </div>
+                <div class="col offset-s1 s2 cus-mar-col adj-grade-pos">
+                    {{getCurrentGrade studentId}}
+                </div>
+            </a>
+        </td>
+        {{#each getStudentGradesForAssessments studentId}}
+        <td class="studMarkTableCell tableCell input-field K-input-grade">
+            <input id="K?{{../studentId}}#{{assessmentId}}" class="gradeInput studMarkInput" type="text" value="{{K}}" name="K?{{../studentId}}#{{assessmentId}}">
+        </td>
+        <td class="studMarkTableCell tableCell input-field">
+            <input id="A?{{../studentId}}#{{assessmentId}}" class="gradeInput studMarkInput" type="text" value="{{A}}" name="A?{{../studentId}}#{{assessmentId}}">
+        </td>
+        <td class="studMarkTableCell tableCell input-field">
+            <input id="T?{{../studentId}}#{{assessmentId}}" class="gradeInput studMarkInput" type="text" value="{{T}}" name="T?{{../studentId}}#{{assessmentId}}">
+        </td>
+        <td style="border-right: 1px solid black" class="studMarkTableCell tableCell input-field">
+            <input id="C?{{../studentId}}#{{assessmentId}}" class="gradeInput studMarkInput" type="text" value="{{C}}" name="C?{{../studentId}}#{{assessmentId}}">
+        </td>
+        {{/each}}
+    </tr>
     {{/each}}
 </template>

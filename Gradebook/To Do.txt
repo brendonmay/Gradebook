@@ -6,9 +6,7 @@
 -Functionality
 	- If you hit tab multiple times in gradebook (past the end of the row), datepicker pops up
 	- When you create a new course in the most recent year relative to the other courses you have, and its the first course of that year, upon creation, the new course will be highlighted in the sidenav, but the mainview wont update.
-	- if the input is blank in the gradebook, on blur, change the value to N/A
 	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.
-	- In the course settings nav bar, if you click on the edge of one of the menu items, the highlight color changes, but you are not directed to the correct page.
 	
 -------------
 -Figure out why I can't add script with src includes/globalFunctions/clearValidation.js 

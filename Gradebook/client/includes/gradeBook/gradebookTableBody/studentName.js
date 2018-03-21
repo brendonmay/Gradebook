@@ -16,7 +16,7 @@ function generateSortedStudentArray() {
         let firstName = studentsDocument[i].studentFirstName;
         let studentId = studentsDocument[i].studentId;
 
-        if (studentId != "s-0"){
+        if (studentId != "s-0") {
             unsortedStudentArray[unsortedStudentArray.length] = lastName + ", " + firstName + "?" + studentId;
         }
     }
@@ -32,10 +32,16 @@ function insertGrade() {
     const category = inputId[0];
     const studentId = inputId.slice(inputId.indexOf("?") + 1, inputId.indexOf("#"));
     const assessmentId = inputId.slice(inputId.indexOf("#") + 1, inputId.length);
-    const grade = event.target.value;
+    var grade = event.target.value;
     if (checkValidationOfInput(inputId)) {
-         Meteor.call('students.insertGrade', Meteor.userId(), courseId, category, studentId, assessmentId, grade);
+        if (grade.replace(/\s/g, '') == "") {
+            grade = "N/A";
+            document.getElementById(inputId).value = "N/A";
+        }
+
+        Meteor.call('students.insertGrade', Meteor.userId(), courseId, category, studentId, assessmentId, grade);
     }
+
 }
 
 function generateArrayOfStudentObjects(sortedStudentArray) {
@@ -59,17 +65,17 @@ function generateArrayOfStudentObjects(sortedStudentArray) {
     return arrayOfStudentObjects
 }
 
-function organizeStudentGrades(ownerId, courseId, studentId){
-    var studentsArray = Students.findOne({ownerId, courseId}).students;
+function organizeStudentGrades(ownerId, courseId, studentId) {
+    var studentsArray = Students.findOne({ ownerId, courseId }).students;
     var studentGrades = [];
     var organizedStudentGrades = [];
-    for ( i = 0; i < studentsArray.length; i++){
-        if (studentId == studentsArray[i].studentId){
+    for (i = 0; i < studentsArray.length; i++) {
+        if (studentId == studentsArray[i].studentId) {
             studentGrades = studentsArray[i].grades;
             i = studentsArray.length;
         }
     }
-    for ( i = 0; i < studentGrades.length; i++){
+    for (i = 0; i < studentGrades.length; i++) {
         var assessmentId = studentGrades[i].assessmentId;
         var K = studentGrades[i].K;
         var A = studentGrades[i].A;
@@ -77,10 +83,10 @@ function organizeStudentGrades(ownerId, courseId, studentId){
         var C = studentGrades[i].C;
 
         var assessmentType = '';
-        if (assessmentId[0] != "f"){
+        if (assessmentId[0] != "f") {
             assessmentType = assessmentId.slice(0, assessmentId.indexOf("-"));
         }
-        else{
+        else {
             assessmentType = assessmentId;
         }
 
@@ -92,10 +98,10 @@ function organizeStudentGrades(ownerId, courseId, studentId){
             C
         }
 
-        if (organizedStudentGrades[assessmentType] == null){
+        if (organizedStudentGrades[assessmentType] == null) {
             organizedStudentGrades[assessmentType] = [studentGradeObject]
         }
-        else{
+        else {
             var numberOfAssessments = organizedStudentGrades[assessmentType].length
             organizedStudentGrades[assessmentType][numberOfAssessments] = studentGradeObject
         }
@@ -109,126 +115,126 @@ function add(a, b) {
     return a + b;
 }
 
-function getWeightedAverage(K, A, T, C, WeightK, WeightA, WeightT, WeightC){
-    if (K != "N/A" && A != "N/A" && T != "N/A" && C != "N/A"){
-        var weightedAverage = K*WeightK + A*WeightA + T*WeightT + C*WeightC;
+function getWeightedAverage(K, A, T, C, WeightK, WeightA, WeightT, WeightC) {
+    if (K != "N/A" && A != "N/A" && T != "N/A" && C != "N/A") {
+        var weightedAverage = K * WeightK + A * WeightA + T * WeightT + C * WeightC;
         return Number(weightedAverage.toFixed(2))
     }
-    else if (K == "N/A" && A != "N/A" && T != "N/A" && C != "N/A"){
-        var newWeightC = (100*WeightC)/(WeightA + WeightT + WeightC);
-        var newWeightA = (WeightA/WeightC)*newWeightC;
-        var newWeightT = (WeightT/WeightC)*newWeightC;
+    else if (K == "N/A" && A != "N/A" && T != "N/A" && C != "N/A") {
+        var newWeightC = (100 * WeightC) / (WeightA + WeightT + WeightC);
+        var newWeightA = (WeightA / WeightC) * newWeightC;
+        var newWeightT = (WeightT / WeightC) * newWeightC;
 
-        var weightedAverage = A*newWeightA + T*newWeightT + C*newWeightC;
-
-        return Number(weightedAverage.toFixed(2))
-    }
-    else if (K != "N/A" && A == "N/A" && T != "N/A" && C != "N/A"){
-        var newWeightC = (100*WeightC)/(WeightK + WeightT + WeightC);
-        var newWeightK = (WeightK/WeightC)*newWeightC;
-        var newWeightT = (WeightT/WeightC)*newWeightC;
-
-        var weightedAverage = K*newWeightK + T*newWeightT + C*newWeightC;
-        
-        return Number(weightedAverage.toFixed(2))
-    }
-    else if (K != "N/A" && A != "N/A" && T == "N/A" && C != "N/A"){
-        var newWeightC = (100*WeightC)/(WeightA + WeightK + WeightC);
-        var newWeightK = (WeightK/WeightC)*newWeightC;
-        var newWeightA = (WeightA/WeightC)*newWeightC;
-
-        var weightedAverage = K*newWeightK + A*newWeightA + C*newWeightC;
-        
-        return Number(weightedAverage.toFixed(2))
-    }
-    else if (K != "N/A" && A != "N/A" && T != "N/A" && C == "N/A"){
-        var newWeightT = (100*WeightT)/(WeightK + WeightT + WeightA);
-        var newWeightK = (WeightK/WeightT)*newWeightT;
-        var newWeightA = (WeightA/WeightT)*newWeightT;
-
-        var weightedAverage = K*newWeightK + A*newWeightA + T*newWeightT;
-        
-        return Number(weightedAverage.toFixed(2))
-    }
-    else if (K == "N/A" && A == "N/A" && T != "N/A" && C != "N/A"){
-        var newWeightT = (100*WeightT)/(WeightT+WeightC);
-        var newWeightC = (WeightC/WeightT)*newWeightT;
-
-        var weightedAverage = T*newWeightT + C*newWeightC;
+        var weightedAverage = A * newWeightA + T * newWeightT + C * newWeightC;
 
         return Number(weightedAverage.toFixed(2))
     }
-    else if (K == "N/A" && A != "N/A" && T == "N/A" && C != "N/A"){
-        var newWeightA = (100*WeightA)/(WeightA+WeightC);
-        var newWeightC = (WeightC/WeightA)*newWeightA;
+    else if (K != "N/A" && A == "N/A" && T != "N/A" && C != "N/A") {
+        var newWeightC = (100 * WeightC) / (WeightK + WeightT + WeightC);
+        var newWeightK = (WeightK / WeightC) * newWeightC;
+        var newWeightT = (WeightT / WeightC) * newWeightC;
 
-        var weightedAverage = A*newWeightA + C*newWeightC;
-
-        return Number(weightedAverage.toFixed(2))
-    }
-    else if (K == "N/A" && A != "N/A" && T != "N/A" && C == "N/A"){
-        var newWeightA = (100*WeightA)/(WeightA+WeightT);
-        var newWeightT = (WeightT/WeightA)*newWeightA;
-
-        var weightedAverage = A*newWeightA + T*newWeightT;
+        var weightedAverage = K * newWeightK + T * newWeightT + C * newWeightC;
 
         return Number(weightedAverage.toFixed(2))
     }
-    else if (K != "N/A" && A == "N/A" && T == "N/A" && C != "N/A"){
-        var newWeightK = (100*WeightK)/(WeightK+WeightC);
-        var newWeightC = (WeightC/WeightK)*newWeightK;
+    else if (K != "N/A" && A != "N/A" && T == "N/A" && C != "N/A") {
+        var newWeightC = (100 * WeightC) / (WeightA + WeightK + WeightC);
+        var newWeightK = (WeightK / WeightC) * newWeightC;
+        var newWeightA = (WeightA / WeightC) * newWeightC;
 
-        var weightedAverage = C*newWeightC + K*newWeightK;
-
-        return Number(weightedAverage.toFixed(2))
-    }
-    else if (K != "N/A" && A == "N/A" && T != "N/A" && C == "N/A"){
-        var newWeightK = (100*WeightK)/(WeightK+WeightT);
-        var newWeightT = (WeightT/WeightK)*newWeightK;
-
-        var weightedAverage = T*newWeightT + K*newWeightK;
+        var weightedAverage = K * newWeightK + A * newWeightA + C * newWeightC;
 
         return Number(weightedAverage.toFixed(2))
     }
-    else if (K != "N/A" && A != "N/A" && T == "N/A" && C == "N/A"){
-        var newWeightA = (100*WeightA)/(WeightK+WeightA);
-        var newWeightK = (WeightK/WeightA)*newWeightA;
+    else if (K != "N/A" && A != "N/A" && T != "N/A" && C == "N/A") {
+        var newWeightT = (100 * WeightT) / (WeightK + WeightT + WeightA);
+        var newWeightK = (WeightK / WeightT) * newWeightT;
+        var newWeightA = (WeightA / WeightT) * newWeightT;
 
-        var weightedAverage = A*newWeightA + K*newWeightK;
-
-        return Number(weightedAverage.toFixed(2))
-    }
-    else if (K != "N/A" && A == "N/A" && T == "N/A" && C == "N/A"){
-        var weightedAverage = 100*K;
+        var weightedAverage = K * newWeightK + A * newWeightA + T * newWeightT;
 
         return Number(weightedAverage.toFixed(2))
     }
-    else if (K == "N/A" && A != "N/A" && T == "N/A" && C == "N/A"){
-        var weightedAverage = 100*A;
+    else if (K == "N/A" && A == "N/A" && T != "N/A" && C != "N/A") {
+        var newWeightT = (100 * WeightT) / (WeightT + WeightC);
+        var newWeightC = (WeightC / WeightT) * newWeightT;
+
+        var weightedAverage = T * newWeightT + C * newWeightC;
 
         return Number(weightedAverage.toFixed(2))
     }
-    else if (K == "N/A" && A == "N/A" && T != "N/A" && C == "N/A"){
-        var weightedAverage = 100*T;
+    else if (K == "N/A" && A != "N/A" && T == "N/A" && C != "N/A") {
+        var newWeightA = (100 * WeightA) / (WeightA + WeightC);
+        var newWeightC = (WeightC / WeightA) * newWeightA;
+
+        var weightedAverage = A * newWeightA + C * newWeightC;
 
         return Number(weightedAverage.toFixed(2))
     }
-    else if (K == "N/A" && A == "N/A" && T == "N/A" && C != "N/A"){
-        var weightedAverage = 100*C;
+    else if (K == "N/A" && A != "N/A" && T != "N/A" && C == "N/A") {
+        var newWeightA = (100 * WeightA) / (WeightA + WeightT);
+        var newWeightT = (WeightT / WeightA) * newWeightA;
+
+        var weightedAverage = A * newWeightA + T * newWeightT;
 
         return Number(weightedAverage.toFixed(2))
     }
-    else if (K == "N/A" && A == "N/A" && T == "N/A" && C == "N/A"){
+    else if (K != "N/A" && A == "N/A" && T == "N/A" && C != "N/A") {
+        var newWeightK = (100 * WeightK) / (WeightK + WeightC);
+        var newWeightC = (WeightC / WeightK) * newWeightK;
+
+        var weightedAverage = C * newWeightC + K * newWeightK;
+
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K != "N/A" && A == "N/A" && T != "N/A" && C == "N/A") {
+        var newWeightK = (100 * WeightK) / (WeightK + WeightT);
+        var newWeightT = (WeightT / WeightK) * newWeightK;
+
+        var weightedAverage = T * newWeightT + K * newWeightK;
+
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K != "N/A" && A != "N/A" && T == "N/A" && C == "N/A") {
+        var newWeightA = (100 * WeightA) / (WeightK + WeightA);
+        var newWeightK = (WeightK / WeightA) * newWeightA;
+
+        var weightedAverage = A * newWeightA + K * newWeightK;
+
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K != "N/A" && A == "N/A" && T == "N/A" && C == "N/A") {
+        var weightedAverage = 100 * K;
+
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K == "N/A" && A != "N/A" && T == "N/A" && C == "N/A") {
+        var weightedAverage = 100 * A;
+
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K == "N/A" && A == "N/A" && T != "N/A" && C == "N/A") {
+        var weightedAverage = 100 * T;
+
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K == "N/A" && A == "N/A" && T == "N/A" && C != "N/A") {
+        var weightedAverage = 100 * C;
+
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K == "N/A" && A == "N/A" && T == "N/A" && C == "N/A") {
         var weightedAverage = "N/A";
 
         return weightedAverage
     }
 }
 
-function calculateAsessmentTypeGrades(ownerId, courseId, organizedStudentGrades){
+function calculateAsessmentTypeGrades(ownerId, courseId, organizedStudentGrades) {
     var assessmentTypes = Object.keys(organizedStudentGrades);
     var assessmentTypeGrades = {};
-    for ( i = 0; i < assessmentTypes.length; i++){
+    for (i = 0; i < assessmentTypes.length; i++) {
         var assessmentType = assessmentTypes[i];
         var KGrades = [];
         var AGrades = [];
@@ -237,36 +243,36 @@ function calculateAsessmentTypeGrades(ownerId, courseId, organizedStudentGrades)
 
         var exclusions = {};
 
-        for ( z = 0; z < organizedStudentGrades[assessmentType].length; z++){
+        for (z = 0; z < organizedStudentGrades[assessmentType].length; z++) {
             var assessmentId = organizedStudentGrades[assessmentType][z].assessmentId;
             exclusions[assessmentId] = []
 
-            if (organizedStudentGrades[assessmentType][z].K != "N/A"){
+            if (organizedStudentGrades[assessmentType][z].K != "N/A") {
                 KGrades[KGrades.length] = Number(organizedStudentGrades[assessmentType][z].K);
             }
-            if (organizedStudentGrades[assessmentType][z].A != "N/A"){
+            if (organizedStudentGrades[assessmentType][z].A != "N/A") {
                 AGrades[AGrades.length] = Number(organizedStudentGrades[assessmentType][z].A);
             }
-            if (organizedStudentGrades[assessmentType][z].T != "N/A"){
+            if (organizedStudentGrades[assessmentType][z].T != "N/A") {
                 TGrades[TGrades.length] = Number(organizedStudentGrades[assessmentType][z].T);
             }
-            if (organizedStudentGrades[assessmentType][z].C != "N/A"){
+            if (organizedStudentGrades[assessmentType][z].C != "N/A") {
                 CGrades[CGrades.length] = Number(organizedStudentGrades[assessmentType][z].C);
             }
-            
-            if (organizedStudentGrades[assessmentType][z].K == "N/A"){
+
+            if (organizedStudentGrades[assessmentType][z].K == "N/A") {
                 var length = exclusions[assessmentId].length;
                 exclusions[assessmentId][length] = "K";
             }
-            if (organizedStudentGrades[assessmentType][z].A == "N/A"){
+            if (organizedStudentGrades[assessmentType][z].A == "N/A") {
                 var length = exclusions[assessmentId].length;
                 exclusions[assessmentId][length] = "A";
             }
-            if (organizedStudentGrades[assessmentType][z].T == "N/A"){
+            if (organizedStudentGrades[assessmentType][z].T == "N/A") {
                 var length = exclusions[assessmentId].length;
                 exclusions[assessmentId][length] = "T";
             }
-            if (organizedStudentGrades[assessmentType][z].C == "N/A"){
+            if (organizedStudentGrades[assessmentType][z].C == "N/A") {
                 var length = exclusions[assessmentId].length;
                 exclusions[assessmentId][length] = "C";
             }
@@ -288,35 +294,35 @@ function calculateAsessmentTypeGrades(ownerId, courseId, organizedStudentGrades)
 
         var excludedAssessments = Object.keys(exclusions);
 
-        for ( z = 0; z < excludedAssessments.length; z++){
+        for (z = 0; z < excludedAssessments.length; z++) {
             var assessmentId = excludedAssessments[z];
-            for (j = 0; j < exclusions[assessmentId].length; j++){
+            for (j = 0; j < exclusions[assessmentId].length; j++) {
                 var excludedCategory = exclusions[assessmentId][j];
                 //look up how many marks the category is worth
-                if(assessmentId[0] != "f"){
-                    var courseAssessmentTypes = Assessments.findOne({ownerId, courseId}).courseAssessmentTypes;
-                    for ( k = 0; k < courseAssessmentTypes.length; k++){
-                        if ( courseAssessmentTypes[k].assessmentTypeId == assessmentType ){
+                if (assessmentId[0] != "f") {
+                    var courseAssessmentTypes = Assessments.findOne({ ownerId, courseId }).courseAssessmentTypes;
+                    for (k = 0; k < courseAssessmentTypes.length; k++) {
+                        if (courseAssessmentTypes[k].assessmentTypeId == assessmentType) {
                             var assessments = courseAssessmentTypes[k].assessments;
-                            for (y = 0; y < assessments.length; y++){
-                                if (assessments[y].assessmentId == assessmentId){
-                                    if ( excludedCategory == "K"){
-                                        if (assessments[y].K != "N/A"){
+                            for (y = 0; y < assessments.length; y++) {
+                                if (assessments[y].assessmentId == assessmentId) {
+                                    if (excludedCategory == "K") {
+                                        if (assessments[y].K != "N/A") {
                                             KSumOfExcludedMarks = KSumOfExcludedMarks + Number(assessments[y].K);
                                         }
                                     }
-                                    if ( excludedCategory == "A"){
-                                        if (assessments[y].A != "N/A"){
+                                    if (excludedCategory == "A") {
+                                        if (assessments[y].A != "N/A") {
                                             ASumOfExcludedMarks = ASumOfExcludedMarks + Number(assessments[y].A);
                                         }
                                     }
-                                    if ( excludedCategory == "T"){
-                                        if (assessments[y].T != "N/A"){
+                                    if (excludedCategory == "T") {
+                                        if (assessments[y].T != "N/A") {
                                             TSumOfExcludedMarks = TSumOfExcludedMarks + Number(assessments[y].T);
                                         }
                                     }
-                                    if ( excludedCategory == "C"){
-                                        if (assessments[y].C != "N/A"){
+                                    if (excludedCategory == "C") {
+                                        if (assessments[y].C != "N/A") {
                                             CSumOfExcludedMarks = CSumOfExcludedMarks + Number(assessments[y].C);
                                         }
                                     }
@@ -326,27 +332,27 @@ function calculateAsessmentTypeGrades(ownerId, courseId, organizedStudentGrades)
                         }
                     }
                 }
-                else{
-                    var finalAssessmentTypes = Assessments.findOne({ownerId, courseId}).finalAssessmentTypes;
-                    for ( k = 0; k < finalAssessmentTypes.length; k++){
-                        if (finalAssessmentTypes[k].assessmentTypeId == assessmentType){
-                            if ( excludedCategory == "K"){
-                                if (finalAssessmentTypes[k].K != "N/A"){
+                else {
+                    var finalAssessmentTypes = Assessments.findOne({ ownerId, courseId }).finalAssessmentTypes;
+                    for (k = 0; k < finalAssessmentTypes.length; k++) {
+                        if (finalAssessmentTypes[k].assessmentTypeId == assessmentType) {
+                            if (excludedCategory == "K") {
+                                if (finalAssessmentTypes[k].K != "N/A") {
                                     KSumOfExcludedMarks = KSumOfExcludedMarks + Number(finalAssessmentTypes[k].K);
                                 }
                             }
-                            if ( excludedCategory == "A"){
-                                if (finalAssessmentTypes[k].A != "N/A"){
+                            if (excludedCategory == "A") {
+                                if (finalAssessmentTypes[k].A != "N/A") {
                                     ASumOfExcludedMarks = ASumOfExcludedMarks + Number(finalAssessmentTypes[k].A);
                                 }
                             }
-                            if ( excludedCategory == "T"){
-                                if (finalAssessmentTypes[k].T != "N/A"){
+                            if (excludedCategory == "T") {
+                                if (finalAssessmentTypes[k].T != "N/A") {
                                     TSumOfExcludedMarks = TSumOfExcludedMarks + Number(finalAssessmentTypes[k].T);
                                 }
                             }
-                            if ( excludedCategory == "K"){
-                                if (finalAssessmentTypes[k].C != "N/A"){
+                            if (excludedCategory == "K") {
+                                if (finalAssessmentTypes[k].C != "N/A") {
                                     CSumOfExcludedMarks = CSumOfExcludedMarks + Number(finalAssessmentTypes[k].C);
                                 }
                             }
@@ -355,22 +361,22 @@ function calculateAsessmentTypeGrades(ownerId, courseId, organizedStudentGrades)
                 }
             }
         }
-        if (assessmentType[0] != "f"){
-            var courseAssessmentTypes = Assessments.findOne({ownerId, courseId}).courseAssessmentTypes;
-            for (q = 0; q < courseAssessmentTypes.length; q++){
-                if(courseAssessmentTypes[q].assessmentTypeId == assessmentType){
+        if (assessmentType[0] != "f") {
+            var courseAssessmentTypes = Assessments.findOne({ ownerId, courseId }).courseAssessmentTypes;
+            for (q = 0; q < courseAssessmentTypes.length; q++) {
+                if (courseAssessmentTypes[q].assessmentTypeId == assessmentType) {
                     var assessments = courseAssessmentTypes[q].assessments;
-                    for (g = 0; g < assessments.length; g++){
-                        if (assessments[g].K != "N/A"){
+                    for (g = 0; g < assessments.length; g++) {
+                        if (assessments[g].K != "N/A") {
                             KTotalMarks = KTotalMarks + Number(assessments[g].K);
                         }
-                        if (assessments[g].A != "N/A"){
+                        if (assessments[g].A != "N/A") {
                             ATotalMarks = ATotalMarks + Number(assessments[g].A);
                         }
-                        if (assessments[g].T != "N/A"){
+                        if (assessments[g].T != "N/A") {
                             TTotalMarks = TTotalMarks + Number(assessments[g].T);
                         }
-                        if (assessments[g].C != "N/A"){
+                        if (assessments[g].C != "N/A") {
                             CTotalMarks = CTotalMarks + Number(assessments[g].C);
                         }
                     }
@@ -378,20 +384,20 @@ function calculateAsessmentTypeGrades(ownerId, courseId, organizedStudentGrades)
                 }
             }
         }
-        else{
-            var finalAssessmentTypes = Assessments.findOne({ownerId, courseId}).finalAssessmentTypes;
-            for (g = 0; g < finalAssessmentTypes.length; g++){
-                if(finalAssessmentTypes[g].assessmentTypeId == assessmentType){
-                    if (finalAssessmentTypes[g].K != "N/A"){
+        else {
+            var finalAssessmentTypes = Assessments.findOne({ ownerId, courseId }).finalAssessmentTypes;
+            for (g = 0; g < finalAssessmentTypes.length; g++) {
+                if (finalAssessmentTypes[g].assessmentTypeId == assessmentType) {
+                    if (finalAssessmentTypes[g].K != "N/A") {
                         KTotalMarks = KTotalMarks + Number(finalAssessmentTypes[g].K);
                     }
-                    if (finalAssessmentTypes[g].A != "N/A"){
+                    if (finalAssessmentTypes[g].A != "N/A") {
                         ATotalMarks = ATotalMarks + Number(finalAssessmentTypes[g].A);
                     }
-                    if (finalAssessmentTypes[g].T != "N/A"){
+                    if (finalAssessmentTypes[g].T != "N/A") {
                         TTotalMarks = TTotalMarks + Number(finalAssessmentTypes[g].T);
                     }
-                    if (finalAssessmentTypes[g].C != "N/A"){
+                    if (finalAssessmentTypes[g].C != "N/A") {
                         CTotalMarks = CTotalMarks + Number(finalAssessmentTypes[g].C);
                     }
                     g = finalAssessmentTypes.length;
@@ -399,22 +405,22 @@ function calculateAsessmentTypeGrades(ownerId, courseId, organizedStudentGrades)
             }
         }
 
-        var KassessmentTypeGrade = KSumOfStudentMarks/(KTotalMarks - KSumOfExcludedMarks);
-        var AassessmentTypeGrade = ASumOfStudentMarks/(ATotalMarks - ASumOfExcludedMarks);
-        var TassessmentTypeGrade = TSumOfStudentMarks/(TTotalMarks - TSumOfExcludedMarks);
-        var CassessmentTypeGrade = CSumOfStudentMarks/(CTotalMarks - CSumOfExcludedMarks);
+        var KassessmentTypeGrade = KSumOfStudentMarks / (KTotalMarks - KSumOfExcludedMarks);
+        var AassessmentTypeGrade = ASumOfStudentMarks / (ATotalMarks - ASumOfExcludedMarks);
+        var TassessmentTypeGrade = TSumOfStudentMarks / (TTotalMarks - TSumOfExcludedMarks);
+        var CassessmentTypeGrade = CSumOfStudentMarks / (CTotalMarks - CSumOfExcludedMarks);
 
         //if totalmarks == 0 we set it to N/A
-        if (isNaN(KassessmentTypeGrade)){
+        if (isNaN(KassessmentTypeGrade)) {
             KassessmentTypeGrade = "N/A"
         }
-        if (isNaN(AassessmentTypeGrade)){
+        if (isNaN(AassessmentTypeGrade)) {
             AassessmentTypeGrade = "N/A"
         }
-        if (isNaN(TassessmentTypeGrade)){
+        if (isNaN(TassessmentTypeGrade)) {
             TassessmentTypeGrade = "N/A"
         }
-        if (isNaN(CassessmentTypeGrade)){
+        if (isNaN(CassessmentTypeGrade)) {
             CassessmentTypeGrade = "N/A"
         }
 
@@ -428,19 +434,19 @@ function calculateAsessmentTypeGrades(ownerId, courseId, organizedStudentGrades)
         var assessmentTypeWeighting = 0;
 
         //AssessmentTypeWeight for Course
-        if (assessmentType[0] != "f"){
-            var courseworkWeightings = CourseWeighting.findOne({ownerId, courseId}).courseworkAssessmentTypes;
-            for (y = 0; y < courseworkWeightings.length; y++){
-                if(courseworkWeightings[y].assessmentTypeId == assessmentType){
+        if (assessmentType[0] != "f") {
+            var courseworkWeightings = CourseWeighting.findOne({ ownerId, courseId }).courseworkAssessmentTypes;
+            for (y = 0; y < courseworkWeightings.length; y++) {
+                if (courseworkWeightings[y].assessmentTypeId == assessmentType) {
                     assessmentTypeWeighting = courseworkWeightings[y].assessmentWeight;
                     y = courseworkWeightings.length;
                 }
             }
         }
-        else{  
-            var finalWeightings = CourseWeighting.findOne({ownerId, courseId}).finalAssessmentTypes;
-            for ( y = 0; y < finalWeightings.length; y++){
-                if (finalWeightings[y].assessmentTypeId == assessmentType){
+        else {
+            var finalWeightings = CourseWeighting.findOne({ ownerId, courseId }).finalAssessmentTypes;
+            for (y = 0; y < finalWeightings.length; y++) {
+                if (finalWeightings[y].assessmentTypeId == assessmentType) {
                     assessmentTypeWeighting = finalWeightings[y].assessmentWeight;
                     y = finalWeightings.length;
                 }
@@ -448,32 +454,32 @@ function calculateAsessmentTypeGrades(ownerId, courseId, organizedStudentGrades)
 
         }
 
-        assessmentTypeGrades[assessmentType] = [weightedAverage, assessmentTypeWeighting/100];
+        assessmentTypeGrades[assessmentType] = [weightedAverage, assessmentTypeWeighting / 100];
 
     }
     return assessmentTypeGrades //{c1: [86, .30], c2: [88, .30], f1: [98, .40]} [grade, weight]
 }
 
-function calculateFinalGrade(ownerId, courseId, assessmentTypeGrades){
+function calculateFinalGrade(ownerId, courseId, assessmentTypeGrades) {
     var assessmentTypes = Object.keys(assessmentTypeGrades);
     var currentGrade = 0;
     var totalWeight = 0;
-    for (i = 0; i < assessmentTypes.length; i++){
+    for (i = 0; i < assessmentTypes.length; i++) {
         var assessmentType = assessmentTypes[i];
         var gradeArray = assessmentTypeGrades[assessmentType];
-        if ( gradeArray[0] != "N/A"){
+        if (gradeArray[0] != "N/A") {
             currentGrade = currentGrade + ((Number(gradeArray[0])) * (Number(gradeArray[1])));
             totalWeight = totalWeight + (Number(gradeArray[1]));
         }
     }
-    
-    var calculatedWeight = 1/totalWeight;
 
-    if (totalWeight == 0){
+    var calculatedWeight = 1 / totalWeight;
+
+    if (totalWeight == 0) {
         return "N/A"
     }
 
-    var finalGrade = currentGrade*calculatedWeight;
+    var finalGrade = currentGrade * calculatedWeight;
 
     return Number(finalGrade.toFixed(2))
 }
@@ -481,10 +487,13 @@ function calculateFinalGrade(ownerId, courseId, assessmentTypeGrades){
 function checkValidationOfInput(inputID) {
     var input = document.getElementById(inputID);
     if (input == null) return false;
-    const inputVal = input.value;
+    var inputVal = input.value;
 
+    if (inputVal.replace(/\s/g, '') == "") {
+        inputVal = "N/A";
+    }
     //return (input == "N/A" || Math.floor(input) == input); return (input > 0 || input == "N/A");
-    if (inputVal == "N/A" || !isNaN(inputVal) || (Number(inputVal) >= 0 && inputVal != "")) {
+    if (inputVal == "N/A" || !isNaN(inputVal) || Number(inputVal) >= 0) {
         if (input.classList.contains("invalid")) {
             input.classList.remove("invalid")
         }
@@ -519,10 +528,10 @@ Template.studentName.helpers({
 
         var finalGrade = calculateFinalGrade(ownerId, courseId, assessmentTypeGrades)
 
-        if (finalGrade != "N/A" ){
+        if (finalGrade != "N/A") {
             return finalGrade + "%"
         }
-        else{
+        else {
             return "N/A"
         }
     },
@@ -760,7 +769,7 @@ Template.studentName.events({
                 else if (!document.getElementById(newInputIdC).hasAttribute("disabled")) {
                     document.getElementById(newInputIdC).focus();
                     document.getElementById(newInputIdC).setSelectionRange(0, document.getElementById(newInputIdC).value.length);
-                } 
+                }
             }
         }
     }

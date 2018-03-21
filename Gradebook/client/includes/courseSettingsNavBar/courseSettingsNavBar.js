@@ -15,7 +15,6 @@ Template.courseSettingsNavBar.events({
         event.preventDefault();
 
         const target = event.target;
-        var settingId = target.parentElement.id;
         var settingScreen;
 
         
@@ -28,7 +27,8 @@ Template.courseSettingsNavBar.events({
         categoryElement.parentElement.classList.remove("active");
 
         var targetID = target.id;
-        var listContainerID = targetID.slice(0,2) + "ClickElement"
+        var settingId = targetID.slice(0,2);
+        var listContainerID = settingId + "ClickElement"
         var listElement = document.getElementById(listContainerID);
         listElement.classList.add("active");
 
@@ -39,9 +39,9 @@ Template.courseSettingsNavBar.events({
         } else if (settingId == "AW") {
             settingScreen = "Assessment Weightings";
         } else if (settingId == "GS") {
-            settingScreen = "General Settings"
+            settingScreen = "General Settings";
         } else {
-            settingScreen = Session.get('settingScreenText')
+            settingScreen = Session.get('settingScreenText');
         }
 
         //console.log(settingScreen);

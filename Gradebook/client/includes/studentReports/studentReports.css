@@ -33,16 +33,33 @@
     padding-right: 11.25px!important;
 }
 
-#myfirstbargraph{
+#assessmentBreakdownBarGraph{
     position: relative!important;
-    width: 100%!important;
+    min-width: 100%!important;
+    height: 100%!important;
+    
+}
+
+#assessmentTypeBarGraph{
+    position: relative!important;
+    min-width: 100%!important;
     height: 100%!important;
 }
 
-.graph-container{
+#assessmentTypeClassBarGraph{
+    position: relative!important;
+    min-width: 100%!important;
+    height: 100%!important;
+}
+
+.graph-container-assessments{
     position:relative;
     width: 65vw;
+    height: 25vh;
+}
+
+.graph-container-assessmentType{
+    position:relative;
+    width: 32.5vw;
     height: 20vh;
-    overflow-x: scroll;
-    overflow-y: scroll;
 }

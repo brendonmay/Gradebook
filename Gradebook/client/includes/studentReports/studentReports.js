@@ -36,7 +36,8 @@ Template.studentReports.onRendered(function () {
 });
 
 Template.studentReports.events({
-    'click #testclick': function(){
+    'click .studentSideNavElements': function(){
+        //this gets run after studentReportsSideNav event
         $('#myfirstbargraph').empty();
         drawBarGraph()
     }

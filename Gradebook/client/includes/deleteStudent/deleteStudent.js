@@ -24,6 +24,7 @@ Template.deleteStudent.events({
             }
         }
         Meteor.call('students.addNewStudent', Meteor.userId(), courseId, currentStudentArray);
+        Meteor.call('calculatedgrades.deleteStudent', Meteor.userId(), courseId, studentId);
         $('#deleteStudentModal').modal('close');
         $('#addStudentsModal').modal('open');
         Materialize.toast(studentName + " has been removed from the student roster.", 3000, 'amber darken-3');

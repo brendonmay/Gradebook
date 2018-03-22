@@ -71,7 +71,10 @@ function insertGrade() {
             if (grade != "N/A"){
                 var percGrade = (grade/outOf) * 100;
                 percGrade = Number( percGrade.toFixed(2) );
+                var assessmentTypeId = assessmentId.slice(0, assessmentId.indexOf("-"));
+                var newGrade = determineAssessmentTypeGrade(Meteor.userId(), courseId, studentId, assessmentTypeId, category); //look here, this is how the newgrade is being determined, should be correct
                 Meteor.call('calculatedgrades.updateCourseAssessmentGrade', Meteor.userId(), courseId, assessmentId, percGrade, category, studentId);
+                Meteor.call('calculatedgrades.updateAssessmentTypeGrade', Meteor.userId(), courseId, studentId, percGrade, category, assessmentTypeId, newGrade); //look here, this one depends on the previous one being fully complete before running.
             }
         }
         else{
@@ -268,6 +271,45 @@ function getWeightedAverage(K, A, T, C, WeightK, WeightA, WeightT, WeightC) {
 
         return weightedAverage
     }
+}
+
+function determineAssessmentTypeGrade(ownerId, courseId, studentId, assessmentTypeId, category){
+    var courseAssessmentTypes = Assessments.findOne({ownerId, courseId}).courseAssessmentTypes;
+    var studentsArray = Students.findOne({ownerId, courseId}).students;
+    var outOf = 0;
+    var totalStudentMarks = 0;
+
+    for ( i = 0; i < courseAssessmentTypes.length; i++){
+        if (courseAssessmentTypes[i].assessmentTypeId == assessmentTypeId){
+            var assessments = courseAssessmentTypes[i].assessments;
+            for (z = 0; z < assessments.length; z++){
+                if (assessments[z][category] != "N/A"){
+                    outOf = outOf + assessments[z][category];
+                }
+            }
+            i = courseAssessmentTypes.length;
+        }
+    }
+    for ( i = 0; i < studentsArray.length; i++){
+        if ( studentsArray[i].studentId == studentId ){
+            var grades = studentsArray[i].grades;
+            for (z = 0; z < grades.length; z++){
+                var assessmentId = grades[z].assessmentId;
+                var checkAssessmentTypeId = assessmentId.slice(0, assessmentId.indexOf("-"));
+                if (checkAssessmentTypeId == assessmentTypeId){
+                    var studentMark = grades[z][category];
+                    if (studentMark != "N/A"){
+                        studentMark = Number(studentMark);
+                        totalStudentMarks = totalStudentMarks + studentMark;
+                    }
+                }
+            }
+            i = studentsArray.length;
+        }
+    }
+    var calculatedAssessmentTypeGrade = Number(((totalStudentMarks/outOf) * 100).toFixed(2));
+    return calculatedAssessmentTypeGrade
+
 }
 
 function calculateAsessmentTypeGrades(ownerId, courseId, organizedStudentGrades) {

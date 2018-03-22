@@ -133,7 +133,9 @@ Template.addAssessmentType.events({
 
         newAssessmentTypeObjects[newAssessmentTypeObjects.length] = newAssessmentTypeObject;
 
-        Meteor.call('assessments.updateAssessments', currentCourseId, newAssessmentTypeObjects)
+        Meteor.call('assessments.updateAssessments', currentCourseId, newAssessmentTypeObjects);
+
+        Meteor.call('calculatedgrades.addNewAssessmentType', Meteor.userId(), courseId, newAssessmentTypeId);
 
         document.getElementById("addAssessmentTypeForm").reset();
         clearTemplateValidation();

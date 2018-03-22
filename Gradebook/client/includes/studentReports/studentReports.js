@@ -3,6 +3,74 @@ import { Accounts } from 'meteor/accounts-base';
 
 import '../../main.html';
 
+function grabGrades(assessmentsArray) {
+	var grades = [];
+	for (var i = 0; i < assessmentsArray.length; i++) {
+		const grade = assessmentsArray[i];
+		if ((grade.KGrade == "N/A") &&
+			(grade.AGrade == "N/A") &&
+			(grade.TGrade == "N/A") &&
+			(grade.CGrade == "N/A")) {
+				continue;
+			}
+		grades.push(getGradesArrrayElement(grade));
+	}
+	return grades;
+}
+
+function getGradesArrrayElement(grade) {
+	const assessmentName = getAssessmentName(grade.assessmentId);
+	var gradeElement = {
+		assessmentName: assessmentName,
+		K: grade.KGrade,
+		A: grade.AGrade,
+		T: grade.TGrade,
+		C: grade.CGrade
+	}
+	if (grade.KGrade == "N/A") {
+		delete gradeElement.K;
+	}
+	if (grade.AGrade == "N/A") {
+		delete gradeElement.A;
+	}
+	if (grade.TGrade == "N/A") {
+		delete gradeElement.T;
+	}
+	if (grade.CGrade == "N/A") {
+		delete gradeElement.C;
+	}
+	return gradeElement;
+}
+
+function getAssessmentName(assessmentId) {
+	if (assessmentId.charAt(0) == "f") {
+		return getFinalEvalName(assessmentId);
+	} else {
+		return getCourseEvalName(assessmentId);
+	}
+}
+
+function getFinalEvalName(assessmentTypeId) {
+    var finalEvaluations = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: courseID }).finalAssessmentTypes;
+    for (var i = 0; i < finalEvaluations.length; i++) {
+        if (finalEvaluations[i].assessmentTypeId == assessmentTypeId) {
+            return finalEvaluations[i].assessmentType;
+        }
+    }
+}
+
+function getCourseEvalName(assessmentId) {
+	let courseID = Session.get('courseId');
+    var courseEvaluations = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: courseID }).courseworkAssessmentTypes;
+    for (var i = 0; i < courseEvaluations.length; i++) {
+    	var splitAssessment = courseEvaluations[i].assessmentTypeId.split("-");
+        if (splitAssessment[0] == assessmentId) {
+            return courseEvaluations[i].assessmentType;
+        }
+    }
+}
+
+
 function drawAssessmentBreakdownBarGraph() {
     //clear the contents of the div, in the event this function is called more than once.
     new Morris.Bar({
@@ -41,7 +109,7 @@ function drawAssessmentTypeBarGraph() {
         // Chart data records -- each entry in this array corresponds to a point on
         // the chart.
         data: [
-            { assessmentType: 'Quiz', K: 83, A: 75, T: 81, C: 71 },
+            { assessmentType: 'Quiz', K: 100, A: 92, T: 0, C: 31 },
         ],
 
         xkey: 'assessmentType',

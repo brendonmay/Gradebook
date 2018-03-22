@@ -97,7 +97,7 @@ Collection 3 - Assessments - Structure (example)
 	]
 }
 //----------------------------------------------------------------------------------------------------------------
-Students Collection
+Collection 4 - Students Collection
 {
 	ownerId: Meteor.userId(),
 	courseId: courseId,
@@ -127,6 +127,39 @@ Students Collection
 				},
 			]
 		},
+	]
+}
+----------------------------------------------------------------------
+Collection 5 - CalculatedGrades
+
+{
+	ownerId,
+	courseId,
+	students:[
+		{
+			studentId,
+			currentGrades:[
+				{
+					assessmentTypeId,
+					assessmentTypeGrade:{
+						KGrade,
+						AGrade,
+						TGrade,
+						CGrade
+					},
+					assessments:[
+						{
+							assessmentId,
+							KGrade,
+							AGrade,
+							TGrade,
+							CGrade
+						}
+					]
+
+				}
+			]
+		}
 	]
 }
 

@@ -85,6 +85,47 @@ function organizeStudentGrades(ownerId, courseId, studentId) {
         var assessmentType = '';
         if (assessmentId[0] != "f") {
             assessmentType = assessmentId.slice(0, assessmentId.indexOf("-"));
+            var KOutOf = 0;
+            var AOutOf = 0;
+            var TOutOf = 0;
+            var COutOf = 0;
+            //update calculated grades collection
+            var courseAssessmentTypes = Assessments.findOne({ ownerId, courseId }).courseAssessmentTypes;
+            for (w = 0; w < courseAssessmentTypes.length; w++){
+                if(courseAssessmentTypes[w].assessmentTypeId == assessmentType){
+                    var assessments = courseAssessmentTypes[w].assessments;
+                    for (r = 0; r < assessments.length; r++){
+                        if (assessments[r].assessmentId == assessmentId){
+                            KOutOf = assessments[r].K;
+                            AOutOf = assessments[r].A;
+                            TOutOf = assessments[r].T;
+                            COutOf = assessments[r].C;
+
+                            var KGrade = ( Number(K)/Number(KOutOf) ) * (100);
+                            KGrade = Number(KGrade.toFixed(2));
+                            var AGrade = ( Number(A)/Number(AOutOf) ) * (100);
+                            AGrade = Number(AGrade.toFixed(2));
+                            var TGrade = ( Number(T)/Number(TOutOf) ) * (100);
+                            TGrade = Number(TGrade.toFixed(2));
+                            var CGrade = ( Number(C)/Number(COutOf) ) * (100);
+                            CGrade = Number(CGrade.toFixed(2));
+
+                            //create object and update collection
+                            currentGradesObj = {
+                                assessmentId,
+                                KGrade,
+                                AGrade,
+                                TGrade,
+                                CGrade
+                            }
+                            //update collection
+                            
+                            r = assessments.length;
+                        }
+                    }
+                    w = courseAssessmentTypes.length;
+                }
+            }
         }
         else {
             assessmentType = assessmentId;
@@ -106,8 +147,9 @@ function organizeStudentGrades(ownerId, courseId, studentId) {
             organizedStudentGrades[assessmentType][numberOfAssessments] = studentGradeObject
         }
     }
-
+    console.log(organizedStudentGrades);
     return organizedStudentGrades
+    //
 
 }
 

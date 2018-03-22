@@ -6,4 +6,5 @@ if (Meteor.isClient){
     Meteor.subscribe("assessments");
     Meteor.subscribe("students");
     Meteor.subscribe("allUsers");
+    Meteor.subscribe('calculatedgrades');
 }

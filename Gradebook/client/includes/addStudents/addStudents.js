@@ -144,6 +144,7 @@ function addNewStudent() {
     }
 
     Meteor.call('students.addNewStudent', Meteor.userId(), courseId, newStudentsDocument);
+    Meteor.call('calculatedgrades.addStudent', Meteor.userId(), courseId, newStudentId);
 }
 
 Template.addStudents.events({

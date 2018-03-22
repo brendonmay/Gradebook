@@ -19,7 +19,8 @@ if (Meteor.isServer) {
                                 grades: grades
                             }
                         ]}
-            })
+            });
+            Meteor.call('calculatedgrades.addStudent', ownerId, courseId, 's-1');
         },
         'students.defaultStudentsDocument'(ownerId, courseId){
             Students.insert({
@@ -37,7 +38,7 @@ if (Meteor.isServer) {
             Students.update(
                 { ownerId: ownerId, courseId: courseId },
                 { $set: {"students": newStudentsDocument} }
-            )
+            );
         },
         'students.addNewAssessment'(ownerId, courseId, assessmentId){
             var currentStudentsDocument = Students.findOne({ownerId: ownerId, courseId: courseId}).students;

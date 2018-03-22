@@ -41,7 +41,7 @@ function drawAssessmentTypeBarGraph() {
         // Chart data records -- each entry in this array corresponds to a point on
         // the chart.
         data: [
-            { assessmentType: 'Quiz', K: 83, A: 75, T: 81, C: 71 },
+            { assessmentType: 'Quiz', K: 100, A: 92, T: 0, C: 31 },
         ],
 
         xkey: 'assessmentType',

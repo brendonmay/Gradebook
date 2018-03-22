@@ -21,7 +21,9 @@
                         </ul>
                 </div>
         </nav>
+        {{#if hasStudents}}
         <div class="gradebookChart-container">
+
                 <table class="gradebook-table striped centered" id="main_table" align="center">
                         <thead>
                                 {{> assessmentNameHeader}}
@@ -31,4 +33,9 @@
                         </tbody>
                 </table>
         </div>
+        {{else}}
+        <div class="container">
+                <h3>To begin using the gradebook, please add students to your student roster!</h3>
+        </div>
+        {{/if}}
 </template>

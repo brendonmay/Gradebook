@@ -67,7 +67,10 @@ Template.studentReportsSideNav.events({
                 studDropDownEle.classList.remove('green');
             }
         }
-
+        var elementSplit = elementID.split("-");
+        var currentStudentID = elementSplit[1] + "-" + elementSplit[2];
+        
+        Session.set("currentSelectedStudentID", currentStudentID);
         document.getElementById(elementID).classList.add('active');
         document.getElementById(elementID).classList.add('green');
     },

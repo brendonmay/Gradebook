@@ -246,7 +246,7 @@ Template.addStudents.helpers({
     },
     hasStudents: function () {
         let courseId = Session.get('courseId');
-        return Students.findOne({ ownerId: Meteor.userId(), courseId: courseId }).students.length > 0;
+        return Students.findOne({ ownerId: Meteor.userId(), courseId: courseId }).students.length > 1;
     }
 });
 

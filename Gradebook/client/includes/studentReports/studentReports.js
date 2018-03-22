@@ -1,9 +1,13 @@
 import { Template } from 'meteor/templating';
 import { Accounts } from 'meteor/accounts-base';
+import { CalculatedGrades } from '../../../lib/collections.js';
+import { CourseWeighting } from '../../../lib/collections.js';
 
 import '../../main.html';
 
-function grabGrades(assessmentsArray) {
+function grabGrades(assessmentTypeId) {
+    var assessmentsArray = getAssessmentsArray(assessmentTypeId);
+    if (assessmentsArray == null) return null;
 	var grades = [];
 	for (var i = 0; i < assessmentsArray.length; i++) {
 		const grade = assessmentsArray[i];
@@ -13,13 +17,34 @@ function grabGrades(assessmentsArray) {
 			(grade.CGrade == "N/A")) {
 				continue;
 			}
-		grades.push(getGradesArrrayElement(grade));
+		grades.push(getGradesArrrayElement(grade, assessmentTypeId));
 	}
 	return grades;
 }
 
-function getGradesArrrayElement(grade) {
-	const assessmentName = getAssessmentName(grade.assessmentId);
+function getAssessmentsArray(assessmentTypeId) {
+    var courseId = Session.get("courseId");
+    var studentId = Session.get("currentSelectedStudentID");
+    var currentGrades;
+
+    var studentGrades = CalculatedGrades.findOne({ ownerId: Meteor.userId(), courseId: courseId }).students;
+    for (var i = 0; i < studentGrades.length; i++) {
+        var student = studentGrades[i];
+        if (student.studentId == studentId) {
+            currentGrades = student.currentGrades;
+            break;
+        }
+    }
+    for (var i = 0; i < currentGrades.length; i++) {
+        var assessmentType = currentGrades[i];
+        if (assessmentType.assessmentTypeId == assessmentTypeId) {
+            return assessmentType.assessments;
+        }
+    }
+}
+
+function getGradesArrrayElement(grade, assessmentTypeId) {
+	const assessmentName = getAssessmentName(assessmentTypeId);
 	var gradeElement = {
 		assessmentName: assessmentName,
 		K: grade.KGrade,
@@ -27,16 +52,16 @@ function getGradesArrrayElement(grade) {
 		T: grade.TGrade,
 		C: grade.CGrade
 	}
-	if (grade.KGrade == "N/A") {
+	if (grade.KGrade == "N/A" || grade.KGrade == null) {
 		delete gradeElement.K;
 	}
-	if (grade.AGrade == "N/A") {
+	if (grade.AGrade == "N/A" || grade.AGrade == null) {
 		delete gradeElement.A;
 	}
-	if (grade.TGrade == "N/A") {
+	if (grade.TGrade == "N/A" || grade.TGrade == null) {
 		delete gradeElement.T;
 	}
-	if (grade.CGrade == "N/A") {
+	if (grade.CGrade == "N/A" || grade.CGrade == null) {
 		delete gradeElement.C;
 	}
 	return gradeElement;
@@ -63,7 +88,7 @@ function getCourseEvalName(assessmentId) {
 	let courseID = Session.get('courseId');
     var courseEvaluations = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: courseID }).courseworkAssessmentTypes;
     for (var i = 0; i < courseEvaluations.length; i++) {
-    	var splitAssessment = courseEvaluations[i].assessmentTypeId.split("-");
+        var splitAssessment = courseEvaluations[i].assessmentTypeId.split("-");
         if (splitAssessment[0] == assessmentId) {
             return courseEvaluations[i].assessmentType;
         }
@@ -78,18 +103,19 @@ function drawAssessmentBreakdownBarGraph() {
         element: 'assessmentBreakdownBarGraph',
         // Chart data records -- each entry in this array corresponds to a point on
         // the chart.
-        data: [
-            { assessmentName: 'Quiz 1', K: 100, A: 90, T: 80, C:50 },
-            { assessmentName: 'Quiz 2', K: 75,  A: 65, T: 80, C:50 },
-            { assessmentName: 'Quiz 3', K: 50,  A: 40, T: 80, C:50 },
-            { assessmentName: 'Quiz 4', K: 75,  A: 65, T: 80, C:50 },
-            { assessmentName: 'Quiz 5', K: 50,  A: 40, T: 80, C:50 },
-            { assessmentName: 'Quiz 6', K: 75,  A: 65, T: 80, C:50 },
-            { assessmentName: 'Quiz 7', K: 100, A: 90, T: 80, C:50 },
-            { assessmentName: 'Quiz 8', K: 100, A: 90, T: 80, C:50 },
-            { assessmentName: 'Quiz 9', K: 100, A: 90, T: 80, C:50 },
-            { assessmentName: 'Quiz 10', K: 100, A: 90, T: 80, C:50 },
-        ],
+        // data: [
+        //     { assessmentName: 'Quiz 1', K: 100, A: 90, T: 80, C:50 },
+        //     { assessmentName: 'Quiz 2', K: 75,  A: 65, T: 80, C:50 },
+        //     { assessmentName: 'Quiz 3', K: 50,  A: 40, T: 80, C:50 },
+        //     { assessmentName: 'Quiz 4', K: 75,  A: 65, T: 80, C:50 },
+        //     { assessmentName: 'Quiz 5', K: 50,  A: 40, T: 80, C:50 },
+        //     { assessmentName: 'Quiz 6', K: 75,  A: 65, T: 80, C:50 },
+        //     { assessmentName: 'Quiz 7', K: 100, A: 90, T: 80, C:50 },
+        //     { assessmentName: 'Quiz 8', K: 100, A: 90, T: 80, C:50 },
+        //     { assessmentName: 'Quiz 9', K: 100, A: 90, T: 80, C:50 },
+        //     { assessmentName: 'Quiz 10', K: 100, A: 90, T: 80, C:50 },
+        // ],
+        data: grabGrades("c2"), //should be the assessmentTypeId
 
         xkey: 'assessmentName',
         ykeys: ['K', 'A', 'T', 'C'],

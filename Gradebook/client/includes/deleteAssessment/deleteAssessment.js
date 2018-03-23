@@ -35,6 +35,8 @@ Template.deleteCourseworkAssessment.events({
         let removeAssessmentObj = Session.get("removeAssessmentObj");
         removeAssessmentObj.removeCourse = "yes";
         Session.set("removeAssessmentObj", removeAssessmentObj);
+        Session.set('gradebookUpdated', true);
+        Meteor.call('calculatedgrades.deleteAssessment', Meteor.userId(), Session.get('courseId'), removeAssessmentObj.assessmentId);
     },
     'click .no-delete-modal': function () {
         let removeAssessmentObj = Session.get("removeAssessmentObj");

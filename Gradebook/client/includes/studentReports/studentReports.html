@@ -1,20 +1,140 @@
 <template name="studentReports">
     <div class="col s10 max-height-report-view">
         <h4 class="light-blue lighten-4 settings-header">Student Reports</h4>
+        <h5 class="center marg-bottom-none">Brendon May (96%)</h5>
+        <div class="row modif-bot-mar">
+            <div class="col input-field s4 offset-s4">
+                <select>
+                    <option value="1" selected>Course Overview</option>
+                    <option value="2">Quiz</option>
+                    <option value="3">Assignment</option>
+                    <option value="4">Test</option>
+                    <option value="4">Final Evaluations</option>
+                </select>
+                <!-- <label>Mark Breakdown Selection</label> -->
+            </div>
+        </div>
         <div class="row">
-            <div class="col s3 offset-s3 graph-container-assessmentType">
-                <div class="assessmentTypeGraph-title center">Overall Student Grade</div>
+            <div class="col s3 graph-container-assessmentType">
+                <ul class="collection collection-box">
+                    <li class="collection-item collection-box-item">
+                        <p class="mar-top-bot-none center collection-title-reports">May, Brendon</p>
+                    </li>
+                    <li class="collection-item collection-box-item">
+                        <p class="mar-top-bot-none collection-K-reports">Knowledge: 100%</p>
+                    </li>
+                    <li class="collection-item collection-box-item">
+                        <p class="mar-top-bot-none collection-A-reports">Application: 92%</p>
+                    </li>
+                    <li class="collection-item collection-box-item">
+                        <p class="mar-top-bot-none collection-T-reports">Thinking: N/A</p>
+                    </li>
+                    <li class="collection-item collection-box-item">
+                        <p class="mar-top-bot-none collection-C-reports">Communication: 31%</p>
+                    </li>
+                    <li class="collection-item collection-box-item">
+                        <p class="mar-top-bot-none collection-title-reports">Grade: 96%</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="col s3 graph-container-assessmentType">
+                <div class="assessmentTypeGraph-title center">
+                    <u>Student Grade</u>
+                </div>
                 <div id="assessmentTypeBarGraph"></div>
             </div>
+            <div class="col s3 graph-container-assessmentType">
+                <ul class="collection collection-box">
+                    <li class="collection-item collection-box-item">
+                        <p class="mar-top-bot-none center collection-title-reports">Class Average</p>
+                    </li>
+                    <li class="collection-item collection-box-item">
+                        <p class="mar-top-bot-none collection-K-reports">Knowledge: 100%</p>
+                    </li>
+                    <li class="collection-item collection-box-item">
+                        <p class="mar-top-bot-none collection-A-reports">Application: 92%</p>
+                    </li>
+                    <li class="collection-item collection-box-item">
+                        <p class="mar-top-bot-none collection-T-reports">Thinking: N/A</p>
+                    </li>
+                    <li class="collection-item collection-box-item">
+                        <p class="mar-top-bot-none collection-C-reports">Communication: 31%</p>
+                    </li>
+                    <li class="collection-item collection-box-item">
+                        <p class="mar-top-bot-none collection-title-reports">Grade: 96%</p>
+                    </li>
+                </ul>
+            </div>
             <div class="col s3 offset-s3 graph-container-assessmentType">
-                <div class="assessmentTypeGraph-title center">Class Average</div>
+                <div class="assessmentTypeGraph-title center">
+                    <u>Class Average</u>
+                </div>
                 <div id="assessmentTypeClassBarGraph"></div>
             </div>
         </div>
         <div class="row graph-container-assessments">
-            <div class="assessmentsGraph-title center">Student Grade Breakdown</div>
+            <div class="assessmentsGraph-title center">
+                <u>Student Grade Breakdown</u>
+            </div>
             <div id="assessmentBreakdownBarGraph"></div>
         </div>
+        <br>
+        <br>
+        <table class="striped centered">
+            <thead>
+                <tr>
+                    <th class="bord-right-left-top Assessment-color">Assessment</th>
+                    <th class="bord-right-top K-color">Knowledge</th>
+                    <th class="bord-right-top A-color">Application</th>
+                    <th class="bord-right-top T-color">Thinking</th>
+                    <th class="bord-right-top C-color">Communication</th>
+                    <th class="bord-right-top Grade-color">Grade</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td class="bord-left-right">Quiz</td>
+                    <td class="bord-right">97%</td>
+                    <td class="bord-right">86%</td>
+                    <td class="bord-right">42%</td>
+                    <td class="bord-right">65%</td>
+                    <td class="bord-right">72%</td>
+                </tr>
+                <tr>
+                    <td class="bord-left-right">Assignment</td>
+                    <td class="bord-right">97%</td>
+                    <td class="bord-right">86%</td>
+                    <td class="bord-right">42%</td>
+                    <td class="bord-right">65%</td>
+                    <td class="bord-right">72%</td>
+                </tr>
+                <tr>
+                    <td class="bord-left-right">Test</td>
+                    <td class="bord-right">97%</td>
+                    <td class="bord-right">86%</td>
+                    <td class="bord-right">42%</td>
+                    <td class="bord-right">65%</td>
+                    <td class="bord-right">72%</td>
+                </tr>
+                <tr>
+                    <td class="bord-left-right">Culminating Task</td>
+                    <td class="bord-right">97%</td>
+                    <td class="bord-right">86%</td>
+                    <td class="bord-right">42%</td>
+                    <td class="bord-right">65%</td>
+                    <td class="bord-right">72%</td>
+                </tr>
+                <tr>
+                    <td class="bord-left-right-bottom">Final Exam</td>
+                    <td class="bord-right-bottom">97%</td>
+                    <td class="bord-right-bottom">86%</td>
+                    <td class="bord-right-bottom">42%</td>
+                    <td class="bord-right-bottom">65%</td>
+                    <td class="bord-right-bottom">72%</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     <div class="col s2 max-height">
         {{> studentReportsSideNav}}

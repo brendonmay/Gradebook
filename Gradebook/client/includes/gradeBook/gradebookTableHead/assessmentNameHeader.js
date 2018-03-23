@@ -300,7 +300,7 @@ Template.assessmentNameHeader.events({
                     updateGradebookColors();
                     setTimeout(function () {
                         $("#main_table").tableHeadFixer({ "left": 1, 'head': true });
-                    }, 5);
+                    }, 10);
                 }
             });
             $('#deleteCourseworkAssessmentModal').modal('open');

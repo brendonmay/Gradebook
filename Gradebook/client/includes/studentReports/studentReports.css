@@ -180,3 +180,11 @@
     border-right: 1px solid grey;
     border-bottom: 1px solid grey;
 }
+
+.marg-bottom-none{
+    margin-bottom: 0!important;
+}
+
+.modif-bot-mar{
+    margin-bottom: 30px!important;
+}

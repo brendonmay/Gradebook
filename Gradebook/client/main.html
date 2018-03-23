@@ -6,11 +6,25 @@
 </head>
 
 <body>
-  <div id="site-content">
+  <div class="hide-on-med-and-down" id="site-content">
     <div id="side-nav-section">
       {{> sideNav}}
     </div>
     <div id="main-content-area">
+      <header>
+        {{> nav}}
+      </header>
+      <main>
+        {{> courseTabs}}
+      </main>
+      <footer>
+        {{> footer}}
+      </footer>
+    </div>
+  </div>
+
+  <div class="hide-on-large-only" id="site-content-handheld">
+    <div id="main-content-area-handheld">
       <header>
         {{> nav}}
       </header>

@@ -2,6 +2,11 @@
     font-family: GillSans, Calibri, Trebuchet, sans-serif;
 }
 .dropdown-marginfix {
+    font-size: 2vh!important;
     margin-top: 1px;
     margin-bottom: 1px;
+}
+
+.dropdown-arrow {
+    margin: 0%!important;
 }

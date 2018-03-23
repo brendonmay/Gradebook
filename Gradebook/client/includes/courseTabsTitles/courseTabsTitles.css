@@ -11,7 +11,8 @@
 }
 
 .tabs .tab a{
-    color:#616161
+    color:#616161;
+    font-size: 1vw;
 }
 
 /*To override tab scrolling on x*/

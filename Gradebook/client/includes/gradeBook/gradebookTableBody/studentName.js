@@ -77,28 +77,29 @@ function insertGrade() {
                 reject();
             }
         });
-        updateStudentsCollectionPromise.then(function(){
-            console.log("promise fulfileld");
-            if (assessmentId[0] != "f"){
-                if (grade != "N/A"){
-                    var percGrade = (grade/outOf) * 100;
-                    percGrade = Number( percGrade.toFixed(2) );
-                    var assessmentTypeId = assessmentId.slice(0, assessmentId.indexOf("-"));
-                    var newGrade = determineAssessmentTypeGrade(Meteor.userId(), courseId, studentId, assessmentTypeId, category); //look here, this is how the newgrade is being determined, should be correct
-                    Meteor.call('calculatedgrades.updateCourseAssessmentGrade', Meteor.userId(), courseId, assessmentId, percGrade, category, studentId);
-                    Meteor.call('calculatedgrades.updateAssessmentTypeGrade', Meteor.userId(), courseId, studentId, percGrade, category, assessmentTypeId, newGrade); //look here, this one depends on the previous one being fully complete before running.
+        setTimeout(function(){
+            updateStudentsCollectionPromise.then(function(){
+                if (assessmentId[0] != "f"){
+                    if (grade != "N/A"){
+                        var percGrade = (grade/outOf) * 100;
+                        percGrade = Number( percGrade.toFixed(2) );
+                        var assessmentTypeId = assessmentId.slice(0, assessmentId.indexOf("-"));
+                        var newGrade = determineAssessmentTypeGrade(Meteor.userId(), courseId, studentId, assessmentTypeId, category); //look here, this is how the newgrade is being determined, should be correct
+                        Meteor.call('calculatedgrades.updateCourseAssessmentGrade', Meteor.userId(), courseId, assessmentId, percGrade, category, studentId);
+                        Meteor.call('calculatedgrades.updateAssessmentTypeGrade', Meteor.userId(), courseId, studentId, percGrade, category, assessmentTypeId, newGrade); //look here, this one depends on the previous one being fully complete before running.
+                    }
                 }
-            }
-            else{
-                if (grade != "N/A"){
-                    var percGrade = (grade/outOf) * 100;
-                    percGrade = Number( percGrade.toFixed(2) );
-                    Meteor.call('calculatedgrades.updateFinalAssessmentGrade', Meteor.userId(), courseId, assessmentId, category, percGrade, studentId);
+                else{
+                    if (grade != "N/A"){
+                        var percGrade = (grade/outOf) * 100;
+                        percGrade = Number( percGrade.toFixed(2) );
+                        Meteor.call('calculatedgrades.updateFinalAssessmentGrade', Meteor.userId(), courseId, assessmentId, category, percGrade, studentId);
+                    }
                 }
-            }
-        }).catch(function(){
-            console.log("Promise not fulfilled")
-        })
+            }).catch(function(){
+                console.log("Promise not fulfilled")
+            })
+        }, 100)
     }
 
 }
@@ -305,6 +306,8 @@ function determineAssessmentTypeGrade(ownerId, courseId, studentId, assessmentTy
             i = courseAssessmentTypes.length;
         }
     }
+    console.log('outOf: ' + outOf); //
+
     for ( i = 0; i < studentsArray.length; i++){
         if ( studentsArray[i].studentId == studentId ){
             var grades = studentsArray[i].grades;
@@ -322,6 +325,7 @@ function determineAssessmentTypeGrade(ownerId, courseId, studentId, assessmentTy
             i = studentsArray.length;
         }
     }
+    console.log('totalStudentMarks: ' + totalStudentMarks);
     var calculatedAssessmentTypeGrade = Number(((totalStudentMarks/outOf) * 100).toFixed(2));
     return calculatedAssessmentTypeGrade
 

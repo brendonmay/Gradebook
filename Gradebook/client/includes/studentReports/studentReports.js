@@ -105,6 +105,8 @@ function getCourseEvalName(assessmentId) {
 
 function drawAssessmentBreakdownBarGraph() {
     //clear the contents of the div, in the event this function is called more than once.
+    var data = grabGrades("c1"); //should be the assessmentTypeId
+    console.log(data)
     new Morris.Bar({
         // ID of the element in which to draw the chart.
         element: 'assessmentBreakdownBarGraph',

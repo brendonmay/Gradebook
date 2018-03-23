@@ -62,4 +62,129 @@
     position:relative;
     width: 32.5vw;
     height: 25vh;
+    padding-left:0!important;
+    padding-right:0!important;
+    margin-left: 0!important;
+}
+
+.assessmentsGraph-title{
+    padding-top: 30px;
+}
+
+.graph-title-reports{
+    font-weight: bold
+}
+
+.collection-box{
+    height: 100%
+}
+
+.collection-box-item{
+    height: 16.67%!important;
+}
+
+.mar-top-bot-none{
+    margin-top:0!important;
+    margin-bottom: 0!important;
+}
+
+.collection-title-reports{
+    font-weight: bold;
+    position: relative!important;
+    top: 50%;
+    transform: translateY(-50%); 
+}
+
+.collection-K-reports{
+    color: #b39ddb;
+    position: relative!important;
+    top: 50%;
+    transform: translateY(-50%); 
+}
+
+.collection-A-reports{
+    color:#4fc3f7;
+    position: relative!important;
+    top: 50%;
+    transform: translateY(-50%); 
+}
+
+.collection-T-reports{
+    color: #81c784;
+    position: relative!important;
+    top: 50%;
+    transform: translateY(-50%); 
+}
+
+.collection-C-reports{
+    color: #e57373;
+    position: relative!important;
+    top: 50%;
+    transform: translateY(-50%); 
+}
+
+.K-color{
+    background-color: #b39ddb;
+}
+
+.A-color{
+    background-color: #4fc3f7;
+}
+
+.T-color{
+    background-color: #81c784
+}
+
+.C-color{
+    background-color: #e57373
+}
+
+.Grade-color{
+    background-color: #90a4ae
+}
+
+.Assessment-color{
+    background-color: #bcaaa4
+}
+
+.bord-right-left-top{
+    border-right: 1px solid grey;
+    border-left: 1px solid grey;
+    border-top: 1px solid grey;
+}
+
+.bord-right-top{
+    border-right: 1px solid grey;
+    border-top: 1px solid grey;
+}
+
+.bord-top{
+    border-top: 1px solid grey;
+}
+
+.bord-right{
+    border-right: 1px solid grey;
+}
+
+.bord-left-right{
+    border-right: 1px solid grey;
+    border-left: 1px solid grey;
+}
+
+.bord-left-right-bottom{
+    border-right: 1px solid grey;
+    border-left: 1px solid grey;
+    border-bottom: 1px solid grey;
+}
+.bord-right-bottom{
+    border-right: 1px solid grey;
+    border-bottom: 1px solid grey;
+}
+
+.marg-bottom-none{
+    margin-bottom: 0!important;
+}
+
+.modif-bot-mar{
+    margin-bottom: 30px!important;
 }

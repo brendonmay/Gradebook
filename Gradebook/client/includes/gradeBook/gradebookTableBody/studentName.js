@@ -4,6 +4,7 @@ import { Students } from '../../../../lib/collections.js';
 import { Assessments } from '../../../../lib/collections.js';
 import { Accounts } from 'meteor/accounts-base';
 import { CourseWeighting } from '../../../../lib/collections.js';
+import { CalculatedGrades } from '../../../../lib/collections.js';
 
 function generateSortedStudentArray() {
     let courseId = Session.get('courseId');
@@ -35,14 +36,14 @@ function insertGrade() {
     var grade = event.target.value;
     var outOf = 0;
     //determine what category is out of
-    if (assessmentId[0] != "f"){
-        var courseAssessmentTypes = Assessments.findOne({ownerId: Meteor.userId(), courseId}).courseAssessmentTypes;
+    if (assessmentId[0] != "f") {
+        var courseAssessmentTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId }).courseAssessmentTypes;
         var assessmentTypeId = assessmentId.slice(0, assessmentId.indexOf("-"));
-        for (i = 0; i < courseAssessmentTypes.length; i++){
-            if(courseAssessmentTypes[i].assessmentTypeId == assessmentTypeId){
+        for (i = 0; i < courseAssessmentTypes.length; i++) {
+            if (courseAssessmentTypes[i].assessmentTypeId == assessmentTypeId) {
                 var assessments = courseAssessmentTypes[i].assessments;
-                for(r = 0; r < assessments.length; r++){
-                    if (assessments[r].assessmentId == assessmentId){
+                for (r = 0; r < assessments.length; r++) {
+                    if (assessments[r].assessmentId == assessmentId) {
                         outOf = assessments[r][category];
                         r = assessments.length;
                     }
@@ -51,10 +52,10 @@ function insertGrade() {
             }
         }
     }
-    else{
-        var finalAssessmentTypes = Assessments.findOne({ownerId: Meteor.userId(), courseId}).finalAssessmentTypes;
-        for (i = 0; i < finalAssessmentTypes.length; i++){
-            if (finalAssessmentTypes[i].assessmentTypeId == assessmentId){
+    else {
+        var finalAssessmentTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId }).finalAssessmentTypes;
+        for (i = 0; i < finalAssessmentTypes.length; i++) {
+            if (finalAssessmentTypes[i].assessmentTypeId == assessmentId) {
                 outOf = finalAssessmentTypes[i][category];
                 i = finalAssessmentTypes.length;
             }
@@ -65,40 +66,50 @@ function insertGrade() {
             grade = "N/A";
             document.getElementById(inputId).value = "N/A";
         }
-        let updateStudentsCollectionPromise = new Promise(function(resolve, reject){
+        let updateStudentsCollectionPromise = new Promise(function (resolve, reject) {
             Meteor.call('students.insertGrade', Meteor.userId(), courseId, category, studentId, assessmentId, grade);
 
             let updated = true;
 
-            if(updated){
+            if (updated) {
                 resolve();
             }
-            else{
+            else {
                 reject();
             }
         });
-        updateStudentsCollectionPromise.then(function(){
-            console.log("promise fulfileld");
-            if (assessmentId[0] != "f"){
-                if (grade != "N/A"){
-                    var percGrade = (grade/outOf) * 100;
-                    percGrade = Number( percGrade.toFixed(2) );
+        setTimeout(function () {
+            updateStudentsCollectionPromise.then(function () {
+                if (assessmentId[0] != "f") {
                     var assessmentTypeId = assessmentId.slice(0, assessmentId.indexOf("-"));
-                    var newGrade = determineAssessmentTypeGrade(Meteor.userId(), courseId, studentId, assessmentTypeId, category); //look here, this is how the newgrade is being determined, should be correct
-                    Meteor.call('calculatedgrades.updateCourseAssessmentGrade', Meteor.userId(), courseId, assessmentId, percGrade, category, studentId);
-                    Meteor.call('calculatedgrades.updateAssessmentTypeGrade', Meteor.userId(), courseId, studentId, percGrade, category, assessmentTypeId, newGrade); //look here, this one depends on the previous one being fully complete before running.
+                    if (grade != "N/A") {
+                        var percGrade = (grade / outOf) * 100;
+                        percGrade = Number(percGrade.toFixed(2));
+                        var newGrade = determineAssessmentTypeGrade(Meteor.userId(), courseId, studentId, assessmentTypeId, category); 
+                        Meteor.call('calculatedgrades.updateCourseAssessmentGrade', Meteor.userId(), courseId, assessmentId, percGrade, category, studentId);
+                        Meteor.call('calculatedgrades.updateAssessmentTypeGrade', Meteor.userId(), courseId, studentId, percGrade, category, assessmentTypeId, newGrade);
+                    }
+                    else {
+                        var percGrade = "N/A";
+                        var newGrade = determineAssessmentTypeGrade(Meteor.userId(), courseId, studentId, assessmentTypeId, category); 
+                        Meteor.call('calculatedgrades.removeCourseAssessmentCategory', Meteor.userId(), courseId, studentId, assessmentTypeId, assessmentId, category);
+                        Meteor.call('calculatedgrades.updateAssessmentTypeGrade', Meteor.userId(), courseId, studentId, percGrade, category, assessmentTypeId, newGrade);
+                    }
                 }
-            }
-            else{
-                if (grade != "N/A"){
-                    var percGrade = (grade/outOf) * 100;
-                    percGrade = Number( percGrade.toFixed(2) );
-                    Meteor.call('calculatedgrades.updateFinalAssessmentGrade', Meteor.userId(), courseId, assessmentId, category, percGrade, studentId);
+                else {
+                    if (grade != "N/A") {
+                        var percGrade = (grade / outOf) * 100;
+                        percGrade = Number(percGrade.toFixed(2));
+                        Meteor.call('calculatedgrades.updateFinalAssessmentGrade', Meteor.userId(), courseId, assessmentId, category, percGrade, studentId);
+                    }
+                    else{
+                        Meteor.call('calculatedgrades.updateFinalAssessmentGrade', Meteor.userId(), courseId, assessmentId, category, grade, studentId);
+                    }
                 }
-            }
-        }).catch(function(){
-            console.log("Promise not fulfilled")
-        })
+            }).catch(function () {
+                console.log("Promise not fulfilled")
+            })
+        }, 100)
     }
 
 }
@@ -288,41 +299,48 @@ function getWeightedAverage(K, A, T, C, WeightK, WeightA, WeightT, WeightC) {
     }
 }
 
-function determineAssessmentTypeGrade(ownerId, courseId, studentId, assessmentTypeId, category){
-    var courseAssessmentTypes = Assessments.findOne({ownerId, courseId}).courseAssessmentTypes;
-    var studentsArray = Students.findOne({ownerId, courseId}).students;
+function determineAssessmentTypeGrade(ownerId, courseId, studentId, assessmentTypeId, category) {
+    var courseAssessmentTypes = Assessments.findOne({ ownerId, courseId }).courseAssessmentTypes;
+    var studentsArray = Students.findOne({ ownerId, courseId }).students;
     var outOf = 0;
     var totalStudentMarks = 0;
+    var exclusions = [];
 
-    for ( i = 0; i < courseAssessmentTypes.length; i++){
-        if (courseAssessmentTypes[i].assessmentTypeId == assessmentTypeId){
-            var assessments = courseAssessmentTypes[i].assessments;
-            for (z = 0; z < assessments.length; z++){
-                if (assessments[z][category] != "N/A"){
-                    outOf = outOf + assessments[z][category];
-                }
-            }
-            i = courseAssessmentTypes.length;
-        }
-    }
-    for ( i = 0; i < studentsArray.length; i++){
-        if ( studentsArray[i].studentId == studentId ){
+    for (i = 0; i < studentsArray.length; i++) {
+        if (studentsArray[i].studentId == studentId) {
             var grades = studentsArray[i].grades;
-            for (z = 0; z < grades.length; z++){
+            for (z = 0; z < grades.length; z++) {
                 var assessmentId = grades[z].assessmentId;
                 var checkAssessmentTypeId = assessmentId.slice(0, assessmentId.indexOf("-"));
-                if (checkAssessmentTypeId == assessmentTypeId){
+                if (checkAssessmentTypeId == assessmentTypeId) {
                     var studentMark = grades[z][category];
-                    if (studentMark != "N/A"){
+                    if (studentMark != "N/A") {
                         studentMark = Number(studentMark);
                         totalStudentMarks = totalStudentMarks + studentMark;
+                    }
+                    else {
+                        exclusions[exclusions.length] = assessmentId;
                     }
                 }
             }
             i = studentsArray.length;
         }
     }
-    var calculatedAssessmentTypeGrade = Number(((totalStudentMarks/outOf) * 100).toFixed(2));
+
+    for (i = 0; i < courseAssessmentTypes.length; i++) {
+        if (courseAssessmentTypes[i].assessmentTypeId == assessmentTypeId) {
+            var assessments = courseAssessmentTypes[i].assessments;
+            for (z = 0; z < assessments.length; z++) {
+                if (assessments[z][category] != "N/A") {
+                    if (!(exclusions.includes(assessments[z].assessmentId))) {
+                        outOf = outOf + assessments[z][category];
+                    }
+                }
+            }
+            i = courseAssessmentTypes.length;
+        }
+    }
+    var calculatedAssessmentTypeGrade = Number(((totalStudentMarks / outOf) * 100).toFixed(2));
     return calculatedAssessmentTypeGrade
 
 }

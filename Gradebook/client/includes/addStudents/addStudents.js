@@ -78,7 +78,7 @@ function generateSortedStudentArray() {
         let firstName = studentsDocument[i].studentFirstName;
         let studentId = studentsDocument[i].studentId;
 
-        if (studentId != "s-0"){
+        if (studentId != "s-0") {
             unsortedStudentArray[unsortedStudentArray.length] = lastName + ", " + firstName + "?" + studentId;
         }
     }
@@ -107,7 +107,7 @@ function generateArrayOfStudentObjects(sortedStudentArray) {
 
 function generateGradesArray() {
     let courseId = Session.get('courseId');
-    var assessmentOrder = Students.findOne({ownerId: Meteor.userId(), courseId}).students[0].grades;
+    var assessmentOrder = Students.findOne({ ownerId: Meteor.userId(), courseId }).students[0].grades;
     var grades = [];
 
     for (i = 0; i < assessmentOrder.length; i++) {
@@ -144,6 +144,7 @@ function addNewStudent() {
     }
 
     Meteor.call('students.addNewStudent', Meteor.userId(), courseId, newStudentsDocument);
+    Meteor.call('calculatedgrades.addStudent', Meteor.userId(), courseId, newStudentId);
 }
 
 Template.addStudents.events({
@@ -212,7 +213,7 @@ Template.addStudents.events({
         let studentName = targetId.slice(targetId.indexOf('?') + 1, targetId.length);
         let lastName = studentName.slice(0, studentName.indexOf(', '));
         let firstName = studentName.slice(studentName.indexOf(', ') + 2, studentName.length);
-
+        Session.set('selectedStudent', { studentId: "studentId", firstName: "firstName", lastName: "lastName" });
         Session.set('selectedStudent', { studentId: studentId, firstName: firstName, lastName: lastName });
         clearAddStudentValidation();
         $('#addStudentsModal').modal('close');
@@ -221,11 +222,15 @@ Template.addStudents.events({
             complete: function () {
                 clearAddStudentValidation();
                 $('#addStudentsModal').modal('open');
-                document.getElementById("editStudentsModalForm").reset();
-            } 
-          }
+                var form = document.getElementById('editStudentsModalForm');
+                clearValidation(form);
+            }
+        }
         );
         $('#editStudentModal').modal('open');
+        setTimeout(function(){
+            Materialize.updateTextFields();
+        }, 10)
     }
 });
 
@@ -241,14 +246,14 @@ Template.addStudents.helpers({
     },
     hasStudents: function () {
         let courseId = Session.get('courseId');
-        return Students.findOne({ ownerId: Meteor.userId(), courseId: courseId }).students.length > 0;
+        return Students.findOne({ ownerId: Meteor.userId(), courseId: courseId }).students.length > 1;
     }
 });
 
 Template.addStudents.onRendered(function () {
     $.validator.addMethod('containsIllegalCharacters', (input) => {
         const illegalCharacters = /[,<.>/?;:'"{}|`~!@#$%^&*()_+=\]\[\\1234567890]/g;
-        return !(input.match(illegalCharacters)); 
+        return !(input.match(illegalCharacters));
     });
     $("#addStudentsModalForm").validate({
         errorClass: 'invalid',

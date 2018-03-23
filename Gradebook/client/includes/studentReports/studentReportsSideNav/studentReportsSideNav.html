@@ -1,0 +1,12 @@
+<template name="studentReportsSideNav">
+    <ul id="slide-out-studentReport" class="side-nav fixed studentReports-sideNav">
+        {{#each getStudents}}
+        <li>
+            <a class="collapsible-header dropdown-marginfix studentSideNavElements" id=studentDropDown-{{studentId}}>{{fullName}}</a>
+        </li>
+        {{/each}}
+        <!-- <li class="active green">
+            <a href="#!" id="testclick">First Sidebar Link</a>
+        </li> -->
+    </ul>
+</template>

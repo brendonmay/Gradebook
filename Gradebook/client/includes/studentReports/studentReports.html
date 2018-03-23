@@ -1,0 +1,22 @@
+<template name="studentReports">
+    <div class="col s10 max-height-report-view">
+        <h4 class="light-blue lighten-4 settings-header">Student Reports</h4>
+        <div class="row">
+            <div class="col s3 offset-s3 graph-container-assessmentType">
+                <div class="assessmentTypeGraph-title center">Overall Student Grade</div>
+                <div id="assessmentTypeBarGraph"></div>
+            </div>
+            <div class="col s3 offset-s3 graph-container-assessmentType">
+                <div class="assessmentTypeGraph-title center">Class Average</div>
+                <div id="assessmentTypeClassBarGraph"></div>
+            </div>
+        </div>
+        <div class="row graph-container-assessments">
+            <div class="assessmentsGraph-title center">Student Grade Breakdown</div>
+            <div id="assessmentBreakdownBarGraph"></div>
+        </div>
+    </div>
+    <div class="col s2 max-height">
+        {{> studentReportsSideNav}}
+    </div>
+</template>

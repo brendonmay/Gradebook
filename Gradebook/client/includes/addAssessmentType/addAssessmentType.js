@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Courses } from '../../../lib/collections.js';
+import { Assessments } from '../../../lib/collections.js';
 import { Accounts } from 'meteor/accounts-base';
 import { CourseWeighting } from '../../../lib/collections.js';
 
@@ -84,7 +85,6 @@ Template.addAssessmentType.events({
         $('#addFinalWork').modal('close');
     },
     'submit .add-coursework-form': function () {
-
         const newAssessment = document.getElementById('add-coursework-type').value;
         if (assessmentAlreadyExists(newAssessment)) {
             document.getElementById('addAssessmentTypeForm').reset();
@@ -121,6 +121,21 @@ Template.addAssessmentType.events({
         courseWorkAssessmentType.push(newAssessmentType);
 
         Meteor.call('courseInformation.addNewCourseWork', currentCourseId, courseWorkAssessmentType);
+
+        var ownerId = Meteor.userId();
+        var courseId = Session.get("courseId");
+        var newAssessmentTypeObjects = Assessments.findOne({ownerId, courseId}).courseAssessmentTypes;
+
+        var newAssessmentTypeObject = {
+            assessmentTypeId: newAssessmentTypeId,
+            assessments: []
+        };
+
+        newAssessmentTypeObjects[newAssessmentTypeObjects.length] = newAssessmentTypeObject;
+
+        Meteor.call('assessments.updateAssessments', currentCourseId, newAssessmentTypeObjects);
+
+        Meteor.call('calculatedgrades.addNewAssessmentType', Meteor.userId(), courseId, newAssessmentTypeId);
 
         document.getElementById("addAssessmentTypeForm").reset();
         clearTemplateValidation();

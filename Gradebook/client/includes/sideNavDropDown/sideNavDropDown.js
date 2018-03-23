@@ -62,7 +62,7 @@ function updateGradebookColors() {
                 if (category == "C") {
                     var studentId = arrayofStudentIds[z];
                     if (studentId != "s-0"){
-                        document.getElementById(category + "?" + studentId + "#" + assessmentId).parentElement.style = "background-color: #9e9e9e; border-right: 2px solid black";
+                        document.getElementById(category + "?" + studentId + "#" + assessmentId).parentElement.style = "background-color: #9e9e9e; border-right: 1px solid black";
                         document.getElementById(category + "?" + studentId + "#" + assessmentId).disabled = "true";
                         document.getElementById(category + "?" + studentId + "#" + assessmentId).value = "N/A";
                     }
@@ -88,7 +88,7 @@ function updateGradebookColors() {
                     var oldValue = findOldStudentGradeValue(studentId, assessmentId, category, Meteor.userId(), courseId);
                     document.getElementById(category + "?" + studentId + "#" + assessmentId).value = oldValue;
                     if (category == "C") {
-                        document.getElementById(category + "?" + studentId + "#" + assessmentId).parentElement.style = "border-right: 2px solid black";
+                        document.getElementById(category + "?" + studentId + "#" + assessmentId).parentElement.style = "border-right: 1px solid black";
                     }
                 }
             }
@@ -198,8 +198,8 @@ Template.sideNavDropDown.events({
             if (document.getElementById('gradeBookCourseTab')) { //this allows us to navigate back to gradebook page when new course is clicked
                 document.getElementById('gradeBookCourseTab').click();
             }
-            if (document.getElementById('GS')) {
-                document.getElementById('GS').click();
+            if (document.getElementById('GSClick')) {
+                document.getElementById('GSClick').click();
                 Session.set('settingScreenText', "General Settings");
             }
 

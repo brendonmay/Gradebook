@@ -450,7 +450,7 @@ Template.assessments.events({
                 }
             }
         });
-        $('#createAssessmentModal').modal('open');
+        $('#createAssessmentModal').modal('open');     
         $('select').material_select();
     },
     'click .deleteFinalEval': function () {
@@ -652,19 +652,23 @@ Template.assessments.events({
         var element = document.getElementsByName("collHead" + assessmentId);
 
         element[0].click();
-
+        Session.set('selectedAssessment', { assessmentId: "assessmentId", assessmentName: "assessmentName" });
         //store assessmentId and assessmentName in Session Variable
-        Session.set('selectedAssessment', { assessmentId, assessmentName });
+        Session.set('selectedAssessment', { assessmentId: assessmentId, assessmentName: assessmentName });
 
         //open modal
         $('#renameAssessmentModal').modal({
             dismissible: true,
             complete: function () {
+                clearValidation(document.getElementById("renameAssessmentModalForm"));
                 document.getElementById("renameAssessmentModalForm").reset();
             }
         }
         );
         $('#renameAssessmentModal').modal('open');
+        setTimeout(function(){
+            Materialize.updateTextFields();
+        }, 10)
     },
     'keyup .finalAssessmentInput': function () {
         if (event.keyCode === 13) { //if enter is hit
@@ -688,6 +692,10 @@ Template.assessments.events({
                     var nextInputField = document.getElementById("finalC" + assessmentTypeID);
                     nextInputField.focus();
                     nextInputField.setSelectionRange(0, nextInputField.value.length);
+                    break;
+                case "C":
+                    var form = document.getElementById("formSubmit" + assessmentTypeID);
+                    form.click();
                     break;
                 default:
                     break;
@@ -716,6 +724,10 @@ Template.assessments.events({
                     var nextInputField = document.getElementById("courseC" + assessmentTypeID);
                     nextInputField.focus();
                     nextInputField.setSelectionRange(0, nextInputField.value.length);
+                    break;
+                case "C":
+                    var form = document.getElementById("formSubmit" + assessmentTypeID);
+                    form.click();
                     break;
                 default:
                     break;

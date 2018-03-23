@@ -95,6 +95,7 @@ if (Meteor.isServer) {
                         Date: "N/A"
                     };
                     newFinalAssessmentTypes.push(assessmentType);
+                    Meteor.call('calculatedgrades.addNewAssessmentType', Meteor.userId(), currentCourseId, currentFinalID);
                 }
             }
 

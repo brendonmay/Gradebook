@@ -3,6 +3,7 @@ import { Students } from "../lib/collections.js";
 import { Assessments } from "../lib/collections.js";
 import { Courses } from "../lib/collections.js";
 import { CourseWeighting } from "../lib/collections.js";
+import { CalculatedGrades } from "../lib/collections.js";
 
 if (Meteor.isServer) {
     Meteor.publish('students', function () {
@@ -35,6 +36,14 @@ if (Meteor.isServer) {
         }
         else {
             return Courses.find({ ownerId: Meteor.userId() })
+        }
+    });
+    Meteor.publish('calculatedgrades', function () {
+        if (!this.userId) {
+            return false;
+        }
+        else {
+            return CalculatedGrades.find({ ownerId: Meteor.userId() })
         }
     });
     Meteor.publish("users", function () {

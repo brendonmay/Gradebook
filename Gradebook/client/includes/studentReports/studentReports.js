@@ -6,7 +6,7 @@ import { CourseWeighting } from '../../../lib/collections.js';
 import '../../main.html';
 
 function grabGrades(assessmentTypeId) {
-    var assessmentsArray = getAssessmentsArray(assessmentTypeId.split('-')[0]);
+    var assessmentsArray = getAssessmentsArray(assessmentTypeId);
     if (assessmentsArray == null) return null;
 	var grades = [];
 	for (var i = 0; i < assessmentsArray.length; i++) {
@@ -124,7 +124,7 @@ function drawAssessmentBreakdownBarGraph() {
         //     { assessmentName: 'Quiz 9', K: 100, A: 90, T: 80, C:50 },
         //     { assessmentName: 'Quiz 10', K: 100, A: 90, T: 80, C:50 },
         // ],
-        data: grabGrades("c1-1"), //should be the assessmentTypeId
+         data: grabGrades("c1"), //should be the assessmentTypeId
 
         xkey: 'assessmentName',
         ykeys: ['K', 'A', 'T', 'C'],

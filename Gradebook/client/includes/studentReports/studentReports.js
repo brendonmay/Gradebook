@@ -394,69 +394,6 @@ Template.studentReports.events({
 });
 
 Template.studentReports.helpers({
-    isCourseOverView: function () {
-        return Template.instance().isCourseOverView.get();
-    },
-    getAllAssessments: function () {
-        const courseWeighting = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') });
-        const courseWork = courseWeighting.courseworkAssessmentTypes;
-        const finalWork = courseWeighting.finalAssessmentTypes;
-
-        var allAssessments = [];
-        for (var i = 0; i < courseWork.length; i++) {
-            allAssessments.push({
-                assessmentTypeId: courseWork[i].assessmentTypeId,
-                assessmentType: courseWork[i].assessmentType
-            });
-        }
-        for (var i = 0; i < finalWork.length; i++) {
-            allAssessments.push({
-                assessmentTypeId: finalWork[i].assessmentTypeId,
-                assessmentType: finalWork[i].assessmentType
-            });
-        }
-        return allAssessments;
-    },
-    getAllAssignmentInformation: function () {
-        var studentId = Session.get("currentSelectedStudentID");
-        var currentAssessmentTypeId = document.getElementById('studentReportsDropdown').value;
-        const assessments = Assessments.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') });
-        const studentGrades = CalculatedGrades.findOne({ ownerId: Meteor.userId(), courseId: courseId }).students;
-        var currentGrade;
-
-        for (var i = 0; i < studentGrades.length; i++) {
-            var student = studentGrades[i];
-            if (student.studentId == studentId) {
-                currentGrades = student.currentGrades;
-                break;
-            }
-        }
-
-        if (currentAssessmentTypeId[0] == "f") {
-            var finalAssessments = assessments.finalAssessmentTypes;
-            var currentAssessment;
-            for (var i = 0; i < finalAssessments.length; i++) {
-                if (finalAssessments[i].assessmentTypeId == currentAssessmentTypeId) {
-                    currentAssessment = finalAssessments[i];
-                    break;
-                }
-            }
-            //get current grades for that assessment
-
-
-
-
-
-
-        } else {
-
-        }
-
-    }
-
-});
-
-Template.studentReports.helpers({
     getAssessmentTypeKnowledge: function () {
         assessmentTypeId = document.getElementById("studentReportsDropdown").value;
         var knowledgeGrade = pullAssessmentTypeKnowledgeGrade(assessmentTypeId);
@@ -521,5 +458,65 @@ Template.studentReports.helpers({
             return "N/A"
         }
         return Number((weightedGrade/100).toFixed(2)) + "%"
+    },
+    isCourseOverView: function () {
+        return Template.instance().isCourseOverView.get();
+    },
+    getAllAssessments: function () {
+        const courseWeighting = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') });
+        const courseWork = courseWeighting.courseworkAssessmentTypes;
+        const finalWork = courseWeighting.finalAssessmentTypes;
+
+        var allAssessments = [];
+        for (var i = 0; i < courseWork.length; i++) {
+            allAssessments.push({
+                assessmentTypeId: courseWork[i].assessmentTypeId,
+                assessmentType: courseWork[i].assessmentType
+            });
+        }
+        for (var i = 0; i < finalWork.length; i++) {
+            allAssessments.push({
+                assessmentTypeId: finalWork[i].assessmentTypeId,
+                assessmentType: finalWork[i].assessmentType
+            });
+        }
+        return allAssessments;
+    },
+    getAllAssignmentInformation: function () {
+        var studentId = Session.get("currentSelectedStudentID");
+        var currentAssessmentTypeId = document.getElementById('studentReportsDropdown').value;
+        const assessments = Assessments.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') });
+        const studentGrades = CalculatedGrades.findOne({ ownerId: Meteor.userId(), courseId: courseId }).students;
+        var currentGrade;
+
+        for (var i = 0; i < studentGrades.length; i++) {
+            var student = studentGrades[i];
+            if (student.studentId == studentId) {
+                currentGrades = student.currentGrades;
+                break;
+            }
+        }
+
+        if (currentAssessmentTypeId[0] == "f") {
+            var finalAssessments = assessments.finalAssessmentTypes;
+            var currentAssessment;
+            for (var i = 0; i < finalAssessments.length; i++) {
+                if (finalAssessments[i].assessmentTypeId == currentAssessmentTypeId) {
+                    currentAssessment = finalAssessments[i];
+                    break;
+                }
+            }
+            //get current grades for that assessment
+
+
+
+
+
+
+        } else {
+
+        }
+
     }
-})
+
+});

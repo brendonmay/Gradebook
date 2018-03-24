@@ -144,7 +144,6 @@ function getCourseEvalName(assessmentId) {
     }
 }
 
-
 function drawAssessmentBreakdownBarGraph() {
     //clear the contents of the div, in the event this function is called more than once.
     var assessmentTypeId = document.getElementById('studentReportsDropdown').value;
@@ -180,21 +179,21 @@ function drawAssessmentBreakdownBarGraph() {
 }
 
 function pullAssessmentTypeKnowledgeGrade(assessmentTypeId) {
-    var assessmentTypeGrade = pullAssessmentTypeGradeFromCollection(assessmentTypeId); 
+    var assessmentTypeGrade = pullAssessmentTypeGradeFromCollection(assessmentTypeId);
     var data = getGradesArrrayElement(assessmentTypeGrade, true);
     var knowledge = data.K;
     return knowledge
 }
 
 function pullAssessmentTypeApplicationGrade(assessmentTypeId) {
-    var assessmentTypeGrade = pullAssessmentTypeGradeFromCollection(assessmentTypeId); 
+    var assessmentTypeGrade = pullAssessmentTypeGradeFromCollection(assessmentTypeId);
     var data = getGradesArrrayElement(assessmentTypeGrade, true);
     var application = data.A;
     return application
 }
 
 function pullAssessmentTypeThinkingGrade(assessmentTypeId) {
-    var assessmentTypeGrade = pullAssessmentTypeGradeFromCollection(assessmentTypeId); 
+    var assessmentTypeGrade = pullAssessmentTypeGradeFromCollection(assessmentTypeId);
     var data = getGradesArrrayElement(assessmentTypeGrade, true);
     var thinking = data.T;
     return thinking
@@ -365,9 +364,21 @@ function drawAssessmentTypeClassBarGraph() {
     });
 }
 
+function refreshGraphs() {
+    $('#assessmentTypeBarGraph').empty();
+    drawAssessmentTypeBarGraph();
+
+    $('#assessmentTypeClassBarGraph').empty();
+    drawAssessmentTypeClassBarGraph();
+
+    $('#assessmentBreakdownBarGraph').empty();
+    drawAssessmentBreakdownBarGraph();
+}
+
+
 Template.studentReports.onCreated(function () {
     this.isCourseOverView = new ReactiveVar(true);
-
+    this.getDropdownValue = new ReactiveVar("courseOverview");
 });
 
 Template.studentReports.onRendered(function () {
@@ -375,27 +386,23 @@ Template.studentReports.onRendered(function () {
 
 Template.studentReports.events({
     'click .studentSideNavElements': function () {
-        $('#assessmentTypeBarGraph').empty();
-        drawAssessmentTypeBarGraph();
-
-        $('#assessmentTypeClassBarGraph').empty();
-        drawAssessmentTypeClassBarGraph();
-
-        $('#assessmentBreakdownBarGraph').empty();
-        drawAssessmentBreakdownBarGraph();
+        refreshGraphs();
     },
     'change #studentReportsDropdown': function (event, template) {
         if (document.getElementById('studentReportsDropdown').value == "courseOverview") {
             template.isCourseOverView.set(true);
+            template.getDropdownValue.set("courseOverview");
         } else {
             template.isCourseOverView.set(false);
+            template.getDropdownValue.set(document.getElementById('studentReportsDropdown').value);
         }
+        refreshGraphs();
     }
 });
 
 Template.studentReports.helpers({
     getAssessmentTypeKnowledge: function () {
-        assessmentTypeId = document.getElementById("studentReportsDropdown").value;
+        assessmentTypeId = Template.instance().getDropdownValue.get();
         var knowledgeGrade = pullAssessmentTypeKnowledgeGrade(assessmentTypeId);
         if (knowledgeGrade == undefined) {
             return "N/A"
@@ -403,7 +410,7 @@ Template.studentReports.helpers({
         return knowledgeGrade + "%"
     },
     getAssessmentTypeApplication: function () {
-        assessmentTypeId = document.getElementById("studentReportsDropdown").value;
+        assessmentTypeId = Template.instance().getDropdownValue.get();
         var applicationGrade = pullAssessmentTypeApplicationGrade(assessmentTypeId);
         if (applicationGrade == undefined) {
             return "N/A"
@@ -411,7 +418,7 @@ Template.studentReports.helpers({
         return applicationGrade + "%"
     },
     getAssessmentTypeThinking: function () {
-        assessmentTypeId = document.getElementById("studentReportsDropdown").value;
+        assessmentTypeId = Template.instance().getDropdownValue.get();
         var thinkingGrade = pullAssessmentTypeThinkingGrade(assessmentTypeId);
         if (thinkingGrade == undefined) {
             return "N/A"
@@ -419,15 +426,15 @@ Template.studentReports.helpers({
         return thinkingGrade + "%"
     },
     getAssessmentTypeCommunication: function () {
-        assessmentTypeId = document.getElementById("studentReportsDropdown").value;
+        assessmentTypeId = Template.instance().getDropdownValue.get();
         var communicationGrade = pullAssessmentTypeCommunicationGrade(assessmentTypeId);
         if (communicationGrade == undefined) {
             return "N/A"
         }
         return communicationGrade + "%"
     },
-    getAssessmentTypeWeightedGrade: function(){
-        assessmentTypeId = document.getElementById("studentReportsDropdown").value;
+    getAssessmentTypeWeightedGrade: function () {
+        assessmentTypeId = Template.instance().getDropdownValue.get();
         var WeightK = Session.get('knowledgeWeight');
         var WeightA = Session.get('applicationWeight');
         var WeightT = Session.get('thinkingWeight');
@@ -435,9 +442,9 @@ Template.studentReports.helpers({
 
         var K = pullAssessmentTypeKnowledgeGrade(assessmentTypeId);
         if (K == undefined) {
-            K =  "N/A"
+            K = "N/A"
         }
-        
+
         var A = pullAssessmentTypeApplicationGrade(assessmentTypeId);
         if (A == undefined) {
             A = "N/A"
@@ -445,7 +452,7 @@ Template.studentReports.helpers({
 
         var T = pullAssessmentTypeThinkingGrade(assessmentTypeId);
         if (T == undefined) {
-            T =  "N/A"
+            T = "N/A"
         }
 
         var C = pullAssessmentTypeCommunicationGrade(assessmentTypeId);
@@ -454,7 +461,7 @@ Template.studentReports.helpers({
         }
 
         var weightedGrade = getWeightedAverage(K, A, T, C, WeightK, WeightA, WeightT, WeightC)
-        if (weightedGrade == "N/A"){
+        if (weightedGrade == "N/A") {
             return "N/A"
         }
         return Number((weightedGrade/100).toFixed(2)) + "%"
@@ -463,6 +470,7 @@ Template.studentReports.helpers({
         return Template.instance().isCourseOverView.get();
     },
     getAllAssessments: function () {
+        var assessmentTypeName = Template.instance().getDropdownValue.get();
         const courseWeighting = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') });
         const courseWork = courseWeighting.courseworkAssessmentTypes;
         const finalWork = courseWeighting.finalAssessmentTypes;
@@ -483,16 +491,24 @@ Template.studentReports.helpers({
         return allAssessments;
     },
     getAllAssignmentInformation: function () {
+        var assessmentTypeName = Template.instance().getDropdownValue.get();
         var studentId = Session.get("currentSelectedStudentID");
         var currentAssessmentTypeId = document.getElementById('studentReportsDropdown').value;
         const assessments = Assessments.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') });
         const studentGrades = CalculatedGrades.findOne({ ownerId: Meteor.userId(), courseId: courseId }).students;
-        var currentGrade;
+        var currentGradesArray;
+        var currentGradeObj;
 
         for (var i = 0; i < studentGrades.length; i++) {
             var student = studentGrades[i];
             if (student.studentId == studentId) {
-                currentGrades = student.currentGrades;
+                currentGradesArray = student.currentGrades;
+                break;
+            }
+        }
+        for (var i = 0; i < currentGradesArray.length; i++) {
+            if (currentGradesArray[i].assessmentTypeId == currentAssessmentTypeId) {
+                currentGradeObj = currentGradesArray[i].assessments;
                 break;
             }
         }
@@ -506,7 +522,14 @@ Template.studentReports.helpers({
                     break;
                 }
             }
-            //get current grades for that assessment
+            return {
+                assessmentName: getFinalEvalName(currentAssessmentTypeId),
+                K: "50%",
+                A: "50%",
+                T: "50%",
+                C: "50%",
+                Grade: "80%"
+            };
 
 
 

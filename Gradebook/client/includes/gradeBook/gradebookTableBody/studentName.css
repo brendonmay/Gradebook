@@ -56,3 +56,11 @@
 .studMarkInvalid {
     color: #d32f2f !important;
 }
+
+.studentRepName {
+    color: black;
+}
+
+.studentRepName:hover {
+    color: blue;
+}

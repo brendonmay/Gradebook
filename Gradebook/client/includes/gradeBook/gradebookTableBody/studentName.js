@@ -670,6 +670,14 @@ Template.studentName.events({
     'click .gradeInput': function () {
         event.target.setSelectionRange(0, event.target.value.length)
     },
+    'click .studentRepName': function() {
+        var studentID = event.target.parentElement.id.split('?')[1];
+        Session.set('currentSelectedStudentID', studentID);
+        var studentReportsTab = document.getElementById('studentReportsTabId');
+        var currentStudentDropDown = document.getElementById('studentDropDown-' + studentID);
+        studentReportsTab.click();
+        currentStudentDropDown.click();
+    },
     'keyup .gradeInput': function () {
         if (event.keyCode === 13) { //if enter is hit
             var inputId = event.target.id;

@@ -1,6 +1,6 @@
 import { Template } from 'meteor/templating';
 import { Accounts } from 'meteor/accounts-base';
-import { CalculatedGrades } from '../../../lib/collections.js';
+import { CalculatedGrades, Assessments } from '../../../lib/collections.js';
 import { CourseWeighting } from '../../../lib/collections.js';
 
 import '../../main.html';
@@ -17,7 +17,7 @@ function grabGrades(assessmentTypeId) {
 			(grade.CGrade == "N/A")) {
 				continue;
 			}
-		grades.push(getGradesArrrayElement(grade, assessmentTypeId));
+		grades.push(getGradesArrrayElement(grade));
 	}
 	return grades;
 }
@@ -43,8 +43,8 @@ function getAssessmentsArray(assessmentTypeId) {
     }
 }
 
-function getGradesArrrayElement(grade, assessmentTypeId) {
-	const assessmentName = getAssessmentName(assessmentTypeId);
+function getGradesArrrayElement(grade) {
+	const assessmentName = getAssessmentName(grade.assessmentId);
 	var gradeElement = {
 		assessmentName: assessmentName,
 		K: grade.KGrade,
@@ -86,11 +86,18 @@ function getFinalEvalName(assessmentTypeId) {
 
 function getCourseEvalName(assessmentId) {
 	let courseID = Session.get('courseId');
-    var courseEvaluations = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: courseID }).courseworkAssessmentTypes;
+    var courseEvaluations = Assessments.findOne({ ownerId: Meteor.userId(), courseId: courseID }).courseAssessmentTypes;
+    var splitAssessmentId = assessmentId.split('-');
+    var assessments; 
     for (var i = 0; i < courseEvaluations.length; i++) {
-        var splitAssessment = courseEvaluations[i].assessmentTypeId.split("-");
-        if (splitAssessment[0] == assessmentId) {
-            return courseEvaluations[i].assessmentType;
+        if (splitAssessmentId[0] == courseEvaluations[i].assessmentTypeId) {
+            assessments = courseEvaluations[i].assessments;
+            break;
+        }
+    }
+    for (var i = 0; i < assessments.length; i++) {
+        if (assessments[i].assessmentId == assessmentId) {
+            return assessments[i].assessmentName;
         }
     }
 }
@@ -98,6 +105,8 @@ function getCourseEvalName(assessmentId) {
 
 function drawAssessmentBreakdownBarGraph() {
     //clear the contents of the div, in the event this function is called more than once.
+    var data = grabGrades("c1"); //should be the assessmentTypeId
+    console.log(data)
     new Morris.Bar({
         // ID of the element in which to draw the chart.
         element: 'assessmentBreakdownBarGraph',
@@ -115,7 +124,7 @@ function drawAssessmentBreakdownBarGraph() {
         //     { assessmentName: 'Quiz 9', K: 100, A: 90, T: 80, C:50 },
         //     { assessmentName: 'Quiz 10', K: 100, A: 90, T: 80, C:50 },
         // ],
-        data: grabGrades("c2"), //should be the assessmentTypeId
+         data: grabGrades("c1"), //should be the assessmentTypeId
 
         xkey: 'assessmentName',
         ykeys: ['K', 'A', 'T', 'C'],

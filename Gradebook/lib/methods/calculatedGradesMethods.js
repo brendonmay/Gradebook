@@ -339,7 +339,18 @@ if (Meteor.isServer) {
                     var currentGrades = studentsArray[i].currentGrades;
                     for (z = 0; z < currentGrades.length; z++) {
                         if (currentGrades[z].assessmentTypeId == assessmentTypeId) {
-                            studentsArray[i].currentGrades[z].assessmentTypeGrade[gradeKey] = grade;
+                            if( grade != "N/A"){
+                                studentsArray[i].currentGrades[z].assessmentTypeGrade[gradeKey] = grade;
+                            }
+                            else{
+                                var gradeKeys = Object.keys(studentsArray[i].currentGrades[z].assessmentTypeGrade);
+                                if (gradeKeys.length == 1){
+                                    studentsArray[i].currentGrades[z].assessmentTypeGrade = {};
+                                }
+                                else{
+                                    delete studentsArray[i].currentGrades[z].assessmentTypeGrade[gradeKey];
+                                }
+                            }
                             z = currentGrades.length;
                         }
                     }
@@ -382,10 +393,22 @@ if (Meteor.isServer) {
                             else { //check to see if the category is there already
                                 var categories = Object.keys(assessmentTypeGrade);
                                 if (categories.includes(gradeKey)) {
-                                    studentsArray[i].currentGrades[z].assessmentTypeGrade[gradeKey] = newGrade;
+                                    if (isNaN(newGrade) == false){
+                                        studentsArray[i].currentGrades[z].assessmentTypeGrade[gradeKey] = newGrade;
+                                    }
+                                    else{
+                                        if (categories.length == 1){
+                                            studentsArray[i].currentGrades[z].assessmentTypeGrade = {};
+                                        }
+                                        else{
+                                            delete studentsArray[i].currentGrades[z].assessmentTypeGrade[gradeKey];
+                                        }
+                                    }
                                 }
                                 else {
-                                    studentsArray[i].currentGrades[z].assessmentTypeGrade[gradeKey] = grade;
+                                    if (isNaN(newGrade) == false){
+                                        studentsArray[i].currentGrades[z].assessmentTypeGrade[gradeKey] = grade;
+                                    }
                                 }
 
                             }
@@ -395,6 +418,57 @@ if (Meteor.isServer) {
                     i = studentsArray.length;
                 }
             }
+            CalculatedGrades.update(
+                { ownerId, courseId },
+                {
+                    $set:
+                        { 'students': studentsArray }
+                }
+            );
+        },
+        'calculatedgrades.removeCourseAssessmentCategory'(ownerId, courseId, studentId, assessmentTypeId, assessmentId, category) {
+            var studentsArray = CalculatedGrades.findOne({ ownerId, courseId }).students;
+
+            if (category == 'K') {
+                gradeKey = 'KGrade';
+            }
+            if (category == 'A') {
+                gradeKey = 'AGrade';
+            }
+            if (category == 'T') {
+                gradeKey = "TGrade";
+            }
+            if (category == 'C') {
+                gradeKey = 'CGrade';
+            }
+
+            for (i = 0; i < studentsArray.length; i++) {
+                if (studentsArray[i].studentId == studentId) {
+                    var currentGrades = studentsArray[i].currentGrades;
+                    for (z = 0; z < currentGrades.length; z++) {
+                        if (currentGrades[z].assessmentTypeId == assessmentTypeId) {
+                            var assessments = currentGrades[z].assessments;
+                            for (y = 0; y < assessments.length; y++) {
+                                if (assessments[y].assessmentId == assessmentId) {
+                                    var gradeKeys = Object.keys(assessments[y]);
+                                    if (gradeKeys.includes(gradeKey)) {
+                                        if (gradeKeys.length != 2) {
+                                            delete studentsArray[i].currentGrades[z].assessments[y][gradeKey];
+                                        }
+                                        else {
+                                            studentsArray[i].currentGrades[z].assessments = [];
+                                        }
+                                    }
+                                    y = assessments.length;
+                                }
+                            }
+                            z = currentGrades.length;
+                        }
+                    }
+                    i = studentsArray.length;
+                }
+            }
+
             CalculatedGrades.update(
                 { ownerId, courseId },
                 {

@@ -56,6 +56,7 @@ Template.deleteCourseworkAssessmentType.events({
         Meteor.call('courseInformation.addNewCourseWork', currentCourseId, newcourseworkAssessmentTypes);
         Meteor.call('students.deleteCourseAssessmentType', Meteor.userId(), currentCourseId, selectedAssessmentTypeId);
         Meteor.call('calculatedgrades.deleteAssessmentType', Meteor.userId(), currentCourseId, selectedAssessmentTypeId);
+        Session.set('gradebookUpdated', true);
 
         //close modal
         $('#deleteCourseworkAssessmentTypeModal').modal('close');
@@ -91,6 +92,7 @@ Template.deleteFinalAssessmentType.events({
         Meteor.call('courseInformation.addNewFinalWork', currentCourseId, newfinalAssessmentTypes);
         Meteor.call('students.deleteAssessment', Meteor.userId(), currentCourseId, selectedAssessmentTypeId);
         Meteor.call('calculatedgrades.deleteAssessmentType', Meteor.userId(), currentCourseId, selectedAssessmentTypeId);
+        Session.set('gradebookUpdated', true);
 
         //close modal
         $('#deleteFinalAssessmentTypeModal').modal('close');

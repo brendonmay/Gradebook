@@ -146,7 +146,8 @@ function getCourseEvalName(assessmentId) {
 
 function drawAssessmentBreakdownBarGraph() {
     //clear the contents of the div, in the event this function is called more than once.
-    var data = grabGrades("c1"); //should be the assessmentTypeId
+    var assessmentTypeId = document.getElementById('studentReportsDropdown').value;
+    var data = grabGrades(assessmentTypeId); //should be the assessmentTypeId
     console.log(data)
     new Morris.Bar({
         // ID of the element in which to draw the chart.
@@ -165,7 +166,7 @@ function drawAssessmentBreakdownBarGraph() {
         //     { assessmentName: 'Quiz 9', K: 100, A: 90, T: 80, C:50 },
         //     { assessmentName: 'Quiz 10', K: 100, A: 90, T: 80, C:50 },
         // ],
-        data: grabGrades("c1"), //should be the assessmentTypeId
+        data: grabGrades(assessmentTypeId),
 
         xkey: 'assessmentName',
         ykeys: ['K', 'A', 'T', 'C'],
@@ -178,28 +179,28 @@ function drawAssessmentBreakdownBarGraph() {
 }
 
 function pullAssessmentTypeKnowledgeGrade(assessmentTypeId) {
-    var assessmentTypeGrade = pullAssessmentTypeGradeFromCollection("c1"); //pass in assessmentTypeId
+    var assessmentTypeGrade = pullAssessmentTypeGradeFromCollection(assessmentTypeId); 
     var data = getGradesArrrayElement(assessmentTypeGrade, true);
     var knowledge = data.K;
     return knowledge
 }
 
 function pullAssessmentTypeApplicationGrade(assessmentTypeId) {
-    var assessmentTypeGrade = pullAssessmentTypeGradeFromCollection("c1"); //pass in assessmentTypeId
+    var assessmentTypeGrade = pullAssessmentTypeGradeFromCollection(assessmentTypeId); 
     var data = getGradesArrrayElement(assessmentTypeGrade, true);
     var application = data.A;
     return application
 }
 
 function pullAssessmentTypeThinkingGrade(assessmentTypeId) {
-    var assessmentTypeGrade = pullAssessmentTypeGradeFromCollection("c1"); //pass in assessmentTypeId
+    var assessmentTypeGrade = pullAssessmentTypeGradeFromCollection(assessmentTypeId); 
     var data = getGradesArrrayElement(assessmentTypeGrade, true);
     var thinking = data.T;
     return thinking
 }
 
 function pullAssessmentTypeCommunicationGrade(assessmentTypeId) {
-    var assessmentTypeGrade = pullAssessmentTypeGradeFromCollection("c1"); //pass in assessmentTypeId
+    var assessmentTypeGrade = pullAssessmentTypeGradeFromCollection(assessmentTypeId);
     var data = getGradesArrrayElement(assessmentTypeGrade, true);
     var communication = data.C;
     return communication
@@ -323,8 +324,8 @@ function getWeightedAverage(K, A, T, C, WeightK, WeightA, WeightT, WeightC) {
 
 function drawAssessmentTypeBarGraph() {
     //clear the contents of the div, in the event this function is called more than once.
-    //var assessmentTypeId = Session.get('');
-    var assessmentTypeGrade = pullAssessmentTypeGradeFromCollection("c1"); //pass in assessmentTypeId
+    var assessmentTypeId = document.getElementById("studentReportsDropdown").value;
+    var assessmentTypeGrade = pullAssessmentTypeGradeFromCollection(assessmentTypeId);
     var data = getGradesArrrayElement(assessmentTypeGrade, true);
     new Morris.Bar({
         // ID of the element in which to draw the chart.
@@ -339,7 +340,6 @@ function drawAssessmentTypeBarGraph() {
         barColors: ['#b39ddb', '#4fc3f7', '#81c784', '#e57373'],
         resize: true,
         hideHover: 'auto'
-
     });
 }
 
@@ -382,60 +382,60 @@ Template.studentReports.events({
 
 Template.studentReports.helpers({
     getAssessmentTypeKnowledge: function () {
-        //assessmentTypeId = document.getElementById("studentReportsDropdown").value;
-        var knowledgeGrade = pullAssessmentTypeKnowledgeGrade("c1");
+        assessmentTypeId = document.getElementById("studentReportsDropdown").value;
+        var knowledgeGrade = pullAssessmentTypeKnowledgeGrade(assessmentTypeId);
         if (knowledgeGrade == undefined) {
             return "N/A"
         }
         return knowledgeGrade + "%"
     },
     getAssessmentTypeApplication: function () {
-        //assessmentTypeId = document.getElementById("studentReportsDropdown").value;
-        var applicationGrade = pullAssessmentTypeApplicationGrade("c1");
+        assessmentTypeId = document.getElementById("studentReportsDropdown").value;
+        var applicationGrade = pullAssessmentTypeApplicationGrade(assessmentTypeId);
         if (applicationGrade == undefined) {
             return "N/A"
         }
         return applicationGrade + "%"
     },
     getAssessmentTypeThinking: function () {
-        //assessmentTypeId = document.getElementById("studentReportsDropdown").value;
-        var thinkingGrade = pullAssessmentTypeThinkingGrade("c1");
+        assessmentTypeId = document.getElementById("studentReportsDropdown").value;
+        var thinkingGrade = pullAssessmentTypeThinkingGrade(assessmentTypeId);
         if (thinkingGrade == undefined) {
             return "N/A"
         }
         return thinkingGrade + "%"
     },
     getAssessmentTypeCommunication: function () {
-        //assessmentTypeId = document.getElementById("studentReportsDropdown").value;
-        var communicationGrade = pullAssessmentTypeCommunicationGrade("c1");
+        assessmentTypeId = document.getElementById("studentReportsDropdown").value;
+        var communicationGrade = pullAssessmentTypeCommunicationGrade(assessmentTypeId);
         if (communicationGrade == undefined) {
             return "N/A"
         }
         return communicationGrade + "%"
     },
     getAssessmentTypeWeightedGrade: function(){
-        //assessmentTypeId = document.getElementById("studentReportsDropdown").value;
+        assessmentTypeId = document.getElementById("studentReportsDropdown").value;
         var WeightK = Session.get('knowledgeWeight');
         var WeightA = Session.get('applicationWeight');
         var WeightT = Session.get('thinkingWeight');
         var WeightC = Session.get('communicationWeight');
 
-        var K = pullAssessmentTypeKnowledgeGrade("c1");
+        var K = pullAssessmentTypeKnowledgeGrade(assessmentTypeId);
         if (K == undefined) {
             K =  "N/A"
         }
         
-        var A = pullAssessmentTypeApplicationGrade("c1");
+        var A = pullAssessmentTypeApplicationGrade(assessmentTypeId);
         if (A == undefined) {
             A = "N/A"
         }
 
-        var T = pullAssessmentTypeThinkingGrade("c1");
+        var T = pullAssessmentTypeThinkingGrade(assessmentTypeId);
         if (T == undefined) {
             T =  "N/A"
         }
 
-        var C = pullAssessmentTypeCommunicationGrade("c1");
+        var C = pullAssessmentTypeCommunicationGrade(assessmentTypeId);
         if (C == undefined) {
             C = "N/A"
         }

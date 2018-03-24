@@ -1,11 +1,35 @@
 import { Template } from 'meteor/templating';
 import { Accounts } from 'meteor/accounts-base';
-import { CalculatedGrades, Assessments } from '../../../lib/collections.js';
+import { CalculatedGrades, Assessments, Students } from '../../../lib/collections.js';
 import { CourseWeighting } from '../../../lib/collections.js';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Meteor } from 'meteor/meteor';
 
 import '../../main.html';
+
+function getStudentNameLastFirst(studentId, ownerId, courseId){
+    var studentsArray = Students.findOne({ownerId, courseId}).students;
+    for (i = 0; i < studentsArray.length; i++){
+        if (studentsArray[i].studentId == studentId){
+            var firstName = studentsArray[i].studentFirstName;
+            var lastName = studentsArray[i].studentLastName;
+            var studentName = lastName + ", " + firstName; 
+            return studentName
+        }
+    }
+}
+
+function getStudentNameFirstLast(studentId, ownerId, courseId){
+    var studentsArray = Students.findOne({ownerId, courseId}).students;
+    for (i = 0; i < studentsArray.length; i++){
+        if (studentsArray[i].studentId == studentId){
+            var firstName = studentsArray[i].studentFirstName;
+            var lastName = studentsArray[i].studentLastName;
+            var studentName = firstName + " " + lastName; 
+            return studentName
+        }
+    }
+}
 
 function grabGrades(assessmentTypeId) {
     var assessmentsArray = getAssessmentsArray(assessmentTypeId);
@@ -394,6 +418,22 @@ Template.studentReports.events({
 });
 
 Template.studentReports.helpers({
+    getStudentNameLastFirst: function(){
+        var ownerId = Meteor.userId();
+        var courseId = Session.get("courseId");
+        var studentId = Session.get('currentSelectedStudentID');
+        var studentName = getStudentNameLastFirst(studentId, ownerId, courseId);
+
+        return studentName
+    },
+    getStudentNameFirstLast: function(){
+        var ownerId = Meteor.userId();
+        var courseId = Session.get("courseId");
+        var studentId = Session.get('currentSelectedStudentID');
+        var studentName = getStudentNameFirstLast(studentId, ownerId, courseId);
+
+        return studentName
+    },
     getAssessmentTypeKnowledge: function () {
         assessmentTypeId = document.getElementById("studentReportsDropdown").value;
         var knowledgeGrade = pullAssessmentTypeKnowledgeGrade(assessmentTypeId);

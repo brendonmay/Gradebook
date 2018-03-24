@@ -2,24 +2,48 @@ import { Template } from 'meteor/templating';
 import { Accounts } from 'meteor/accounts-base';
 import { CalculatedGrades, Assessments } from '../../../lib/collections.js';
 import { CourseWeighting } from '../../../lib/collections.js';
+import { Meteor } from 'meteor/meteor';
 
 import '../../main.html';
 
 function grabGrades(assessmentTypeId) {
     var assessmentsArray = getAssessmentsArray(assessmentTypeId);
     if (assessmentsArray == null) return null;
-	var grades = [];
-	for (var i = 0; i < assessmentsArray.length; i++) {
-		const grade = assessmentsArray[i];
-		if ((grade.KGrade == "N/A") &&
-			(grade.AGrade == "N/A") &&
-			(grade.TGrade == "N/A") &&
-			(grade.CGrade == "N/A")) {
-				continue;
-			}
-		grades.push(getGradesArrrayElement(grade));
-	}
-	return grades;
+    var grades = [];
+    for (var i = 0; i < assessmentsArray.length; i++) {
+        const grade = assessmentsArray[i];
+        if ((grade.KGrade == "N/A") &&
+            (grade.AGrade == "N/A") &&
+            (grade.TGrade == "N/A") &&
+            (grade.CGrade == "N/A")) {
+            continue;
+        }
+        grades.push(getGradesArrrayElement(grade));
+    }
+    return grades;
+}
+
+function pullAssessmentTypeGradeFromCollection(assessmentTypeId) {
+    var studentId = Session.get('currentSelectedStudentID');
+    var studentsArray = CalculatedGrades.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') }).students;
+    for (i = 0; i < studentsArray.length; i++) {
+        if (studentsArray[i].studentId == studentId) {
+            var currentGrades = studentsArray[i].currentGrades;
+            for (z = 0; z < currentGrades.length; z++) {
+                if (currentGrades[z].assessmentTypeId == assessmentTypeId) {
+                    var assessmentTypeGrade = currentGrades[z].assessmentTypeGrade;
+                    if (assessmentTypeGrade != {}) {
+                        assessmentTypeGrade.assessmentId = assessmentTypeId;
+                        return assessmentTypeGrade
+                    }
+                    else {
+                        //put here what you want if empty
+                    }
+                }
+            }
+            i = studentsArray.length;
+        }
+    }
 }
 
 function getAssessmentsArray(assessmentTypeId) {
@@ -43,39 +67,56 @@ function getAssessmentsArray(assessmentTypeId) {
     }
 }
 
-function getGradesArrrayElement(grade) {
-	const assessmentName = getAssessmentName(grade.assessmentId);
-	var gradeElement = {
-		assessmentName: assessmentName,
-		K: grade.KGrade,
-		A: grade.AGrade,
-		T: grade.TGrade,
-		C: grade.CGrade
-	}
-	if (grade.KGrade == "N/A" || grade.KGrade == null) {
-		delete gradeElement.K;
-	}
-	if (grade.AGrade == "N/A" || grade.AGrade == null) {
-		delete gradeElement.A;
-	}
-	if (grade.TGrade == "N/A" || grade.TGrade == null) {
-		delete gradeElement.T;
-	}
-	if (grade.CGrade == "N/A" || grade.CGrade == null) {
-		delete gradeElement.C;
-	}
-	return gradeElement;
+function getGradesArrrayElement(grade, needAssessmentTypeName) {
+    var assessmentName;
+    if (needAssessmentTypeName) {
+        assessmentName = getAssessmentTypeName(grade.assessmentId);
+    } else {
+        assessmentName = getAssessmentName(grade.assessmentId);
+    }
+    var gradeElement = {
+        assessmentName: assessmentName,
+        K: grade.KGrade,
+        A: grade.AGrade,
+        T: grade.TGrade,
+        C: grade.CGrade
+    }
+    if (grade.KGrade == "N/A" || grade.KGrade == null) {
+        delete gradeElement.K;
+    }
+    if (grade.AGrade == "N/A" || grade.AGrade == null) {
+        delete gradeElement.A;
+    }
+    if (grade.TGrade == "N/A" || grade.TGrade == null) {
+        delete gradeElement.T;
+    }
+    if (grade.CGrade == "N/A" || grade.CGrade == null) {
+        delete gradeElement.C;
+    }
+    return gradeElement;
 }
 
 function getAssessmentName(assessmentId) {
-	if (assessmentId.charAt(0) == "f") {
-		return getFinalEvalName(assessmentId);
-	} else {
-		return getCourseEvalName(assessmentId);
-	}
+    if (assessmentId.charAt(0) == "f") {
+        return getFinalEvalName(assessmentId);
+    } else {
+        return getCourseEvalName(assessmentId);
+    }
+}
+
+function getAssessmentTypeName(assessmentId) {
+    let courseID = Session.get('courseId');
+    var courseEvaluations = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: courseID }).courseworkAssessmentTypes;
+    var assessmentTypeId = assessmentId.split('-')[0];
+    for (var i = 0; i < courseEvaluations.length; i++) {
+        if (courseEvaluations[i].assessmentTypeId == assessmentTypeId) {
+            return courseEvaluations[i].assessmentType;
+        }
+    }
 }
 
 function getFinalEvalName(assessmentTypeId) {
+    let courseID = Session.get('courseId');
     var finalEvaluations = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: courseID }).finalAssessmentTypes;
     for (var i = 0; i < finalEvaluations.length; i++) {
         if (finalEvaluations[i].assessmentTypeId == assessmentTypeId) {
@@ -85,10 +126,10 @@ function getFinalEvalName(assessmentTypeId) {
 }
 
 function getCourseEvalName(assessmentId) {
-	let courseID = Session.get('courseId');
+    let courseID = Session.get('courseId');
     var courseEvaluations = Assessments.findOne({ ownerId: Meteor.userId(), courseId: courseID }).courseAssessmentTypes;
     var splitAssessmentId = assessmentId.split('-');
-    var assessments; 
+    var assessments;
     for (var i = 0; i < courseEvaluations.length; i++) {
         if (splitAssessmentId[0] == courseEvaluations[i].assessmentTypeId) {
             assessments = courseEvaluations[i].assessments;
@@ -124,7 +165,7 @@ function drawAssessmentBreakdownBarGraph() {
         //     { assessmentName: 'Quiz 9', K: 100, A: 90, T: 80, C:50 },
         //     { assessmentName: 'Quiz 10', K: 100, A: 90, T: 80, C:50 },
         // ],
-         data: grabGrades("c1"), //should be the assessmentTypeId
+        data: grabGrades("c1"), //should be the assessmentTypeId
 
         xkey: 'assessmentName',
         ykeys: ['K', 'A', 'T', 'C'],
@@ -136,18 +177,163 @@ function drawAssessmentBreakdownBarGraph() {
     });
 }
 
+function pullAssessmentTypeKnowledgeGrade(assessmentTypeId) {
+    var assessmentTypeGrade = pullAssessmentTypeGradeFromCollection("c1"); //pass in assessmentTypeId
+    var data = getGradesArrrayElement(assessmentTypeGrade, true);
+    var knowledge = data.K;
+    return knowledge
+}
+
+function pullAssessmentTypeApplicationGrade(assessmentTypeId) {
+    var assessmentTypeGrade = pullAssessmentTypeGradeFromCollection("c1"); //pass in assessmentTypeId
+    var data = getGradesArrrayElement(assessmentTypeGrade, true);
+    var application = data.A;
+    return application
+}
+
+function pullAssessmentTypeThinkingGrade(assessmentTypeId) {
+    var assessmentTypeGrade = pullAssessmentTypeGradeFromCollection("c1"); //pass in assessmentTypeId
+    var data = getGradesArrrayElement(assessmentTypeGrade, true);
+    var thinking = data.T;
+    return thinking
+}
+
+function pullAssessmentTypeCommunicationGrade(assessmentTypeId) {
+    var assessmentTypeGrade = pullAssessmentTypeGradeFromCollection("c1"); //pass in assessmentTypeId
+    var data = getGradesArrrayElement(assessmentTypeGrade, true);
+    var communication = data.C;
+    return communication
+}
+
+function getWeightedAverage(K, A, T, C, WeightK, WeightA, WeightT, WeightC) {
+    if (K != "N/A" && A != "N/A" && T != "N/A" && C != "N/A") {
+        var weightedAverage = K * WeightK + A * WeightA + T * WeightT + C * WeightC;
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K == "N/A" && A != "N/A" && T != "N/A" && C != "N/A") {
+        var newWeightC = (100 * WeightC) / (WeightA + WeightT + WeightC);
+        var newWeightA = (WeightA / WeightC) * newWeightC;
+        var newWeightT = (WeightT / WeightC) * newWeightC;
+
+        var weightedAverage = A * newWeightA + T * newWeightT + C * newWeightC;
+
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K != "N/A" && A == "N/A" && T != "N/A" && C != "N/A") {
+        var newWeightC = (100 * WeightC) / (WeightK + WeightT + WeightC);
+        var newWeightK = (WeightK / WeightC) * newWeightC;
+        var newWeightT = (WeightT / WeightC) * newWeightC;
+
+        var weightedAverage = K * newWeightK + T * newWeightT + C * newWeightC;
+
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K != "N/A" && A != "N/A" && T == "N/A" && C != "N/A") {
+        var newWeightC = (100 * WeightC) / (WeightA + WeightK + WeightC);
+        var newWeightK = (WeightK / WeightC) * newWeightC;
+        var newWeightA = (WeightA / WeightC) * newWeightC;
+
+        var weightedAverage = K * newWeightK + A * newWeightA + C * newWeightC;
+
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K != "N/A" && A != "N/A" && T != "N/A" && C == "N/A") {
+        var newWeightT = (100 * WeightT) / (WeightK + WeightT + WeightA);
+        var newWeightK = (WeightK / WeightT) * newWeightT;
+        var newWeightA = (WeightA / WeightT) * newWeightT;
+
+        var weightedAverage = K * newWeightK + A * newWeightA + T * newWeightT;
+
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K == "N/A" && A == "N/A" && T != "N/A" && C != "N/A") {
+        var newWeightT = (100 * WeightT) / (WeightT + WeightC);
+        var newWeightC = (WeightC / WeightT) * newWeightT;
+
+        var weightedAverage = T * newWeightT + C * newWeightC;
+
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K == "N/A" && A != "N/A" && T == "N/A" && C != "N/A") {
+        var newWeightA = (100 * WeightA) / (WeightA + WeightC);
+        var newWeightC = (WeightC / WeightA) * newWeightA;
+
+        var weightedAverage = A * newWeightA + C * newWeightC;
+
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K == "N/A" && A != "N/A" && T != "N/A" && C == "N/A") {
+        var newWeightA = (100 * WeightA) / (WeightA + WeightT);
+        var newWeightT = (WeightT / WeightA) * newWeightA;
+
+        var weightedAverage = A * newWeightA + T * newWeightT;
+
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K != "N/A" && A == "N/A" && T == "N/A" && C != "N/A") {
+        var newWeightK = (100 * WeightK) / (WeightK + WeightC);
+        var newWeightC = (WeightC / WeightK) * newWeightK;
+
+        var weightedAverage = C * newWeightC + K * newWeightK;
+
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K != "N/A" && A == "N/A" && T != "N/A" && C == "N/A") {
+        var newWeightK = (100 * WeightK) / (WeightK + WeightT);
+        var newWeightT = (WeightT / WeightK) * newWeightK;
+
+        var weightedAverage = T * newWeightT + K * newWeightK;
+
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K != "N/A" && A != "N/A" && T == "N/A" && C == "N/A") {
+        var newWeightA = (100 * WeightA) / (WeightK + WeightA);
+        var newWeightK = (WeightK / WeightA) * newWeightA;
+
+        var weightedAverage = A * newWeightA + K * newWeightK;
+
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K != "N/A" && A == "N/A" && T == "N/A" && C == "N/A") {
+        var weightedAverage = 100 * K;
+
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K == "N/A" && A != "N/A" && T == "N/A" && C == "N/A") {
+        var weightedAverage = 100 * A;
+
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K == "N/A" && A == "N/A" && T != "N/A" && C == "N/A") {
+        var weightedAverage = 100 * T;
+
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K == "N/A" && A == "N/A" && T == "N/A" && C != "N/A") {
+        var weightedAverage = 100 * C;
+
+        return Number(weightedAverage.toFixed(2))
+    }
+    else if (K == "N/A" && A == "N/A" && T == "N/A" && C == "N/A") {
+        var weightedAverage = "N/A";
+
+        return weightedAverage
+    }
+}
+
 function drawAssessmentTypeBarGraph() {
     //clear the contents of the div, in the event this function is called more than once.
+    //var assessmentTypeId = Session.get('');
+    var assessmentTypeGrade = pullAssessmentTypeGradeFromCollection("c1"); //pass in assessmentTypeId
+    var data = getGradesArrrayElement(assessmentTypeGrade, true);
     new Morris.Bar({
         // ID of the element in which to draw the chart.
         element: 'assessmentTypeBarGraph',
         // Chart data records -- each entry in this array corresponds to a point on
         // the chart.
-        data: [
-            { assessmentType: 'Quiz', K: 100, A: 92, T: 0, C: 31 },
-        ],
+        data: [data],
 
-        xkey: 'assessmentType',
+        xkey: 'assessmentName',
         ykeys: ['K', 'A', 'T', 'C'],
         labels: ['Knowledge', 'Application', 'Thinking', 'Communication'],
         barColors: ['#b39ddb', '#4fc3f7', '#81c784', '#e57373'],
@@ -178,12 +364,11 @@ function drawAssessmentTypeClassBarGraph() {
     });
 }
 
-
 Template.studentReports.onRendered(function () {
 });
 
 Template.studentReports.events({
-    'click .studentSideNavElements': function(){
+    'click .studentSideNavElements': function () {
         $('#assessmentTypeBarGraph').empty();
         drawAssessmentTypeBarGraph();
 
@@ -192,5 +377,73 @@ Template.studentReports.events({
 
         $('#assessmentBreakdownBarGraph').empty();
         drawAssessmentBreakdownBarGraph();
+    }
+})
+
+Template.studentReports.helpers({
+    getAssessmentTypeKnowledge: function () {
+        //assessmentTypeId = document.getElementById("studentReportsDropdown").value;
+        var knowledgeGrade = pullAssessmentTypeKnowledgeGrade("c1");
+        if (knowledgeGrade == undefined) {
+            return "N/A"
+        }
+        return knowledgeGrade + "%"
+    },
+    getAssessmentTypeApplication: function () {
+        //assessmentTypeId = document.getElementById("studentReportsDropdown").value;
+        var applicationGrade = pullAssessmentTypeApplicationGrade("c1");
+        if (applicationGrade == undefined) {
+            return "N/A"
+        }
+        return applicationGrade + "%"
+    },
+    getAssessmentTypeThinking: function () {
+        //assessmentTypeId = document.getElementById("studentReportsDropdown").value;
+        var thinkingGrade = pullAssessmentTypeThinkingGrade("c1");
+        if (thinkingGrade == undefined) {
+            return "N/A"
+        }
+        return thinkingGrade + "%"
+    },
+    getAssessmentTypeCommunication: function () {
+        //assessmentTypeId = document.getElementById("studentReportsDropdown").value;
+        var communicationGrade = pullAssessmentTypeCommunicationGrade("c1");
+        if (communicationGrade == undefined) {
+            return "N/A"
+        }
+        return communicationGrade + "%"
+    },
+    getAssessmentTypeWeightedGrade: function(){
+        //assessmentTypeId = document.getElementById("studentReportsDropdown").value;
+        var WeightK = Session.get('knowledgeWeight');
+        var WeightA = Session.get('applicationWeight');
+        var WeightT = Session.get('thinkingWeight');
+        var WeightC = Session.get('communicationWeight');
+
+        var K = pullAssessmentTypeKnowledgeGrade("c1");
+        if (K == undefined) {
+            K =  "N/A"
+        }
+        
+        var A = pullAssessmentTypeApplicationGrade("c1");
+        if (A == undefined) {
+            A = "N/A"
+        }
+
+        var T = pullAssessmentTypeThinkingGrade("c1");
+        if (T == undefined) {
+            T =  "N/A"
+        }
+
+        var C = pullAssessmentTypeCommunicationGrade("c1");
+        if (C == undefined) {
+            C = "N/A"
+        }
+
+        var weightedGrade = getWeightedAverage(K, A, T, C, WeightK, WeightA, WeightT, WeightC)
+        if (weightedGrade == "N/A"){
+            return "N/A"
+        }
+        return Number((weightedGrade/100).toFixed(2)) + "%"
     }
 })

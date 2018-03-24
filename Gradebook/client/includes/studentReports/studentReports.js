@@ -375,6 +375,30 @@ function refreshGraphs() {
     drawAssessmentBreakdownBarGraph();
 }
 
+function getGradeForAssessment(gradeObj) {
+    var k = gradeObj.KGrade;
+    var a = gradeObj.AGrade;
+    var t = gradeObj.TGrade;
+    var c = gradeObj.CGrade;
+    var WeightK = Session.get('knowledgeWeight');
+    var WeightA = Session.get('applicationWeight');
+    var WeightT = Session.get('thinkingWeight');
+    var WeightC = Session.get('communicationWeight');
+    if (isNaN(k)) k = "N/A"
+    if (isNaN(a)) a = "N/A"
+    if (isNaN(t)) t = "N/A"
+    if (isNaN(c)) c = "N/A"
+    return Number(getWeightedAverage(k, a, t, c, WeightK, WeightA, WeightT, WeightC)) / 100;
+
+}
+
+function getGradeString(grade) {
+    if (isNaN(grade)) {
+        return "N/A"
+    } else {
+        return grade + "%";
+    }
+}
 
 Template.studentReports.onCreated(function () {
     this.isCourseOverView = new ReactiveVar(true);
@@ -464,7 +488,7 @@ Template.studentReports.helpers({
         if (weightedGrade == "N/A") {
             return "N/A"
         }
-        return Number((weightedGrade/100).toFixed(2)) + "%"
+        return Number((weightedGrade / 100).toFixed(2)) + "%"
     },
     isCourseOverView: function () {
         return Template.instance().isCourseOverView.get();
@@ -491,11 +515,10 @@ Template.studentReports.helpers({
         return allAssessments;
     },
     getAllAssignmentInformation: function () {
-        var assessmentTypeName = Template.instance().getDropdownValue.get();
         var studentId = Session.get("currentSelectedStudentID");
-        var currentAssessmentTypeId = document.getElementById('studentReportsDropdown').value;
+        var currentAssessmentTypeId = Template.instance().getDropdownValue.get();
         const assessments = Assessments.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') });
-        const studentGrades = CalculatedGrades.findOne({ ownerId: Meteor.userId(), courseId: courseId }).students;
+        const studentGrades = CalculatedGrades.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') }).students;
         var currentGradesArray;
         var currentGradeObj;
 
@@ -506,40 +529,39 @@ Template.studentReports.helpers({
                 break;
             }
         }
+
         for (var i = 0; i < currentGradesArray.length; i++) {
             if (currentGradesArray[i].assessmentTypeId == currentAssessmentTypeId) {
-                currentGradeObj = currentGradesArray[i].assessments;
-                break;
-            }
-        }
+                if (currentAssessmentTypeId[0] == "f") {
+                    currentGradeObj = currentGradesArray[i].assessmentTypeGrade;
 
-        if (currentAssessmentTypeId[0] == "f") {
-            var finalAssessments = assessments.finalAssessmentTypes;
-            var currentAssessment;
-            for (var i = 0; i < finalAssessments.length; i++) {
-                if (finalAssessments[i].assessmentTypeId == currentAssessmentTypeId) {
-                    currentAssessment = finalAssessments[i];
+                    var returnObject = {
+                        assessmentName: getFinalEvalName(currentAssessmentTypeId),
+                        K: getGradeString(currentGradeObj[i].KGrade),
+                        A: getGradeString(currentGradeObj[i].AGrade),
+                        T: getGradeString(currentGradeObj[i].TGrade),
+                        C: getGradeString(currentGradeObj[i].CGrade),
+                        Grade: getGradeString(getGradeForAssessment(currentGradeObj))
+                    };
+                    return [returnObject];
+                } else {
+                    currentGradeObj = currentGradesArray[i].assessments;
                     break;
                 }
             }
-            return {
-                assessmentName: getFinalEvalName(currentAssessmentTypeId),
-                K: "50%",
-                A: "50%",
-                T: "50%",
-                C: "50%",
-                Grade: "80%"
-            };
-
-
-
-
-
-
-        } else {
-
         }
-
+        //courseWork now:
+        var assessmentGrades = [];
+        for (var i = 0; i < currentGradeObj.length; i++) {
+            assessmentGrades.push({
+                assessmentName: getCourseEvalName(currentGradeObj[i].assessmentId),
+                K: getGradeString(currentGradeObj[i].KGrade),
+                A: getGradeString(currentGradeObj[i].AGrade),
+                T: getGradeString(currentGradeObj[i].TGrade),
+                C: getGradeString(currentGradeObj[i].CGrade),
+                Grade: getGradeString(getGradeForAssessment(currentGradeObj[i]))
+            });
+        }
+        return assessmentGrades;
     }
-
 });

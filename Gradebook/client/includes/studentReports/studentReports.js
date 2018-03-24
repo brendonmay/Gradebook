@@ -48,25 +48,123 @@ function grabGrades(assessmentTypeId) {
     return grades;
 }
 
-function pullAssessmentTypeGradeFromCollection(assessmentTypeId) {
-    var studentId = Session.get('currentSelectedStudentID');
-    var studentsArray = CalculatedGrades.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') }).students;
-    for (i = 0; i < studentsArray.length; i++) {
-        if (studentsArray[i].studentId == studentId) {
+function getAssessmentTypeName(assessmentTypeId){
+    var ownerId = Meteor.userId();
+    var courseId = Session.get('courseId');
+
+    if (assessmentTypeId[0] != "f"){
+        var assessmentTypes = CourseWeighting.findOne({ownerId, courseId}).courseworkAssessmentTypes
+    }
+    else{
+        var assessmentTypes = CourseWeighting.findOne({ownerId, courseId}).finalAssessmentTypes
+    }
+
+    for (i = 0; i < assessmentTypes.length; i++){
+        if (assessmentTypes[i].assessmentTypeId == assessmentTypeId){
+            assessmentTypeName = assessmentTypes[i].assessmentType
+            return assessmentTypeName
+        }
+    }
+
+}
+
+function pullAssessmentTypeGradeFromCollection(assessmentTypeId, forClass) {
+    if(forClass){
+        var KTotal = 0;
+        var ATotal = 0
+        var TTotal = 0;
+        var CTotal = 0;
+
+        var KTotalStudents = 0;
+        var ATotalStudents = 0;
+        var TTotalStudents = 0;
+        var CTotalStudents = 0;
+
+        var studentsArray = CalculatedGrades.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') }).students;
+        for (i = 0; i < studentsArray.length; i++){
             var currentGrades = studentsArray[i].currentGrades;
-            for (z = 0; z < currentGrades.length; z++) {
-                if (currentGrades[z].assessmentTypeId == assessmentTypeId) {
+            for (z = 0; z < currentGrades.length; z++){
+                if(currentGrades[z].assessmentTypeId == assessmentTypeId){
                     var assessmentTypeGrade = currentGrades[z].assessmentTypeGrade;
-                    if (assessmentTypeGrade != {}) {
-                        assessmentTypeGrade.assessmentId = assessmentTypeId;
-                        return assessmentTypeGrade
+                    var gradeKeys = Object.keys(assessmentTypeGrade);
+                    if (gradeKeys.includes("KGrade")){
+                        KTotalStudents++;
+                        KTotal = KTotal + assessmentTypeGrade.KGrade;
                     }
-                    else {
-                        //put here what you want if empty
+                    if (gradeKeys.includes("AGrade")){
+                        ATotalStudents++;
+                        ATotal = ATotal + assessmentTypeGrade.AGrade;
                     }
+                    if (gradeKeys.includes("TGrade")){
+                        TTotalStudents++;
+                        TTotal = TTotal + assessmentTypeGrade.TGrade;
+                    }
+                    if (gradeKeys.includes("CGrade")){
+                        CTotalStudents++;
+                        CTotal = CTotal + assessmentTypeGrade.CGrade;
+                    }
+                    z = currentGrades.length;
                 }
             }
-            i = studentsArray.length;
+        }
+        var K = KTotal/KTotalStudents;
+        var A = ATotal/ATotalStudents;
+        var T = TTotal/TTotalStudents;
+        var C = CTotal/CTotalStudents;
+
+        if ( KTotalStudents == 0 ){
+            K = "N/A"
+        }
+        if ( ATotalStudents == 0 ){
+            A = "N/A"
+        }
+        if ( TTotalStudents == 0 ){
+            T = "N/A"
+        }
+        if ( CTotalStudents == 0 ){
+            C = "N/A"
+        }
+        var assessmentType = getAssessmentTypeName(assessmentTypeId);
+
+        var assessmentTypeGradeObject = {assessmentType}
+        
+        if (K != "N/A"){
+            assessmentTypeGradeObject.K = K
+        }
+        if (A != "N/A"){
+            assessmentTypeGradeObject.A = A
+        }
+        if (T != "N/A"){
+            assessmentTypeGradeObject.T = T
+        }
+        if (C != "N/A"){
+            assessmentTypeGradeObject.C = C
+        }
+
+        console.log(assessmentTypeGradeObject);
+
+        return assessmentTypeGradeObject   
+    }
+    else{
+        var studentId = Session.get('currentSelectedStudentID');
+        var studentsArray = CalculatedGrades.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') }).students;
+        for (i = 0; i < studentsArray.length; i++) {
+            if (studentsArray[i].studentId == studentId) {
+                var currentGrades = studentsArray[i].currentGrades;
+                for (z = 0; z < currentGrades.length; z++) {
+                    if (currentGrades[z].assessmentTypeId == assessmentTypeId) {
+                        var assessmentTypeGrade = currentGrades[z].assessmentTypeGrade;
+                        if (assessmentTypeGrade != {}) {
+                            assessmentTypeGrade.assessmentId = assessmentTypeId;
+                            return assessmentTypeGrade
+                        }
+                        else {
+                            //put here what you want if empty
+                        }
+                    }
+                }
+                i = studentsArray.length;
+            }
         }
     }
 }
@@ -369,14 +467,14 @@ function drawAssessmentTypeBarGraph() {
 
 function drawAssessmentTypeClassBarGraph() {
     //clear the contents of the div, in the event this function is called more than once.
+    var assessmentTypeId = document.getElementById("studentReportsDropdown").value;
+    var data = pullAssessmentTypeGradeFromCollection(assessmentTypeId, true);
     new Morris.Bar({
         // ID of the element in which to draw the chart.
         element: 'assessmentTypeClassBarGraph',
         // Chart data records -- each entry in this array corresponds to a point on
         // the chart.
-        data: [
-            { assessmentType: 'Quiz', K: 83, A: 75, T: 81, C: 71 },
-        ],
+        data: [data],
 
         xkey: 'assessmentType',
         ykeys: ['K', 'A', 'T', 'C'],

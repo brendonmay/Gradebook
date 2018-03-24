@@ -4,14 +4,16 @@
         <h5 class="center marg-bottom-none">Brendon May (96%)</h5>
         <div class="row modif-bot-mar">
             <div class="col input-field s4 offset-s4">
-                <select>
-                    <option value="1" selected>Course Overview</option>
-                    <option value="2">Quiz</option>
+                <select id="studentReportsDropdown">
+                    <option value="courseOverview" selected>Course Overview</option>
+                    {{#each getAllAssessments}}
+                    <option value="{{assessmentTypeId}}">{{assessmentType}}</option>
+                    {{/each}}
+                    <!-- <option value="2">Quiz</option>
                     <option value="3">Assignment</option>
                     <option value="4">Test</option>
-                    <option value="4">Final Evaluations</option>
+                    <option value="4">Final Evaluations</option> -->
                 </select>
-                <!-- <label>Mark Breakdown Selection</label> -->
             </div>
         </div>
         <div class="row">
@@ -80,6 +82,7 @@
         </div>
         <br>
         <br>
+        {{#if isCourseOverView}}
         <table class="striped centered">
             <thead>
                 <tr>
@@ -135,6 +138,32 @@
                 </tr>
             </tbody>
         </table>
+        {{else}}
+        <table class="striped centered">
+            <thead>
+                <tr>
+                    <th class="bord-right-left-top Assessment-color">Assessment</th>
+                    <th class="bord-right-top K-color">Knowledge</th>
+                    <th class="bord-right-top A-color">Application</th>
+                    <th class="bord-right-top T-color">Thinking</th>
+                    <th class="bord-right-top C-color">Communication</th>
+                    <th class="bord-right-top Grade-color">Grade</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- {{#each getAllAssignmentInformation}}
+                    <tr>
+                        <td class="bord-left-right">{{assessmentName}}</td>
+                        <td class="bord-right">{{K}}</td>
+                        <td class="bord-right">{{A}}</td>
+                        <td class="bord-right">{{T}}</td>
+                        <td class="bord-right">{{C}}</td>
+                        <td class="bord-right">{{Grade}}</td>
+                    </tr>
+                {{/each}} -->
+            </tbody>
+        </table>
+        {{/if}}
     </div>
     <div class="col s2 max-height">
         {{> studentReportsSideNav}}

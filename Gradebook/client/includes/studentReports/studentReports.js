@@ -464,7 +464,7 @@ Template.studentReports.helpers({
         if (weightedGrade == "N/A") {
             return "N/A"
         }
-        return Number((weightedGrade / 100).toFixed(2)) + "%"
+        return Number((weightedGrade/100).toFixed(2)) + "%"
     },
     isCourseOverView: function () {
         return Template.instance().isCourseOverView.get();
@@ -509,6 +509,7 @@ Template.studentReports.helpers({
         for (var i = 0; i < currentGradesArray.length; i++) {
             if (currentGradesArray[i].assessmentTypeId == currentAssessmentTypeId) {
                 currentGradeObj = currentGradesArray[i].assessments;
+                break;
             }
         }
 

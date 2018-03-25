@@ -164,6 +164,7 @@ if (Meteor.isServer) {
 
             var newStudentObject = {
                 studentId: studentId,
+                categoryGrades: {},
                 currentGrades: currentGrades
             }
 
@@ -469,6 +470,33 @@ if (Meteor.isServer) {
                 }
             }
 
+            CalculatedGrades.update(
+                { ownerId, courseId },
+                {
+                    $set:
+                        { 'students': studentsArray }
+                }
+            );
+        },
+        'calculatedgrades.updateOverallCategoryGrade'(ownerId, courseId, studentId, category, overallCategoryGrade){
+            var studentsArray = CalculatedGrades.findOne({ownerId, courseId}).students;
+            for (i = 0; i < studentsArray.length; i++){
+                if(studentsArray[i].studentId == studentId){
+                    var categoryKey = category + "Grade";
+                    var categoryGrades = studentsArray[i].categoryGrades;
+                    var currentCategories = Object.keys(categoryGrades);
+
+                    if (overallCategoryGrade == "N/A"){
+                        if(currentCategories.includes(categoryKey)){
+                            delete studentsArray[i].categoryGrades[categoryKey];
+                        }
+                    }
+                    else{
+                        studentsArray[i].categoryGrades[categoryKey] = overallCategoryGrade;
+                    }
+                    i = studentsArray.length;
+                }
+            }
             CalculatedGrades.update(
                 { ownerId, courseId },
                 {

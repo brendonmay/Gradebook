@@ -9,6 +9,9 @@
 	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.
 	- In student reports, if you select a student with id = "s-3" and then you go to a new course in student reports, student with Id "s-3" will be highlighted
 	- Fix hover color of students in gradebook
+	- course overview chart on bottom not working
+	- student reports, quizzes, chart in bottom grades colum not rounded to 2 decimal places
+	- change the way the final mark is determined by averaging the grades of all assessments of a specific type with equal weight
 	
 	-studentReports dropdown not being refreshed after a new assessment type has been added/deleted. Why? 
 -------------

@@ -1300,6 +1300,7 @@ function drawAssessmentTypeClassBarGraph() {
     //clear the contents of the div, in the event this function is called more than once.
     var assessmentTypeId = document.getElementById("studentReportsDropdown").value;
     var data = pullAssessmentTypeGradeFromCollection(assessmentTypeId, true);
+    //TODO: NEED TO HAVE A BETTER WAY TO CHECK 
     if (data == null) {
         var assessmentName = getAssessmentTypeNameFromAssessmentId(assessmentTypeId);
         if (assessmentName == null) {
@@ -1455,6 +1456,10 @@ function getCourseOverviewInformation() {
             TGrade: TGrade,
             CGrade: CGrade
         };
+        if (grade.KGrade == (-1).toFixed(2)) grade.KGrade = "N/A"
+        if (grade.AGrade == (-1).toFixed(2)) grade.AGrade = "N/A"
+        if (grade.TGrade == (-1).toFixed(2)) grade.TGrade = "N/A"
+        if (grade.CGrade == (-1).toFixed(2)) grade.CGrade = "N/A"
 
         courseOverViewTableInfo.push({
             assessmentTypeName: assessmentTypeIds[i].assessmentType,

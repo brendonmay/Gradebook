@@ -909,6 +909,11 @@ function drawAssessmentBreakdownBarGraph() {
         data = [{
             assessmentName: assessmentName
         }];
+    } 
+    else if (data.length == 0) {
+        data = [{
+            assessmentName: getAssessmentTypeName(assessmentTypeId)
+        }];
     }
     new Morris.Bar({
         // ID of the element in which to draw the chart.
@@ -1296,7 +1301,7 @@ function drawAssessmentTypeClassBarGraph() {
     var assessmentTypeId = document.getElementById("studentReportsDropdown").value;
     var data = pullAssessmentTypeGradeFromCollection(assessmentTypeId, true);
     if (data.assessmentName == null) {
-        data.assessmentType = getAssessmentName(assessmentTypeId);
+        data.assessmentType = getAssessmentTypeNameFromAssessmentId(assessmentTypeId);
     }
     new Morris.Bar({
         // ID of the element in which to draw the chart.

@@ -1467,7 +1467,7 @@ function getCourseOverviewInformation() {
             A: getGradeString(AGrade),
             T: getGradeString(TGrade),
             C: getGradeString(CGrade),
-            Grade: getGradeString(getGradeForAssessment(grade))
+            Grade: getGradeString(getGradeForAssessment(grade).toFixed(2))
         });
     }
     return courseOverViewTableInfo;

@@ -591,6 +591,76 @@ function getFinalGrade(studentId) {
     }
 }
 
+function getFinalCategoryGradesForClass() {
+    var KTotal = 0;
+    var ATotal = 0
+    var TTotal = 0;
+    var CTotal = 0;
+
+    var KTotalStudents = 0;
+    var ATotalStudents = 0;
+    var TTotalStudents = 0;
+    var CTotalStudents = 0;
+
+    var studentsArray = CalculatedGrades.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') }).students;
+    for (i = 0; i < studentsArray.length; i++) {
+        var categoryGrades = studentsArray[i].categoryGrades;
+        var gradeKeys = Object.keys(categoryGrades);
+
+        if (gradeKeys.includes("KGrade")) {
+            KTotalStudents++;
+            KTotal = KTotal + categoryGrades.KGrade;
+        }
+        if (gradeKeys.includes("AGrade")) {
+            ATotalStudents++;
+            ATotal = ATotal + categoryGrades.AGrade;
+        }
+        if (gradeKeys.includes("TGrade")) {
+            TTotalStudents++;
+            TTotal = TTotal + categoryGrades.TGrade;
+        }
+        if (gradeKeys.includes("CGrade")) {
+            CTotalStudents++;
+            CTotal = CTotal + categoryGrades.CGrade;
+        }
+
+    }
+    var K = KTotal / KTotalStudents;
+    var A = ATotal / ATotalStudents;
+    var T = TTotal / TTotalStudents;
+    var C = CTotal / CTotalStudents;
+
+    if (KTotalStudents == 0) {
+        K = "N/A"
+    }
+    if (ATotalStudents == 0) {
+        A = "N/A"
+    }
+    if (TTotalStudents == 0) {
+        T = "N/A"
+    }
+    if (CTotalStudents == 0) {
+        C = "N/A"
+    }
+
+    var finalCategoryGradesForClass = { assessmentType: "Final Grade" }
+
+    if (K != "N/A") {
+        finalCategoryGradesForClass.K = K
+    }
+    if (A != "N/A") {
+        finalCategoryGradesForClass.A = A
+    }
+    if (T != "N/A") {
+        finalCategoryGradesForClass.T = T
+    }
+    if (C != "N/A") {
+        finalCategoryGradesForClass.C = C
+    }
+
+    return finalCategoryGradesForClass
+}
+
 function pullAssessmentTypeGradeFromCollection(assessmentTypeId, forClass) {
     if (forClass) {
         var KTotal = 0;
@@ -714,7 +784,7 @@ function getAssessmentsArray(assessmentTypeId) {
 function getGradesArrrayElement(grade, needAssessmentTypeName) {
     var assessmentName;
     if (needAssessmentTypeName) {
-        assessmentName = getAssessmentTypeName(grade.assessmentId);
+        assessmentName = getAssessmentTypeNameFromAssessmentId(grade.assessmentId);
     } else {
         assessmentName = getAssessmentName(grade.assessmentId);
     }
@@ -748,7 +818,7 @@ function getAssessmentName(assessmentId) {
     }
 }
 
-function getAssessmentTypeName(assessmentId) {
+function getAssessmentTypeNameFromAssessmentId(assessmentId) {
     let courseID = Session.get('courseId');
     var courseEvaluations = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: courseID }).courseworkAssessmentTypes;
     var assessmentTypeId = assessmentId.split('-')[0];
@@ -1120,11 +1190,11 @@ function drawAssessmentTypeBarGraph() {
 
 function drawFinalGradeBarGraph() {
     //clear the contents of the div, in the event this function is called more than once.
-    var studentsArray = CalculatedGrades.findOne({ownerId: Meteor.userId(), courseId: Session.get('courseId')}).students;
+    var studentsArray = CalculatedGrades.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') }).students;
     var studentId = Session.get("currentSelectedStudentID");
     var categoryGrades = {};
-    for (i = 0; i < studentsArray.length; i++){
-        if (studentsArray[i].studentId == studentId){
+    for (i = 0; i < studentsArray.length; i++) {
+        if (studentsArray[i].studentId == studentId) {
             categoryGrades = studentsArray[i].categoryGrades;
             i = studentsArray.length;
         }
@@ -1135,7 +1205,7 @@ function drawFinalGradeBarGraph() {
         assessmentName: "Final Grade",
     }
 
-    for (i = 0; i < categories.length; i++){
+    for (i = 0; i < categories.length; i++) {
         var category = categories[i][0];
         data[category] = categoryGrades[categories[i]]
 
@@ -1324,6 +1394,40 @@ Template.studentReports.events({
 });
 
 Template.studentReports.helpers({
+    getClassFinalCategories: function(){
+        obj = getFinalCategoryGradesForClass();
+        let keys = Object.keys(obj);
+
+        if (keys.includes("K")){
+            obj.K = obj.K + "%"
+        }
+
+        if (keys.includes("A")){
+            obj.A = obj.A + "%"
+        }
+
+        if (keys.includes("K")){
+            obj.T = obj.T + "%"
+        }
+
+        if (keys.includes("K")){
+            obj.C= obj.C + "%"
+        }
+
+        if (!keys.includes("K")){
+            obj.K = "N/A"
+        }
+        if (!keys.includes("A")){
+            obj.A = "N/A"
+        }
+        if (!keys.includes("T")){
+            obj.T = "N/A"
+        }
+        if (!keys.includes("C")){
+            obj.C = "N/A"
+        }
+        return obj
+    },
     getFinalGrade: function () {
         var studentId = Session.get('currentSelectedStudentID');
         let ownerId = Meteor.userId();

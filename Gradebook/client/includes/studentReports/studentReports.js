@@ -928,7 +928,9 @@ function drawAssessmentBreakdownBarGraph() {
         //     { assessmentName: 'Quiz 10', K: 100, A: 90, T: 80, C:50 },
         // ],
         data: data,
-        ymin: 100,
+        ymin: 0,
+        ymax: 100,
+        numLines: 6,
         xkey: 'assessmentName',
         ykeys: ['K', 'A', 'T', 'C'],
         labels: ['Knowledge', 'Application', 'Thinking', 'Communication'],
@@ -1041,7 +1043,9 @@ function drawCourseOverviewBreakdownBarGraph() {
         //     { assessmentName: 'Quiz 10', K: 100, A: 90, T: 80, C:50 },
         // ],
         data: data,
-        ymin: 100,
+        ymin: 0,
+        ymax: 100,
+        numLines: 6,
         xkey: 'assessmentTypeName',
         ykeys: ['K', 'A', 'T', 'C'],
         labels: ['Knowledge', 'Application', 'Thinking', 'Communication'],
@@ -1234,7 +1238,9 @@ function drawAssessmentTypeBarGraph() {
         // Chart data records -- each entry in this array corresponds to a point on
         // the chart.
         data: [data],
-        ymin: 100,
+        ymin: 0,
+        ymax: 100,
+        numLines: 6,
         xkey: 'assessmentName',
         ykeys: ['K', 'A', 'T', 'C'],
         labels: ['Knowledge', 'Application', 'Thinking', 'Communication'],
@@ -1273,7 +1279,9 @@ function drawFinalGradeBarGraph() {
         // Chart data records -- each entry in this array corresponds to a point on
         // the chart.
         data: [data],
-        ymin: 100,
+        ymin: 0,
+        ymax: 100,
+        numLines: 6,
         xkey: 'assessmentName',
         ykeys: ['K', 'A', 'T', 'C'],
         labels: ['Knowledge', 'Application', 'Thinking', 'Communication'],
@@ -1296,7 +1304,9 @@ function drawAssessmentTypeClassBarGraph() {
         // Chart data records -- each entry in this array corresponds to a point on
         // the chart.
         data: [data],
-        ymin: 100,
+        ymin: 0,
+        ymax: 100,
+        numLines: 6,
         xkey: 'assessmentType',
         ykeys: ['K', 'A', 'T', 'C'],
         labels: ['Knowledge', 'Application', 'Thinking', 'Communication'],
@@ -1316,7 +1326,9 @@ function drawOverallClassBarGraph() {
         // Chart data records -- each entry in this array corresponds to a point on
         // the chart.
         data: [data],
-
+        ymin: 0,
+        ymax: 100,
+        numLines: 6,
         xkey: 'assessmentType',
         ykeys: ['K', 'A', 'T', 'C'],
         labels: ['Knowledge', 'Application', 'Thinking', 'Communication'],

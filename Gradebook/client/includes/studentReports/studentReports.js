@@ -820,6 +820,48 @@ function drawAssessmentBreakdownBarGraph() {
     });
 }
 
+function drawCourseOverviewBreakdownBarGraph() {
+    //clear the contents of the div, in the event this function is called more than once.
+    
+    var data = getCourseOverviewInformation(); //should be the assessmentTypeId
+    for (var i = 0; i < data.length; i++) {
+        if (data[i].Grade == "N/A") {
+            data.splice(i,1);
+            i--;
+        } else {
+            delete data[i].Grade;
+        }
+    }
+
+    new Morris.Bar({
+        // ID of the element in which to draw the chart.
+        element: 'assessmentBreakdownBarGraph',
+        // Chart data records -- each entry in this array corresponds to a point on
+        // the chart.
+        // data: [
+        //     { assessmentName: 'Quiz 1', K: 100, A: 90, T: 80, C:50 },
+        //     { assessmentName: 'Quiz 2', K: 75,  A: 65, T: 80, C:50 },
+        //     { assessmentName: 'Quiz 3', K: 50,  A: 40, T: 80, C:50 },
+        //     { assessmentName: 'Quiz 4', K: 75,  A: 65, T: 80, C:50 },
+        //     { assessmentName: 'Quiz 5', K: 50,  A: 40, T: 80, C:50 },
+        //     { assessmentName: 'Quiz 6', K: 75,  A: 65, T: 80, C:50 },
+        //     { assessmentName: 'Quiz 7', K: 100, A: 90, T: 80, C:50 },
+        //     { assessmentName: 'Quiz 8', K: 100, A: 90, T: 80, C:50 },
+        //     { assessmentName: 'Quiz 9', K: 100, A: 90, T: 80, C:50 },
+        //     { assessmentName: 'Quiz 10', K: 100, A: 90, T: 80, C:50 },
+        // ],
+        data: data,
+
+        xkey: 'assessmentTypeName',
+        ykeys: ['K', 'A', 'T', 'C'],
+        labels: ['Knowledge', 'Application', 'Thinking', 'Communication'],
+        barColors: ['#b39ddb', '#4fc3f7', '#81c784', '#e57373'],
+        resize: true,
+        hideHover: 'auto'
+
+    });
+}
+
 function pullAssessmentTypeKnowledgeGrade(assessmentTypeId) {
     var assessmentTypeGrade = pullAssessmentTypeGradeFromCollection(assessmentTypeId);
     var data = getGradesArrrayElement(assessmentTypeGrade, true);
@@ -1041,6 +1083,15 @@ function refreshAssessmentTypeGraphs() {
     drawAssessmentBreakdownBarGraph();
 }
 
+function refreshCourseOverviewGraphs() {
+    $('#assessmentTypeBarGraph').empty();
+    $('#assessmentTypeClassBarGraph').empty();
+    $('#assessmentBreakdownBarGraph').empty();
+
+    drawCourseOverviewBreakdownBarGraph();
+
+}
+
 function getGradeForAssessment(gradeObj) {
     var k = gradeObj.KGrade;
     var a = gradeObj.AGrade;
@@ -1088,6 +1139,57 @@ function getAssessmentTypeArray() {
     return allAssessments;
 }
 
+function getCourseOverviewInformation() {
+    var studentId = Session.get("currentSelectedStudentID");
+    const studentGrades = CalculatedGrades.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') }).students;
+    var courseOverViewTableInfo = [];
+    var numOfStudents = studentGrades.length;
+    var assessmentTypeIds = getAssessmentTypeArray();
+    for (var i = 0; i < assessmentTypeIds.length; i++) {
+        var KGrade = 0;
+        var AGrade = 0;
+        var TGrade = 0;
+        var CGrade = 0;
+        var currentATID = assessmentTypeIds[i].assessmentTypeId;
+        for (var j = 0; j < studentGrades.length; j++) {
+            if (studentGrades[j].studentId == studentId) {
+                currentStudentGrades = studentGrades[j].currentGrades;
+                for (var x = 0; x < currentStudentGrades.length; x++) {
+                    if (currentATID == currentStudentGrades[x].assessmentTypeId) {
+                        var assessmentTypeGrade = currentStudentGrades[x].assessmentTypeGrade;
+                        if (!isNaN(assessmentTypeGrade.KGrade)) KGrade += assessmentTypeGrade.KGrade;
+                        if (!isNaN(assessmentTypeGrade.AGrade)) AGrade += assessmentTypeGrade.AGrade;
+                        if (!isNaN(assessmentTypeGrade.TGrade)) TGrade += assessmentTypeGrade.TGrade;
+                        if (!isNaN(assessmentTypeGrade.CGrade)) CGrade += assessmentTypeGrade.CGrade;
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        KGrade = KGrade.toFixed(2);
+        AGrade = AGrade.toFixed(2);
+        TGrade = TGrade.toFixed(2);
+        CGrade = CGrade.toFixed(2);
+        grade = {
+            KGrade: KGrade,
+            AGrade: AGrade,
+            TGrade: TGrade,
+            CGrade: CGrade
+        };
+
+        courseOverViewTableInfo.push({
+            assessmentTypeName: assessmentTypeIds[i].assessmentType,
+            K: (KGrade),
+            A: (AGrade),
+            T: (TGrade),
+            C: (CGrade),
+            Grade: getGradeString(getGradeForAssessment(grade).toFixed(2))
+        });
+    }
+    return courseOverViewTableInfo;
+}
+
 Template.studentReports.onCreated(function () {
     this.isCourseOverView = new ReactiveVar(true);
     this.getDropdownValue = new ReactiveVar("courseOverview");
@@ -1104,11 +1206,13 @@ Template.studentReports.events({
         if (document.getElementById('studentReportsDropdown').value == "courseOverview") {
             template.isCourseOverView.set(true);
             template.getDropdownValue.set("courseOverview");
+            refreshCourseOverviewGraphs();
         } else {
             template.isCourseOverView.set(false);
             template.getDropdownValue.set(document.getElementById('studentReportsDropdown').value);
+            refreshAssessmentTypeGraphs();
         }
-        refreshAssessmentTypeGraphs();
+        
     }
 });
 
@@ -1321,53 +1425,14 @@ Template.studentReports.helpers({
         return assessmentGrades;
     },
     getCourseOverviewTableInfo: function () {
-        var studentId = Session.get("currentSelectedStudentID");
-        const studentGrades = CalculatedGrades.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') }).students;
-        var courseOverViewTableInfo = [];
-        var numOfStudents = studentGrades.length;
-        var assessmentTypeIds = getAssessmentTypeArray();
-        for (var i = 0; i < assessmentTypeIds.length; i++) {
-            var KGrade = 0;
-            var AGrade = 0;
-            var TGrade = 0;
-            var CGrade = 0;
-            var currentATID = assessmentTypeIds[i].assessmentTypeId;
-            for (var j = 0; j < studentGrades.length; j++) {
-                if (studentGrades[j].studentId == studentId) {
-                    currentStudentGrades = studentGrades[j].currentGrades;
-                    for (var x = 0; x < currentStudentGrades.length; x++) {
-                        if (currentATID == currentStudentGrades[x].assessmentTypeId) {
-                            var assessmentTypeGrade = currentStudentGrades[x].assessmentTypeGrade;
-                            if (!isNaN(assessmentTypeGrade.KGrade)) KGrade += assessmentTypeGrade.KGrade;
-                            if (!isNaN(assessmentTypeGrade.AGrade)) AGrade += assessmentTypeGrade.AGrade;
-                            if (!isNaN(assessmentTypeGrade.TGrade)) TGrade += assessmentTypeGrade.TGrade;
-                            if (!isNaN(assessmentTypeGrade.CGrade)) CGrade += assessmentTypeGrade.CGrade;
-                            break;
-                        }
-                    }
-                    break;
-                }
-            }
-            KGrade = KGrade.toFixed(2);
-            AGrade = AGrade.toFixed(2);
-            TGrade = TGrade.toFixed(2);
-            CGrade = CGrade.toFixed(2);
-            grade = {
-                KGrade: KGrade,
-                AGrade: AGrade,
-                TGrade: TGrade,
-                CGrade: CGrade
-            };
-
-            courseOverViewTableInfo.push({
-                assessmentTypeName: assessmentTypeIds[i].assessmentType,
-                K: getGradeString(KGrade),
-                A: getGradeString(AGrade),
-                T: getGradeString(TGrade),
-                C: getGradeString(CGrade),
-                Grade: getGradeString(getGradeForAssessment(grade).toFixed(2))
-            });
+        var courseOverviewInfo = getCourseOverviewInformation();
+        for (var i = 0; i < courseOverviewInfo.length; i++) {
+            courseOverviewInfo[i].K = getGradeString(courseOverviewInfo[i].K);
+            courseOverviewInfo[i].A = getGradeString(courseOverviewInfo[i].A);
+            courseOverviewInfo[i].T = getGradeString(courseOverviewInfo[i].T);
+            courseOverviewInfo[i].C = getGradeString(courseOverviewInfo[i].C);
         }
+        refreshCourseOverviewGraphs();
         return courseOverViewTableInfo;
     },
     getFinalGrade: function (category) {

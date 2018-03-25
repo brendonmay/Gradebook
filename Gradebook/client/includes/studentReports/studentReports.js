@@ -1300,8 +1300,12 @@ function drawAssessmentTypeClassBarGraph() {
     //clear the contents of the div, in the event this function is called more than once.
     var assessmentTypeId = document.getElementById("studentReportsDropdown").value;
     var data = pullAssessmentTypeGradeFromCollection(assessmentTypeId, true);
-    if (data.assessmentName == null) {
-        data.assessmentType = getAssessmentTypeNameFromAssessmentId(assessmentTypeId);
+    if (data == null) {
+        var assessmentName = getAssessmentTypeNameFromAssessmentId(assessmentTypeId);
+        if (assessmentName == null) {
+            assessmentName = getAssessmentName(assessmentTypeId);
+        }
+        data.assessmentType = assessmentName
     }
     new Morris.Bar({
         // ID of the element in which to draw the chart.

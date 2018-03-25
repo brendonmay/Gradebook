@@ -519,10 +519,10 @@ function calculateCategoryFinalGrades(ownerId, courseId, organizedStudentGrades)
             }
         }
 
-        var KassessmentTypeGrade = KSumOfStudentMarks / (KTotalMarks - KSumOfExcludedMarks);
-        var AassessmentTypeGrade = ASumOfStudentMarks / (ATotalMarks - ASumOfExcludedMarks);
-        var TassessmentTypeGrade = TSumOfStudentMarks / (TTotalMarks - TSumOfExcludedMarks);
-        var CassessmentTypeGrade = CSumOfStudentMarks / (CTotalMarks - CSumOfExcludedMarks);
+        var KassessmentTypeGrade = (KSumOfStudentMarks / (KTotalMarks - KSumOfExcludedMarks)) * 100;
+        var AassessmentTypeGrade = (ASumOfStudentMarks / (ATotalMarks - ASumOfExcludedMarks)) * 100;
+        var TassessmentTypeGrade = (TSumOfStudentMarks / (TTotalMarks - TSumOfExcludedMarks)) * 100;
+        var CassessmentTypeGrade = (CSumOfStudentMarks / (CTotalMarks - CSumOfExcludedMarks)) * 100;
 
         //if totalmarks == 0 we set it to N/A
         if (isNaN(KassessmentTypeGrade)) {
@@ -1435,9 +1435,10 @@ Template.studentReports.helpers({
         refreshCourseOverviewGraphs();
         return courseOverViewTableInfo;
     },
-    getFinalGrade: function (category) {
+    getFinalCategoryGrade: function (category) {
         let ownerId = Meteor.userId();
         let courseId = Session.get('courseId');
+        let studentId = Session.get('currentSelectedStudentID');
 
         var organizedStudentGrades = organizeStudentGrades(ownerId, courseId, studentId);
 
@@ -1447,14 +1448,19 @@ Template.studentReports.helpers({
         //{assessmentTypeId: "c3", assessmentTypeWeight: "10", K: 92, A: 22, T: 75, C: 90}] 
 
         var totalWeight = 0;
+        var totalCategoryMarks = 0;
         var categoryMarksAndWeight = {};
 
         for (i = 0; i < categoryFinalGrades.length; i++){
             var assessmentTypeId = categoryFinalGrades[i].assessmentTypeId;
-            if (categoryFinalGrades[i].category != "N/A"){
-                totalWeight = totalWeight + categoryFinalGrades[i].assessmentTypeWeight;
-                totalCategoryMarks = totalCategoryMarks + categoryFinalGrades[i][category];
-                categoryMarksAndWeight[i] = [categoryFinalGrades[i].assessmentTypeWeight, categoryFinalGrades[i][category]]; //[weight, marks]
+            if (categoryFinalGrades[i][category] != "N/A"){
+                var selectedWeight = categoryFinalGrades[i].assessmentTypeWeight
+                var categoryMark = categoryFinalGrades[i][category];
+
+                totalWeight = totalWeight + selectedWeight;
+                totalCategoryMarks = totalCategoryMarks + categoryMark;
+                var key = "key" + i;
+                categoryMarksAndWeight[key] = [ selectedWeight, categoryMark ]; //[weight, marks]
             }
         }
 
@@ -1470,6 +1476,7 @@ Template.studentReports.helpers({
             var mark = categoryMarksAndWeight[key][1];
 
             var grade = grade + ( mark * ( weight/totalWeight ) );
+            grade = Number(grade.toFixed(2))
         }
 
         return grade

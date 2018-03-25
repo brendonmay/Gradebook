@@ -138,6 +138,7 @@ Collection 5 - CalculatedGrades
 	students:[
 		{
 			studentId,
+			categoryGrades:{KGrade, AGrade, TGrade, CGrade},
 			currentGrades:[
 				{
 					assessmentTypeId,

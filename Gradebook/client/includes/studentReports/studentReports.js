@@ -1378,7 +1378,6 @@ Template.studentReports.helpers({
         var assessmentTypeName = Template.instance().getDropdownValue.get();
         var studentId = Session.get("currentSelectedStudentID");
         var currentAssessmentTypeId = Template.instance().getDropdownValue.get();
-        const assessments = Assessments.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') });
         const studentGrades = CalculatedGrades.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') }).students;
         var currentGradesArray;
         var currentGradeObj;
@@ -1395,14 +1394,13 @@ Template.studentReports.helpers({
             if (currentGradesArray[i].assessmentTypeId == currentAssessmentTypeId) {
                 if (currentAssessmentTypeId[0] == "f") {
                     currentGradeObj = currentGradesArray[i].assessmentTypeGrade;
-
                     var returnObject = {
                         assessmentName: getFinalEvalName(currentAssessmentTypeId),
-                        K: getGradeString(currentGradeObj[i].KGrade),
-                        A: getGradeString(currentGradeObj[i].AGrade),
-                        T: getGradeString(currentGradeObj[i].TGrade),
-                        C: getGradeString(currentGradeObj[i].CGrade),
-                        Grade: getGradeString(getGradeForAssessment(currentGradeObj))
+                        K: getGradeString(currentGradeObj[i].KGrade.toFixed(2)),
+                        A: getGradeString(currentGradeObj[i].AGrade.toFixed(2)),
+                        T: getGradeString(currentGradeObj[i].TGrade.toFixed(2)),
+                        C: getGradeString(currentGradeObj[i].CGrade.toFixed(2)),
+                        Grade: getGradeString(getGradeForAssessment(currentGradeObj).toFixed(2))
                     };
                     return [returnObject];
                 } else {
@@ -1415,11 +1413,11 @@ Template.studentReports.helpers({
         for (var i = 0; i < currentGradeObj.length; i++) {
             assessmentGrades.push({
                 assessmentName: getCourseEvalName(currentGradeObj[i].assessmentId),
-                K: getGradeString(currentGradeObj[i].KGrade),
-                A: getGradeString(currentGradeObj[i].AGrade),
-                T: getGradeString(currentGradeObj[i].TGrade),
-                C: getGradeString(currentGradeObj[i].CGrade),
-                Grade: getGradeString(getGradeForAssessment(currentGradeObj[i]))
+                K: getGradeString(currentGradeObj[i].KGrade.toFixed(2)),
+                A: getGradeString(currentGradeObj[i].AGrade.toFixed(2)),
+                T: getGradeString(currentGradeObj[i].TGrade.toFixed(2)),
+                C: getGradeString(currentGradeObj[i].CGrade.toFixed(2)),
+                Grade: getGradeString(getGradeForAssessment(currentGradeObj[i]).toFixed(2))
             });
         }
         return assessmentGrades;
@@ -1433,7 +1431,7 @@ Template.studentReports.helpers({
             courseOverviewInfo[i].C = getGradeString(courseOverviewInfo[i].C);
         }
         refreshCourseOverviewGraphs();
-        return courseOverViewTableInfo;
+        return courseOverviewInfo;
     },
     getFinalCategoryGrade: function (category) {
         let ownerId = Meteor.userId();

@@ -12,8 +12,6 @@ function renameAssessment(){
     var newAssessmentName = document.getElementById("editAssessmentName").value;
     var courseAssessmentTypes = Assessments.findOne({ownerId: Meteor.userId(), courseId: courseId}).courseAssessmentTypes;
 
-    console.log(courseId, assessmentId, assessmentTypeId, newAssessmentName, courseAssessmentTypes);
-
     for (i = 0; i < courseAssessmentTypes.length; i++){
         if (courseAssessmentTypes[i].assessmentTypeId == assessmentTypeId){
             let assessments = courseAssessmentTypes[i].assessments;

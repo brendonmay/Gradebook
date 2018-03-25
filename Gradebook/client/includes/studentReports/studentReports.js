@@ -49,15 +49,24 @@ function getStudentAssessmentTypeInfo(currentAssessmentTypeId) {
         if (currentGradesArray[i].assessmentTypeId == currentAssessmentTypeId) {
             if (currentAssessmentTypeId[0] == "f") {
                 currentGradeObj = currentGradesArray[i].assessmentTypeGrade;
-                var returnObject = {
+                var KGrade = -1;
+                var AGrade = -1;
+                var TGrade = -1;
+                var CGrade = -1;
+                if (currentGradeObj.KGrade && !isNaN(currentGradeObj.KGrade)) KGrade = currentGradeObj.KGrade;
+                if (currentGradeObj.AGrade && !isNaN(currentGradeObj.AGrade)) AGrade = currentGradeObj.AGrade;
+                if (currentGradeObj.TGrade && !isNaN(currentGradeObj.TGrade)) TGrade = currentGradeObj.TGrade;
+                if (currentGradeObj.CGrade && !isNaN(currentGradeObj.CGrade)) CGrade = currentGradeObj.CGrade;
+
+                var finalGrade = {
                     assessmentName: getFinalEvalName(currentAssessmentTypeId),
-                    K: getGradeString(currentGradeObj.KGrade.toFixed(2)),
-                    A: getGradeString(currentGradeObj.AGrade.toFixed(2)),
-                    T: getGradeString(currentGradeObj.TGrade.toFixed(2)),
-                    C: getGradeString(currentGradeObj.CGrade.toFixed(2)),
-                    Grade: getGradeString(getGradeForAssessment(currentGradeObj).toFixed(2))
+                    K: getGradeString(KGrade.toFixed(2)),
+                    A: getGradeString(AGrade.toFixed(2)),
+                    T: getGradeString(TGrade.toFixed(2)),
+                    C: getGradeString(CGrade.toFixed(2)),
+                    Grade: getGradeString(getGradeForAssessment(currentGradeObj))
                 };
-                return [returnObject];
+                return [finalGrade];
             } else {
                 currentGradeObj = currentGradesArray[i].assessments;
                 break;
@@ -65,13 +74,23 @@ function getStudentAssessmentTypeInfo(currentAssessmentTypeId) {
         }
     }
     var assessmentGrades = [];
+    var KGrade = -1;
+    var AGrade = -1;
+    var TGrade = -1;
+    var CGrade = -1;
     for (var i = 0; i < currentGradeObj.length; i++) {
+        var currGrade = currentGradeObj[i];
+        if (currGrade.KGrade && !isNaN(currGrade.KGrade)) KGrade = currGrade.KGrade;
+        if (currGrade.AGrade && !isNaN(currGrade.AGrade)) AGrade = currGrade.AGrade;
+        if (currGrade.TGrade && !isNaN(currGrade.TGrade)) TGrade = currGrade.TGrade;
+        if (currGrade.CGrade && !isNaN(currGrade.CGrade)) CGrade = currGrade.CGrade;
+
         assessmentGrades.push({
             assessmentName: getCourseEvalName(currentGradeObj[i].assessmentId),
-            K: getGradeString(currentGradeObj[i].KGrade.toFixed(2)),
-            A: getGradeString(currentGradeObj[i].AGrade.toFixed(2)),
-            T: getGradeString(currentGradeObj[i].TGrade.toFixed(2)),
-            C: getGradeString(currentGradeObj[i].CGrade.toFixed(2)),
+            K: getGradeString(KGrade.toFixed(2)),
+            A: getGradeString(AGrade.toFixed(2)),
+            T: getGradeString(TGrade.toFixed(2)),
+            C: getGradeString(CGrade.toFixed(2)),
             Grade: getGradeString(getGradeForAssessment(currentGradeObj[i]).toFixed(2))
         });
     }
@@ -799,15 +818,27 @@ function getCourseEvalName(assessmentId) {
 function drawAssessmentBreakdownBarGraph() {
     //clear the contents of the div, in the event this function is called more than once.
     var assessmentTypeId = document.getElementById('studentReportsDropdown').value;
-    var data = getStudentAssessmentTypeInfo(assessmentTypeId); 
+    var data = getStudentAssessmentTypeInfo(assessmentTypeId);
+    var assessmentName; 
+    if (assessmentTypeId[0] == "f") {
+        assessmentName = data[0].assessmentName
+    }
     for (var i = 0; i < data.length; i++) {
-        // if (data[i].Grade == "N/A") {
-        //     data.splice(i, 1);
-        //     i--;
-        // } else {
-        //     delete data[i].Grade;
-        // }
-        delete data[i].Grade;
+        if (data[i].K == "N/A") delete data[i].K
+        if (data[i].A == "N/A") delete data[i].A
+        if (data[i].T == "N/A") delete data[i].T
+        if (data[i].C == "N/A") delete data[i].C
+        if (data[i].Grade == "N/A") {
+            data.splice(i, 1);
+            i--;
+        } else {
+            delete data[i].Grade;
+        }
+    }
+    if (data.length == 0 && assessmentTypeId[0] == "f") {
+        data = [{
+            assessmentName: assessmentName
+        }];
     }
     new Morris.Bar({
         // ID of the element in which to draw the chart.
@@ -827,7 +858,7 @@ function drawAssessmentBreakdownBarGraph() {
         //     { assessmentName: 'Quiz 10', K: 100, A: 90, T: 80, C:50 },
         // ],
         data: data,
-
+        ymin: 100,
         xkey: 'assessmentName',
         ykeys: ['K', 'A', 'T', 'C'],
         labels: ['Knowledge', 'Application', 'Thinking', 'Communication'],
@@ -910,6 +941,10 @@ function drawCourseOverviewBreakdownBarGraph() {
 
     var data = getCourseOverviewInformation(); //should be the assessmentTypeId
     for (var i = 0; i < data.length; i++) {
+        if (data[i].K == "N/A") delete data[i].K
+        if (data[i].A == "N/A") delete data[i].A
+        if (data[i].T == "N/A") delete data[i].T
+        if (data[i].C == "N/A") delete data[i].C
         if (data[i].Grade == "N/A") {
             data.splice(i, 1);
             i--;
@@ -936,7 +971,7 @@ function drawCourseOverviewBreakdownBarGraph() {
         //     { assessmentName: 'Quiz 10', K: 100, A: 90, T: 80, C:50 },
         // ],
         data: data,
-
+        ymin: 100,
         xkey: 'assessmentTypeName',
         ykeys: ['K', 'A', 'T', 'C'],
         labels: ['Knowledge', 'Application', 'Thinking', 'Communication'],
@@ -1120,13 +1155,16 @@ function drawAssessmentTypeBarGraph() {
     var assessmentTypeId = document.getElementById("studentReportsDropdown").value;
     var assessmentTypeGrade = pullAssessmentTypeGradeFromCollection(assessmentTypeId);
     var data = getGradesArrrayElement(assessmentTypeGrade, true);
+    if (data.assessmentName == null) {
+        data.assessmentName = getAssessmentName(assessmentTypeId);
+    }
     new Morris.Bar({
         // ID of the element in which to draw the chart.
         element: 'assessmentTypeBarGraph',
         // Chart data records -- each entry in this array corresponds to a point on
         // the chart.
         data: [data],
-
+        ymin: 100,
         xkey: 'assessmentName',
         ykeys: ['K', 'A', 'T', 'C'],
         labels: ['Knowledge', 'Application', 'Thinking', 'Communication'],
@@ -1138,11 +1176,11 @@ function drawAssessmentTypeBarGraph() {
 
 function drawFinalGradeBarGraph() {
     //clear the contents of the div, in the event this function is called more than once.
-    var studentsArray = CalculatedGrades.findOne({ownerId: Meteor.userId(), courseId: Session.get('courseId')}).students;
+    var studentsArray = CalculatedGrades.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') }).students;
     var studentId = Session.get("currentSelectedStudentID");
     var categoryGrades = {};
-    for (i = 0; i < studentsArray.length; i++){
-        if (studentsArray[i].studentId == studentId){
+    for (i = 0; i < studentsArray.length; i++) {
+        if (studentsArray[i].studentId == studentId) {
             categoryGrades = studentsArray[i].categoryGrades;
             i = studentsArray.length;
         }
@@ -1153,7 +1191,7 @@ function drawFinalGradeBarGraph() {
         assessmentName: "Final Grade",
     }
 
-    for (i = 0; i < categories.length; i++){
+    for (i = 0; i < categories.length; i++) {
         var category = categories[i][0];
         data[category] = categoryGrades[categories[i]]
 
@@ -1165,7 +1203,7 @@ function drawFinalGradeBarGraph() {
         // Chart data records -- each entry in this array corresponds to a point on
         // the chart.
         data: [data],
-
+        ymin: 100,
         xkey: 'assessmentName',
         ykeys: ['K', 'A', 'T', 'C'],
         labels: ['Knowledge', 'Application', 'Thinking', 'Communication'],
@@ -1179,13 +1217,16 @@ function drawAssessmentTypeClassBarGraph() {
     //clear the contents of the div, in the event this function is called more than once.
     var assessmentTypeId = document.getElementById("studentReportsDropdown").value;
     var data = pullAssessmentTypeGradeFromCollection(assessmentTypeId, true);
+    if (data.assessmentName == null) {
+        data.assessmentType = getAssessmentName(assessmentTypeId);
+    }
     new Morris.Bar({
         // ID of the element in which to draw the chart.
         element: 'assessmentTypeClassBarGraph',
         // Chart data records -- each entry in this array corresponds to a point on
         // the chart.
         data: [data],
-
+        ymin: 100,
         xkey: 'assessmentType',
         ykeys: ['K', 'A', 'T', 'C'],
         labels: ['Knowledge', 'Application', 'Thinking', 'Communication'],
@@ -1235,7 +1276,7 @@ function getGradeForAssessment(gradeObj) {
 }
 
 function getGradeString(grade) {
-    if (isNaN(grade) || Number(grade) == 0) {
+    if (isNaN(grade) || grade == null || grade == (-1).toFixed(2)) {
         return "N/A"
     } else {
         return grade + "%";
@@ -1271,10 +1312,10 @@ function getCourseOverviewInformation() {
     var numOfStudents = studentGrades.length;
     var assessmentTypeIds = getAssessmentTypeArray();
     for (var i = 0; i < assessmentTypeIds.length; i++) {
-        var KGrade = 0;
-        var AGrade = 0;
-        var TGrade = 0;
-        var CGrade = 0;
+        var KGrade = -1;
+        var AGrade = -1;
+        var TGrade = -1;
+        var CGrade = -1;
         var currentATID = assessmentTypeIds[i].assessmentTypeId;
         for (var j = 0; j < studentGrades.length; j++) {
             if (studentGrades[j].studentId == studentId) {
@@ -1282,10 +1323,10 @@ function getCourseOverviewInformation() {
                 for (var x = 0; x < currentStudentGrades.length; x++) {
                     if (currentATID == currentStudentGrades[x].assessmentTypeId) {
                         var assessmentTypeGrade = currentStudentGrades[x].assessmentTypeGrade;
-                        if (!isNaN(assessmentTypeGrade.KGrade)) KGrade += assessmentTypeGrade.KGrade;
-                        if (!isNaN(assessmentTypeGrade.AGrade)) AGrade += assessmentTypeGrade.AGrade;
-                        if (!isNaN(assessmentTypeGrade.TGrade)) TGrade += assessmentTypeGrade.TGrade;
-                        if (!isNaN(assessmentTypeGrade.CGrade)) CGrade += assessmentTypeGrade.CGrade;
+                        if (assessmentTypeGrade.KGrade && !isNaN(assessmentTypeGrade.KGrade)) KGrade += assessmentTypeGrade.KGrade + 1;
+                        if (assessmentTypeGrade.AGrade && !isNaN(assessmentTypeGrade.AGrade)) AGrade += assessmentTypeGrade.AGrade + 1;
+                        if (assessmentTypeGrade.TGrade && !isNaN(assessmentTypeGrade.TGrade)) TGrade += assessmentTypeGrade.TGrade + 1;
+                        if (assessmentTypeGrade.CGrade && !isNaN(assessmentTypeGrade.CGrade)) CGrade += assessmentTypeGrade.CGrade + 1;
                         break;
                     }
                 }
@@ -1305,11 +1346,11 @@ function getCourseOverviewInformation() {
 
         courseOverViewTableInfo.push({
             assessmentTypeName: assessmentTypeIds[i].assessmentType,
-            K: (KGrade),
-            A: (AGrade),
-            T: (TGrade),
-            C: (CGrade),
-            Grade: getGradeString(getGradeForAssessment(grade).toFixed(2))
+            K: getGradeString(KGrade),
+            A: getGradeString(AGrade),
+            T: getGradeString(TGrade),
+            C: getGradeString(CGrade),
+            Grade: getGradeString(getGradeForAssessment(grade))
         });
     }
     return courseOverViewTableInfo;
@@ -1542,12 +1583,7 @@ Template.studentReports.helpers({
     },
     getCourseOverviewTableInfo: function () {
         var courseOverviewInfo = getCourseOverviewInformation();
-        for (var i = 0; i < courseOverviewInfo.length; i++) {
-            courseOverviewInfo[i].K = getGradeString(courseOverviewInfo[i].K);
-            courseOverviewInfo[i].A = getGradeString(courseOverviewInfo[i].A);
-            courseOverviewInfo[i].T = getGradeString(courseOverviewInfo[i].T);
-            courseOverviewInfo[i].C = getGradeString(courseOverviewInfo[i].C);
-        }
+
         refreshCourseOverviewGraphs();
         return courseOverviewInfo;
     },

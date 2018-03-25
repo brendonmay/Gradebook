@@ -1266,6 +1266,26 @@ function drawAssessmentTypeClassBarGraph() {
     });
 }
 
+function drawOverallClassBarGraph() {
+    //clear the contents of the div, in the event this function is called more than once.
+    var data = getFinalCategoryGradesForClass();
+    new Morris.Bar({
+        // ID of the element in which to draw the chart.
+        element: 'assessmentTypeClassBarGraph',
+        // Chart data records -- each entry in this array corresponds to a point on
+        // the chart.
+        data: [data],
+
+        xkey: 'assessmentType',
+        ykeys: ['K', 'A', 'T', 'C'],
+        labels: ['Knowledge', 'Application', 'Thinking', 'Communication'],
+        barColors: ['#b39ddb', '#4fc3f7', '#81c784', '#e57373'],
+        resize: true,
+        hideHover: 'auto'
+
+    });
+}
+
 function refreshAssessmentTypeGraphs() {
     $('#assessmentTypeBarGraph').empty();
     drawAssessmentTypeBarGraph();
@@ -1284,6 +1304,7 @@ function refreshCourseOverviewGraphs() {
 
     drawCourseOverviewBreakdownBarGraph();
     drawFinalGradeBarGraph();
+    drawOverallClassBarGraph();
 
 }
 

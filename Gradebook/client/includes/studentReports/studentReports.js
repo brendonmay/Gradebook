@@ -640,6 +640,76 @@ function getFinalGrade(studentId) {
     }
 }
 
+function getFinalCategoryGradesForClass() {
+    var KTotal = 0;
+    var ATotal = 0
+    var TTotal = 0;
+    var CTotal = 0;
+
+    var KTotalStudents = 0;
+    var ATotalStudents = 0;
+    var TTotalStudents = 0;
+    var CTotalStudents = 0;
+
+    var studentsArray = CalculatedGrades.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') }).students;
+    for (i = 0; i < studentsArray.length; i++) {
+        var categoryGrades = studentsArray[i].categoryGrades;
+        var gradeKeys = Object.keys(categoryGrades);
+
+        if (gradeKeys.includes("KGrade")) {
+            KTotalStudents++;
+            KTotal = KTotal + categoryGrades.KGrade;
+        }
+        if (gradeKeys.includes("AGrade")) {
+            ATotalStudents++;
+            ATotal = ATotal + categoryGrades.AGrade;
+        }
+        if (gradeKeys.includes("TGrade")) {
+            TTotalStudents++;
+            TTotal = TTotal + categoryGrades.TGrade;
+        }
+        if (gradeKeys.includes("CGrade")) {
+            CTotalStudents++;
+            CTotal = CTotal + categoryGrades.CGrade;
+        }
+
+    }
+    var K = Number((KTotal / KTotalStudents).toFixed(2));
+    var A = Number((ATotal / ATotalStudents).toFixed(2));
+    var T = Number((TTotal / TTotalStudents).toFixed(2));
+    var C = Number((CTotal / CTotalStudents).toFixed(2));
+
+    if (KTotalStudents == 0) {
+        K = "N/A"
+    }
+    if (ATotalStudents == 0) {
+        A = "N/A"
+    }
+    if (TTotalStudents == 0) {
+        T = "N/A"
+    }
+    if (CTotalStudents == 0) {
+        C = "N/A"
+    }
+
+    var finalCategoryGradesForClass = { assessmentType: "Final Grade" }
+
+    if (K != "N/A") {
+        finalCategoryGradesForClass.K = K
+    }
+    if (A != "N/A") {
+        finalCategoryGradesForClass.A = A
+    }
+    if (T != "N/A") {
+        finalCategoryGradesForClass.T = T
+    }
+    if (C != "N/A") {
+        finalCategoryGradesForClass.C = C
+    }
+
+    return finalCategoryGradesForClass
+}
+
 function pullAssessmentTypeGradeFromCollection(assessmentTypeId, forClass) {
     if (forClass) {
         var KTotal = 0;
@@ -742,7 +812,7 @@ function pullAssessmentTypeGradeFromCollection(assessmentTypeId, forClass) {
 function getGradesArrrayElement(grade, needAssessmentTypeName) {
     var assessmentName;
     if (needAssessmentTypeName) {
-        assessmentName = getAssessmentTypeName(grade.assessmentId);
+        assessmentName = getAssessmentTypeNameFromAssessmentId(grade.assessmentId);
     } else {
         assessmentName = getAssessmentName(grade.assessmentId);
     }
@@ -776,7 +846,7 @@ function getAssessmentName(assessmentId) {
     }
 }
 
-function getAssessmentTypeName(assessmentId) {
+function getAssessmentTypeNameFromAssessmentId(assessmentId) {
     let courseID = Session.get('courseId');
     var courseEvaluations = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: courseID }).courseworkAssessmentTypes;
     var assessmentTypeId = assessmentId.split('-')[0];
@@ -1237,6 +1307,26 @@ function drawAssessmentTypeClassBarGraph() {
     });
 }
 
+function drawOverallClassBarGraph() {
+    //clear the contents of the div, in the event this function is called more than once.
+    var data = getFinalCategoryGradesForClass();
+    new Morris.Bar({
+        // ID of the element in which to draw the chart.
+        element: 'assessmentTypeClassBarGraph',
+        // Chart data records -- each entry in this array corresponds to a point on
+        // the chart.
+        data: [data],
+
+        xkey: 'assessmentType',
+        ykeys: ['K', 'A', 'T', 'C'],
+        labels: ['Knowledge', 'Application', 'Thinking', 'Communication'],
+        barColors: ['#b39ddb', '#4fc3f7', '#81c784', '#e57373'],
+        resize: true,
+        hideHover: 'auto'
+
+    });
+}
+
 function refreshAssessmentTypeGraphs() {
     $('#assessmentTypeBarGraph').empty();
     drawAssessmentTypeBarGraph();
@@ -1255,6 +1345,7 @@ function refreshCourseOverviewGraphs() {
 
     drawCourseOverviewBreakdownBarGraph();
     drawFinalGradeBarGraph();
+    drawOverallClassBarGraph();
 
 }
 
@@ -1396,6 +1487,88 @@ Template.studentReports.events({
 });
 
 Template.studentReports.helpers({
+    getClassFinalAverage: function(){
+        var obj = getFinalCategoryGradesForClass();
+        let keys = Object.keys(obj);
+
+        if (keys.includes("K")){
+            var K = obj.K
+        }
+
+        if (keys.includes("A")){
+            var A = obj.A
+        }
+
+        if (keys.includes("T")){
+            var T = obj.T
+        }
+
+        if (keys.includes("C")){
+            var C = obj.C 
+        }
+
+        if (!keys.includes("K")){
+            var K = "N/A"
+        }
+        if (!keys.includes("A")){
+            var A = "N/A"
+        }
+        if (!keys.includes("T")){
+            var T = "N/A"
+        }
+        if (!keys.includes("C")){
+            var C = "N/A"
+        }
+
+        let WeightK = Session.get('knowledgeWeight');
+        let WeightA = Session.get('applicationWeight');
+        let WeightT = Session.get('thinkingWeight');
+        let WeightC = Session.get('communicationWeight');
+
+        var classAverage = getWeightedAverage(K, A, T, C, WeightK, WeightA, WeightT, WeightC);
+
+        if (classAverage == "N/A"){
+            return "N/A"
+        }
+        else{
+            classAverage = Number((classAverage / 100).toFixed(2))
+            return classAverage + "%"
+        }
+    },
+    getClassFinalCategories: function(){
+        var obj = getFinalCategoryGradesForClass();
+        let keys = Object.keys(obj);
+
+        if (keys.includes("K")){
+            obj.K = obj.K + "%"
+        }
+
+        if (keys.includes("A")){
+            obj.A = obj.A + "%"
+        }
+
+        if (keys.includes("T")){
+            obj.T = obj.T + "%"
+        }
+
+        if (keys.includes("C")){
+            obj.C= obj.C + "%"
+        }
+
+        if (!keys.includes("K")){
+            obj.K = "N/A"
+        }
+        if (!keys.includes("A")){
+            obj.A = "N/A"
+        }
+        if (!keys.includes("T")){
+            obj.T = "N/A"
+        }
+        if (!keys.includes("C")){
+            obj.C = "N/A"
+        }
+        return obj
+    },
     getFinalGrade: function () {
         var studentId = Session.get('currentSelectedStudentID');
         let ownerId = Meteor.userId();
@@ -1594,6 +1767,11 @@ Template.studentReports.helpers({
 
         var grade = determineOverallCategoryGrade(ownerId, courseId, studentId, category);
 
-        return grade
+        if (grade == "N/A"){
+            return grade
+        }
+        else{
+            return grade + "%"
+        }
     }
 });

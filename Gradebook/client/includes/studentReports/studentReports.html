@@ -1,7 +1,7 @@
 <template name="studentReports">
     <div class="col s10 max-height-report-view">
         <h4 class="light-blue lighten-4 settings-header">Student Reports</h4>
-        <h5 class="center marg-bottom-none">{{getStudentNameFirstLast}} (96%)</h5>
+        <h5 class="center marg-bottom-none">{{getStudentNameFirstLast}} ({{getFinalGrade}})</h5>
         <div class="row modif-bot-mar">
             <div class="col input-field s4 offset-s4">
                 <select id="studentReportsDropdown">
@@ -47,19 +47,19 @@
                         <p class="mar-top-bot-none center collection-title-reports">Class Average</p>
                     </li>
                     <li class="collection-item collection-box-item">
-                        <p class="mar-top-bot-none collection-K-reports">Knowledge: 100%</p>
+                        <p class="mar-top-bot-none collection-K-reports">Knowledge: {{getClassAssessmentTypeKnowledge}}</p>
                     </li>
                     <li class="collection-item collection-box-item">
-                        <p class="mar-top-bot-none collection-A-reports">Application: 92%</p>
+                        <p class="mar-top-bot-none collection-A-reports">Application: {{getClassAssessmentTypeApplication}}</p>
                     </li>
                     <li class="collection-item collection-box-item">
-                        <p class="mar-top-bot-none collection-T-reports">Thinking: N/A</p>
+                        <p class="mar-top-bot-none collection-T-reports">Thinking: {{getClassAssessmentTypeThinking}}</p>
                     </li>
                     <li class="collection-item collection-box-item">
-                        <p class="mar-top-bot-none collection-C-reports">Communication: 31%</p>
+                        <p class="mar-top-bot-none collection-C-reports">Communication: {{getClassAssessmentTypeCommunication}}</p>
                     </li>
                     <li class="collection-item collection-box-item">
-                        <p class="mar-top-bot-none collection-title-reports">Grade: 96%</p>
+                        <p class="mar-top-bot-none collection-title-reports">Grade: {{getClassAssessmentTypeWeightedGrade}}</p>
                     </li>
                 </ul>
             </div>

@@ -11,12 +11,14 @@
         <td class='studNameCell tableCell'>
             <a class="studName">
                 <div class="col s8">
-                    <div class="row mar-bot-none">
-                        {{lastName}}
-                    </div>
-                    <div class="row mar-bot-none">
-                        {{firstName}}
-                    </div>
+                    <a href="#!" class="studentRepName" id="studentNameButton?{{studentId}}">
+                        <div class="row mar-bot-none">
+                            {{lastName}}
+                        </div>
+                        <div class="row mar-bot-none">
+                            {{firstName}}
+                        </div>
+                    </a>
                 </div>
                 <div class="col offset-s1 s2 cus-mar-col adj-grade-pos">
                     {{getCurrentGrade studentId}}

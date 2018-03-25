@@ -7,6 +7,18 @@
 	- If you hit tab multiple times in gradebook (past the end of the row), datepicker pops up
 	- When you create a new course in the most recent year relative to the other courses you have, and its the first course of that year, upon creation, the new course will be highlighted in the sidenav, but the mainview wont update.
 	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.
+	- In student reports, if you select a student with id = "s-3" and then you go to a new course in student reports, student with Id "s-3" will be highlighted
+	- Fix hover color of students in gradebook
 	
+	-studentReports dropdown not being refreshed after a new assessment type has been added/deleted. Why? 
 -------------
 -Figure out why I can't add script with src includes/globalFunctions/clearValidation.js 
+
+
+
+-Work on bottom table-> popualting it dynamically 
+
+
+-Refresh student reports on current student when you come back to the reports tab
+-Populate Student grade graph -> from collection and for table use getWeightedAverage or something 
+

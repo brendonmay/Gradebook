@@ -655,10 +655,10 @@ function getFinalCategoryGradesForClass() {
         }
 
     }
-    var K = KTotal / KTotalStudents;
-    var A = ATotal / ATotalStudents;
-    var T = TTotal / TTotalStudents;
-    var C = CTotal / CTotalStudents;
+    var K = Number((KTotal / KTotalStudents).toFixed(2));
+    var A = Number((ATotal / ATotalStudents).toFixed(2));
+    var T = Number((TTotal / TTotalStudents).toFixed(2));
+    var C = Number((CTotal / CTotalStudents).toFixed(2));
 
     if (KTotalStudents == 0) {
         K = "N/A"
@@ -1425,8 +1425,56 @@ Template.studentReports.events({
 });
 
 Template.studentReports.helpers({
+    getClassFinalAverage: function(){
+        var obj = getFinalCategoryGradesForClass();
+        let keys = Object.keys(obj);
+
+        if (keys.includes("K")){
+            var K = obj.K
+        }
+
+        if (keys.includes("A")){
+            var A = obj.A
+        }
+
+        if (keys.includes("T")){
+            var T = obj.T
+        }
+
+        if (keys.includes("C")){
+            var C = obj.C 
+        }
+
+        if (!keys.includes("K")){
+            var K = "N/A"
+        }
+        if (!keys.includes("A")){
+            var A = "N/A"
+        }
+        if (!keys.includes("T")){
+            var T = "N/A"
+        }
+        if (!keys.includes("C")){
+            var C = "N/A"
+        }
+
+        let WeightK = Session.get('knowledgeWeight');
+        let WeightA = Session.get('applicationWeight');
+        let WeightT = Session.get('thinkingWeight');
+        let WeightC = Session.get('communicationWeight');
+
+        var classAverage = getWeightedAverage(K, A, T, C, WeightK, WeightA, WeightT, WeightC);
+
+        if (classAverage == "N/A"){
+            return "N/A"
+        }
+        else{
+            classAverage = Number((classAverage / 100).toFixed(2))
+            return classAverage + "%"
+        }
+    },
     getClassFinalCategories: function(){
-        obj = getFinalCategoryGradesForClass();
+        var obj = getFinalCategoryGradesForClass();
         let keys = Object.keys(obj);
 
         if (keys.includes("K")){
@@ -1437,11 +1485,11 @@ Template.studentReports.helpers({
             obj.A = obj.A + "%"
         }
 
-        if (keys.includes("K")){
+        if (keys.includes("T")){
             obj.T = obj.T + "%"
         }
 
-        if (keys.includes("K")){
+        if (keys.includes("C")){
             obj.C= obj.C + "%"
         }
 
@@ -1662,6 +1710,11 @@ Template.studentReports.helpers({
 
         var grade = determineOverallCategoryGrade(ownerId, courseId, studentId, category);
 
-        return grade
+        if (grade == "N/A"){
+            return grade
+        }
+        else{
+            return grade + "%"
+        }
     }
 });

@@ -7,7 +7,7 @@
                 <select id="studentReportsDropdown">
                     <option value="courseOverview" selected>Course Overview</option>
                     {{#each getAllAssessments}}
-                        <option value="{{assessmentTypeId}}">{{assessmentType}}</option>
+                    <option value="{{assessmentTypeId}}">{{assessmentType}}</option>
                     {{/each}}
                 </select>
             </div>
@@ -78,63 +78,7 @@
         </div>
         <br>
         <br>
-        {{#if isCourseOverView}}
-        <table class="striped centered">
-            <thead>
-                <tr>
-                    <th class="bord-right-left-top Assessment-color">Assessment</th>
-                    <th class="bord-right-top K-color">Knowledge</th>
-                    <th class="bord-right-top A-color">Application</th>
-                    <th class="bord-right-top T-color">Thinking</th>
-                    <th class="bord-right-top C-color">Communication</th>
-                    <th class="bord-right-top Grade-color">Grade</th>
-                </tr>
-            </thead>
 
-            <tbody>
-                <tr>
-                    <td class="bord-left-right">Quiz</td>
-                    <td class="bord-right">97%</td>
-                    <td class="bord-right">86%</td>
-                    <td class="bord-right">42%</td>
-                    <td class="bord-right">65%</td>
-                    <td class="bord-right">72%</td>
-                </tr>
-                <tr>
-                    <td class="bord-left-right">Assignment</td>
-                    <td class="bord-right">97%</td>
-                    <td class="bord-right">86%</td>
-                    <td class="bord-right">42%</td>
-                    <td class="bord-right">65%</td>
-                    <td class="bord-right">72%</td>
-                </tr>
-                <tr>
-                    <td class="bord-left-right">Test</td>
-                    <td class="bord-right">97%</td>
-                    <td class="bord-right">86%</td>
-                    <td class="bord-right">42%</td>
-                    <td class="bord-right">65%</td>
-                    <td class="bord-right">72%</td>
-                </tr>
-                <tr>
-                    <td class="bord-left-right">Culminating Task</td>
-                    <td class="bord-right">97%</td>
-                    <td class="bord-right">86%</td>
-                    <td class="bord-right">42%</td>
-                    <td class="bord-right">65%</td>
-                    <td class="bord-right">72%</td>
-                </tr>
-                <tr>
-                    <td class="bord-left-right-bottom">Final Exam</td>
-                    <td class="bord-right-bottom">97%</td>
-                    <td class="bord-right-bottom">86%</td>
-                    <td class="bord-right-bottom">42%</td>
-                    <td class="bord-right-bottom">65%</td>
-                    <td class="bord-right-bottom">72%</td>
-                </tr>
-            </tbody>
-        </table>
-        {{else}}
         <table class="striped centered">
             <thead>
                 <tr>
@@ -147,19 +91,32 @@
                 </tr>
             </thead>
             <tbody>
+                {{#if isCourseOverView}} 
+                {{#each getCourseOverviewTableInfo}}
+                <tr>
+                    <td class="bord-left-right-bottom">{{assessmentTypeName}}</td>
+                    <td class="bord-right-bottom">{{K}}</td>
+                    <td class="bord-right-bottom">{{A}}</td>
+                    <td class="bord-right-bottom">{{T}}</td>
+                    <td class="bord-right-bottom">{{C}}</td>
+                    <td class="bord-right-bottom">{{Grade}}</td>
+                </tr>
+                {{/each}} 
+                {{else}}
                 {{#each getAllAssignmentInformation}}
-                    <tr>
-                        <td class="bord-left-right-bottom">{{assessmentName}}</td>
-                        <td class="bord-right-bottom">{{K}}</td>
-                        <td class="bord-right-bottom">{{A}}</td>
-                        <td class="bord-right-bottom">{{T}}</td>
-                        <td class="bord-right-bottom">{{C}}</td>
-                        <td class="bord-right-bottom">{{Grade}}</td>
-                    </tr>
-                {{/each}}
+                <tr>
+                    <td class="bord-left-right-bottom">{{assessmentName}}</td>
+                    <td class="bord-right-bottom">{{K}}</td>
+                    <td class="bord-right-bottom">{{A}}</td>
+                    <td class="bord-right-bottom">{{T}}</td>
+                    <td class="bord-right-bottom">{{C}}</td>
+                    <td class="bord-right-bottom">{{Grade}}</td>
+                </tr>
+                {{/each}} 
+                {{/if}}
             </tbody>
         </table>
-        {{/if}}
+
     </div>
     <div class="col s2 max-height">
         {{> studentReportsSideNav}}

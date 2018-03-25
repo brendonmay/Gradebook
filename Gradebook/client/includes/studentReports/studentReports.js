@@ -860,6 +860,57 @@ function getAssessmentTypeArray() {
     return allAssessments;
 }
 
+function getCourseOverviewInformation() {
+    var studentId = Session.get("currentSelectedStudentID");
+    const studentGrades = CalculatedGrades.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') }).students;
+    var courseOverViewTableInfo = [];
+    var numOfStudents = studentGrades.length;
+    var assessmentTypeIds = getAssessmentTypeArray();
+    for (var i = 0; i < assessmentTypeIds.length; i++) {
+        var KGrade = 0;
+        var AGrade = 0;
+        var TGrade = 0;
+        var CGrade = 0;
+        var currentATID = assessmentTypeIds[i].assessmentTypeId;
+        for (var j = 0; j < studentGrades.length; j++) {
+            if (studentGrades[j].studentId == studentId) {
+                currentStudentGrades = studentGrades[j].currentGrades;
+                for (var x = 0; x < currentStudentGrades.length; x++) {
+                    if (currentATID == currentStudentGrades[x].assessmentTypeId) {
+                        var assessmentTypeGrade = currentStudentGrades[x].assessmentTypeGrade;
+                        if (!isNaN(assessmentTypeGrade.KGrade)) KGrade += assessmentTypeGrade.KGrade;
+                        if (!isNaN(assessmentTypeGrade.AGrade)) AGrade += assessmentTypeGrade.AGrade;
+                        if (!isNaN(assessmentTypeGrade.TGrade)) TGrade += assessmentTypeGrade.TGrade;
+                        if (!isNaN(assessmentTypeGrade.CGrade)) CGrade += assessmentTypeGrade.CGrade;
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        KGrade = KGrade.toFixed(2);
+        AGrade = AGrade.toFixed(2);
+        TGrade = TGrade.toFixed(2);
+        CGrade = CGrade.toFixed(2);
+        grade = {
+            KGrade: KGrade,
+            AGrade: AGrade,
+            TGrade: TGrade,
+            CGrade: CGrade
+        };
+
+        courseOverViewTableInfo.push({
+            assessmentTypeName: assessmentTypeIds[i].assessmentType,
+            K: getGradeString(KGrade),
+            A: getGradeString(AGrade),
+            T: getGradeString(TGrade),
+            C: getGradeString(CGrade),
+            Grade: getGradeString(getGradeForAssessment(grade).toFixed(2))
+        });
+    }
+    return courseOverViewTableInfo;
+}
+
 Template.studentReports.onCreated(function () {
     this.isCourseOverView = new ReactiveVar(true);
     this.getDropdownValue = new ReactiveVar("courseOverview");
@@ -885,7 +936,7 @@ Template.studentReports.events({
 });
 
 Template.studentReports.helpers({
-    getFinalGrade: function(){
+    getFinalGrade: function () {
         var studentId = Session.get('currentSelectedStudentID');
         var finalGrade = getFinalGrade(studentId);
         return finalGrade
@@ -1093,53 +1144,6 @@ Template.studentReports.helpers({
         return assessmentGrades;
     },
     getCourseOverviewTableInfo: function () {
-        var studentId = Session.get("currentSelectedStudentID");
-        const studentGrades = CalculatedGrades.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') }).students;
-        var courseOverViewTableInfo = [];
-        var numOfStudents = studentGrades.length;
-        var assessmentTypeIds = getAssessmentTypeArray();
-        for (var i = 0; i < assessmentTypeIds.length; i++) {
-            var KGrade = 0;
-            var AGrade = 0;
-            var TGrade = 0;
-            var CGrade = 0;
-            var currentATID = assessmentTypeIds[i].assessmentTypeId;
-            for (var j = 0; j < studentGrades.length; j++) {
-                if (studentGrades[j].studentId == studentId) {
-                    currentStudentGrades = studentGrades[j].currentGrades;
-                    for (var x = 0; x < currentStudentGrades.length; x++) {
-                        if (currentATID == currentStudentGrades[x].assessmentTypeId) {
-                            var assessmentTypeGrade = currentStudentGrades[x].assessmentTypeGrade;
-                            if (!isNaN(assessmentTypeGrade.KGrade)) KGrade += assessmentTypeGrade.KGrade;
-                            if (!isNaN(assessmentTypeGrade.AGrade)) AGrade += assessmentTypeGrade.AGrade;
-                            if (!isNaN(assessmentTypeGrade.TGrade)) TGrade += assessmentTypeGrade.TGrade;
-                            if (!isNaN(assessmentTypeGrade.CGrade)) CGrade += assessmentTypeGrade.CGrade;
-                            break;
-                        }
-                    }
-                    break;
-                }
-            }
-            KGrade = KGrade.toFixed(2);
-            AGrade = AGrade.toFixed(2);
-            TGrade = TGrade.toFixed(2);
-            CGrade = CGrade.toFixed(2);
-            grade = {
-                KGrade: KGrade,
-                AGrade: AGrade,
-                TGrade: TGrade,
-                CGrade: CGrade
-            };
-
-            courseOverViewTableInfo.push({
-                assessmentTypeName: assessmentTypeIds[i].assessmentType,
-                K: getGradeString(KGrade),
-                A: getGradeString(AGrade),
-                T: getGradeString(TGrade),
-                C: getGradeString(CGrade),
-                Grade: getGradeString(getGradeForAssessment(grade).toFixed(2))
-            });
-        }
-        return courseOverViewTableInfo;
+        return getCourseOverviewInformation();
     }
 });

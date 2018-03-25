@@ -1132,7 +1132,7 @@ function drawFinalGradeBarGraph() {
     var categories = Object.keys(categoryGrades);
 
     var data = {
-        assessmentName: "FinalGrade",
+        assessmentName: "Final Grade",
     }
 
     for (i = 0; i < categories.length; i++){

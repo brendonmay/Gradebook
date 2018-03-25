@@ -18,10 +18,6 @@
 -Figure out why I can't add script with src includes/globalFunctions/clearValidation.js 
 
 
-
--Work on bottom table-> popualting it dynamically 
-
-
 -Refresh student reports on current student when you come back to the reports tab
 -Populate Student grade graph -> from collection and for table use getWeightedAverage or something 
 

@@ -820,13 +820,80 @@ function drawAssessmentBreakdownBarGraph() {
     });
 }
 
+function determineOverallCategoryGrade(ownerId, courseId, studentId, category) {
+    var studentsArray = CalculatedGrades.findOne({ ownerId, courseId }).students;
+    var assessmentTypeGradesAndWeight = [];
+    var totalWeight = 0;
+
+    for (i = 0; i < studentsArray.length; i++) {
+        if (studentsArray[i].studentId == studentId) {
+            var currentGrades = studentsArray[i].currentGrades;
+            for (z = 0; z < currentGrades.length; z++) {
+                var assessmentTypeId = currentGrades[z].assessmentTypeId;
+                var assessmentTypeGrade = currentGrades[z].assessmentTypeGrade;
+
+                var assessedCategories = Object.keys(assessmentTypeGrade);
+                var categoryKey = category + "Grade";
+                var weight = 0;
+
+                if (assessedCategories.includes(categoryKey)) {
+                    var grade = assessmentTypeGrade[categoryKey];
+                    //find weight of assessmentTypeId
+                    if (assessmentTypeId[0] != "f") {
+                        var courseworkAssessmentTypes = CourseWeighting.findOne({ ownerId, courseId }).courseworkAssessmentTypes;
+                        for (w = 0; w < courseworkAssessmentTypes.length; w++) {
+                            if (courseworkAssessmentTypes[w].assessmentTypeId == assessmentTypeId) {
+                                weight = courseworkAssessmentTypes[w].assessmentWeight;
+                                w = courseworkAssessmentTypes.length;
+                            }
+                        }
+                    }
+                    else {
+                        var finalAssessmentTypes = CourseWeighting.findOne({ ownerId, courseId }).finalAssessmentTypes;
+                        for (w = 0; w < finalAssessmentTypes.length; w++) {
+                            if (finalAssessmentTypes[w].assessmentTypeId == assessmentTypeId) {
+                                weight = finalAssessmentTypes[w].assessmentWeight;
+                                w = finalAssessmentTypes.length;
+                            }
+                        }
+                    }
+                    var assessmentTypeObject = {
+                        assessmentTypeId,
+                        grade,
+                        weight
+                    }
+                    totalWeight = totalWeight + weight;
+                    assessmentTypeGradesAndWeight[assessmentTypeGradesAndWeight.length] = assessmentTypeObject;
+                }
+            }
+            i = studentsArray.length;
+        }
+    }
+
+    if (assessmentTypeGradesAndWeight.length == 0) {
+        return "N/A"
+    }
+
+    overallCategoryGrade = 0;
+
+    for (i = 0; i < assessmentTypeGradesAndWeight.length; i++) {
+        var grade = assessmentTypeGradesAndWeight[i].grade;
+        var weight = assessmentTypeGradesAndWeight[i].weight;
+        overallCategoryGrade = overallCategoryGrade + (grade * (weight / totalWeight));
+
+    }
+
+    overallCategoryGrade = Number(overallCategoryGrade.toFixed(2));
+    return overallCategoryGrade
+}
+
 function drawCourseOverviewBreakdownBarGraph() {
     //clear the contents of the div, in the event this function is called more than once.
-    
+
     var data = getCourseOverviewInformation(); //should be the assessmentTypeId
     for (var i = 0; i < data.length; i++) {
         if (data[i].Grade == "N/A") {
-            data.splice(i,1);
+            data.splice(i, 1);
             i--;
         } else {
             delete data[i].Grade;
@@ -1051,6 +1118,45 @@ function drawAssessmentTypeBarGraph() {
     });
 }
 
+function drawFinalGradeBarGraph() {
+    //clear the contents of the div, in the event this function is called more than once.
+    var studentsArray = CalculatedGrades.findOne({ownerId: Meteor.userId(), courseId: Session.get('courseId')}).students;
+    var studentId = Session.get("currentSelectedStudentID");
+    var categoryGrades = {};
+    for (i = 0; i < studentsArray.length; i++){
+        if (studentsArray[i].studentId == studentId){
+            categoryGrades = studentsArray[i].categoryGrades;
+            i = studentsArray.length;
+        }
+    }
+    var categories = Object.keys(categoryGrades);
+
+    var data = {
+        assessmentName: "FinalGrade",
+    }
+
+    for (i = 0; i < categories.length; i++){
+        var category = categories[i][0];
+        data[category] = categoryGrades[categories[i]]
+
+    }
+
+    new Morris.Bar({
+        // ID of the element in which to draw the chart.
+        element: 'assessmentTypeBarGraph',
+        // Chart data records -- each entry in this array corresponds to a point on
+        // the chart.
+        data: [data],
+
+        xkey: 'assessmentName',
+        ykeys: ['K', 'A', 'T', 'C'],
+        labels: ['Knowledge', 'Application', 'Thinking', 'Communication'],
+        barColors: ['#b39ddb', '#4fc3f7', '#81c784', '#e57373'],
+        resize: true,
+        hideHover: 'auto'
+    });
+}
+
 function drawAssessmentTypeClassBarGraph() {
     //clear the contents of the div, in the event this function is called more than once.
     var assessmentTypeId = document.getElementById("studentReportsDropdown").value;
@@ -1089,6 +1195,7 @@ function refreshCourseOverviewGraphs() {
     $('#assessmentBreakdownBarGraph').empty();
 
     drawCourseOverviewBreakdownBarGraph();
+    drawFinalGradeBarGraph();
 
 }
 
@@ -1212,15 +1319,40 @@ Template.studentReports.events({
             template.getDropdownValue.set(document.getElementById('studentReportsDropdown').value);
             refreshAssessmentTypeGraphs();
         }
-        
+
     }
 });
 
 Template.studentReports.helpers({
     getFinalGrade: function () {
         var studentId = Session.get('currentSelectedStudentID');
-        var finalGrade = getFinalGrade(studentId);
-        return finalGrade
+        let ownerId = Meteor.userId();
+        let courseId = Session.get('courseId');
+
+        // var organizedStudentGrades = organizeStudentGrades(ownerId, courseId, studentId);
+
+        // var assessmentTypeGrades = calculateAsessmentTypeGrades(ownerId, courseId, organizedStudentGrades);
+
+        // var finalGrade = calculateFinalGrade(ownerId, courseId, assessmentTypeGrades)
+
+        var K = determineOverallCategoryGrade(Meteor.userId(), courseId, studentId, 'K');
+        var A = determineOverallCategoryGrade(Meteor.userId(), courseId, studentId, 'A');
+        var T = determineOverallCategoryGrade(Meteor.userId(), courseId, studentId, 'T');
+        var C = determineOverallCategoryGrade(Meteor.userId(), courseId, studentId, 'C');
+
+        var WeightK = Session.get('knowledgeWeight');
+        var WeightA = Session.get('applicationWeight');
+        var WeightT = Session.get('thinkingWeight');
+        var WeightC = Session.get('communicationWeight');
+
+        var finalGrade = getWeightedAverage(K, A, T, C, WeightK, WeightA, WeightT, WeightC)
+
+        if (finalGrade != "N/A") {
+            return (finalGrade / 100).toFixed(2) + "%";
+        }
+        else {
+            return "N/A"
+        }
     },
     getStudentNameLastFirst: function () {
         var ownerId = Meteor.userId();
@@ -1440,45 +1572,8 @@ Template.studentReports.helpers({
         let courseId = Session.get('courseId');
         let studentId = Session.get('currentSelectedStudentID');
 
-        var organizedStudentGrades = organizeStudentGrades(ownerId, courseId, studentId);
-
-        var categoryFinalGrades = calculateCategoryFinalGrades(ownerId, courseId, organizedStudentGrades);
-        //[{assessmentTypeId: "c1", assessmentTypeWeight: "40", K: 88, A: 22, T: 75, C: 90},
-        //{assessmentTypeId: "c2", assessmentTypeWeight: "50", K: 72, A: 22, T: 75, C: 90}
-        //{assessmentTypeId: "c3", assessmentTypeWeight: "10", K: 92, A: 22, T: 75, C: 90}] 
-
-        var totalWeight = 0;
-        var totalCategoryMarks = 0;
-        var categoryMarksAndWeight = {};
-
-        for (i = 0; i < categoryFinalGrades.length; i++){
-            var assessmentTypeId = categoryFinalGrades[i].assessmentTypeId;
-            if (categoryFinalGrades[i][category] != "N/A"){
-                var selectedWeight = categoryFinalGrades[i].assessmentTypeWeight
-                var categoryMark = categoryFinalGrades[i][category];
-
-                totalWeight = totalWeight + selectedWeight;
-                totalCategoryMarks = totalCategoryMarks + categoryMark;
-                var key = "key" + i;
-                categoryMarksAndWeight[key] = [ selectedWeight, categoryMark ]; //[weight, marks]
-            }
-        }
-
-        var grade = 0;
-        var keys = Object.keys(categoryMarksAndWeight);
-
-        if (keys.length == 0){
-            return "N/A"
-        }
-        for (i = 0; i < keys.length; i++){
-            var key = keys[i];
-            var weight = categoryMarksAndWeight[key][0];
-            var mark = categoryMarksAndWeight[key][1];
-
-            var grade = grade + ( mark * ( weight/totalWeight ) );
-            grade = Number(grade.toFixed(2))
-        }
+        var grade = determineOverallCategoryGrade(ownerId, courseId, studentId, category);
 
         return grade
-    } 
+    }
 });

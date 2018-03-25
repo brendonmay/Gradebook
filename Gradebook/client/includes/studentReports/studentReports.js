@@ -31,21 +31,51 @@ function getStudentNameFirstLast(studentId, ownerId, courseId) {
     }
 }
 
-function grabGrades(assessmentTypeId) {
-    var assessmentsArray = getAssessmentsArray(assessmentTypeId);
-    if (assessmentsArray == null) return null;
-    var grades = [];
-    for (var i = 0; i < assessmentsArray.length; i++) {
-        const grade = assessmentsArray[i];
-        if ((grade.KGrade == "N/A") &&
-            (grade.AGrade == "N/A") &&
-            (grade.TGrade == "N/A") &&
-            (grade.CGrade == "N/A")) {
-            continue;
+function getStudentAssessmentTypeInfo(currentAssessmentTypeId) {
+    var studentId = Session.get("currentSelectedStudentID");
+    const studentGrades = CalculatedGrades.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') }).students;
+    var currentGradesArray;
+    var currentGradeObj;
+
+    for (var i = 0; i < studentGrades.length; i++) {
+        var student = studentGrades[i];
+        if (student.studentId == studentId) {
+            currentGradesArray = student.currentGrades;
+            break;
         }
-        grades.push(getGradesArrrayElement(grade));
     }
-    return grades;
+
+    for (var i = 0; i < currentGradesArray.length; i++) {
+        if (currentGradesArray[i].assessmentTypeId == currentAssessmentTypeId) {
+            if (currentAssessmentTypeId[0] == "f") {
+                currentGradeObj = currentGradesArray[i].assessmentTypeGrade;
+                var returnObject = {
+                    assessmentName: getFinalEvalName(currentAssessmentTypeId),
+                    K: getGradeString(currentGradeObj.KGrade.toFixed(2)),
+                    A: getGradeString(currentGradeObj.AGrade.toFixed(2)),
+                    T: getGradeString(currentGradeObj.TGrade.toFixed(2)),
+                    C: getGradeString(currentGradeObj.CGrade.toFixed(2)),
+                    Grade: getGradeString(getGradeForAssessment(currentGradeObj).toFixed(2))
+                };
+                return [returnObject];
+            } else {
+                currentGradeObj = currentGradesArray[i].assessments;
+                break;
+            }
+        }
+    }
+    var assessmentGrades = [];
+    for (var i = 0; i < currentGradeObj.length; i++) {
+        assessmentGrades.push({
+            assessmentName: getCourseEvalName(currentGradeObj[i].assessmentId),
+            K: getGradeString(currentGradeObj[i].KGrade.toFixed(2)),
+            A: getGradeString(currentGradeObj[i].AGrade.toFixed(2)),
+            T: getGradeString(currentGradeObj[i].TGrade.toFixed(2)),
+            C: getGradeString(currentGradeObj[i].CGrade.toFixed(2)),
+            Grade: getGradeString(getGradeForAssessment(currentGradeObj[i]).toFixed(2))
+        });
+    }
+    return assessmentGrades;
 }
 
 function getAssessmentTypeName(assessmentTypeId) {
@@ -690,27 +720,6 @@ function pullAssessmentTypeGradeFromCollection(assessmentTypeId, forClass) {
     }
 }
 
-function getAssessmentsArray(assessmentTypeId) {
-    var courseId = Session.get("courseId");
-    var studentId = Session.get("currentSelectedStudentID");
-    var currentGrades;
-
-    var studentGrades = CalculatedGrades.findOne({ ownerId: Meteor.userId(), courseId: courseId }).students;
-    for (var i = 0; i < studentGrades.length; i++) {
-        var student = studentGrades[i];
-        if (student.studentId == studentId) {
-            currentGrades = student.currentGrades;
-            break;
-        }
-    }
-    for (var i = 0; i < currentGrades.length; i++) {
-        var assessmentType = currentGrades[i];
-        if (assessmentType.assessmentTypeId == assessmentTypeId) {
-            return assessmentType.assessments;
-        }
-    }
-}
-
 function getGradesArrrayElement(grade, needAssessmentTypeName) {
     var assessmentName;
     if (needAssessmentTypeName) {
@@ -790,7 +799,16 @@ function getCourseEvalName(assessmentId) {
 function drawAssessmentBreakdownBarGraph() {
     //clear the contents of the div, in the event this function is called more than once.
     var assessmentTypeId = document.getElementById('studentReportsDropdown').value;
-    var data = grabGrades(assessmentTypeId); //should be the assessmentTypeId
+    var data = getStudentAssessmentTypeInfo(assessmentTypeId); 
+    for (var i = 0; i < data.length; i++) {
+        // if (data[i].Grade == "N/A") {
+        //     data.splice(i, 1);
+        //     i--;
+        // } else {
+        //     delete data[i].Grade;
+        // }
+        delete data[i].Grade;
+    }
     new Morris.Bar({
         // ID of the element in which to draw the chart.
         element: 'assessmentBreakdownBarGraph',
@@ -808,7 +826,7 @@ function drawAssessmentBreakdownBarGraph() {
         //     { assessmentName: 'Quiz 9', K: 100, A: 90, T: 80, C:50 },
         //     { assessmentName: 'Quiz 10', K: 100, A: 90, T: 80, C:50 },
         // ],
-        data: grabGrades(assessmentTypeId),
+        data: data,
 
         xkey: 'assessmentName',
         ykeys: ['K', 'A', 'T', 'C'],
@@ -1306,8 +1324,12 @@ Template.studentReports.onRendered(function () {
 });
 
 Template.studentReports.events({
-    'click .studentSideNavElements': function () {
-        refreshAssessmentTypeGraphs();
+    'click .studentSideNavElements': function (event, template) {
+        if (template.isCourseOverView.get()) {
+            refreshCourseOverviewGraphs();
+        } else {
+            refreshAssessmentTypeGraphs();
+        }
     },
     'change #studentReportsDropdown': function (event, template) {
         if (document.getElementById('studentReportsDropdown').value == "courseOverview") {
@@ -1320,6 +1342,15 @@ Template.studentReports.events({
             refreshAssessmentTypeGraphs();
         }
 
+    },
+    'click #studentReportsTabId': function () {
+        if (Session.get('currentSelectedStudentId') != '0') {
+            if (Template.instance().isCourseOverView.get()) {
+                refreshCourseOverviewGraphs();
+            } else {
+                refreshAssessmentTypeGraphs();
+            }
+        }
     }
 });
 
@@ -1507,52 +1538,7 @@ Template.studentReports.helpers({
         return getAssessmentTypeArray();
     },
     getAllAssignmentInformation: function () {
-        var assessmentTypeName = Template.instance().getDropdownValue.get();
-        var studentId = Session.get("currentSelectedStudentID");
-        var currentAssessmentTypeId = Template.instance().getDropdownValue.get();
-        const studentGrades = CalculatedGrades.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') }).students;
-        var currentGradesArray;
-        var currentGradeObj;
-
-        for (var i = 0; i < studentGrades.length; i++) {
-            var student = studentGrades[i];
-            if (student.studentId == studentId) {
-                currentGradesArray = student.currentGrades;
-                break;
-            }
-        }
-
-        for (var i = 0; i < currentGradesArray.length; i++) {
-            if (currentGradesArray[i].assessmentTypeId == currentAssessmentTypeId) {
-                if (currentAssessmentTypeId[0] == "f") {
-                    currentGradeObj = currentGradesArray[i].assessmentTypeGrade;
-                    var returnObject = {
-                        assessmentName: getFinalEvalName(currentAssessmentTypeId),
-                        K: getGradeString(currentGradeObj[i].KGrade.toFixed(2)),
-                        A: getGradeString(currentGradeObj[i].AGrade.toFixed(2)),
-                        T: getGradeString(currentGradeObj[i].TGrade.toFixed(2)),
-                        C: getGradeString(currentGradeObj[i].CGrade.toFixed(2)),
-                        Grade: getGradeString(getGradeForAssessment(currentGradeObj).toFixed(2))
-                    };
-                    return [returnObject];
-                } else {
-                    currentGradeObj = currentGradesArray[i].assessments;
-                    break;
-                }
-            }
-        }
-        var assessmentGrades = [];
-        for (var i = 0; i < currentGradeObj.length; i++) {
-            assessmentGrades.push({
-                assessmentName: getCourseEvalName(currentGradeObj[i].assessmentId),
-                K: getGradeString(currentGradeObj[i].KGrade.toFixed(2)),
-                A: getGradeString(currentGradeObj[i].AGrade.toFixed(2)),
-                T: getGradeString(currentGradeObj[i].TGrade.toFixed(2)),
-                C: getGradeString(currentGradeObj[i].CGrade.toFixed(2)),
-                Grade: getGradeString(getGradeForAssessment(currentGradeObj[i]).toFixed(2))
-            });
-        }
-        return assessmentGrades;
+        return getStudentAssessmentTypeInfo(Template.instance().getDropdownValue.get());;
     },
     getCourseOverviewTableInfo: function () {
         var courseOverviewInfo = getCourseOverviewInformation();

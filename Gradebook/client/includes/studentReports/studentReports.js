@@ -7,25 +7,25 @@ import { Meteor } from 'meteor/meteor';
 
 import '../../main.html';
 
-function getStudentNameLastFirst(studentId, ownerId, courseId){
-    var studentsArray = Students.findOne({ownerId, courseId}).students;
-    for (i = 0; i < studentsArray.length; i++){
-        if (studentsArray[i].studentId == studentId){
+function getStudentNameLastFirst(studentId, ownerId, courseId) {
+    var studentsArray = Students.findOne({ ownerId, courseId }).students;
+    for (i = 0; i < studentsArray.length; i++) {
+        if (studentsArray[i].studentId == studentId) {
             var firstName = studentsArray[i].studentFirstName;
             var lastName = studentsArray[i].studentLastName;
-            var studentName = lastName + ", " + firstName; 
+            var studentName = lastName + ", " + firstName;
             return studentName
         }
     }
 }
 
-function getStudentNameFirstLast(studentId, ownerId, courseId){
-    var studentsArray = Students.findOne({ownerId, courseId}).students;
-    for (i = 0; i < studentsArray.length; i++){
-        if (studentsArray[i].studentId == studentId){
+function getStudentNameFirstLast(studentId, ownerId, courseId) {
+    var studentsArray = Students.findOne({ ownerId, courseId }).students;
+    for (i = 0; i < studentsArray.length; i++) {
+        if (studentsArray[i].studentId == studentId) {
             var firstName = studentsArray[i].studentFirstName;
             var lastName = studentsArray[i].studentLastName;
-            var studentName = firstName + " " + lastName; 
+            var studentName = firstName + " " + lastName;
             return studentName
         }
     }
@@ -48,19 +48,19 @@ function grabGrades(assessmentTypeId) {
     return grades;
 }
 
-function getAssessmentTypeName(assessmentTypeId){
+function getAssessmentTypeName(assessmentTypeId) {
     var ownerId = Meteor.userId();
     var courseId = Session.get('courseId');
 
-    if (assessmentTypeId[0] != "f"){
-        var assessmentTypes = CourseWeighting.findOne({ownerId, courseId}).courseworkAssessmentTypes
+    if (assessmentTypeId[0] != "f") {
+        var assessmentTypes = CourseWeighting.findOne({ ownerId, courseId }).courseworkAssessmentTypes
     }
-    else{
-        var assessmentTypes = CourseWeighting.findOne({ownerId, courseId}).finalAssessmentTypes
+    else {
+        var assessmentTypes = CourseWeighting.findOne({ ownerId, courseId }).finalAssessmentTypes
     }
 
-    for (i = 0; i < assessmentTypes.length; i++){
-        if (assessmentTypes[i].assessmentTypeId == assessmentTypeId){
+    for (i = 0; i < assessmentTypes.length; i++) {
+        if (assessmentTypes[i].assessmentTypeId == assessmentTypeId) {
             assessmentTypeName = assessmentTypes[i].assessmentType
             return assessmentTypeName
         }
@@ -69,7 +69,7 @@ function getAssessmentTypeName(assessmentTypeId){
 }
 
 function pullAssessmentTypeGradeFromCollection(assessmentTypeId, forClass) {
-    if(forClass){
+    if (forClass) {
         var KTotal = 0;
         var ATotal = 0
         var TTotal = 0;
@@ -81,25 +81,25 @@ function pullAssessmentTypeGradeFromCollection(assessmentTypeId, forClass) {
         var CTotalStudents = 0;
 
         var studentsArray = CalculatedGrades.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') }).students;
-        for (i = 0; i < studentsArray.length; i++){
+        for (i = 0; i < studentsArray.length; i++) {
             var currentGrades = studentsArray[i].currentGrades;
-            for (z = 0; z < currentGrades.length; z++){
-                if(currentGrades[z].assessmentTypeId == assessmentTypeId){
+            for (z = 0; z < currentGrades.length; z++) {
+                if (currentGrades[z].assessmentTypeId == assessmentTypeId) {
                     var assessmentTypeGrade = currentGrades[z].assessmentTypeGrade;
                     var gradeKeys = Object.keys(assessmentTypeGrade);
-                    if (gradeKeys.includes("KGrade")){
+                    if (gradeKeys.includes("KGrade")) {
                         KTotalStudents++;
                         KTotal = KTotal + assessmentTypeGrade.KGrade;
                     }
-                    if (gradeKeys.includes("AGrade")){
+                    if (gradeKeys.includes("AGrade")) {
                         ATotalStudents++;
                         ATotal = ATotal + assessmentTypeGrade.AGrade;
                     }
-                    if (gradeKeys.includes("TGrade")){
+                    if (gradeKeys.includes("TGrade")) {
                         TTotalStudents++;
                         TTotal = TTotal + assessmentTypeGrade.TGrade;
                     }
-                    if (gradeKeys.includes("CGrade")){
+                    if (gradeKeys.includes("CGrade")) {
                         CTotalStudents++;
                         CTotal = CTotal + assessmentTypeGrade.CGrade;
                     }
@@ -107,45 +107,45 @@ function pullAssessmentTypeGradeFromCollection(assessmentTypeId, forClass) {
                 }
             }
         }
-        var K = KTotal/KTotalStudents;
-        var A = ATotal/ATotalStudents;
-        var T = TTotal/TTotalStudents;
-        var C = CTotal/CTotalStudents;
+        var K = KTotal / KTotalStudents;
+        var A = ATotal / ATotalStudents;
+        var T = TTotal / TTotalStudents;
+        var C = CTotal / CTotalStudents;
 
-        if ( KTotalStudents == 0 ){
+        if (KTotalStudents == 0) {
             K = "N/A"
         }
-        if ( ATotalStudents == 0 ){
+        if (ATotalStudents == 0) {
             A = "N/A"
         }
-        if ( TTotalStudents == 0 ){
+        if (TTotalStudents == 0) {
             T = "N/A"
         }
-        if ( CTotalStudents == 0 ){
+        if (CTotalStudents == 0) {
             C = "N/A"
         }
         var assessmentType = getAssessmentTypeName(assessmentTypeId);
 
-        var assessmentTypeGradeObject = {assessmentType}
-        
-        if (K != "N/A"){
+        var assessmentTypeGradeObject = { assessmentType }
+
+        if (K != "N/A") {
             assessmentTypeGradeObject.K = K
         }
-        if (A != "N/A"){
+        if (A != "N/A") {
             assessmentTypeGradeObject.A = A
         }
-        if (T != "N/A"){
+        if (T != "N/A") {
             assessmentTypeGradeObject.T = T
         }
-        if (C != "N/A"){
+        if (C != "N/A") {
             assessmentTypeGradeObject.C = C
         }
 
         console.log(assessmentTypeGradeObject);
 
-        return assessmentTypeGradeObject   
+        return assessmentTypeGradeObject
     }
-    else{
+    else {
         var studentId = Session.get('currentSelectedStudentID');
         var studentsArray = CalculatedGrades.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') }).students;
         for (i = 0; i < studentsArray.length; i++) {
@@ -486,7 +486,7 @@ function drawAssessmentTypeClassBarGraph() {
     });
 }
 
-function refreshGraphs() {
+function refreshAssessmentTypeGraphs() {
     $('#assessmentTypeBarGraph').empty();
     drawAssessmentTypeBarGraph();
 
@@ -515,11 +515,33 @@ function getGradeForAssessment(gradeObj) {
 }
 
 function getGradeString(grade) {
-    if (isNaN(grade)) {
+    if (isNaN(grade) || Number(grade) == 0) {
         return "N/A"
     } else {
         return grade + "%";
     }
+}
+
+function getAssessmentTypeArray() {
+    var assessmentTypeName = Template.instance().getDropdownValue.get();
+    const courseWeighting = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') });
+    const courseWork = courseWeighting.courseworkAssessmentTypes;
+    const finalWork = courseWeighting.finalAssessmentTypes;
+
+    var allAssessments = [];
+    for (var i = 0; i < courseWork.length; i++) {
+        allAssessments.push({
+            assessmentTypeId: courseWork[i].assessmentTypeId,
+            assessmentType: courseWork[i].assessmentType
+        });
+    }
+    for (var i = 0; i < finalWork.length; i++) {
+        allAssessments.push({
+            assessmentTypeId: finalWork[i].assessmentTypeId,
+            assessmentType: finalWork[i].assessmentType
+        });
+    }
+    return allAssessments;
 }
 
 Template.studentReports.onCreated(function () {
@@ -532,7 +554,7 @@ Template.studentReports.onRendered(function () {
 
 Template.studentReports.events({
     'click .studentSideNavElements': function () {
-        refreshGraphs();
+        refreshAssessmentTypeGraphs();
     },
     'change #studentReportsDropdown': function (event, template) {
         if (document.getElementById('studentReportsDropdown').value == "courseOverview") {
@@ -542,12 +564,12 @@ Template.studentReports.events({
             template.isCourseOverView.set(false);
             template.getDropdownValue.set(document.getElementById('studentReportsDropdown').value);
         }
-        refreshGraphs();
+        refreshAssessmentTypeGraphs();
     }
 });
 
 Template.studentReports.helpers({
-    getStudentNameLastFirst: function(){
+    getStudentNameLastFirst: function () {
         var ownerId = Meteor.userId();
         var courseId = Session.get("courseId");
         var studentId = Session.get('currentSelectedStudentID');
@@ -555,7 +577,7 @@ Template.studentReports.helpers({
 
         return studentName
     },
-    getStudentNameFirstLast: function(){
+    getStudentNameFirstLast: function () {
         var ownerId = Meteor.userId();
         var courseId = Session.get("courseId");
         var studentId = Session.get('currentSelectedStudentID');
@@ -632,25 +654,7 @@ Template.studentReports.helpers({
         return Template.instance().isCourseOverView.get();
     },
     getAllAssessments: function () {
-        var assessmentTypeName = Template.instance().getDropdownValue.get();
-        const courseWeighting = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') });
-        const courseWork = courseWeighting.courseworkAssessmentTypes;
-        const finalWork = courseWeighting.finalAssessmentTypes;
-
-        var allAssessments = [];
-        for (var i = 0; i < courseWork.length; i++) {
-            allAssessments.push({
-                assessmentTypeId: courseWork[i].assessmentTypeId,
-                assessmentType: courseWork[i].assessmentType
-            });
-        }
-        for (var i = 0; i < finalWork.length; i++) {
-            allAssessments.push({
-                assessmentTypeId: finalWork[i].assessmentTypeId,
-                assessmentType: finalWork[i].assessmentType
-            });
-        }
-        return allAssessments;
+        return getAssessmentTypeArray();
     },
     getAllAssignmentInformation: function () {
         var assessmentTypeName = Template.instance().getDropdownValue.get();
@@ -701,5 +705,55 @@ Template.studentReports.helpers({
             });
         }
         return assessmentGrades;
+    },
+    getCourseOverviewTableInfo: function () {
+        var studentId = Session.get("currentSelectedStudentID");
+        const studentGrades = CalculatedGrades.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') }).students;
+        var courseOverViewTableInfo = [];
+        var numOfStudents = studentGrades.length;
+        var assessmentTypeIds = getAssessmentTypeArray();
+        for (var i = 0; i < assessmentTypeIds.length; i++) {
+            var KGrade = 0;
+            var AGrade = 0;
+            var TGrade = 0;
+            var CGrade = 0;
+            var currentATID = assessmentTypeIds[i].assessmentTypeId;
+            for (var j = 0; j < studentGrades.length; j++) {
+                if (studentGrades[j].studentId == studentId) {
+                    currentStudentGrades = studentGrades[j].currentGrades;
+                    for (var x = 0; x < currentStudentGrades.length; x++) {
+                        if (currentATID == currentStudentGrades[x].assessmentTypeId) {
+                            var assessmentTypeGrade = currentStudentGrades[x].assessmentTypeGrade;
+                            if (!isNaN(assessmentTypeGrade.KGrade)) KGrade += assessmentTypeGrade.KGrade;
+                            if (!isNaN(assessmentTypeGrade.AGrade)) AGrade += assessmentTypeGrade.AGrade;
+                            if (!isNaN(assessmentTypeGrade.TGrade)) TGrade += assessmentTypeGrade.TGrade;
+                            if (!isNaN(assessmentTypeGrade.CGrade)) CGrade += assessmentTypeGrade.CGrade;
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+            KGrade = KGrade.toFixed(2);
+            AGrade = AGrade.toFixed(2);
+            TGrade = TGrade.toFixed(2);
+            CGrade = CGrade.toFixed(2);
+            grade = {
+                KGrade: KGrade,
+                AGrade: AGrade,
+                TGrade: TGrade,
+                CGrade: CGrade
+            };
+
+            courseOverViewTableInfo.push({
+                assessmentTypeName: assessmentTypeIds[i].assessmentType,
+                K: getGradeString(KGrade),
+                A: getGradeString(AGrade),
+                T: getGradeString(TGrade),
+                C: getGradeString(CGrade),
+                Grade: getGradeString(getGradeForAssessment(grade).toFixed(2))
+            });
+        }
+        return courseOverViewTableInfo;
     }
 });

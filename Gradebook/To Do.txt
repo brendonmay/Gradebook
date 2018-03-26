@@ -11,6 +11,7 @@
 	- Fix hover color of students in gradebook
 	- course overview chart on bottom not working
 	- student reports, quizzes, chart in bottom grades colum not rounded to 2 decimal places
+	- if you input grades too fast into the gradebook, there is an issue with CategoryGrades in students collection properly updating
 	
 	-studentReports dropdown not being refreshed after a new assessment type has been added/deleted. Why? 
 -------------

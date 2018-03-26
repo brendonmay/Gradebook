@@ -176,7 +176,7 @@ function insertGrade() {
             }).catch(function () {
                 console.log("Promise not fulfilled")
             })
-        }, 100);
+        }, 150);
     }
 
 }
@@ -791,9 +791,9 @@ Template.studentName.events({
                 setTimeout(function () {
                     var newOverallCategoryGrade = determineOverallCategoryGrade(Meteor.userId(), courseId, studentId, category);
                     Meteor.call('calculatedgrades.updateOverallCategoryGrade', Meteor.userId(), courseId, studentId, category, newOverallCategoryGrade);
-                }, 75);
+                }, 125);
             })
-        }, 75);
+        }, 125);
     },
     'click .gradeInput': function () {
         event.target.setSelectionRange(0, event.target.value.length)
@@ -864,9 +864,9 @@ Template.studentName.events({
                                                 setTimeout(function () {
                                                     var newOverallCategoryGrade = determineOverallCategoryGrade(Meteor.userId(), courseId, studentId, category);
                                                     Meteor.call('calculatedgrades.updateOverallCategoryGrade', Meteor.userId(), courseId, studentId, category, newOverallCategoryGrade);
-                                                }, 75);
+                                                }, 125);
                                             })
-                                        }, 75);
+                                        }, 125);
                                         return false
                                     }
                                     else {
@@ -944,9 +944,9 @@ Template.studentName.events({
                                             setTimeout(function () {
                                                 var newOverallCategoryGrade = determineOverallCategoryGrade(Meteor.userId(), courseId, studentId, category);
                                                 Meteor.call('calculatedgrades.updateOverallCategoryGrade', Meteor.userId(), courseId, studentId, category, newOverallCategoryGrade);
-                                            }, 75);
+                                            }, 125);
                                         })
-                                    }, 75);
+                                    }, 125);
                                     return false
                                 }
                                 else {
@@ -1016,9 +1016,9 @@ Template.studentName.events({
                                         setTimeout(function () {
                                             var newOverallCategoryGrade = determineOverallCategoryGrade(Meteor.userId(), courseId, studentId, category);
                                             Meteor.call('calculatedgrades.updateOverallCategoryGrade', Meteor.userId(), courseId, studentId, category, newOverallCategoryGrade);
-                                        }, 75);
+                                        }, 125);
                                     })
-                                }, 75);
+                                }, 125);
                                 return false
                             }
                             else {
@@ -1079,9 +1079,9 @@ Template.studentName.events({
                                     setTimeout(function () {
                                         var newOverallCategoryGrade = determineOverallCategoryGrade(Meteor.userId(), courseId, studentId, category);
                                         Meteor.call('calculatedgrades.updateOverallCategoryGrade', Meteor.userId(), courseId, studentId, category, newOverallCategoryGrade);
-                                    }, 75);
+                                    }, 125);
                                 })
-                            }, 75);
+                            }, 125);
                             return false
                         }
                         else {

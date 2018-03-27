@@ -1,4 +1,0 @@
-meteor add fourseven:scss
-meteor add appworkshop:materialize
-
-if appworkshop:materialize stops working one day, try materialize:materialize

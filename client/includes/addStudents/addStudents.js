@@ -6,6 +6,7 @@ import { CourseWeighting } from '../../../lib/collections.js';
 import { Assessments } from '../../../lib/collections.js';
 import { Students } from '../../../lib/collections.js';
 import jqueryValidation from 'jquery-validation';
+import { Meteor } from 'meteor/meteor';
 
 import '../../main.html';
 
@@ -103,6 +104,33 @@ function generateArrayOfStudentObjects(sortedStudentArray) {
     }
 
     return arrayOfStudentObjects
+}
+
+function editStudentEvent() {
+    let target = event.target;
+    let targetId = target.parentElement.id
+    let studentId = targetId.slice(3, targetId.indexOf('?'));
+    let studentName = targetId.slice(targetId.indexOf('?') + 1, targetId.length);
+    let lastName = studentName.slice(0, studentName.indexOf(', '));
+    let firstName = studentName.slice(studentName.indexOf(', ') + 2, studentName.length);
+    Session.set('selectedStudent', { studentId: "studentId", firstName: "firstName", lastName: "lastName" });
+    Session.set('selectedStudent', { studentId: studentId, firstName: firstName, lastName: lastName });
+    clearAddStudentValidation();
+    $('#addStudentsModal').modal('close');
+    $('#editStudentModal').modal({
+        dismissible: true,
+        ready: function(modal, trigger){
+            Materialize.updateTextFields();
+        },
+        complete: function () {
+            clearAddStudentValidation();
+            $('#addStudentsModal').modal('open');
+            var form = document.getElementById('editStudentsModalForm');
+            clearValidation(form);
+        }
+    }
+    );
+    $('#editStudentModal').modal('open');
 }
 
 function generateGradesArray() {
@@ -207,30 +235,7 @@ Template.addStudents.events({
         $('#deleteStudentModal').modal('open');
     },
     'click .editStudent': function () {
-        let target = event.target;
-        let targetId = target.parentElement.id
-        let studentId = targetId.slice(3, targetId.indexOf('?'));
-        let studentName = targetId.slice(targetId.indexOf('?') + 1, targetId.length);
-        let lastName = studentName.slice(0, studentName.indexOf(', '));
-        let firstName = studentName.slice(studentName.indexOf(', ') + 2, studentName.length);
-        Session.set('selectedStudent', { studentId: "studentId", firstName: "firstName", lastName: "lastName" });
-        Session.set('selectedStudent', { studentId: studentId, firstName: firstName, lastName: lastName });
-        clearAddStudentValidation();
-        $('#addStudentsModal').modal('close');
-        $('#editStudentModal').modal({
-            dismissible: true,
-            complete: function () {
-                clearAddStudentValidation();
-                $('#addStudentsModal').modal('open');
-                var form = document.getElementById('editStudentsModalForm');
-                clearValidation(form);
-            }
-        }
-        );
-        $('#editStudentModal').modal('open');
-        setTimeout(function(){
-            Materialize.updateTextFields();
-        }, 10)
+        editStudentEvent();
     }
 });
 

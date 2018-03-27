@@ -44,6 +44,46 @@ function findOldStudentGradeValue(studentId, assessmentId, category, ownerId, co
     return oldValue
 }
 
+function sectionsClickEvent() {
+    return new Promise(function (resolve, reject) {
+        event.preventDefault();
+
+        const target = event.target;
+        var courseId = Number(target.id);
+        var courseYear = target.name;
+        const courseName = target.innerText;
+        const categoryWeighting = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: courseId }).categoryWeighting;
+        var knowledgeWeight = categoryWeighting.K;
+        var applicationWeight = categoryWeighting.A;
+        var thinkingWeight = categoryWeighting.T;
+        var communicationWeight = categoryWeighting.C;
+        var courseworkWeight = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: courseId }).courseworkWeight;
+        var finalWeight = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: courseId }).finalWeight;
+
+        //Set Session Variables for Selected Course
+        Session.set('courseId', courseId);
+        Session.set('courseYear', courseYear);
+        Session.set('courseName', courseName);
+        Session.set('knowledgeWeight', knowledgeWeight);
+        Session.set('applicationWeight', applicationWeight);
+        Session.set('thinkingWeight', thinkingWeight);
+        Session.set('communicationWeight', communicationWeight);
+        Session.set('courseworkWeight', courseworkWeight);
+        Session.set('finalWeight', finalWeight);
+
+        collapseAll();
+
+        if (document.getElementById('gradeBookCourseTab')) { //this allows us to navigate back to gradebook page when new course is clicked
+            document.getElementById('gradeBookCourseTab').click();
+        }
+        if (document.getElementById('GSClick')) {
+            document.getElementById('GSClick').click();
+            Session.set('settingScreenText', "General Settings");
+        }
+        resolve();
+    })
+}
+
 function updateGradebookColors() {
     var categoryCells = document.getElementsByClassName("categoryCell");
     var arrayofStudentIds = arrayOfStudentIds();
@@ -61,7 +101,7 @@ function updateGradebookColors() {
             for (z = 0; z < arrayofStudentIds.length; z++) {
                 if (category == "C") {
                     var studentId = arrayofStudentIds[z];
-                    if (studentId != "s-0"){
+                    if (studentId != "s-0") {
                         document.getElementById(category + "?" + studentId + "#" + assessmentId).parentElement.style = "background-color: #9e9e9e; border-right: 1px solid black";
                         document.getElementById(category + "?" + studentId + "#" + assessmentId).disabled = "true";
                         document.getElementById(category + "?" + studentId + "#" + assessmentId).value = "N/A";
@@ -69,7 +109,7 @@ function updateGradebookColors() {
                 }
                 else {
                     var studentId = arrayofStudentIds[z];
-                    if (studentId != "s-0"){
+                    if (studentId != "s-0") {
                         document.getElementById(category + "?" + studentId + "#" + assessmentId).parentElement.style = "background-color: #9e9e9e";
                         document.getElementById(category + "?" + studentId + "#" + assessmentId).disabled = "true";
                         document.getElementById(category + "?" + studentId + "#" + assessmentId).value = "N/A";
@@ -82,7 +122,7 @@ function updateGradebookColors() {
 
             for (z = 0; z < arrayofStudentIds.length; z++) {
                 var studentId = arrayofStudentIds[z];
-                if (studentId != "s-0"){
+                if (studentId != "s-0") {
                     document.getElementById(category + "?" + studentId + "#" + assessmentId).parentElement.style = "";
                     document.getElementById(category + "?" + studentId + "#" + assessmentId).removeAttribute("disabled");
                     var oldValue = findOldStudentGradeValue(studentId, assessmentId, category, Meteor.userId(), courseId);
@@ -95,6 +135,28 @@ function updateGradebookColors() {
         }
     }
 };
+
+function updateColorsInGradebook() {
+    return new Promise(function (resolve, reject) {
+        updateGradebookColors();
+        resolve();
+    })
+}
+
+function updateTableHeadFixer() {
+    return new Promise(function (resolve, reject) {
+        $("#main_table").tableHeadFixer({ "left": 1, 'head': true })
+        resolve();
+    })
+}
+
+function sectionsClickEventComplete(){
+    sectionsClickEvent().then(function(){
+        updateColorsInGradebook().then(function(){
+            updateTableHeadFixer()
+        })
+    })
+}
 
 Template.sideNavDropDown.onRendered(function () {
     this.$('.collapsible-nav').collapsible();
@@ -167,61 +229,7 @@ Template.sideNavDropDown.helpers({
 Template.sideNavDropDown.events({
     //event allows the main page to change as you click the side bar
     'click .sections': function () {
-        let promiseToUpdateGradebook = new Promise(function (resolve, reject) {
-            event.preventDefault();
-
-            const target = event.target;
-            var courseId = Number(target.id);
-            var courseYear = target.name;
-            const courseName = target.innerText;
-            const categoryWeighting = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: courseId }).categoryWeighting;
-            var knowledgeWeight = categoryWeighting.K;
-            var applicationWeight = categoryWeighting.A;
-            var thinkingWeight = categoryWeighting.T;
-            var communicationWeight = categoryWeighting.C;
-            var courseworkWeight = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: courseId }).courseworkWeight;
-            var finalWeight = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: courseId }).finalWeight;
-
-            //Set Session Variables for Selected Course
-            Session.set('courseId', courseId);
-            Session.set('courseYear', courseYear);
-            Session.set('courseName', courseName);
-            Session.set('knowledgeWeight', knowledgeWeight);
-            Session.set('applicationWeight', applicationWeight);
-            Session.set('thinkingWeight', thinkingWeight);
-            Session.set('communicationWeight', communicationWeight);
-            Session.set('courseworkWeight', courseworkWeight);
-            Session.set('finalWeight', finalWeight);
-
-            collapseAll();
-
-            if (document.getElementById('gradeBookCourseTab')) { //this allows us to navigate back to gradebook page when new course is clicked
-                document.getElementById('gradeBookCourseTab').click();
-            }
-            if (document.getElementById('GSClick')) {
-                document.getElementById('GSClick').click();
-                Session.set('settingScreenText', "General Settings");
-            }
-
-            let updated = true;
-
-            if(updated){
-                resolve();
-            }
-            else{
-                reject();
-            }
-        });
-        promiseToUpdateGradebook.then(function(){
-            var delayInMilliseconds = 10;
-            setTimeout(function() {
-                updateGradebookColors();
-                $("#main_table").tableHeadFixer({ "left": 1, 'head': true });
-              }, delayInMilliseconds);
-        }).catch(function(){
-            console.log("Gradebook colors not updated.");
-        })
-
+        sectionsClickEventComplete();
     },
 
     'click .course-dropdown': function () {

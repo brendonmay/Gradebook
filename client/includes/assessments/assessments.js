@@ -221,6 +221,32 @@ function addFinalValidationRules(assessmentsObj) {
 
 }
 
+function renameAssessmentEvent() {
+    var id = event.target.id;
+    var assessmentId = id.slice(0, id.indexOf("?LmUtGwN?"));
+    var assessmentName = id.slice(id.indexOf("?LmUtGwN?") + 9, id.length);
+    var element = document.getElementsByName("collHead" + assessmentId);
+
+    element[0].click();
+    Session.set('selectedAssessment', { assessmentId: "assessmentId", assessmentName: "assessmentName" });
+    //store assessmentId and assessmentName in Session Variable
+    Session.set('selectedAssessment', { assessmentId: assessmentId, assessmentName: assessmentName });
+
+    //open modal
+    $('#renameAssessmentModal').modal({
+        dismissible: true,
+        ready: function(modal, trigger){
+            Materialize.updateTextFields();
+        },
+        complete: function () {
+            clearValidation(document.getElementById("renameAssessmentModalForm"));
+            document.getElementById("renameAssessmentModalForm").reset();
+        }
+    }
+    );
+    $('#renameAssessmentModal').modal('open');
+}
+
 function addCourseValidationRules(assessmentsObj) {
     for (var i = 0; i < assessmentsObj.length; i++) {
         for (var j = 0; j < assessmentsObj[i].assessments.length; j++) {
@@ -450,7 +476,7 @@ Template.assessments.events({
                 }
             }
         });
-        $('#createAssessmentModal').modal('open');     
+        $('#createAssessmentModal').modal('open');
         $('select').material_select();
     },
     'click .deleteFinalEval': function () {
@@ -646,29 +672,8 @@ Template.assessments.events({
         form.click();
     },
     'click .rename-assessment': function () {
-        var id = event.target.id;
-        var assessmentId = id.slice(0, id.indexOf("?LmUtGwN?"));
-        var assessmentName = id.slice(id.indexOf("?LmUtGwN?") + 9, id.length);
-        var element = document.getElementsByName("collHead" + assessmentId);
+        renameAssessmentEvent();
 
-        element[0].click();
-        Session.set('selectedAssessment', { assessmentId: "assessmentId", assessmentName: "assessmentName" });
-        //store assessmentId and assessmentName in Session Variable
-        Session.set('selectedAssessment', { assessmentId: assessmentId, assessmentName: assessmentName });
-
-        //open modal
-        $('#renameAssessmentModal').modal({
-            dismissible: true,
-            complete: function () {
-                clearValidation(document.getElementById("renameAssessmentModalForm"));
-                document.getElementById("renameAssessmentModalForm").reset();
-            }
-        }
-        );
-        $('#renameAssessmentModal').modal('open');
-        setTimeout(function(){
-            Materialize.updateTextFields();
-        }, 10)
     },
     'keyup .finalAssessmentInput': function () {
         if (event.keyCode === 13) { //if enter is hit

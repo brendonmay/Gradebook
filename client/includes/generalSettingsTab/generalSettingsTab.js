@@ -23,6 +23,18 @@ function getYearsArray() {
     return yearOptions
 }
 
+function ifNewCourseYear() {
+    var courseId = Session.get('courseId');
+    for (i = 0; i < activeElements.length; i++) {
+        activeElements[0].classList.remove("active");
+        activeElements[0].classList.remove("green");
+    }
+}
+
+function clickNewCourseYear() {
+    document.getElementById(newCourseYear).click();
+}
+
 function clearPageValidation() {
     var pageForm = document.getElementById('generalSettingsFormID');
     clearValidation(pageForm);
@@ -160,18 +172,12 @@ Template.generalSettingsTab.events({
 
         var activeElements = document.getElementsByClassName("active");
         if (oldCourseYear != newCourseYear) {
-            var courseId = Session.get('courseId');
-            for (i = 0; i < activeElements.length; i++) {
-                activeElements[0].classList.remove("active");
-                activeElements[0].classList.remove("green");
-            }
-            setTimeout(function () {
-                document.getElementById(newCourseYear).click();
-                setTimeout(function () {
+            ifNewCourseYear(function () {
+                clickNewCourseYear(function () {
                     document.getElementById(courseId).parentElement.classList.add("active");
                     document.getElementById(courseId).parentElement.classList.add("green");
-                }, 10);
-            }, 5);
+                })
+            })
         }
         return false;
     },

@@ -16,6 +16,30 @@ function arrayOfStudentIds() {
   return arrayofStudentIds
 };
 
+function gradebookCourseTabClickEvent() {
+  return new Promise(function (resolve, reject) {
+    var updateCheck = Session.get("gradebookUpdated");
+    if (updateCheck) {
+      updateGradebookColors();
+      Session.set("gradebookUpdated", false);
+    }
+    resolve();
+  })
+}
+
+function updateTableHeadFixer() {
+  return new Promise(function (resolve, reject) {
+    $("#main_table").tableHeadFixer({ "left": 1, 'head': true })
+    resolve();
+  })
+}
+
+function clickEventThenFixHeader() {
+  gradebookCourseTabClickEvent().then(function(){
+    updateTableHeadFixer();
+  })
+}
+
 function findOldStudentGradeValue(studentId, assessmentId, category, ownerId, courseId) {
   var students = Students.findOne({ ownerId: ownerId, courseId: courseId }).students;
   var oldValue = 0;
@@ -93,14 +117,6 @@ Template.courseTabsTitles.onRendered(function () {
 Template.courseTabsTitles.events({
   'click #gradeBookCourseTab': function () {
     //check if a change has been made first by referring to Session Variable
-    var updateCheck = Session.get("gradebookUpdated");
-    if (updateCheck) {
-      updateGradebookColors();
-      Session.set("gradebookUpdated", false);
-    }
-    setTimeout(function() {
-      $("#main_table").tableHeadFixer({ "left": 1, 'head': true });
-    }, 10);
-
+    clickEventThenFixHeader();
   }
 })

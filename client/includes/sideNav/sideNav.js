@@ -5,6 +5,12 @@ import { Accounts } from 'meteor/accounts-base';
 
 import '../../main.html';
 
+/*START*/
+$( document ).ready(function() {
+  $(".button-collapse").sideNav();
+});
+/*END*/
+
 Template.sideNav.onCreated(function () {
   Session.set('courseId', 0);
 });
@@ -21,7 +27,6 @@ Template.sideNav.helpers({
       document.getElementById("active" + currentCourseId).classList.add("active");
       document.getElementById("active" + currentCourseId).classList.add("green");
       document.getElementById("" + newCourseYear).click();
-
     }
   }
 

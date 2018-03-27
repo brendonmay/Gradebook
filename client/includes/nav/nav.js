@@ -6,12 +6,27 @@ import { Meteor } from 'meteor/meteor';
 
 import '../../main.html';
 
+/*START*/
+
+// $( document ).ready(function(){
+//   this.$('.button-collapse').sideNav({
+//     closeOnClick: true
+//     menuWith
+//   });
+// })
+
+$( document ).ready(function() {
+  $("[data-activates=slide-out-l]").sideNav();
+});
+
 Template.nav.onRendered(function () {
   this.$("[data-activates=slide-out-l]").sideNav({
     menuWidth: document.getElementById('side-nav-section').style.width,
     edge: 'left',
+    closeOnClick: true
   });
 });
+/*END*/
 
 Template.nav.helpers({
   currentEmail: function () {

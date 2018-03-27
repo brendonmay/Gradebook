@@ -133,50 +133,69 @@ function insertGrade() {
             grade = "N/A";
             document.getElementById(inputId).value = "N/A";
         }
-        let updateStudentsCollectionPromise = new Promise(function (resolve, reject) {
-            Meteor.call('students.insertGrade', Meteor.userId(), courseId, category, studentId, assessmentId, grade);
-
-            let updated = true;
-
-            if (updated) {
-                resolve();
+        Meteor.call('students.insertGrade', Meteor.userId(), courseId, category, studentId, assessmentId, grade, function (error, result) {
+            if (error) {
+                console.log("error 1");
             }
-            else {
-                reject();
-            }
-        });
-        setTimeout(function () {
-            updateStudentsCollectionPromise.then(function () {
-                if (assessmentId[0] != "f") {
-                    var assessmentTypeId = assessmentId.slice(0, assessmentId.indexOf("-"));
-                    if (grade != "N/A") {
-                        var percGrade = (grade / outOf) * 100;
-                        percGrade = Number(percGrade.toFixed(2));
-                        var newGrade = determineAssessmentTypeGrade(Meteor.userId(), courseId, studentId, assessmentTypeId, category);
-                        Meteor.call('calculatedgrades.updateCourseAssessmentGrade', Meteor.userId(), courseId, assessmentId, percGrade, category, studentId);
-                        Meteor.call('calculatedgrades.updateAssessmentTypeGrade', Meteor.userId(), courseId, studentId, percGrade, category, assessmentTypeId, newGrade);
-                    }
-                    else {
-                        var percGrade = "N/A";
-                        var newGrade = determineAssessmentTypeGrade(Meteor.userId(), courseId, studentId, assessmentTypeId, category);
-                        Meteor.call('calculatedgrades.removeCourseAssessmentCategory', Meteor.userId(), courseId, studentId, assessmentTypeId, assessmentId, category);
-                        Meteor.call('calculatedgrades.updateAssessmentTypeGrade', Meteor.userId(), courseId, studentId, percGrade, category, assessmentTypeId, newGrade);
-                    }
+            if (assessmentId[0] != "f") {
+                var assessmentTypeId = assessmentId.slice(0, assessmentId.indexOf("-"));
+                if (grade != "N/A") {
+                    var percGrade = (grade / outOf) * 100;
+                    percGrade = Number(percGrade.toFixed(2));
+                    var newGrade = determineAssessmentTypeGrade(Meteor.userId(), courseId, studentId, assessmentTypeId, category);
+                    Meteor.call('calculatedgrades.updateCourseAssessmentGrade', Meteor.userId(), courseId, assessmentId, percGrade, category, studentId, function (error, result) {
+                        if (error) {
+                            console.log("error 2")
+                        }
+                        Meteor.call('calculatedgrades.updateAssessmentTypeGrade', Meteor.userId(), courseId, studentId, percGrade, category, assessmentTypeId, newGrade, function(error, result){
+                            if (error) {
+                                console.log("error 7")
+                            }
+                            var newOverallCategoryGrade = determineOverallCategoryGrade(Meteor.userId(), courseId, studentId, category);
+                            Meteor.call('calculatedgrades.updateOverallCategoryGrade', Meteor.userId(), courseId, studentId, category, newOverallCategoryGrade);
+                        });
+                    });
                 }
                 else {
-                    if (grade != "N/A") {
-                        var percGrade = (grade / outOf) * 100;
-                        percGrade = Number(percGrade.toFixed(2));
-                        Meteor.call('calculatedgrades.updateFinalAssessmentGrade', Meteor.userId(), courseId, assessmentId, category, percGrade, studentId);
-                    }
-                    else {
-                        Meteor.call('calculatedgrades.updateFinalAssessmentGrade', Meteor.userId(), courseId, assessmentId, category, grade, studentId);
-                    }
+                    var percGrade = "N/A";
+                    var newGrade = determineAssessmentTypeGrade(Meteor.userId(), courseId, studentId, assessmentTypeId, category);
+                    Meteor.call('calculatedgrades.removeCourseAssessmentCategory', Meteor.userId(), courseId, studentId, assessmentTypeId, assessmentId, category, function (error, result) {
+                        if (error) {
+                            console.log("error 3")
+                        }
+                        Meteor.call('calculatedgrades.updateAssessmentTypeGrade', Meteor.userId(), courseId, studentId, percGrade, category, assessmentTypeId, newGrade, function (error, result){
+                            if (error) {
+                                console.log("error 6")
+                            }
+                            var newOverallCategoryGrade = determineOverallCategoryGrade(Meteor.userId(), courseId, studentId, category);
+                            Meteor.call('calculatedgrades.updateOverallCategoryGrade', Meteor.userId(), courseId, studentId, category, newOverallCategoryGrade);
+                        });
+                    });
                 }
-            }).catch(function () {
-                console.log("Promise not fulfilled")
-            })
-        }, 150);
+            }
+            else {
+                if (grade != "N/A") {
+                    var percGrade = (grade / outOf) * 100;
+                    percGrade = Number(percGrade.toFixed(2));
+                    Meteor.call('calculatedgrades.updateFinalAssessmentGrade', Meteor.userId(), courseId, assessmentId, category, percGrade, studentId, function(error, result){
+                        if (error) {
+                            console.log("error 5")
+                        }
+                        var newOverallCategoryGrade = determineOverallCategoryGrade(Meteor.userId(), courseId, studentId, category);
+                        Meteor.call('calculatedgrades.updateOverallCategoryGrade', Meteor.userId(), courseId, studentId, category, newOverallCategoryGrade);
+                    });
+                }
+                else {
+                    Meteor.call('calculatedgrades.updateFinalAssessmentGrade', Meteor.userId(), courseId, assessmentId, category, grade, studentId, function(error, result){
+                        if (error) {
+                            console.log("error 4")
+                        }
+                        var newOverallCategoryGrade = determineOverallCategoryGrade(Meteor.userId(), courseId, studentId, category);
+                        Meteor.call('calculatedgrades.updateOverallCategoryGrade', Meteor.userId(), courseId, studentId, category, newOverallCategoryGrade);
+                    });
+                }
+            }
+        });
     }
 
 }
@@ -770,30 +789,7 @@ Template.studentName.helpers({
 
 Template.studentName.events({
     'blur .gradeInput': function () {
-        const courseId = Session.get('courseId');
-        const inputId = event.target.id;
-        const category = inputId[0];
-        const studentId = inputId.slice(inputId.indexOf("?") + 1, inputId.indexOf("#"));
-        let promiseToInsertGrade = new Promise(function (resolve, reject) {
-            insertGrade();
-
-            let updated = true;
-
-            if (updated) {
-                resolve();
-            }
-            else {
-                reject();
-            }
-        });
-        setTimeout(function () {
-            promiseToInsertGrade.then(function () {
-                setTimeout(function () {
-                    var newOverallCategoryGrade = determineOverallCategoryGrade(Meteor.userId(), courseId, studentId, category);
-                    Meteor.call('calculatedgrades.updateOverallCategoryGrade', Meteor.userId(), courseId, studentId, category, newOverallCategoryGrade);
-                }, 125);
-            })
-        }, 125);
+        insertGrade();
     },
     'click .gradeInput': function () {
         event.target.setSelectionRange(0, event.target.value.length)
@@ -843,30 +839,8 @@ Template.studentName.events({
                                     //check it isnt the last student
                                     if (i == (sortedStudentObjects.length - 1)) {
                                         //console.log("last student");
-                                        const courseId = Session.get('courseId');
-                                        const inputId = event.target.id;
-                                        const category = inputId[0];
-                                        const studentId = inputId.slice(inputId.indexOf("?") + 1, inputId.indexOf("#"));
-                                        let promiseToInsertGrade = new Promise(function (resolve, reject) {
-                                            insertGrade();
-
-                                            let updated = true;
-
-                                            if (updated) {
-                                                resolve();
-                                            }
-                                            else {
-                                                reject();
-                                            }
-                                        });
-                                        setTimeout(function () {
-                                            promiseToInsertGrade.then(function () {
-                                                setTimeout(function () {
-                                                    var newOverallCategoryGrade = determineOverallCategoryGrade(Meteor.userId(), courseId, studentId, category);
-                                                    Meteor.call('calculatedgrades.updateOverallCategoryGrade', Meteor.userId(), courseId, studentId, category, newOverallCategoryGrade);
-                                                }, 125);
-                                            })
-                                        }, 125);
+                                        
+                                        insertGrade();
                                         return false
                                     }
                                     else {
@@ -922,31 +896,8 @@ Template.studentName.events({
                             if (sortedStudentObjects[i].studentId == studentId) {
                                 //check it isnt the last student
                                 if (i == (sortedStudentObjects.length - 1)) {
-                                    //console.log("last student");
-                                    const courseId = Session.get('courseId');
-                                    const inputId = event.target.id;
-                                    const category = inputId[0];
-                                    const studentId = inputId.slice(inputId.indexOf("?") + 1, inputId.indexOf("#"));
-                                    let promiseToInsertGrade = new Promise(function (resolve, reject) {
-                                        insertGrade();
-
-                                        let updated = true;
-
-                                        if (updated) {
-                                            resolve();
-                                        }
-                                        else {
-                                            reject();
-                                        }
-                                    });
-                                    setTimeout(function () {
-                                        promiseToInsertGrade.then(function () {
-                                            setTimeout(function () {
-                                                var newOverallCategoryGrade = determineOverallCategoryGrade(Meteor.userId(), courseId, studentId, category);
-                                                Meteor.call('calculatedgrades.updateOverallCategoryGrade', Meteor.userId(), courseId, studentId, category, newOverallCategoryGrade);
-                                            }, 125);
-                                        })
-                                    }, 125);
+                                    //console.log("last student");      
+                                    insertGrade();
                                     return false
                                 }
                                 else {
@@ -995,30 +946,7 @@ Template.studentName.events({
                             //check it isnt the last student
                             if (i == (sortedStudentObjects.length - 1)) {
                                 //console.log("last student");
-                                const courseId = Session.get('courseId');
-                                const inputId = event.target.id;
-                                const category = inputId[0];
-                                const studentId = inputId.slice(inputId.indexOf("?") + 1, inputId.indexOf("#"));
-                                let promiseToInsertGrade = new Promise(function (resolve, reject) {
-                                    insertGrade();
-
-                                    let updated = true;
-
-                                    if (updated) {
-                                        resolve();
-                                    }
-                                    else {
-                                        reject();
-                                    }
-                                });
-                                setTimeout(function () {
-                                    promiseToInsertGrade.then(function () {
-                                        setTimeout(function () {
-                                            var newOverallCategoryGrade = determineOverallCategoryGrade(Meteor.userId(), courseId, studentId, category);
-                                            Meteor.call('calculatedgrades.updateOverallCategoryGrade', Meteor.userId(), courseId, studentId, category, newOverallCategoryGrade);
-                                        }, 125);
-                                    })
-                                }, 125);
+                                insertGrade();
                                 return false
                             }
                             else {
@@ -1058,30 +986,7 @@ Template.studentName.events({
                         //check it isnt the last student
                         if (i == (sortedStudentObjects.length - 1)) {
                             //console.log("last student");
-                            const courseId = Session.get('courseId');
-                            const inputId = event.target.id;
-                            const category = inputId[0];
-                            const studentId = inputId.slice(inputId.indexOf("?") + 1, inputId.indexOf("#"));
-                            let promiseToInsertGrade = new Promise(function (resolve, reject) {
-                                insertGrade();
-
-                                let updated = true;
-
-                                if (updated) {
-                                    resolve();
-                                }
-                                else {
-                                    reject();
-                                }
-                            });
-                            setTimeout(function () {
-                                promiseToInsertGrade.then(function () {
-                                    setTimeout(function () {
-                                        var newOverallCategoryGrade = determineOverallCategoryGrade(Meteor.userId(), courseId, studentId, category);
-                                        Meteor.call('calculatedgrades.updateOverallCategoryGrade', Meteor.userId(), courseId, studentId, category, newOverallCategoryGrade);
-                                    }, 125);
-                                })
-                            }, 125);
+                            insertGrade();
                             return false
                         }
                         else {

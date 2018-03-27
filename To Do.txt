@@ -10,8 +10,6 @@
 	- In student reports, if you select a student with id = "s-3" and then you go to a new course in student reports, student with Id "s-3" will be highlighted
 	- Fix hover color of students in gradebook
 	- course overview chart on bottom not working
-	- student reports, quizzes, chart in bottom grades colum not rounded to 2 decimal places
-	- if you input grades too fast into the gradebook, there is an issue with CategoryGrades in students collection properly updating (need a new method of dealing with async)
 	- if you click the logged in user in the top right, and then click it again, it shifts the page down a bit permanently
 	- studentReports dropdown not being refreshed after a new assessment type has been added/deleted. Why? 
 -------------

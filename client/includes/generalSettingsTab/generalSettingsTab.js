@@ -26,8 +26,13 @@ function getYearsArray() {
 function ifNewCourseYear(activeElements) {
     return new Promise(function (resolve, reject) {
         for (i = 0; i < activeElements.length; i++) {
-            activeElements[0].classList.remove("active");
-            activeElements[0].classList.remove("green");
+            var activeElement = activeElements[i];
+            if (activeElement.classList.contains('course-dropdown')) {
+                console.log("found the element thats highlighted: " + activeElements[i]);
+                activeElements[i].classList.remove("active");
+                activeElements[i].classList.remove("green");
+                i = activeElements.length;
+            }
         }
         resolve();
     })
@@ -182,16 +187,34 @@ Template.generalSettingsTab.events({
         //highlight correct course after changing year
         promiseToDoGeneralSettingsWork.then(function () {
             var activeElements = document.getElementsByClassName("active");
+            var activeElement
+            for (i = 0; i < activeElements.length; i++) {
+                var activeElement = activeElements[i];
+                if (activeElement.classList.contains('course-dropdown')) {
+                    //console.log("found the element thats highlighted: " + activeElements[i].id);
+                    // activeElements[i].classList.remove("active");
+                    // activeElements[i].classList.remove("green");
+                    i = activeElements.length;
+                }
+            }
+
             if (oldCourseYear != newCourseYear) {
-                ifNewCourseYear(activeElements).then(function () {
+                document.getElementById("preloaderSideNav").style = "";
+                activeElement.classList.remove("active");
+                activeElement.classList.remove("green");
+
+                setTimeout(function () {
+                    // ifNewCourseYear(activeElements).then(function () {
                     clickNewCourseYear(newCourseYear).then(function () {
                         setTimeout(function () {
                             var courseId = Session.get('courseId');
                             document.getElementById(courseId).parentElement.classList.add("active");
                             document.getElementById(courseId).parentElement.classList.add("green");
+                            document.getElementById("preloaderSideNav").style = "display:none";
                         }, 1000);
                     });
-                });
+                    // });
+                }, 1000);
             }
         })
         return false;

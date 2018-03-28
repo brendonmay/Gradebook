@@ -39,6 +39,7 @@ Template.login.events({
                 }
             } else {
                 //no error on login, so user Logs in fine
+                document.getElementById("preloader").style = "";
                 removeLoginError();
 
                 var loginForm = document.getElementById('loginForm');

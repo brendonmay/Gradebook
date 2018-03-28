@@ -50,30 +50,33 @@ function sectionsClickEvent() {
 
         const target = event.target;
         var courseId = Number(target.id);
-        var courseYear = target.name;
-        const courseName = target.innerText;
-        const categoryWeighting = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: courseId }).categoryWeighting;
-        var knowledgeWeight = categoryWeighting.K;
-        var applicationWeight = categoryWeighting.A;
-        var thinkingWeight = categoryWeighting.T;
-        var communicationWeight = categoryWeighting.C;
-        var courseworkWeight = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: courseId }).courseworkWeight;
-        var finalWeight = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: courseId }).finalWeight;
 
-        //Set Session Variables for Selected Course
-        Session.set('courseId', courseId);
-        Session.set('courseYear', courseYear);
-        Session.set('courseName', courseName);
-        Session.set('knowledgeWeight', knowledgeWeight);
-        Session.set('applicationWeight', applicationWeight);
-        Session.set('thinkingWeight', thinkingWeight);
-        Session.set('communicationWeight', communicationWeight);
-        Session.set('courseworkWeight', courseworkWeight);
-        Session.set('finalWeight', finalWeight);
-        Session.set('currentSelectedStudentID', '0');
+        if ( Number(courseId) != Number( Session.get('courseId') ) ){
+            var courseYear = target.name;
+            const courseName = target.innerText;
+            const categoryWeighting = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: courseId }).categoryWeighting;
+            var knowledgeWeight = categoryWeighting.K;
+            var applicationWeight = categoryWeighting.A;
+            var thinkingWeight = categoryWeighting.T;
+            var communicationWeight = categoryWeighting.C;
+            var courseworkWeight = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: courseId }).courseworkWeight;
+            var finalWeight = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: courseId }).finalWeight;
 
-        collapseAll();
+            //Set Session Variables for Selected Course
+            Session.set('courseId', courseId);
+            Session.set('courseYear', courseYear);
+            Session.set('courseName', courseName);
+            Session.set('knowledgeWeight', knowledgeWeight);
+            Session.set('applicationWeight', applicationWeight);
+            Session.set('thinkingWeight', thinkingWeight);
+            Session.set('communicationWeight', communicationWeight);
+            Session.set('courseworkWeight', courseworkWeight);
+            Session.set('finalWeight', finalWeight);
+            Session.set('currentSelectedStudentID', '0');
+            Session.set('gradebookUpdated', true);
 
+            collapseAll();
+        }
         if (document.getElementById('gradeBookCourseTab')) { //this allows us to navigate back to gradebook page when new course is clicked
             document.getElementById('gradeBookCourseTab').click();
         }
@@ -153,14 +156,16 @@ function updateTableHeadFixer() {
 
 function sectionsClickEventComplete() {
     sectionsClickEvent().then(function () {
-        console.log("logged");
-        document.getElementById("preloader").style = "";
-        setTimeout(function () {
-            updateColorsInGradebook().then(function () {
-                updateTableHeadFixer();
-            });
-            document.getElementById("preloader").style = "display: none";
-        }, 1000);
+        if (Session.get('gradebookUpdated') == true){
+            document.getElementById("preloader").style = "";
+            setTimeout(function () {
+                updateColorsInGradebook().then(function () {
+                    updateTableHeadFixer();
+                });
+                document.getElementById("preloader").style = "display: none";
+                Session.set('gradebookUpdated', false);
+            }, 1000);
+        }
     })
 }
 

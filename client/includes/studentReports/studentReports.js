@@ -1050,23 +1050,17 @@ function drawCourseOverviewBreakdownBarGraph() {
             delete data[i].Grade;
         }
     }
+    if (data.length == 0) { 
+        data = [{
+            assessmentTypeName: "Grade Breakdown"
+        }];
+    }
 
     new Morris.Bar({
         // ID of the element in which to draw the chart.
         element: 'assessmentBreakdownBarGraph',
-        // Chart data records -- each entry in this array corresponds to a point on
-        // the chart.
         // data: [
-        //     { assessmentName: 'Quiz 1', K: 100, A: 90, T: 80, C:50 },
-        //     { assessmentName: 'Quiz 2', K: 75,  A: 65, T: 80, C:50 },
-        //     { assessmentName: 'Quiz 3', K: 50,  A: 40, T: 80, C:50 },
-        //     { assessmentName: 'Quiz 4', K: 75,  A: 65, T: 80, C:50 },
-        //     { assessmentName: 'Quiz 5', K: 50,  A: 40, T: 80, C:50 },
-        //     { assessmentName: 'Quiz 6', K: 75,  A: 65, T: 80, C:50 },
-        //     { assessmentName: 'Quiz 7', K: 100, A: 90, T: 80, C:50 },
-        //     { assessmentName: 'Quiz 8', K: 100, A: 90, T: 80, C:50 },
-        //     { assessmentName: 'Quiz 9', K: 100, A: 90, T: 80, C:50 },
-        //     { assessmentName: 'Quiz 10', K: 100, A: 90, T: 80, C:50 },
+        //     { assessmentName: 'Quiz 1', K: 100, A: 90, T: 80, C:50 }
         // ],
         data: data,
         ymin: 0,
@@ -1461,6 +1455,7 @@ function getCourseOverviewInformation() {
                         if (assessmentTypeGrade.AGrade && !isNaN(assessmentTypeGrade.AGrade)) AGrade += assessmentTypeGrade.AGrade + 1;
                         if (assessmentTypeGrade.TGrade && !isNaN(assessmentTypeGrade.TGrade)) TGrade += assessmentTypeGrade.TGrade + 1;
                         if (assessmentTypeGrade.CGrade && !isNaN(assessmentTypeGrade.CGrade)) CGrade += assessmentTypeGrade.CGrade + 1;
+
                         break;
                     }
                 }

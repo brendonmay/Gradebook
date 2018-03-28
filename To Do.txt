@@ -6,11 +6,8 @@
 	- If you have no students in the student reports side-nav, offer a message to add students.
 
 -Functionality
-	- graphs and charts not always displaying correct data in student reports (make several assignments with App = N/A and see how it looks, maybe add one A mark)
-	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.
-	- In student reports, if you select a student with id = "s-3" and then you go to a new course in student reports, student with Id "s-3" will be highlighted
-	- In student reports, course overview, the studentmark breakdown graph isnt showing if theres no data
 	- When you create a new course in the most recent year relative to the other courses you have, and its the first course of that year, upon creation, the new course will be highlighted in the sidenav, but the mainview wont update.
+	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.	
 	- studentReports dropdown not being refreshed after a new assessment type has been added/deleted. Why? 
 	- change z-index of dropdown in student reports so it is on-top of everything else	
 	- if you click the logged in user in the top right, and then click it again, it shifts the page down a bit permanently

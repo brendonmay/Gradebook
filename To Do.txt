@@ -2,6 +2,8 @@
 	- "Thanks for signing in! Add a course to get started!
 	- "Welcome Back! Select a course to get started!"
 	- Gradebook display when you have no students
+	- In student reports side-nav, create a title on the top "Students"
+	- If you have no students in the student reports side-nav, offer a message to add students.
 
 -Functionality
 	- If you hit tab multiple times in gradebook (past the end of the row), datepicker pops up
@@ -13,6 +15,8 @@
 	- graphs and charts not always displaying correct data in student reports (make several assignments with App = N/A and see how it looks, maybe add one A mark)
 	- change z-index of dropdown in student reports so it is on-top of everything else
 	- In student reports, course overview, the studentmark breakdown graph isnt showing if theres no data
+	- Hover over graphs break if you hover over broken student breakdown table in course overview
+	- If you click edit in general settings, dont cancel, switch to another course, go to general settings, the edit will still be open.
 
 Preloader:
 	- assign final and create new assessment in gradebook (dont do it on every modal close, run a check if new assessment has been created)

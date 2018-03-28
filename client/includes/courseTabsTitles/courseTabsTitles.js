@@ -114,6 +114,17 @@ Template.courseTabsTitles.onRendered(function () {
 
 Template.courseTabsTitles.events({
   'click #gradeBookCourseTab': function () {
-    gradebookCourseTabClickEvent();
+    //check if a change has been made first by referring to Session Variable
+    gradebookCourseTabClickEvent();    
+  },
+  'click #courseSettingsTabId': function () {
+    var settingsScreen = Session.get('settingScreenText');
+    if (settingsScreen == "General Settings") {
+      document.getElementById('generalSettings-CancelButton').click();
+    } else if (settingsScreen == "Category Weightings") {
+      document.getElementById("categoryWeighting-cancelButton").click();
+    } else if (settingsScreen == "Assessments") {
+      document.getElementById('assignmentSettings-cancelButton').click();
+    } 
   }
 })

@@ -70,6 +70,7 @@ function sectionsClickEvent() {
         Session.set('communicationWeight', communicationWeight);
         Session.set('courseworkWeight', courseworkWeight);
         Session.set('finalWeight', finalWeight);
+        Session.set('currentSelectedStudentID', '0');
 
         collapseAll();
 
@@ -163,6 +164,20 @@ function sectionsClickEventComplete() {
     })
 }
 
+function resetStudentReportsSideNav() {
+    var studentReportsSideNav = document.getElementById('slide-out-studentReport');
+    if (studentReportsSideNav && studentReportsSideNav.children) {
+        for (var i = 0; i < studentReportsSideNav.children.length; i++) {
+            var currentChild = studentReportsSideNav.children[i];
+            if (currentChild.children) {
+                currentChild = currentChild.children[0];
+                currentChild.classList.remove('active');
+                currentChild.classList.remove('green');
+            }
+        }
+    }
+}
+
 Template.sideNavDropDown.onRendered(function () {
     this.$('.collapsible-nav').collapsible();
 });
@@ -234,6 +249,7 @@ Template.sideNavDropDown.helpers({
 Template.sideNavDropDown.events({
     //event allows the main page to change as you click the side bar
     'click .sections': function () {
+        resetStudentReportsSideNav();
         sectionsClickEventComplete();
     },
 

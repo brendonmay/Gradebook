@@ -16,28 +16,26 @@ function arrayOfStudentIds() {
   return arrayofStudentIds
 };
 
+function updateColorsInGradebook() {
+  return new Promise(function (resolve, reject) {
+    updateGradebookColors();
+    resolve();
+  })
+}
+
 function gradebookCourseTabClickEvent() {
-  return new Promise(function (resolve, reject) {
-    var updateCheck = Session.get("gradebookUpdated");
-    if (updateCheck) {
-      updateGradebookColors();
+  var updateCheck = Session.get("gradebookUpdated");
+
+  if (updateCheck) {
+    document.getElementById("preloader").style = "";
+    setTimeout(function () {
+      updateColorsInGradebook().then(function () {
+        $("#main_table").tableHeadFixer({ "left": 1, 'head': true });
+      });
+      document.getElementById("preloader").style = "display: none";
       Session.set("gradebookUpdated", false);
-    }
-    resolve();
-  })
-}
-
-function updateTableHeadFixer() {
-  return new Promise(function (resolve, reject) {
-    $("#main_table").tableHeadFixer({ "left": 1, 'head': true })
-    resolve();
-  })
-}
-
-function clickEventThenFixHeader() {
-  gradebookCourseTabClickEvent().then(function(){
-    updateTableHeadFixer();
-  })
+    }, 1000);
+  }
 }
 
 function findOldStudentGradeValue(studentId, assessmentId, category, ownerId, courseId) {
@@ -116,7 +114,6 @@ Template.courseTabsTitles.onRendered(function () {
 
 Template.courseTabsTitles.events({
   'click #gradeBookCourseTab': function () {
-    //check if a change has been made first by referring to Session Variable
-    clickEventThenFixHeader();
+    gradebookCourseTabClickEvent();
   }
 })

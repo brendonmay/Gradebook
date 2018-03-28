@@ -184,13 +184,13 @@ Template.generalSettingsTab.events({
             var activeElements = document.getElementsByClassName("active");
             if (oldCourseYear != newCourseYear) {
                 ifNewCourseYear(activeElements).then(function () {
-                    setTimeout(function () {
-                        clickNewCourseYear(newCourseYear).then(function () {
+                    clickNewCourseYear(newCourseYear).then(function () {
+                        setTimeout(function () {
                             var courseId = Session.get('courseId');
                             document.getElementById(courseId).parentElement.classList.add("active");
                             document.getElementById(courseId).parentElement.classList.add("green");
-                        })
-                    }, 500)
+                        }, 1000);
+                    });
                 });
             }
         })

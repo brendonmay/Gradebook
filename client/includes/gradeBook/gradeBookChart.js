@@ -187,9 +187,20 @@ function createAssessmentButtonEvent() {
 
 function createAssessmentModalComplete() {
     createAssessmentButtonEvent().then(function () {
-        updateColorsInGradebook().then(function () {
-            updateTableHeadFixer()
-        })
+        document.getElementById("preloader").style = "";
+
+        setTimeout(function () {
+            updateColorsInGradebook().then(function () {
+                updateTableHeadFixer();
+            });
+            document.getElementById("preloader").style = "display: none";
+        }, 1000);
+
+        // setTimeout(function () {
+        //     updateColorsInGradebook().then(function () {
+        //         updateTableHeadFixer();
+        //     });
+        // }, 250);
     })
 }
 
@@ -202,10 +213,14 @@ function addStudentsButtonGradebookComplete() {
 }
 
 function assignFinalEvalComplete() {
-    assignFinalEvalButtonGradeBookComplete().then(function(){
-        updateColorsInGradebook().then(function () {
-            updateTableHeadFixer()
-        })
+    assignFinalEvalButtonGradeBookComplete().then(function () {
+        document.getElementById("preloader").style = "";
+        setTimeout(function () {
+            updateColorsInGradebook().then(function () {
+                updateTableHeadFixer();
+            });
+            document.getElementById("preloader").style = "display: none";
+        }, 1000);
     })
 }
 

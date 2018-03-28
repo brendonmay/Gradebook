@@ -271,11 +271,14 @@ function deleteCourseWorkModalComplete(assessmentTypeId, assessmentId) {
     Session.set("removeAssessmentObj", removeAssessmentObj);
     $('#deleteCourseworkAssessmentModal').modal('close');
 
+    document.getElementById("preloader").style = "";
+
     setTimeout(function () {
         updateColorsInGradebook().then(function () {
             updateTableHeadFixer();
-        })
-    }, 500)
+        });
+        document.getElementById("preloader").style = "display: none";
+    }, 1000);
 
 }
 

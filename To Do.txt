@@ -4,6 +4,7 @@
 	- Gradebook display when you have no students
 	- In student reports side-nav, create a title on the top "Students"
 	- If you have no students in the student reports side-nav, offer a message to add students.
+	- Make toasts appear in the bottom right corner.
 
 -Functionality
 	- If you hit tab multiple times in gradebook (past the end of the row), datepicker pops up
@@ -13,18 +14,16 @@
 	- if you click the logged in user in the top right, and then click it again, it shifts the page down a bit permanently
 	- studentReports dropdown not being refreshed after a new assessment type has been added/deleted. Why? 
 	- graphs and charts not always displaying correct data in student reports (make several assignments with App = N/A and see how it looks, maybe add one A mark)
-	- change z-index of dropdown in student reports so it is on-top of everything else
 	- In student reports, course overview, the studentmark breakdown graph isnt showing if theres no data
 	- Hover over graphs break if you hover over broken student breakdown table in course overview
 	- If you click edit in general settings, dont cancel, switch to another course, go to general settings, the edit will still be open.
 
 Preloader:
-	- assign final and create new assessment in gradebook (dont do it on every modal close, run a check if new assessment has been created)
-	- deleting an assessment directly in gradebook (dont do it on every modal close, run a check if new assessment has been created)
 	- when you select a new course in the sidenav, run a check to ensure you arent clicking the same tab, then run a preloader
 	- after you login/immediately after you register, add a Preloader
 	- after you change the course-year of a course, the preloader breaks for the rest of the site. Why?
 	- after you change the course-year of a course, make the side-nav blurred and give it a preloader while it makes the changes.
+	- make gradebook preloader only fill in the size of the main view, not nav and footer.
 
 Scaling
 	- https://medium.freecodecamp.org/scaling-meteor-a-year-on-26ee37588e4b

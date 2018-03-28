@@ -187,9 +187,11 @@ function createAssessmentButtonEvent() {
 
 function createAssessmentModalComplete() {
     createAssessmentButtonEvent().then(function () {
-        updateColorsInGradebook().then(function () {
-            updateTableHeadFixer()
-        })
+        setTimeout(function () {
+            updateColorsInGradebook().then(function () {
+                updateTableHeadFixer()
+            })
+        }, 250);
     })
 }
 
@@ -202,10 +204,12 @@ function addStudentsButtonGradebookComplete() {
 }
 
 function assignFinalEvalComplete() {
-    assignFinalEvalButtonGradeBookComplete().then(function(){
-        updateColorsInGradebook().then(function () {
-            updateTableHeadFixer()
-        })
+    assignFinalEvalButtonGradeBookComplete().then(function () {
+        setTimeout(function () {
+            updateColorsInGradebook().then(function () {
+                updateTableHeadFixer()
+            })
+        }, 250);
     })
 }
 

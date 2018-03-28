@@ -1,7 +1,7 @@
 -Styling
 	- "Thanks for signing in! Add a course to get started!
 	- "Welcome Back! Select a course to get started!"
-	- Make it so that the gradebook has a different display if you have no students
+	- Gradebook display when you have no students
 
 -Functionality
 	- If you hit tab multiple times in gradebook (past the end of the row), datepicker pops up
@@ -18,7 +18,8 @@ Replace setTimeOut for the following in the future:
 	- when you change courseyear, the sidenav gets messed up
 	- after deleting an assessment directly in gradebook, colors arent properly updating
 	- when you select a new course in the sidenav, the table main row and column dont float and gradebook colors dont update unless you click it a second time
-
+	- assign final and create new assessment in gradebook
+	
 Scaling
 	- https://medium.freecodecamp.org/scaling-meteor-a-year-on-26ee37588e4b
 	- Disconnect users when they’ve been away for a while

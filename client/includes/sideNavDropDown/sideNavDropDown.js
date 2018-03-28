@@ -174,7 +174,6 @@ function resetStudentReportsSideNav() {
                 currentChild.classList.remove('active');
                 currentChild.classList.remove('green');
             }
-            console.log(currentChild);
         }
     }
 }

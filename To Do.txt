@@ -15,7 +15,11 @@
 	- graphs and charts not always displaying correct data in student reports (make several assignments with App = N/A and see how it looks, maybe add one A mark)
 	- remove class statistics tab temporarily
 	- after deleting an assessment directly in gradebook, colors arent properly updating
-	- when you select a new course in the sidenav, the table main row and column dont float unless you click it a second time ( I think I fixed this, do testing)
+	- when you select a new course in the sidenav, the table main row and column dont float and gradebook colors dont update unless you click it a second time ( I think I fixed this, do testing)
+	- replace callbacks with promises in generalsettingstab
+	- when you change courseyear, the sidenav gets messed up
+	- change z-index of dropdown in student reports so it is on-top of everything else
+	- in student reports, course overview, the studentmark breakdown graph isnt showing if theres no data
 
 
 Scaling

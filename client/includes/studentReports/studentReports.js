@@ -33,66 +33,87 @@ function getStudentNameFirstLast(studentId, ownerId, courseId) {
 
 function getStudentAssessmentTypeInfo(currentAssessmentTypeId) {
     var studentId = Session.get("currentSelectedStudentID");
-    const studentGrades = CalculatedGrades.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') }).students;
-    var currentGradesArray;
-    var currentGradeObj;
-
-    for (var i = 0; i < studentGrades.length; i++) {
-        var student = studentGrades[i];
-        if (student.studentId == studentId) {
-            currentGradesArray = student.currentGrades;
+    const students = Students.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') }).students;
+    var currentStudentsGrade;
+    for (var i = 0; i < students.length; i++) {
+        if (students[i].studentId == studentId) {
+            currentStudentsGrade = students[i].grades;
             break;
         }
     }
-
-    for (var i = 0; i < currentGradesArray.length; i++) {
-        if (currentGradesArray[i].assessmentTypeId == currentAssessmentTypeId) {
-            if (currentAssessmentTypeId[0] == "f") {
-                currentGradeObj = currentGradesArray[i].assessmentTypeGrade;
-                var KGrade = -1;
-                var AGrade = -1;
-                var TGrade = -1;
-                var CGrade = -1;
-                if (currentGradeObj.KGrade && !isNaN(currentGradeObj.KGrade)) KGrade = currentGradeObj.KGrade;
-                if (currentGradeObj.AGrade && !isNaN(currentGradeObj.AGrade)) AGrade = currentGradeObj.AGrade;
-                if (currentGradeObj.TGrade && !isNaN(currentGradeObj.TGrade)) TGrade = currentGradeObj.TGrade;
-                if (currentGradeObj.CGrade && !isNaN(currentGradeObj.CGrade)) CGrade = currentGradeObj.CGrade;
-
-                var finalGrade = {
-                    assessmentName: getFinalEvalName(currentAssessmentTypeId),
-                    K: getGradeString(KGrade.toFixed(2)),
-                    A: getGradeString(AGrade.toFixed(2)),
-                    T: getGradeString(TGrade.toFixed(2)),
-                    C: getGradeString(CGrade.toFixed(2)),
-                    Grade: getGradeString(getGradeForAssessment(currentGradeObj))
-                };
-                return [finalGrade];
+    if (currentStudentsGrade == null || currentStudentsGrade.length == 0) {
+        return [{
+            assessmentName: getAssessmentTypeName(currentAssessmentTypeId)
+        }];
+    }
+    var studentAssessmentTypeGrades = [];
+    for (var i = 0; i < currentStudentsGrade.length; i++) {
+        var id = currentStudentsGrade[i].assessmentId
+        if (id.split('-')[0] == currentAssessmentTypeId) {
+            var grade = getCalculatedGrade(id, studentId); // {K, A, T, C} or null if NONE 
+            if (grade == null) {
+                var grade = {
+                    assessmentName: getAssessmentName(id),
+                    K: "N/A",
+                    A: "N/A",
+                    T: "N/A",
+                    C: "N/A",
+                    Grade: "N/A"
+                }
+                studentAssessmentTypeGrades.push(grade);
             } else {
-                currentGradeObj = currentGradesArray[i].assessments;
-                break;
+                studentAssessmentTypeGrades.push(grade);
             }
         }
     }
-    var assessmentGrades = [];
+    return studentAssessmentTypeGrades;
+}
+
+function getCalculatedGrade(assessmentId, studentId) {
+    const students = CalculatedGrades.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') }).students;
+    var currentStudentGrades = null;
+    for (var i = 0; i < students.length; i++) {
+        if (students[i].studentId == studentId) {
+            currentStudentGrades = students[i].currentGrades;
+            break;
+        }
+    }
+    if (currentStudentGrades == null) return null;
+    var currentGradeObj = null;
+    for (var i = 0; i < currentStudentGrades.length; i++) {
+        if (currentStudentGrades[i].assessmentTypeId == assessmentId.split('-')[0]) {
+            if (assessmentId[0] == "c") {
+                currentGradeObj = currentStudentGrades[i].assessments;
+            } else {
+                currentGradeObj = [currentStudentGrades[i].assessmentTypeGrade];
+            }
+            break;
+        }
+    }
+    if (currentGradeObj == null || currentGradeObj.length == 0) return null;
+    var assessmentGrades = null;
     var KGrade = -1;
     var AGrade = -1;
     var TGrade = -1;
     var CGrade = -1;
     for (var i = 0; i < currentGradeObj.length; i++) {
         var currGrade = currentGradeObj[i];
-        if (currGrade.KGrade && !isNaN(currGrade.KGrade)) KGrade = currGrade.KGrade;
-        if (currGrade.AGrade && !isNaN(currGrade.AGrade)) AGrade = currGrade.AGrade;
-        if (currGrade.TGrade && !isNaN(currGrade.TGrade)) TGrade = currGrade.TGrade;
-        if (currGrade.CGrade && !isNaN(currGrade.CGrade)) CGrade = currGrade.CGrade;
+        if (currGrade.assessmentId == assessmentId) {
+            if (currGrade.KGrade && !isNaN(currGrade.KGrade)) KGrade = currGrade.KGrade;
+            if (currGrade.AGrade && !isNaN(currGrade.AGrade)) AGrade = currGrade.AGrade;
+            if (currGrade.TGrade && !isNaN(currGrade.TGrade)) TGrade = currGrade.TGrade;
+            if (currGrade.CGrade && !isNaN(currGrade.CGrade)) CGrade = currGrade.CGrade;
 
-        assessmentGrades.push({
-            assessmentName: getCourseEvalName(currentGradeObj[i].assessmentId),
-            K: getGradeString(KGrade.toFixed(2)),
-            A: getGradeString(AGrade.toFixed(2)),
-            T: getGradeString(TGrade.toFixed(2)),
-            C: getGradeString(CGrade.toFixed(2)),
-            Grade: getGradeString(getGradeForAssessment(currentGradeObj[i]).toFixed(2))
-        });
+            assessmentGrades = {
+                assessmentName: getAssessmentName(assessmentId),
+                K: getGradeString(KGrade.toFixed(2)),
+                A: getGradeString(AGrade.toFixed(2)),
+                T: getGradeString(TGrade.toFixed(2)),
+                C: getGradeString(CGrade.toFixed(2)),
+                Grade: getGradeString(getGradeForAssessment(currentGradeObj[i]).toFixed(2))
+            };
+            break;
+        }
     }
     return assessmentGrades;
 }
@@ -889,7 +910,7 @@ function drawAssessmentBreakdownBarGraph() {
     //clear the contents of the div, in the event this function is called more than once.
     var assessmentTypeId = document.getElementById('studentReportsDropdown').value;
     var data = getStudentAssessmentTypeInfo(assessmentTypeId);
-    var assessmentName; 
+    var assessmentName;
     if (assessmentTypeId[0] == "f") {
         assessmentName = data[0].assessmentName
     }
@@ -909,7 +930,7 @@ function drawAssessmentBreakdownBarGraph() {
         data = [{
             assessmentName: assessmentName
         }];
-    } 
+    }
     else if (data.length == 0) {
         data = [{
             assessmentName: getAssessmentTypeName(assessmentTypeId)
@@ -1513,36 +1534,36 @@ Template.studentReports.events({
 });
 
 Template.studentReports.helpers({
-    getClassFinalAverage: function(){
+    getClassFinalAverage: function () {
         var obj = getFinalCategoryGradesForClass();
         let keys = Object.keys(obj);
 
-        if (keys.includes("K")){
+        if (keys.includes("K")) {
             var K = obj.K
         }
 
-        if (keys.includes("A")){
+        if (keys.includes("A")) {
             var A = obj.A
         }
 
-        if (keys.includes("T")){
+        if (keys.includes("T")) {
             var T = obj.T
         }
 
-        if (keys.includes("C")){
-            var C = obj.C 
+        if (keys.includes("C")) {
+            var C = obj.C
         }
 
-        if (!keys.includes("K")){
+        if (!keys.includes("K")) {
             var K = "N/A"
         }
-        if (!keys.includes("A")){
+        if (!keys.includes("A")) {
             var A = "N/A"
         }
-        if (!keys.includes("T")){
+        if (!keys.includes("T")) {
             var T = "N/A"
         }
-        if (!keys.includes("C")){
+        if (!keys.includes("C")) {
             var C = "N/A"
         }
 
@@ -1553,44 +1574,44 @@ Template.studentReports.helpers({
 
         var classAverage = getWeightedAverage(K, A, T, C, WeightK, WeightA, WeightT, WeightC);
 
-        if (classAverage == "N/A"){
+        if (classAverage == "N/A") {
             return "N/A"
         }
-        else{
+        else {
             classAverage = Number((classAverage / 100).toFixed(2))
             return classAverage + "%"
         }
     },
-    getClassFinalCategories: function(){
+    getClassFinalCategories: function () {
         var obj = getFinalCategoryGradesForClass();
         let keys = Object.keys(obj);
 
-        if (keys.includes("K")){
+        if (keys.includes("K")) {
             obj.K = obj.K + "%"
         }
 
-        if (keys.includes("A")){
+        if (keys.includes("A")) {
             obj.A = obj.A + "%"
         }
 
-        if (keys.includes("T")){
+        if (keys.includes("T")) {
             obj.T = obj.T + "%"
         }
 
-        if (keys.includes("C")){
-            obj.C= obj.C + "%"
+        if (keys.includes("C")) {
+            obj.C = obj.C + "%"
         }
 
-        if (!keys.includes("K")){
+        if (!keys.includes("K")) {
             obj.K = "N/A"
         }
-        if (!keys.includes("A")){
+        if (!keys.includes("A")) {
             obj.A = "N/A"
         }
-        if (!keys.includes("T")){
+        if (!keys.includes("T")) {
             obj.T = "N/A"
         }
-        if (!keys.includes("C")){
+        if (!keys.includes("C")) {
             obj.C = "N/A"
         }
         return obj
@@ -1793,10 +1814,10 @@ Template.studentReports.helpers({
 
         var grade = determineOverallCategoryGrade(ownerId, courseId, studentId, category);
 
-        if (grade == "N/A"){
+        if (grade == "N/A") {
             return grade
         }
-        else{
+        else {
             return grade + "%"
         }
     }

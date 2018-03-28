@@ -194,7 +194,7 @@ function createAssessmentModalComplete() {
                 updateTableHeadFixer();
             });
             document.getElementById("preloader").style = "display: none";
-        }, 1000)
+        }, 1000);
 
         // setTimeout(function () {
         //     updateColorsInGradebook().then(function () {
@@ -214,11 +214,13 @@ function addStudentsButtonGradebookComplete() {
 
 function assignFinalEvalComplete() {
     assignFinalEvalButtonGradeBookComplete().then(function () {
+        document.getElementById("preloader").style = "";
         setTimeout(function () {
             updateColorsInGradebook().then(function () {
                 updateTableHeadFixer();
             });
-        }, 250);
+            document.getElementById("preloader").style = "display: none";
+        }, 1000);
     })
 }
 

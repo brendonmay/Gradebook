@@ -150,13 +150,16 @@ function updateTableHeadFixer() {
     })
 }
 
-function sectionsClickEventComplete(){
-    sectionsClickEvent().then(function(){
-        setTimeout(function(){
-            updateColorsInGradebook().then(function(){
-                updateTableHeadFixer()
-            })
-        }, 500)
+function sectionsClickEventComplete() {
+    sectionsClickEvent().then(function () {
+        console.log("logged");
+        document.getElementById("preloader").style = "";
+        setTimeout(function () {
+            updateColorsInGradebook().then(function () {
+                updateTableHeadFixer();
+            });
+            document.getElementById("preloader").style = "display: none";
+        }, 1000);
     })
 }
 

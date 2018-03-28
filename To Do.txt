@@ -14,17 +14,25 @@
 	- change z-index of dropdown in student reports so it is on-top of everything else
 	- In student reports, course overview, the studentmark breakdown graph isnt showing if theres no data
 
-Replace setTimeOut for the following in the future:
-	- when you change courseyear, the sidenav gets messed up
-	- after deleting an assessment directly in gradebook, colors arent properly updating
-	- when you select a new course in the sidenav, the table main row and column dont float and gradebook colors dont update unless you click it a second time
-	- assign final and create new assessment in gradebook
-	- add in preloaders to all the above areas
+Preloader:
+	- assign final and create new assessment in gradebook (dont do it on every modal close, run a check if new assessment has been created)
+	- deleting an assessment directly in gradebook (dont do it on every modal close, run a check if new assessment has been created)
+	- when you select a new course in the sidenav, run a check to ensure you arent clicking the same tab, then run a preloader
+	- after you login/immediately after you register, add a Preloader
+	- after you change the course-year of a course, the preloader breaks for the rest of the site. Why?
+	- after you change the course-year of a course, make the side-nav blurred and give it a preloader while it makes the changes.
 
 Scaling
 	- https://medium.freecodecamp.org/scaling-meteor-a-year-on-26ee37588e4b
 	- Disconnect users when they’ve been away for a while
 	- MongoDB indexes are super important. Disconnect users when they’ve just left their tab open; It’s so simple to do and saves precious resources.
+	- Make it so course assessment deletion occurs before assessment modal close? Perhaps will provide a longer opportunity for rendering.
+
+Replace setTimeOut:
+	- when you change courseyear, the sidenav gets messed up
+	- when you select a new course in the sidenav, the table main row and column dont float and gradebook colors dont update unless you click it a second time
+	- assign final and create new assessment in gradebook
+	- after deleting an assessment directly in gradebook, colors arent properly updating
 
 -------------
 -Figure out why I can't add script with src includes/globalFunctions/clearValidation.js 

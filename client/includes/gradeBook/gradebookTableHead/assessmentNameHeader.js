@@ -275,7 +275,7 @@ function deleteCourseWorkModalComplete(assessmentTypeId, assessmentId) {
         updateColorsInGradebook().then(function () {
             updateTableHeadFixer();
         })
-    }, 500)
+    }, 600)
 
 }
 

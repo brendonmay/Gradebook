@@ -187,11 +187,20 @@ function createAssessmentButtonEvent() {
 
 function createAssessmentModalComplete() {
     createAssessmentButtonEvent().then(function () {
+        document.getElementById("preloader").style = "";
+
         setTimeout(function () {
             updateColorsInGradebook().then(function () {
-                updateTableHeadFixer()
-            })
-        }, 250);
+                updateTableHeadFixer();
+            });
+            document.getElementById("preloader").style = "display: none";
+        }, 1000)
+
+        // setTimeout(function () {
+        //     updateColorsInGradebook().then(function () {
+        //         updateTableHeadFixer();
+        //     });
+        // }, 250);
     })
 }
 
@@ -207,8 +216,8 @@ function assignFinalEvalComplete() {
     assignFinalEvalButtonGradeBookComplete().then(function () {
         setTimeout(function () {
             updateColorsInGradebook().then(function () {
-                updateTableHeadFixer()
-            })
+                updateTableHeadFixer();
+            });
         }, 250);
     })
 }

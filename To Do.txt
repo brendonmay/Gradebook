@@ -19,7 +19,8 @@ Replace setTimeOut for the following in the future:
 	- after deleting an assessment directly in gradebook, colors arent properly updating
 	- when you select a new course in the sidenav, the table main row and column dont float and gradebook colors dont update unless you click it a second time
 	- assign final and create new assessment in gradebook
-	
+	- add in preloaders to all the above areas
+
 Scaling
 	- https://medium.freecodecamp.org/scaling-meteor-a-year-on-26ee37588e4b
 	- Disconnect users when they’ve been away for a while

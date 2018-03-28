@@ -188,3 +188,7 @@
 .modif-bot-mar{
     margin-bottom: 30px!important;
 }
+
+.morris-hover{
+    z-index: 0!important
+}

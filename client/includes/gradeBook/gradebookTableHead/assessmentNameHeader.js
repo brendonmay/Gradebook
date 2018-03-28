@@ -265,20 +265,19 @@ function deleteCourseWorkModalComplete(assessmentTypeId, assessmentId) {
         }
         Meteor.call('assessments.updateAssessments', currentCourseId, courseAssessmentsTypes);
         Meteor.call('students.deleteAssessment', Meteor.userId(), currentCourseId, assessmentId);
+        document.getElementById("preloader").style = "";
+
+        setTimeout(function () {
+            updateColorsInGradebook().then(function () {
+                updateTableHeadFixer();
+            });
+            document.getElementById("preloader").style = "display: none";
+        }, 1000);
     }
     let removeAssessmentObj = Session.get("removeAssessmentObj");
     removeAssessmentObj.removeCourse = "";
     Session.set("removeAssessmentObj", removeAssessmentObj);
     $('#deleteCourseworkAssessmentModal').modal('close');
-
-    document.getElementById("preloader").style = "";
-
-    setTimeout(function () {
-        updateColorsInGradebook().then(function () {
-            updateTableHeadFixer();
-        });
-        document.getElementById("preloader").style = "display: none";
-    }, 1000);
 
 }
 

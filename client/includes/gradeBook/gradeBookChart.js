@@ -187,20 +187,19 @@ function createAssessmentButtonEvent() {
 
 function createAssessmentModalComplete() {
     createAssessmentButtonEvent().then(function () {
-        document.getElementById("preloader").style = "";
+        var updated = Session.get('gradebookUpdated');
 
-        setTimeout(function () {
-            updateColorsInGradebook().then(function () {
-                updateTableHeadFixer();
-            });
-            document.getElementById("preloader").style = "display: none";
-        }, 1000);
+        if (updated) {
+            document.getElementById("preloader").style = "";
 
-        // setTimeout(function () {
-        //     updateColorsInGradebook().then(function () {
-        //         updateTableHeadFixer();
-        //     });
-        // }, 250);
+            setTimeout(function () {
+                updateColorsInGradebook().then(function () {
+                    updateTableHeadFixer();
+                });
+                document.getElementById("preloader").style = "display: none";
+                Session.set('gradebookUpdated', true);
+            }, 1000);
+        }
     })
 }
 
@@ -214,13 +213,18 @@ function addStudentsButtonGradebookComplete() {
 
 function assignFinalEvalComplete() {
     assignFinalEvalButtonGradeBookComplete().then(function () {
-        document.getElementById("preloader").style = "";
-        setTimeout(function () {
-            updateColorsInGradebook().then(function () {
-                updateTableHeadFixer();
-            });
-            document.getElementById("preloader").style = "display: none";
-        }, 1000);
+        var updated = Session.get('gradebookUpdated');
+
+        if (updated) {
+            document.getElementById("preloader").style = "";
+            setTimeout(function () {
+                updateColorsInGradebook().then(function () {
+                    updateTableHeadFixer();
+                });
+                document.getElementById("preloader").style = "display: none";
+                Session.set('gradebookUpdated', true);
+            }, 1000);
+        }
     })
 }
 

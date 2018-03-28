@@ -4,6 +4,7 @@
 	- Gradebook display when you have no students
 	- In student reports side-nav, create a title on the top "Students"
 	- If you have no students in the student reports side-nav, offer a message to add students.
+	- Make toasts appear in the bottom right corner.
 
 -Functionality
 	- When you create a new course in the most recent year relative to the other courses you have, and its the first course of that year, upon creation, the new course will be highlighted in the sidenav, but the mainview wont update.
@@ -13,12 +14,11 @@
 	- If you hit tab multiple times in gradebook (past the end of the row), datepicker pops up
 
 Preloader:
-	- assign final and create new assessment in gradebook (dont do it on every modal close, run a check if new assessment has been created)
-	- deleting an assessment directly in gradebook (dont do it on every modal close, run a check if new assessment has been created)
 	- when you select a new course in the sidenav, run a check to ensure you arent clicking the same tab, then run a preloader
 	- after you login/immediately after you register, add a Preloader
 	- after you change the course-year of a course, the preloader breaks for the rest of the site. Why?
 	- after you change the course-year of a course, make the side-nav blurred and give it a preloader while it makes the changes.
+	- make gradebook preloader only fill in the size of the main view, not nav and footer.
 
 Scaling
 	- https://medium.freecodecamp.org/scaling-meteor-a-year-on-26ee37588e4b

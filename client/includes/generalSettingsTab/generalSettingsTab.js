@@ -23,16 +23,22 @@ function getYearsArray() {
     return yearOptions
 }
 
-function ifNewCourseYear() {
-    var courseId = Session.get('courseId');
-    for (i = 0; i < activeElements.length; i++) {
-        activeElements[0].classList.remove("active");
-        activeElements[0].classList.remove("green");
-    }
+function ifNewCourseYear(activeElements) {
+    return new Promise(function (resolve, reject) {
+        for (i = 0; i < activeElements.length; i++) {
+            activeElements[0].classList.remove("active");
+            activeElements[0].classList.remove("green");
+        }
+        resolve();
+    })
 }
 
-function clickNewCourseYear() {
-    document.getElementById(newCourseYear).click();
+function clickNewCourseYear(newCourseYear) {
+    return new Promise(function (resolve, reject) {
+        document.getElementById(newCourseYear).click();
+        console.log("clicked newCourseDropdownYear")
+        resolve();
+    })
 }
 
 function clearPageValidation() {
@@ -118,67 +124,76 @@ Template.generalSettingsTab.events({
 
     },
     'submit .generalSettingsForm': function () {
-        let saveButtonElement = document.getElementById("generalSettings-SaveButton");
-        let editButtonElement = document.getElementById("generalSettings-EditButton");
-        let cancelButtonElement = document.getElementById("generalSettings-CancelButton");
-
-        let newCourseName = document.getElementById("generalSettingsCourseName").value;
         let newCourseYear = document.getElementById("generalSettings-courseYear").value;
         let oldCourseYear = Session.get('courseYear');
 
-        let courseName = document.getElementById("generalSettingsCourseName");
-        let courseYearText = document.getElementById("yearTextId");
-        let courseYearDropdown = document.getElementById("yearDropdownId");
+        let promiseToDoGeneralSettingsWork = new Promise(function (resolve, reject) {
+            let saveButtonElement = document.getElementById("generalSettings-SaveButton");
+            let editButtonElement = document.getElementById("generalSettings-EditButton");
+            let cancelButtonElement = document.getElementById("generalSettings-CancelButton");
 
-        editButtonElement.classList.remove("hide");
-        saveButtonElement.classList.add("hide");
-        cancelButtonElement.classList.add("hide");
-        courseYearText.classList.remove("hide");
-        courseYearDropdown.classList.add("hide");
-        courseName.disabled = true;
+            let newCourseName = document.getElementById("generalSettingsCourseName").value;
 
-        const currentCourseId = Session.get('courseId');
+            let courseName = document.getElementById("generalSettingsCourseName");
+            let courseYearText = document.getElementById("yearTextId");
+            let courseYearDropdown = document.getElementById("yearDropdownId");
 
-        var courseInfo = Courses.find({ ownerId: Meteor.userId() }, { _id: 0, ownerId: 0 });
-        var courseObj = [];
+            editButtonElement.classList.remove("hide");
+            saveButtonElement.classList.add("hide");
+            cancelButtonElement.classList.add("hide");
+            courseYearText.classList.remove("hide");
+            courseYearDropdown.classList.add("hide");
+            courseName.disabled = true;
 
-        courseInfo.forEach(
-            function (doc) {
-                const docLength = doc.courses.length;
-                let courses = doc.courses;
-                for (var i = 0; i < docLength; i++) {
-                    if (courses[i].courseId == currentCourseId) {
-                        const newCourseInfo = {
-                            courseId: currentCourseId,
-                            courseName: newCourseName,
-                            courseYear: newCourseYear
-                        };
-                        courseObj.push(newCourseInfo);
-                    }
-                    else {
-                        courseObj.push(courses[i]);
+            const currentCourseId = Session.get('courseId');
+
+            var courseInfo = Courses.find({ ownerId: Meteor.userId() }, { _id: 0, ownerId: 0 });
+            var courseObj = [];
+
+            courseInfo.forEach(
+                function (doc) {
+                    const docLength = doc.courses.length;
+                    let courses = doc.courses;
+                    for (var i = 0; i < docLength; i++) {
+                        if (courses[i].courseId == currentCourseId) {
+                            const newCourseInfo = {
+                                courseId: currentCourseId,
+                                courseName: newCourseName,
+                                courseYear: newCourseYear
+                            };
+                            courseObj.push(newCourseInfo);
+                        }
+                        else {
+                            courseObj.push(courses[i]);
+                        }
                     }
                 }
-            }
-        );
-        Session.set('courseName', newCourseName);
-        Session.set('courseYear', newCourseYear);
+            );
+            Session.set('courseName', newCourseName);
+            Session.set('courseYear', newCourseYear);
 
-        Meteor.call('courses.updateCourseNameAndYear', currentCourseId, courseObj);
+            Meteor.call('courses.updateCourseNameAndYear', currentCourseId, courseObj);
 
-        clearPageValidation();
+            clearPageValidation();
+
+            resolve();
+        });
 
         //highlight correct course after changing year
-
-        var activeElements = document.getElementsByClassName("active");
-        if (oldCourseYear != newCourseYear) {
-            ifNewCourseYear(function () {
-                clickNewCourseYear(function () {
-                    document.getElementById(courseId).parentElement.classList.add("active");
-                    document.getElementById(courseId).parentElement.classList.add("green");
-                })
-            })
-        }
+        promiseToDoGeneralSettingsWork.then(function () {
+            var activeElements = document.getElementsByClassName("active");
+            if (oldCourseYear != newCourseYear) {
+                ifNewCourseYear(activeElements).then(function () {
+                    setTimeout(function () {
+                        clickNewCourseYear(newCourseYear).then(function () {
+                            var courseId = Session.get('courseId');
+                            document.getElementById(courseId).parentElement.classList.add("active");
+                            document.getElementById(courseId).parentElement.classList.add("green");
+                        })
+                    }, 500)
+                });
+            }
+        })
         return false;
     },
     'click .cancel-general-settings': function () {

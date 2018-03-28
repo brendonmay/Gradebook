@@ -152,9 +152,11 @@ function updateTableHeadFixer() {
 
 function sectionsClickEventComplete(){
     sectionsClickEvent().then(function(){
-        updateColorsInGradebook().then(function(){
-            updateTableHeadFixer()
-        })
+        setTimeout(function(){
+            updateColorsInGradebook().then(function(){
+                updateTableHeadFixer()
+            })
+        }, 500)
     })
 }
 

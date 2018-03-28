@@ -4,15 +4,15 @@
 	- Gradebook display when you have no students
 
 -Functionality
-	- If you hit tab multiple times in gradebook (past the end of the row), datepicker pops up
-	- When you create a new course in the most recent year relative to the other courses you have, and its the first course of that year, upon creation, the new course will be highlighted in the sidenav, but the mainview wont update.
+	- graphs and charts not always displaying correct data in student reports (make several assignments with App = N/A and see how it looks, maybe add one A mark)
 	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.
 	- In student reports, if you select a student with id = "s-3" and then you go to a new course in student reports, student with Id "s-3" will be highlighted
-	- if you click the logged in user in the top right, and then click it again, it shifts the page down a bit permanently
-	- studentReports dropdown not being refreshed after a new assessment type has been added/deleted. Why? 
-	- graphs and charts not always displaying correct data in student reports (make several assignments with App = N/A and see how it looks, maybe add one A mark)
-	- change z-index of dropdown in student reports so it is on-top of everything else
 	- In student reports, course overview, the studentmark breakdown graph isnt showing if theres no data
+	- When you create a new course in the most recent year relative to the other courses you have, and its the first course of that year, upon creation, the new course will be highlighted in the sidenav, but the mainview wont update.
+	- studentReports dropdown not being refreshed after a new assessment type has been added/deleted. Why? 
+	- change z-index of dropdown in student reports so it is on-top of everything else	
+	- if you click the logged in user in the top right, and then click it again, it shifts the page down a bit permanently
+	- If you hit tab multiple times in gradebook (past the end of the row), datepicker pops up
 
 Preloader:
 	- assign final and create new assessment in gradebook (dont do it on every modal close, run a check if new assessment has been created)

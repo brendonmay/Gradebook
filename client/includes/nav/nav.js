@@ -3,6 +3,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Courses } from '../../../lib/collections.js';
 import { Accounts } from 'meteor/accounts-base';
 import { Meteor } from 'meteor/meteor';
+import { Blaze } from 'meteor/blaze';
 
 import '../../main.html';
 
@@ -37,6 +38,9 @@ Template.nav.events({
 
   'click .logout': function () {
     event.preventDefault();
+    var view = Blaze.getView(document.getElementById('loginViewId'));
+    Blaze.remove(view);
+    Blaze.render(Template.nav, document.getElementById('headerForNav'));
     Meteor.logout();
   },
 });

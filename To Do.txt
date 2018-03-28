@@ -4,21 +4,14 @@
 	- Gradebook display when you have no students
 	- In student reports side-nav, create a title on the top "Students"
 	- If you have no students in the student reports side-nav, offer a message to add students.
-	- Make toasts appear in the bottom right corner.
 
 -Functionality
 	- When you create a new course in the most recent year relative to the other courses you have, and its the first course of that year, upon creation, the new course will be highlighted in the sidenav, but the mainview wont update.
 	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.
 	- studentReports dropdown not being refreshed after a new assessment type has been added/deleted. Why? 
-	- if you click the logged in user in the top right, and then click it again, it shifts the page down a bit permanently
+	- if you click the logged in user in the top right, and then click it again, it shifts the page down a bit permanently (doesnt appear to happen on deployed app)
 	- If you hit tab multiple times in gradebook (past the end of the row), datepicker pops up
-
-Preloader:
-	- when you select a new course in the sidenav, run a check to ensure you arent clicking the same tab, then run a preloader
-	- after you login/immediately after you register, add a Preloader
-	- after you change the course-year of a course, the preloader breaks for the rest of the site. Why?
-	- after you change the course-year of a course, make the side-nav blurred and give it a preloader while it makes the changes.
-	- make gradebook preloader only fill in the size of the main view, not nav and footer.
+	- When you click student reports, if a student isn't already selected, select the first student.
 
 Scaling
 	- https://medium.freecodecamp.org/scaling-meteor-a-year-on-26ee37588e4b
@@ -27,8 +20,8 @@ Scaling
 	- Make it so course assessment deletion occurs before assessment modal close? Perhaps will provide a longer opportunity for rendering.
 
 Replace setTimeOut:
-	- when you change courseyear, the sidenav gets messed up
-	- when you select a new course in the sidenav, the table main row and column dont float and gradebook colors dont update unless you click it a second time
+	- when you change courseyear
+	- when you select a new course in the sidenav, the table main row and column dont float and gradebook colors dont update
 	- assign final and create new assessment in gradebook
 	- after deleting an assessment directly in gradebook, colors arent properly updating
 

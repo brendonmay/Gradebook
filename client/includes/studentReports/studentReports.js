@@ -911,9 +911,6 @@ function drawAssessmentBreakdownBarGraph() {
     var assessmentTypeId = document.getElementById('studentReportsDropdown').value;
     var data = getStudentAssessmentTypeInfo(assessmentTypeId);
     var assessmentName;
-    if (assessmentTypeId[0] == "f") {
-        assessmentName = data[0].assessmentName
-    }
     for (var i = 0; i < data.length; i++) {
         if (data[i].K == "N/A") delete data[i].K
         if (data[i].A == "N/A") delete data[i].A
@@ -928,7 +925,7 @@ function drawAssessmentBreakdownBarGraph() {
     }
     if (data.length == 0 && assessmentTypeId[0] == "f") {
         data = [{
-            assessmentName: assessmentName
+            assessmentName: getFinalEvalName(assessmentTypeId)
         }];
     }
     else if (data.length == 0) {

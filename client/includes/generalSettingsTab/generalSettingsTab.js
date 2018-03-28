@@ -126,7 +126,7 @@ Template.generalSettingsTab.events({
     'submit .generalSettingsForm': function () {
         let newCourseYear = document.getElementById("generalSettings-courseYear").value;
         let oldCourseYear = Session.get('courseYear');
-        
+
         let promiseToDoGeneralSettingsWork = new Promise(function (resolve, reject) {
             let saveButtonElement = document.getElementById("generalSettings-SaveButton");
             let editButtonElement = document.getElementById("generalSettings-EditButton");
@@ -184,11 +184,13 @@ Template.generalSettingsTab.events({
             var activeElements = document.getElementsByClassName("active");
             if (oldCourseYear != newCourseYear) {
                 ifNewCourseYear(activeElements).then(function () {
-                    clickNewCourseYear(newCourseYear).then(function () {
-                        var courseId = Session.get('courseId');
-                        document.getElementById(courseId).parentElement.classList.add("active");
-                        document.getElementById(courseId).parentElement.classList.add("green");
-                    })
+                    setTimeout(function () {
+                        clickNewCourseYear(newCourseYear).then(function () {
+                            var courseId = Session.get('courseId');
+                            document.getElementById(courseId).parentElement.classList.add("active");
+                            document.getElementById(courseId).parentElement.classList.add("green");
+                        })
+                    }, 500)
                 });
             }
         })

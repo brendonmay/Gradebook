@@ -122,7 +122,7 @@ function setGradebookColors() {
 };
 
 function deleteCourseWorkModalActions(assessmentTypeId, assessmentId) {
-    return new Promise (function(resolve, reject){
+    return new Promise(function (resolve, reject) {
         if (Session.get('removeAssessmentObj').removeCourse == "yes") {
             var currentCourseId = Session.get('courseId');
             var courseAssessmentsTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseAssessmentTypes;
@@ -246,12 +246,37 @@ function updateTableHeadFixer() {
     })
 }
 
-function deleteCourseWorkModalComplete(assessmentTypeId, assessmentId){
-    deleteCourseWorkModalActions(assessmentTypeId, assessmentId).then(function(){
+function deleteCourseWorkModalComplete(assessmentTypeId, assessmentId) {
+    if (Session.get('removeAssessmentObj').removeCourse == "yes") {
+        var currentCourseId = Session.get('courseId');
+        var courseAssessmentsTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseAssessmentTypes;
+        for (var i = 0; i < courseAssessmentsTypes.length; i++) {
+            if (courseAssessmentsTypes[i].assessmentTypeId == assessmentTypeId) {
+                let assessmentType = courseAssessmentsTypes[i].assessments;
+                for (var j = 0; j < assessmentType.length; j++) {
+                    if (assessmentType[j].assessmentId == assessmentId) {
+                        assessmentType.splice(j, 1);
+                        break;
+                    }
+                }
+                courseAssessmentsTypes[i].assessments = assessmentType;
+                break;
+            }
+        }
+        Meteor.call('assessments.updateAssessments', currentCourseId, courseAssessmentsTypes);
+        Meteor.call('students.deleteAssessment', Meteor.userId(), currentCourseId, assessmentId);
+    }
+    let removeAssessmentObj = Session.get("removeAssessmentObj");
+    removeAssessmentObj.removeCourse = "";
+    Session.set("removeAssessmentObj", removeAssessmentObj);
+    $('#deleteCourseworkAssessmentModal').modal('close');
+
+    setTimeout(function () {
         updateColorsInGradebook().then(function () {
             updateTableHeadFixer();
         })
-    })
+    }, 500)
+
 }
 
 Template.assessmentNameHeader.helpers({

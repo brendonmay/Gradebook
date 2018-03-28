@@ -35,7 +35,7 @@ function updateTableHeadFixer() {
 }
 
 function clickEventThenFixHeader() {
-  gradebookCourseTabClickEvent().then(function(){
+  gradebookCourseTabClickEvent().then(function () {
     updateTableHeadFixer();
   })
 }
@@ -118,5 +118,16 @@ Template.courseTabsTitles.events({
   'click #gradeBookCourseTab': function () {
     //check if a change has been made first by referring to Session Variable
     clickEventThenFixHeader();
+  },
+  'click #courseSettingsTabId': function () {
+    var settingsScreen = Session.get('settingScreenText');
+    if (settingsScreen == "General Settings") {
+      document.getElementById('generalSettings-CancelButton').click();
+    } else if (settingsScreen == "Category Weightings") {
+      document.getElementById("categoryWeighting-cancelButton").click();
+    } else if (settingsScreen == "Assessments") {
+      document.getElementById('assignmentSettings-cancelButton').click();
+    } 
+
   }
 })

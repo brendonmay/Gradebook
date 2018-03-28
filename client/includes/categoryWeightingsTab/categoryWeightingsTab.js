@@ -67,7 +67,7 @@ function getCurrentCatWeight() {
 function finishedEditing() {
     let editButtonElement = document.getElementById("edit-button");
     let saveButtonElement = document.getElementById("save-button");
-    let cancelButtonElement = document.getElementById("cancel-button");
+    let cancelButtonElement = document.getElementById("categoryWeighting-cancelButton");
 
     editButtonElement.classList.remove("hide");
     saveButtonElement.classList.add("hide");
@@ -112,7 +112,7 @@ Template.categoryWeightingsTab.events({
     'click .edit-category-weightings': function () {
         let editButtonElement = document.getElementById("edit-button");
         let saveButtonElement = document.getElementById("save-button");
-        let cancelButtonElement = document.getElementById("cancel-button");
+        let cancelButtonElement = document.getElementById("categoryWeighting-cancelButton");
 
         editButtonElement.classList.add("hide");
         saveButtonElement.classList.remove("hide");

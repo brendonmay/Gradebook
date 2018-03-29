@@ -26,19 +26,23 @@
             </a>
         </td>
         {{#each getStudentGradesForAssessments studentId}}
-        <td class="studMarkTableCell tableCell input-field K-input-grade">
-            <input id="K?{{../studentId}}#{{assessmentId}}" class="gradeInput studMarkInput" type="text" value="{{K}}" name="K?{{../studentId}}#{{assessmentId}}">
-        </td>
-        <td class="studMarkTableCell tableCell input-field">
-            <input id="A?{{../studentId}}#{{assessmentId}}" class="gradeInput studMarkInput" type="text" value="{{A}}" name="A?{{../studentId}}#{{assessmentId}}">
-        </td>
-        <td class="studMarkTableCell tableCell input-field">
-            <input id="T?{{../studentId}}#{{assessmentId}}" class="gradeInput studMarkInput" type="text" value="{{T}}" name="T?{{../studentId}}#{{assessmentId}}">
-        </td>
-        <td style="border-right: 1px solid black" class="studMarkTableCell tableCell input-field">
-            <input id="C?{{../studentId}}#{{assessmentId}}" class="gradeInput studMarkInput" type="text" value="{{C}}" name="C?{{../studentId}}#{{assessmentId}}">
-        </td>
+            {{> studentRowTemplate}}
         {{/each}}
     </tr>
     {{/each}}
+</template>
+
+<template name="studentRowTemplate">
+    <td class="studMarkTableCell tableCell input-field K-input-grade">
+        <input id="K?{{../studentId}}#{{assessmentId}}" class="gradeInput studMarkInput" type="text" value="{{K}}" name="K?{{../studentId}}#{{assessmentId}}">
+    </td>
+    <td class="studMarkTableCell tableCell input-field">
+        <input id="A?{{../studentId}}#{{assessmentId}}" class="gradeInput studMarkInput" type="text" value="{{A}}" name="A?{{../studentId}}#{{assessmentId}}">
+    </td>
+    <td class="studMarkTableCell tableCell input-field">
+        <input id="T?{{../studentId}}#{{assessmentId}}" class="gradeInput studMarkInput" type="text" value="{{T}}" name="T?{{../studentId}}#{{assessmentId}}">
+    </td>
+    <td style="border-right: 1px solid black" class="studMarkTableCell tableCell input-field">
+        <input id="C?{{../studentId}}#{{assessmentId}}" class="gradeInput studMarkInput" type="text" value="{{C}}" name="C?{{../studentId}}#{{assessmentId}}">
+    </td>
 </template>

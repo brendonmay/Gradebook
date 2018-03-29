@@ -3,12 +3,15 @@
 	- "Welcome Back! Select a course to get started!"
 	- Gradebook display when you have no students
 	- If you have no students, show a different page in student reports
+	- Change add assessments modal so that it says "Out of" instead of "Mark" for each category.
 
 -Functionality
 	- When you create a new course in the most recent year relative to the other courses you have, and its the first course of that year, upon creation, the new course will be highlighted in the sidenav, but the mainview wont update.
 	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.
 	- If you hit tab multiple times in gradebook (past the end of the row), datepicker pops up (fix via display: none)
 	- in student reports, table in assessmenttype shouldnt have any rows if there's no assessments of that type
+	- if weight of an assessment is 0%, when you put grades for it in the markbook (and nothing else) the calculated grade becomes NaN%.
+	- In assessment tab, when you click an input to make a change, highlight the whole input.
 
 Scaling
 	- https://medium.freecodecamp.org/scaling-meteor-a-year-on-26ee37588e4b
@@ -18,7 +21,7 @@ Scaling
 
 Replace setTimeOut (try Blaze.remove() and Blaze.render(), and then Template.onRendered will re-trigger each time):
 	- when you change courseyear
-	- when you select a new course in the sidenav, the table main row and column dont float and gradebook colors dont update
+	- when you select a new course in the sidenav, the table main row and column dont float and gradebook colors dont update (I think I fixed this)
 	- assign final and create new assessment in gradebook
 	- after deleting an assessment directly in gradebook, colors arent properly updating
 

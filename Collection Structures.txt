@@ -163,10 +163,3 @@ Collection 5 - CalculatedGrades
 		}
 	]
 }
-
-
-
-
-
-
-

@@ -41,9 +41,14 @@ Template.nav.events({
 
   'click .logout': function () {
     event.preventDefault();
-    var view = Blaze.getView(document.getElementById('loginViewId'));
-    Blaze.remove(view);
+
+    var view1 = Blaze.getView(document.getElementById('loginViewId1'));
+    Blaze.remove(view1);
+    var view2 = Blaze.getView(document.getElementById('loginViewId2'));
+    Blaze.remove(view2);
+
     Blaze.render(Template.nav, document.getElementById('headerForNav'));
+
     Meteor.logout();
   },
 });

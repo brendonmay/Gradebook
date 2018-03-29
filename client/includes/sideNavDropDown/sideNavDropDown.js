@@ -51,7 +51,7 @@ function sectionsClickEvent() {
         const target = event.target;
         var courseId = Number(target.id);
 
-        if ( Number(courseId) != Number( Session.get('courseId') ) ){
+        if (Number(courseId) != Number(Session.get('courseId'))) {
             var courseYear = target.name;
             const courseName = target.innerText;
             const categoryWeighting = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: courseId }).categoryWeighting;
@@ -156,15 +156,20 @@ function updateTableHeadFixer() {
 
 function sectionsClickEventComplete() {
     sectionsClickEvent().then(function () {
-        if (Session.get('gradebookUpdated') == true){
+        if (Session.get('gradebookUpdated') == true) {
             document.getElementById("preloader").style = "";
-            setTimeout(function () {
-                updateColorsInGradebook().then(function () {
-                    updateTableHeadFixer();
-                });
-                document.getElementById("preloader").style = "display: none";
-                Session.set('gradebookUpdated', false);
-            }, 1000);
+            // setTimeout(function () {
+            //     updateColorsInGradebook().then(function () {
+            //         updateTableHeadFixer();
+            //     });
+            //     document.getElementById("preloader").style = "display: none";
+            //     Session.set('gradebookUpdated', false);
+            // }, 1000);
+            if (document.getElementById('gradeBookChartId')){
+                var view = Blaze.getView(document.getElementById('gradeBookChartId'));
+                Blaze.remove(view);
+                Blaze.render(Template.gradeBookChart, document.getElementById('gradeBookChartHolder'));
+            }
         }
     })
 }

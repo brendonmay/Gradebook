@@ -265,14 +265,15 @@ function deleteCourseWorkModalComplete(assessmentTypeId, assessmentId) {
         }
         Meteor.call('assessments.updateAssessments', currentCourseId, courseAssessmentsTypes);
         Meteor.call('students.deleteAssessment', Meteor.userId(), currentCourseId, assessmentId);
+
         document.getElementById("preloader").style = "";
 
-        setTimeout(function () {
-            updateColorsInGradebook().then(function () {
-                updateTableHeadFixer();
-            });
-            document.getElementById("preloader").style = "display: none";
-        }, 1000);
+        // setTimeout(function () {
+        //     updateColorsInGradebook().then(function () {
+        //         updateTableHeadFixer();
+        //     });
+        //     document.getElementById("preloader").style = "display: none";
+        // }, 1000);
     }
     let removeAssessmentObj = Session.get("removeAssessmentObj");
     removeAssessmentObj.removeCourse = "";
@@ -280,6 +281,34 @@ function deleteCourseWorkModalComplete(assessmentTypeId, assessmentId) {
     $('#deleteCourseworkAssessmentModal').modal('close');
 
 }
+
+Template.topRow.onRendered(function () {
+    var self = this;
+    this.autorun(function () {
+        Template.currentData();
+        console.log("change in topRow");
+        setTimeout(function () {
+            updateColorsInGradebook().then(function () {
+                updateTableHeadFixer().then(function () {
+                    Session.set('gradebookUpdated', false);
+                    document.getElementById("preloader").style = "display: none";
+                });
+            });
+        }, 1000);
+    });
+});
+
+// Template.topCategories.onRendered(function(){
+//     var self = this;
+//     this.autorun(function () {
+//         Template.currentData();
+//         console.log("topCategories re-rendered");
+//         setGradebookColors();
+//         $("#main_table").tableHeadFixer({ "left": 1, 'head': true });
+//         Session.set('gradebookUpdated', false);
+//         document.getElementById("preloader").style = "display: none";
+//     });
+// });
 
 Template.assessmentNameHeader.helpers({
     getAssessmentNames: function () {
@@ -371,5 +400,5 @@ Template.assessmentNameHeader.events({
 
 Template.assessmentNameHeader.onRendered(function () {
     setGradebookColors();
-    $("#main_table").tableHeadFixer({ "left": 1, 'head': true })
+    $("#main_table").tableHeadFixer({ "left": 1, 'head': true });
 });

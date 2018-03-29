@@ -128,8 +128,8 @@ Template.courseTabsTitles.events({
     } 
   },
   'click #studentReportsTabId': function () {
+    $('#studentReportsDropdown').material_select();
     if( Session.get("currentSelectedStudentID") == "0" ){
-      $('#studentReportsDropdown').material_select();
       let listedStudents = document.getElementById("slide-out-studentReport").children;
       if (listedStudents.length != 0){
         document.getElementById("slide-out-studentReport").children[0].children[0].click();

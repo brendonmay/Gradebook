@@ -10,6 +10,57 @@
 </head>
 
 <body>
+  <div class="preloader-background" id="preloader-main" style="">
+    <div class="preloader-wrapper big active">
+      <div class="spinner-layer spinner-blue">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+          <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer spinner-red">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+          <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer spinner-yellow">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+          <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer spinner-green">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+          <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div id="site-content">
     <div id="side-nav-section">
       {{> sideNav}}
@@ -33,6 +84,12 @@
 
   <!--Scripts Here-->
   <script>
+    // document.getElementById("preloader-main").style = "display: ";
+
+
+    // $(function () {
+    //   document.getElementById("preloader-main").style.display = "";
+    // });
     // Initialize collapsible
     $(document).ready(function () {
       $('.collapsible').collapsible();
@@ -48,7 +105,6 @@
         container: 'body',
         closeOnSelect: false // Close upon selecting a date,
       });
-      document.getElementById("preloader").style.display = "";
     });
   </script>
   <script>

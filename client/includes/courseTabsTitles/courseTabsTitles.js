@@ -126,6 +126,14 @@ Template.courseTabsTitles.events({
     } else if (settingsScreen == "Assessments") {
       document.getElementById('assignmentSettings-cancelButton').click();
     } 
+  },
+  'click #studentReportsTabId': function () {
+    if( Session.get("currentSelectedStudentID") == "0" ){
+      let listedStudents = document.getElementById("slide-out-studentReport").children;
+      if (listedStudents.length != 0){
+        document.getElementById("slide-out-studentReport").children[0].children[0].click();
+      }
+    }
   }
 })
 

@@ -1787,13 +1787,7 @@ Template.studentReports.helpers({
         return Template.instance().isCourseOverView.get();
     },
     getAllAssessments: function () {
-        if (Session.get('newAssessmentTypeAdded')) {
-            Tracker.nonreactive(function() {
-                Session.set('newAssessmentTypeAdded', false);
-            });
-        }
         return getAssessmentTypeArray();
-        
     },
     getAllAssignmentInformation: function () {
         return getStudentAssessmentTypeInfo(Template.instance().getDropdownValue.get());;

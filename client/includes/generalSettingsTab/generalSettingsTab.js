@@ -109,7 +109,8 @@ Template.generalSettingsTab.helpers({
 
 Template.generalSettingsTab.events({
     'click .edit-general-settings': function () {
-        $('select').material_select();
+        $('#generalSettings-courseYear').material_select();        
+        
         $('input#input_text, textarea#textarea1').characterCounter();
 
         let editButtonElement = document.getElementById("generalSettings-EditButton");
@@ -216,7 +217,7 @@ Template.generalSettingsTab.events({
                     // });
                 }, 1000);
             }
-        })
+        });
         return false;
     },
     'click .cancel-general-settings': function () {

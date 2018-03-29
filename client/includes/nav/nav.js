@@ -21,6 +21,9 @@ Template.nav.helpers({
   currentEmail: function () {
     let account = Meteor.users.findOne({ _id: Meteor.userId() });
     return account.emails[0].address;
+  },
+  turnOffMainLoader: function() {
+    document.getElementById("preloader").style = "display: none";
   }
 });
 

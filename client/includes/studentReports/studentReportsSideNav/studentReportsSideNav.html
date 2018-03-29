@@ -1,12 +1,18 @@
 <template name="studentReportsSideNav">
-    <ul id="slide-out-studentReport" class="side-nav fixed studentReports-sideNav">
-        {{#each getStudents}}
-        <li>
-            <a class="collapsible-header dropdown-marginfix studentSideNavElements" id=studentDropDown-{{studentId}}>{{fullName}}</a>
-        </li>
-        {{/each}}
-        <!-- <li class="active green">
-            <a href="#!" id="testclick">First Sidebar Link</a>
-        </li> -->
-    </ul>
+    <div class="center-label">
+        <h5>Students</h5>
+    </div>
+    {{#if hasStudents}}
+        <ul id="slide-out-studentReport" class="side-nav fixed studentReports-sideNav">
+            {{#each getStudents}}
+            <li>
+                <a class="collapsible-header dropdown-marginfix studentSideNavElements" id=studentDropDown-{{studentId}}>{{fullName}}</a>
+            </li>
+            {{/each}}
+        </ul>
+    {{else}}
+        <div class="paragraph">
+            <p>You currently have no students on your roster.</p>
+        </div>
+    {{/if}}
 </template>

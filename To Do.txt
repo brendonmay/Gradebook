@@ -2,13 +2,13 @@
 	- "Thanks for signing in! Add a course to get started!
 	- "Welcome Back! Select a course to get started!"
 	- Gradebook display when you have no students
-	- In student reports side-nav, create a title on the top "Students"
-	- If you have no students in the student reports side-nav, offer a message to add students.
+	- If you have no students, show a different page in student reports
 
 -Functionality
 	- When you create a new course in the most recent year relative to the other courses you have, and its the first course of that year, upon creation, the new course will be highlighted in the sidenav, but the mainview wont update.
 	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.
-	- If you hit tab multiple times in gradebook (past the end of the row), datepicker pops up
+	- If you hit tab multiple times in gradebook (past the end of the row), datepicker pops up (fix via display: none)
+	- in student reports, table in assessmenttype shouldnt have any rows if there's no assessments of that type
 
 Scaling
 	- https://medium.freecodecamp.org/scaling-meteor-a-year-on-26ee37588e4b

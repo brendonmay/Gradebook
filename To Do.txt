@@ -8,8 +8,6 @@
 -Functionality
 	- When you create a new course in the most recent year relative to the other courses you have, and its the first course of that year, upon creation, the new course will be highlighted in the sidenav, but the mainview wont update.
 	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.
-	- studentReports dropdown not being refreshed after a new assessment type has been added/deleted. Why? 
-	- if you click the logged in user in the top right, and then click it again, it shifts the page down a bit permanently (doesnt appear to happen on deployed app)
 	- If you hit tab multiple times in gradebook (past the end of the row), datepicker pops up
 	- When you click student reports, if a student isn't already selected, select the first student.
 

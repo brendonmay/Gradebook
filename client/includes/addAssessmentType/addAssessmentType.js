@@ -81,6 +81,7 @@ Template.addAssessmentType.events({
 
         document.getElementById("addFinalTypeForm").reset();
         clearTemplateValidation();
+        Session.set('newAssessmentTypeAdded', true);
         //Close Modal
         $('#addFinalWork').modal('close');
     },
@@ -140,6 +141,7 @@ Template.addAssessmentType.events({
         document.getElementById("addAssessmentTypeForm").reset();
         clearTemplateValidation();
         //Close Modal
+        Session.set('newAssessmentTypeAdded', true);
         $('#addCourseWork').modal('close');
     }
 });

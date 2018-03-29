@@ -23,4 +23,8 @@ Template.courseTabs.helpers({
       return false;
     }
   },
+
+  firstPageLoad: function () {
+    document.getElementById("preloader").style = "display: none;";
+  }
 });

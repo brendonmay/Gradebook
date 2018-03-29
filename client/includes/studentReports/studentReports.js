@@ -1409,7 +1409,6 @@ function getGradeString(grade) {
 }
 
 function getAssessmentTypeArray() {
-    var assessmentTypeName = Template.instance().getDropdownValue.get();
     const courseWeighting = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') });
     const courseWork = courseWeighting.courseworkAssessmentTypes;
     const finalWork = courseWeighting.finalAssessmentTypes;
@@ -1788,7 +1787,13 @@ Template.studentReports.helpers({
         return Template.instance().isCourseOverView.get();
     },
     getAllAssessments: function () {
+        if (Session.get('newAssessmentTypeAdded')) {
+            Tracker.nonreactive(function() {
+                Session.set('newAssessmentTypeAdded', false);
+            });
+        }
         return getAssessmentTypeArray();
+        
     },
     getAllAssignmentInformation: function () {
         return getStudentAssessmentTypeInfo(Template.instance().getDropdownValue.get());;

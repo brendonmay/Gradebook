@@ -319,7 +319,6 @@ Template.assessmentsTab.helpers({
         const courseworkAssessmentTypes = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseworkAssessmentTypes;
         return courseworkAssessmentTypes
     },
-
     finalAssessmentTypes: function () {
         let currentCourseId = Session.get('courseId');
         const finalAssessmentTypes = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).finalAssessmentTypes;

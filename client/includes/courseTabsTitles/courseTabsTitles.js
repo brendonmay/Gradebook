@@ -128,3 +128,12 @@ Template.courseTabsTitles.events({
     } 
   }
 })
+
+
+
+
+
+// ,
+//   'click #studentReportsTabId': function () {
+//     $('#studentReportsDropdown').material_select();
+//   }

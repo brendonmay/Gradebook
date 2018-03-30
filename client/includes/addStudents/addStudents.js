@@ -119,7 +119,7 @@ function editStudentEvent() {
     $('#addStudentsModal').modal('close');
     $('#editStudentModal').modal({
         dismissible: true,
-        ready: function(modal, trigger){
+        ready: function (modal, trigger) {
             Materialize.updateTextFields();
         },
         complete: function () {
@@ -251,7 +251,10 @@ Template.addStudents.helpers({
     },
     hasStudents: function () {
         let courseId = Session.get('courseId');
-        return Students.findOne({ ownerId: Meteor.userId(), courseId: courseId }).students.length > 1;
+        let students = Students.findOne({ ownerId: Meteor.userId(), courseId: courseId });
+        if (students && students.students) {
+            return Students.findOne({ ownerId: Meteor.userId(), courseId: courseId }).students.length > 1;
+        }
     }
 });
 

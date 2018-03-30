@@ -23,7 +23,9 @@ Template.nav.helpers({
     return account.emails[0].address;
   },
   turnOffMainLoader: function() {
-    document.getElementById("preloader").style = "display: none";
+    if (document.getElementById("preloader") != null) {
+      document.getElementById("preloader").style = "display: none";
+    }
   }
 });
 

@@ -1017,7 +1017,7 @@ function determineOverallCategoryGrade(ownerId, courseId, studentId, category) {
         }
     }
 
-    if (assessmentTypeGradesAndWeight.length == 0) {
+    if (assessmentTypeGradesAndWeight.length == 0 || totalWeight == 0) {
         return "N/A"
     }
 

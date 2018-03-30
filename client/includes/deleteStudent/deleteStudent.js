@@ -4,21 +4,24 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Accounts } from 'meteor/accounts-base';
 
 Template.deleteStudent.helpers({
-    studentName: function(){
-        return Session.get('selectedStudent').studentName;
+    studentName: function () {
+        var selectedStudent = Session.get('selectedStudent');
+        if (selectedStudent) {
+            return Session.get('selectedStudent').studentName;
+        }
     }
 
 });
 
 Template.deleteStudent.events({
-    'click #deleteStudent-yes': function(){
+    'click #deleteStudent-yes': function () {
         let courseId = Session.get('courseId');
         let studentId = Session.get('selectedStudent').studentId;
         let studentName = Session.get('selectedStudent').studentName;
-        var currentStudentArray = Students.findOne({ownerId: Meteor.userId(), courseId: courseId}).students;
+        var currentStudentArray = Students.findOne({ ownerId: Meteor.userId(), courseId: courseId }).students;
 
-        for (i = 0; i < currentStudentArray.length; i++){
-            if (currentStudentArray[i].studentId == studentId){
+        for (i = 0; i < currentStudentArray.length; i++) {
+            if (currentStudentArray[i].studentId == studentId) {
                 currentStudentArray.splice(i, 1);
                 break
             }
@@ -29,7 +32,7 @@ Template.deleteStudent.events({
         $('#addStudentsModal').modal('open');
         Materialize.toast(studentName + " has been removed from the student roster.", 3000, 'amber darken-3');
     },
-    'click #deleteStudent-no': function(){
+    'click #deleteStudent-no': function () {
         $('#addStudentsModal').modal('open');
     }
 });

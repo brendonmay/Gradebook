@@ -3,22 +3,18 @@
 	- "Welcome Back! Select a course to get started!"
 	- Gradebook display when you have no students
 	- If you have no students, show a different page in student reports
-	- Change add assessments modal so that it says "Out of" instead of "Mark" for each category.
 
 -Functionality
 	- When you create a new course in the most recent year relative to the other courses you have, and its the first course of that year, upon creation, the new course will be highlighted in the sidenav, but the mainview wont update.
 	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.
-	- If you hit tab multiple times in gradebook (past the end of the row), datepicker pops up (fix via display: none)
-	- in student reports, table in assessmenttype shouldnt have any rows if there's no assessments of that type
-	- In assessment tab, when you click an input to make a change, highlight the whole input.
-	- when you delete an assessmentTYpe, updated category grades in calculated grades
-	- if you add an assessment and you have no students, preloader hangs indefinitely
+	- when you edit assessmentType weighting, adjust categoryGrades in calculatedgrades
+	- when you delete an assessmentType, update categoryGrades in calculated grades
+	- add print student reports functionality
 
 Scaling
 	- https://medium.freecodecamp.org/scaling-meteor-a-year-on-26ee37588e4b
-	- Disconnect users when they’ve been away for a while
-	- MongoDB indexes are super important. Disconnect users when they’ve just left their tab open; It’s so simple to do and saves precious resources.
-	- Make it so course assessment deletion occurs before assessment modal close? Perhaps will provide a longer opportunity for rendering.
+	- MongoDB indexes are super important. 
+	- Disconnect users when they’ve just left their tab open; It’s so simple to do and saves precious resources.
 
 Replace setTimeOut (try Blaze.remove() and Blaze.render(), and then Template.onRendered will re-trigger each time):
 	- when you change courseyear

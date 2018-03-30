@@ -110,7 +110,7 @@ function getCalculatedGrade(assessmentId, studentId) {
                 A: getGradeString(AGrade.toFixed(2)),
                 T: getGradeString(TGrade.toFixed(2)),
                 C: getGradeString(CGrade.toFixed(2)),
-                Grade: getGradeString(getGradeForAssessment(currentGradeObj[i]).toFixed(2))
+                Grade: getGradeString(getGradeForAssessment(currentGradeObj[i]))
             };
             break;
         }
@@ -910,6 +910,7 @@ function getCourseEvalName(assessmentId) {
 }
 
 function drawAssessmentBreakdownBarGraph() {
+    if (!document.getElementById('assessmentBreakdownBarGraph')) return;    
     //clear the contents of the div, in the event this function is called more than once.
     var assessmentTypeId = document.getElementById('studentReportsDropdown').value;
     var data = getStudentAssessmentTypeInfo(assessmentTypeId);
@@ -1036,7 +1037,7 @@ function determineOverallCategoryGrade(ownerId, courseId, studentId, category) {
 
 function drawCourseOverviewBreakdownBarGraph() {
     //clear the contents of the div, in the event this function is called more than once.
-
+    if (!document.getElementById('assessmentBreakdownBarGraph')) return;
     var data = getCourseOverviewInformation(); //should be the assessmentTypeId
     for (var i = 0; i < data.length; i++) {
         if (data[i].K == "N/A") delete data[i].K
@@ -1055,7 +1056,6 @@ function drawCourseOverviewBreakdownBarGraph() {
             assessmentTypeName: "Grade Breakdown"
         }];
     }
-
     new Morris.Bar({
         // ID of the element in which to draw the chart.
         element: 'assessmentBreakdownBarGraph',
@@ -1245,6 +1245,7 @@ function getWeightedAverage(K, A, T, C, WeightK, WeightA, WeightT, WeightC) {
 }
 
 function drawAssessmentTypeBarGraph() {
+    if (!document.getElementById('assessmentTypeBarGraph')) return;    
     //clear the contents of the div, in the event this function is called more than once.
     var assessmentTypeId = document.getElementById("studentReportsDropdown").value;
     var assessmentTypeGrade = pullAssessmentTypeGradeFromCollection(assessmentTypeId);
@@ -1271,6 +1272,7 @@ function drawAssessmentTypeBarGraph() {
 }
 
 function drawFinalGradeBarGraph() {
+    if (!document.getElementById('assessmentTypeBarGraph')) return;    
     //clear the contents of the div, in the event this function is called more than once.
     var studentsArray = CalculatedGrades.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') }).students;
     var studentId = Session.get("currentSelectedStudentID");
@@ -1292,7 +1294,6 @@ function drawFinalGradeBarGraph() {
         data[category] = categoryGrades[categories[i]]
 
     }
-
     new Morris.Bar({
         // ID of the element in which to draw the chart.
         element: 'assessmentTypeBarGraph',
@@ -1312,6 +1313,7 @@ function drawFinalGradeBarGraph() {
 }
 
 function drawAssessmentTypeClassBarGraph() {
+    if (!document.getElementById('assessmentTypeClassBarGraph')) return;
     //clear the contents of the div, in the event this function is called more than once.
     var assessmentTypeId = document.getElementById("studentReportsDropdown").value;
     var data = pullAssessmentTypeGradeFromCollection(assessmentTypeId, true);
@@ -1323,6 +1325,7 @@ function drawAssessmentTypeClassBarGraph() {
         }
         data.assessmentType = assessmentName
     }
+    
     new Morris.Bar({
         // ID of the element in which to draw the chart.
         element: 'assessmentTypeClassBarGraph',
@@ -1343,14 +1346,16 @@ function drawAssessmentTypeClassBarGraph() {
 }
 
 function drawOverallClassBarGraph() {
+    if (!document.getElementById('assessmentTypeClassBarGraph')) return;
     //clear the contents of the div, in the event this function is called more than once.
     var data = getFinalCategoryGradesForClass();
+    
     new Morris.Bar({
         // ID of the element in which to draw the chart.
         element: 'assessmentTypeClassBarGraph',
         // Chart data records -- each entry in this array corresponds to a point on
         // the chart.
-        data: [data],
+        data: [{data}],
         ymin: 0,
         ymax: 100,
         numLines: 6,
@@ -1399,13 +1404,13 @@ function getGradeForAssessment(gradeObj) {
     if (isNaN(a)) a = "N/A"
     if (isNaN(t)) t = "N/A"
     if (isNaN(c)) c = "N/A"
-    var weightedAverage = Number(getWeightedAverage(k, a, t, c, WeightK, WeightA, WeightT, WeightC)) / 100;
+    var weightedAverage = Number(getWeightedAverage(k, a, t, c, WeightK, WeightA, WeightT, WeightC));
 
-    if (isNaN(weightedAverage)){
+    if (weightedAverage && isNaN(weightedAverage)){
         weightedAverage = "N/A"
     }
 
-    return weightedAverage;
+    return (weightedAverage / 100).toFixed(2);
 
 }
 
@@ -1482,13 +1487,15 @@ function getCourseOverviewInformation() {
         if (grade.TGrade == (-1).toFixed(2)) grade.TGrade = "N/A"
         if (grade.CGrade == (-1).toFixed(2)) grade.CGrade = "N/A"
 
+        var finalGrade = getGradeForAssessment(grade);
+
         courseOverViewTableInfo.push({
             assessmentTypeName: assessmentTypeIds[i].assessmentType,
             K: getGradeString(KGrade),
             A: getGradeString(AGrade),
             T: getGradeString(TGrade),
             C: getGradeString(CGrade),
-            Grade: getGradeString(getGradeForAssessment(grade).toFixed(2))
+            Grade: getGradeString(finalGrade)
         });
     }
     return courseOverViewTableInfo;

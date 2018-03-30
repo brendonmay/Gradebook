@@ -187,10 +187,12 @@ function createAssessmentButtonEvent() {
 
 function createAssessmentModalComplete() {
     createAssessmentButtonEvent().then(function () {
-        var updated = Session.get('gradebookUpdated');
+        if (document.getElementById("main_table")) {
+            var updated = Session.get('gradebookUpdated');
 
-        if (updated) {
-            document.getElementById("preloader").style = "";
+            if (updated) {
+                document.getElementById("preloader").style = "";
+            }
         }
     })
 }
@@ -205,10 +207,12 @@ function addStudentsButtonGradebookComplete() {
 
 function assignFinalEvalComplete() {
     assignFinalEvalButtonGradeBookComplete().then(function () {
-        var updated = Session.get('gradebookUpdated');
+        if (document.getElementById("main_table")) {
+            var updated = Session.get('gradebookUpdated');
 
-        if (updated) {
-            document.getElementById("preloader").style = "";
+            if (updated) {
+                document.getElementById("preloader").style = "";
+            }
         }
     })
 }

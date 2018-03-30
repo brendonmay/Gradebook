@@ -285,8 +285,6 @@ function deleteCourseWorkModalComplete(assessmentTypeId, assessmentId) {
 Template.topRow.onRendered(function () {
     var self = this;
     this.autorun(function () {
-        //Template.currentData();
-        console.log("change in topRow");
         setTimeout(function () {
             updateColorsInGradebook().then(function () {
                 updateTableHeadFixer().then(function () {

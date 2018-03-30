@@ -16,7 +16,7 @@ Template.sideNav.helpers({
   highlightCorrectCourse: function () {
     var newCourseYear = Session.get('courseYear');
     var currentCourseId = Session.get('courseId');
-    if (currentCourseId != 0) {
+    if (currentCourseId != 0 && document.getElementById("active" + currentCourseId)) {
 
       document.getElementById("active" + currentCourseId).classList.add("active");
       document.getElementById("active" + currentCourseId).classList.add("green");

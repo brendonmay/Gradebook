@@ -52,8 +52,12 @@ function closeAssignFinalModal() {
 Template.assignFinal.helpers({ //make sure that this only returns assessments that have not been assigned yet
     getAssessmentTypes: function () {
         let currentCourseId = Session.get('courseId');
-        let finalAssessmentTypes = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).finalAssessmentTypes;
-        var finalAssessmentTypeObjects = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).finalAssessmentTypes;
+        let finalAssessments = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId });
+        if (!finalAssessments || !finalAssessments.finalAssessmentTypes) return;
+        let finalAssessmentTypes = finalAssessments.finalAssessmentTypes;
+        finalAssessments = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId });
+        if (!finalAssessments || !finalAssessments.finalAssessmentTypes) return;
+        var finalAssessmentTypeObjects = finalAssessments.finalAssessmentTypes;
         var unassignedFinalEvaluationIds = [];
         var arrayOfEvaluationsToReturn = [];
 
@@ -186,6 +190,16 @@ Template.assignFinal.events({
 });
 
 Template.assignFinal.onRendered(function () {
+    $('.datepicker').pickadate({
+    selectMonths: false, // Creates a dropdown to control month
+    selectYears: 15, // Creates a dropdown of 15 years to control year,
+    today: 'Today',
+    clear: 'Clear',
+    close: 'Ok',
+    container: '#assignFinalModal',
+    closeOnSelect: false // Close upon selecting a date,
+  });
+
     $('.assignFinalModal').modal({
         dismissible: true, // Modal can be dismissed by clicking outside of the modal
         complete: function () {

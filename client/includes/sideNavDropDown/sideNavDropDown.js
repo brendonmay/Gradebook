@@ -271,7 +271,6 @@ Template.sideNavDropDown.helpers({
 
     highlightCorrectCourse: function () {
         Tracker.afterFlush(function () {
-            console.log("afterflush");
             var newCourseYear = Session.get('courseYear');
             var currentCourseId = Session.get('courseId');
             removeAllActiveAndGreen();

@@ -227,7 +227,6 @@ Template.createAssessment.onRendered(function () {
         return (input == "N/A" || Math.floor(input) == input);
     });
     $.validator.addMethod('isPositive', (input) => {
-        console.log(input);
         return (input > 0 && input != "");
     });
     $('.createAssessmentModal').modal({

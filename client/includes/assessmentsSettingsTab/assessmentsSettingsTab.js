@@ -72,7 +72,7 @@ function clearPageValidation() {
     }
 }
 
-function doneEditing() { //works
+function doneEditing() { 
     let editButtonElement = document.getElementById("edit-button");
     let saveButtonElement = document.getElementById("assessments-save-button");
     let cancelButtonElement = document.getElementById("assignmentSettings-cancelButton");
@@ -342,8 +342,7 @@ Template.assessmentsTab.onRendered(function () {
 });
 
 Template.assessmentsTab.events({
-    'click .delete-courseworkAssessmentType': function () { //works
-        //check that weight is 0
+    'click .delete-courseworkAssessmentType': function () { 
         target = event.target;
         assessmentTypeId = target.parentElement.id;
         assessmentTypeName = target.parentElement.name;
@@ -362,12 +361,8 @@ Template.assessmentsTab.events({
             Session.set('selectedAssessmentType', sessionObject);
             $('#deleteCourseworkAssessmentTypeModal').modal('open');
         }
-        else {
-            Materialize.toast('Set the weight of ' + assessmentTypeName + ' to 0% before deleting it.', 5000, 'amber darken-3');
-            //console.log("set your weight to 0 before deleting");
-        }
     },
-    'click .delete-finalAssessmentType': function () { //works
+    'click .delete-finalAssessmentType': function () {
         target = event.target;
         assessmentTypeId = target.parentElement.id;
         assessmentTypeName = target.parentElement.name;
@@ -383,12 +378,8 @@ Template.assessmentsTab.events({
             Session.set('selectedAssessmentType', sessionObject);
             $('#deleteFinalAssessmentTypeModal').modal('open');
         }
-        else {
-            //console.log("set your weight to 0 before deleting")
-            Materialize.toast('Set the weight of ' + assessmentTypeName + ' to 0% before deleting it.', 5000, 'amber darken-3');
-        }
     },
-    'click .edit-button': function () { //working
+    'click .edit-button': function () { 
         let editButtonElement = document.getElementById("edit-button");
         let saveButtonElement = document.getElementById("assessments-save-button");
         let cancelButtonElement = document.getElementById("assignmentSettings-cancelButton");
@@ -476,11 +467,11 @@ Template.assessmentsTab.events({
         courseWeight.removeAttribute('disabled');
         addValidationRulesOnInputs();
     },
-    'click .cancel-button': function () { //working
+    'click .cancel-button': function () { 
         doneEditing();
         clearPageValidation();
     },
-    'submit .assessmentsTabForm': function () { //working
+    'submit .assessmentsTabForm': function () { 
         const currentCourseId = Session.get('courseId');
         const target = event.target;
 

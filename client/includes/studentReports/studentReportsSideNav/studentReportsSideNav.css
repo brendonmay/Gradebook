@@ -1,3 +1,6 @@
 .studentSideNavElements.active {
     color: white !important;
 }
+.studentReports-sideNav{
+    font-family: GillSans, Calibri, Trebuchet, sans-serif;
+}

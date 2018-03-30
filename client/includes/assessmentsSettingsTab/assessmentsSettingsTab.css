@@ -134,9 +134,9 @@
 }
 
 #toast-container {
-    top: 18% !important;
+    top: auto !important;
     right: 2% !important;
-    bottom: auto!important;
+    bottom: 10%!important;
     left: auto!important;
   }
 

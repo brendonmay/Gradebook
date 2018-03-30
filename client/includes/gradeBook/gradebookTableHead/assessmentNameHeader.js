@@ -121,6 +121,35 @@ function setGradebookColors() {
     }
 };
 
+function deleteCourseWorkModalActions(assessmentTypeId, assessmentId) {
+    return new Promise(function (resolve, reject) {
+        if (Session.get('removeAssessmentObj').removeCourse == "yes") {
+            var currentCourseId = Session.get('courseId');
+            var courseAssessmentsTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseAssessmentTypes;
+            for (var i = 0; i < courseAssessmentsTypes.length; i++) {
+                if (courseAssessmentsTypes[i].assessmentTypeId == assessmentTypeId) {
+                    let assessmentType = courseAssessmentsTypes[i].assessments;
+                    for (var j = 0; j < assessmentType.length; j++) {
+                        if (assessmentType[j].assessmentId == assessmentId) {
+                            assessmentType.splice(j, 1);
+                            break;
+                        }
+                    }
+                    courseAssessmentsTypes[i].assessments = assessmentType;
+                    break;
+                }
+            }
+            Meteor.call('assessments.updateAssessments', currentCourseId, courseAssessmentsTypes);
+            Meteor.call('students.deleteAssessment', Meteor.userId(), currentCourseId, assessmentId);
+        }
+        let removeAssessmentObj = Session.get("removeAssessmentObj");
+        removeAssessmentObj.removeCourse = "";
+        Session.set("removeAssessmentObj", removeAssessmentObj);
+        $('#deleteCourseworkAssessmentModal').modal('close');
+        resolve();
+    })
+}
+
 function convertAssessmentIdIntoAssessmentName(arrayOfAssessmentIds, courseId) {
     var courseAssessmentTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: courseId }).courseAssessmentTypes;
     var finalAssessmentTypes = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: courseId }).finalAssessmentTypes;
@@ -203,6 +232,84 @@ function convertAssessmentIdIntoAssessmentName(arrayOfAssessmentIds, courseId) {
     return arrayOfAssessmentNames
 };
 
+function updateColorsInGradebook() {
+    return new Promise(function (resolve, reject) {
+        updateGradebookColors();
+        resolve();
+    })
+}
+
+function updateTableHeadFixer() {
+    return new Promise(function (resolve, reject) {
+        $("#main_table").tableHeadFixer({ "left": 1, 'head': true })
+        resolve();
+    })
+}
+
+function deleteCourseWorkModalComplete(assessmentTypeId, assessmentId) {
+    if (Session.get('removeAssessmentObj').removeCourse == "yes") {
+        var currentCourseId = Session.get('courseId');
+        var courseAssessmentsTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseAssessmentTypes;
+        for (var i = 0; i < courseAssessmentsTypes.length; i++) {
+            if (courseAssessmentsTypes[i].assessmentTypeId == assessmentTypeId) {
+                let assessmentType = courseAssessmentsTypes[i].assessments;
+                for (var j = 0; j < assessmentType.length; j++) {
+                    if (assessmentType[j].assessmentId == assessmentId) {
+                        assessmentType.splice(j, 1);
+                        break;
+                    }
+                }
+                courseAssessmentsTypes[i].assessments = assessmentType;
+                break;
+            }
+        }
+        Meteor.call('assessments.updateAssessments', currentCourseId, courseAssessmentsTypes);
+        Meteor.call('students.deleteAssessment', Meteor.userId(), currentCourseId, assessmentId);
+
+        document.getElementById("preloader").style = "";
+
+        setTimeout(function () {
+            updateColorsInGradebook().then(function () {
+                updateTableHeadFixer();
+            });
+            document.getElementById("preloader").style = "display: none";
+        }, 1000);
+    }
+    let removeAssessmentObj = Session.get("removeAssessmentObj");
+    removeAssessmentObj.removeCourse = "";
+    Session.set("removeAssessmentObj", removeAssessmentObj);
+    $('#deleteCourseworkAssessmentModal').modal('close');
+
+}
+
+Template.topRow.onRendered(function () {
+    var self = this;
+    this.autorun(function () {
+        setTimeout(function () {
+            updateColorsInGradebook().then(function () {
+                updateTableHeadFixer().then(function () {
+                    Session.set('gradebookUpdated', false);
+                    document.getElementById("preloader").style = "display: none";
+                });
+            });
+        }, 1000);
+    });
+});
+
+// Template.topCategories.onRendered(function(){
+//     var self = this;
+//     this.autorun(function () {
+//         // Template.currentData();
+//         console.log("topCategories re-rendered");
+//         // setGradebookColors();
+//         // $("#main_table").tableHeadFixer({ "left": 1, 'head': true });
+//         // Session.set('gradebookUpdated', false);
+//         setTimeout(function(){
+//             document.getElementById("preloader").style = "display: none";
+//         }, 1000);
+//     });
+// });
+
 Template.assessmentNameHeader.helpers({
     getAssessmentNames: function () {
         let courseId = Session.get('courseId');
@@ -269,38 +376,22 @@ Template.assessmentNameHeader.events({
             var removeAssessmentObj = {
                 assessmentTypeId: assessmentTypeId,
                 assessmentId: assessmentId,
-                removeCourse: ""
+                removeCourse: "",
+                inAssessments: false
             };
             Session.set("removeAssessmentObj", removeAssessmentObj);
 
             $('.delete-courseworkAssessment-modal').modal({
                 complete: function () {
-                    if (Session.get('removeAssessmentObj').removeCourse == "yes") {
-                        var courseAssessmentsTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseAssessmentTypes;
-                        for (var i = 0; i < courseAssessmentsTypes.length; i++) {
-                            if (courseAssessmentsTypes[i].assessmentTypeId == assessmentTypeId) {
-                                let assessmentType = courseAssessmentsTypes[i].assessments;
-                                for (var j = 0; j < assessmentType.length; j++) {
-                                    if (assessmentType[j].assessmentId == assessmentId) {
-                                        assessmentType.splice(j, 1);
-                                        break;
-                                    }
-                                }
-                                courseAssessmentsTypes[i].assessments = assessmentType;
-                                break;
-                            }
-                        }
-                        Meteor.call('assessments.updateAssessments', currentCourseId, courseAssessmentsTypes);
-                        Meteor.call('students.deleteAssessment', Meteor.userId(), currentCourseId, assessmentId);
-                    }
-                    let removeAssessmentObj = Session.get("removeAssessmentObj");
-                    removeAssessmentObj.removeCourse = "";
-                    Session.set("removeAssessmentObj", removeAssessmentObj);
-                    $('#deleteCourseworkAssessmentModal').modal('close');
-                    updateGradebookColors();
+                    //deleteCourseWorkModalComplete(assessmentTypeId, assessmentId);
                     setTimeout(function () {
-                        $("#main_table").tableHeadFixer({ "left": 1, 'head': true });
-                    }, 10);
+                        updateColorsInGradebook().then(function () {
+                            updateTableHeadFixer().then(function () {
+                                Session.set('gradebookUpdated', false);
+                                document.getElementById("preloader").style = "display: none";
+                            });
+                        });
+                    }, 1000);
                 }
             });
             $('#deleteCourseworkAssessmentModal').modal('open');
@@ -318,4 +409,5 @@ Template.assessmentNameHeader.events({
 
 Template.assessmentNameHeader.onRendered(function () {
     setGradebookColors();
+    $("#main_table").tableHeadFixer({ "left": 1, 'head': true });
 });

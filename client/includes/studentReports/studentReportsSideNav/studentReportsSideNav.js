@@ -52,6 +52,12 @@ Template.studentReportsSideNav.helpers({
         let sortedStudentArray = generateSortedStudentArray();
         return generateArrayOfStudentObjects(sortedStudentArray)
     },
+    hasStudents: function(){
+        var ownerId = Meteor.userId();
+        var courseId = Session.get('courseId');
+        var students = Students.findOne({ownerId, courseId}).students;
+        return students.length > 1
+    }
 });
 
 Template.studentReportsSideNav.events({

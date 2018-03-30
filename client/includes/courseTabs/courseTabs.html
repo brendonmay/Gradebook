@@ -1,24 +1,78 @@
 <!--Tabs Structure-->
 <template name="courseTabs">
-    {{#if currentUser}}
-        {{#if courseSelected}}
-        <div class="row">
-            {{> courseTabsTitles}} {{> courseTabsContent}}
+    <div class="preloader-background" id="preloader" style="display:none">
+        <div class="preloader-wrapper big active">
+            <div class="spinner-layer spinner-blue">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+
+            <div class="spinner-layer spinner-red">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+
+            <div class="spinner-layer spinner-yellow">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+
+            <div class="spinner-layer spinner-green">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
         </div>
-        {{else}}
+    </div>
+    {{#if currentUser}} 
+        {{#if courseSelected}}
+    <div class="row">
+        {{> courseTabsTitles}} {{> courseTabsContent}}
+    </div>
+        {{else}} 
             {{#if hasCourse}}
-                <div class="container">
-                    <h3>Welcome back! Select a course to get started!</h3>
-                </div>
+    <div class="container">
+        <!-- <h3>Welcome back! Select a course to get started!</h3> -->
+                {{> successfulLoginView}}
+    </div>
             {{else}}
-                <div class="container">
-                    <h3>Thanks for signing in! Add a course to get started!</h3>
-                </div>
+    <div class="container">
+                {{> successfulLoginNoCourseView}}
+        <!-- <h3>Thanks for signing in! Add a course to get started!</h3> -->
+    </div>
             {{/if}}
         {{/if}}
     {{else}}
-        <div class="container">
-            <h3>Welcome to Gradebook. Login to get started!</h3>
-        </div>
+    <div class="container">
+        {{> welcomeView}}
+        <!-- <h3>Welcome to Gradebook. Login to get started!</h3> -->
+    </div>
     {{/if}}
 </template>

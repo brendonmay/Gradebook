@@ -1,21 +1,67 @@
 <template name="sideNav" class="sideNav">
-    <ul id="slide-out-l" class="side-nav fixed side-nav-modify"> <!--HERE-->
+    <ul id="slide-out-l" class="side-nav fixed side-nav-modify">
+        <div id="preloaderSideNav" class="preloaderNav" style="display:none">
+            <div id="circle-location" class="preloader-wrapper active">
+                <div class="spinner-layer spinner-blue">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+
+                <div class="spinner-layer spinner-red">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+
+                <div class="spinner-layer spinner-yellow">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+
+                <div class="spinner-layer spinner-green">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="center-label">
             <h5>My Courses</h5>
         </div>
-        {{#if currentUser}} 
-            {{#if hasNoCourses}}
-                <div class="paragraph">
-                    <p>Thank you for logging in. You can now create a course.</p>
-                </div>
-            {{else}}
-                {{> sideNavDropDown}}
-                {{highlightCorrectCourse}}
-            {{/if}}
-        {{else}}
-            <div class="paragraph">
-                <p>Please login to begin creating courses.</p>
-            </div>
+        {{#if currentUser}} {{#if hasNoCourses}}
+        <div class="paragraph">
+            <p>Thank you for logging in. You can now create a course.</p>
+        </div>
+        {{else}} {{> sideNavDropDown}} {{highlightCorrectCourse}} {{/if}} {{else}}
+        <div class="paragraph">
+            <p>Please login to begin creating courses.</p>
+        </div>
         {{/if}}
     </ul>
 </template>

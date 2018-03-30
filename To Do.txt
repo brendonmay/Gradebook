@@ -1,17 +1,29 @@
 -Styling
 	- "Thanks for signing in! Add a course to get started!
 	- "Welcome Back! Select a course to get started!"
-	- Make it so that the gradebook has a different display if you have no students
+	- Gradebook display when you have no students
+	- If you have no students, show a different page in student reports
 
 -Functionality
-	- If you hit tab multiple times in gradebook (past the end of the row), datepicker pops up
 	- When you create a new course in the most recent year relative to the other courses you have, and its the first course of that year, upon creation, the new course will be highlighted in the sidenav, but the mainview wont update.
 	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.
-	- In student reports, if you select a student with id = "s-3" and then you go to a new course in student reports, student with Id "s-3" will be highlighted
-	- Fix hover color of students in gradebook
-	- course overview chart on bottom not working
-	- if you click the logged in user in the top right, and then click it again, it shifts the page down a bit permanently
-	- studentReports dropdown not being refreshed after a new assessment type has been added/deleted. Why? 
+	- when you edit assessmentType weighting, adjust categoryGrades in calculatedgrades
+	- when you delete an assessmentType, update categoryGrades in calculated grades
+	- add print student reports functionality
+
+Scaling
+	- https://medium.freecodecamp.org/scaling-meteor-a-year-on-26ee37588e4b
+	- MongoDB indexes are super important. 
+	- Disconnect users when they’ve just left their tab open; It’s so simple to do and saves precious resources.
+
+Replace setTimeOut (try Blaze.remove() and Blaze.render(), and then Template.onRendered will re-trigger each time):
+	- when you change courseyear
+
+Preloader:
+	- Initial page load
+	- logging in
+	- loggging out
+
 -------------
 -Figure out why I can't add script with src includes/globalFunctions/clearValidation.js 
 

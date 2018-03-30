@@ -221,6 +221,32 @@ function addFinalValidationRules(assessmentsObj) {
 
 }
 
+function renameAssessmentEvent() {
+    var id = event.target.id;
+    var assessmentId = id.slice(0, id.indexOf("?LmUtGwN?"));
+    var assessmentName = id.slice(id.indexOf("?LmUtGwN?") + 9, id.length);
+    var element = document.getElementsByName("collHead" + assessmentId);
+
+    element[0].click();
+    Session.set('selectedAssessment', { assessmentId: "assessmentId", assessmentName: "assessmentName" });
+    //store assessmentId and assessmentName in Session Variable
+    Session.set('selectedAssessment', { assessmentId: assessmentId, assessmentName: assessmentName });
+
+    //open modal
+    $('#renameAssessmentModal').modal({
+        dismissible: true,
+        ready: function (modal, trigger) {
+            Materialize.updateTextFields();
+        },
+        complete: function () {
+            clearValidation(document.getElementById("renameAssessmentModalForm"));
+            document.getElementById("renameAssessmentModalForm").reset();
+        }
+    }
+    );
+    $('#renameAssessmentModal').modal('open');
+}
+
 function addCourseValidationRules(assessmentsObj) {
     for (var i = 0; i < assessmentsObj.length; i++) {
         for (var j = 0; j < assessmentsObj[i].assessments.length; j++) {
@@ -450,7 +476,7 @@ Template.assessments.events({
                 }
             }
         });
-        $('#createAssessmentModal').modal('open');     
+        $('#createAssessmentModal').modal('open');
         $('select').material_select();
     },
     'click .deleteFinalEval': function () {
@@ -472,7 +498,8 @@ Template.assessments.events({
         var removeAssessmentObj = {
             assessmentTypeId: assessmentTypeId,
             assessmentId: assessmentId,
-            removeCourse: ""
+            removeCourse: "",
+            inAssessments: true
         };
         Session.set("removeAssessmentObj", removeAssessmentObj);
         document.getElementById(assessmentId).click();
@@ -496,8 +523,9 @@ Template.assessments.events({
                     }
                     Meteor.call('assessments.updateAssessments', currentCourseId, courseAssessmentsTypes);
                     Meteor.call('students.deleteAssessment', Meteor.userId(), currentCourseId, assessmentId);
+                    Meteor.call('calculatedgrades.deleteAssessment', Meteor.userId(), Session.get('courseId'), removeAssessmentObj.assessmentId);
                 }
-                let removeAssessmentObj = Session.get("removeAssessmentObj");
+                var removeAssessmentObj = Session.get("removeAssessmentObj");
                 removeAssessmentObj.removeCourse = "";
                 Session.set("removeAssessmentObj", removeAssessmentObj);
                 $('#deleteCourseworkAssessmentModal').modal('close');
@@ -512,7 +540,7 @@ Template.assessments.events({
             today: 'Today',
             clear: 'Clear',
             close: 'Ok',
-            container: 'body',
+            container: '#datepicker-container',
             closeOnSelect: false // Close upon selecting a date,
         });
         $('.collapsible').collapsible();
@@ -626,6 +654,68 @@ Template.assessments.events({
         updateFinalAssessments(finalAssessmentTypes, assessmentTypeId, markK, markA, markT, markC, newDate)
         Session.set("gradebookUpdated", true);
     },
+    'focus .course-edit-fields-blur': function () {
+        let target = event.target;
+        let formId = target.id;
+        let assessmentTypeID = formId.substring("courseX".length, formId.length);
+        let currentField = formId.substring("course".length, "courseX".length);
+
+        switch (currentField) {
+            case "K":
+                var nextInputField = document.getElementById("courseK" + assessmentTypeID);
+                nextInputField.focus();
+                nextInputField.setSelectionRange(0, nextInputField.value.length);
+                break;
+            case "A":
+                var nextInputField = document.getElementById("courseA" + assessmentTypeID);
+                nextInputField.focus();
+                nextInputField.setSelectionRange(0, nextInputField.value.length);
+                break;
+            case "T":
+                var nextInputField = document.getElementById("courseT" + assessmentTypeID);
+                nextInputField.focus();
+                nextInputField.setSelectionRange(0, nextInputField.value.length);
+                break;
+            case "C":
+                var nextInputField = document.getElementById("courseC" + assessmentTypeID);
+                nextInputField.focus();
+                nextInputField.setSelectionRange(0, nextInputField.value.length);
+                break;
+            default:
+                break;
+        }
+    },
+    'focus .final-blur-class': function () {
+        let target = event.target;
+        let formId = target.id;
+        let assessmentTypeID = formId.substring("finalX".length, formId.length);
+        let currentField = formId.substring("final".length, "finalX".length);
+
+        switch (currentField) {
+            case "K":
+                var nextInputField = document.getElementById("finalK" + assessmentTypeID);
+                nextInputField.focus();
+                nextInputField.setSelectionRange(0, nextInputField.value.length);
+                break;
+            case "A":
+                var nextInputField = document.getElementById("finalA" + assessmentTypeID);
+                nextInputField.focus();
+                nextInputField.setSelectionRange(0, nextInputField.value.length);
+                break;
+            case "T":
+                var nextInputField = document.getElementById("finalT" + assessmentTypeID);
+                nextInputField.focus();
+                nextInputField.setSelectionRange(0, nextInputField.value.length);
+                break;
+            case "C":
+                var nextInputField = document.getElementById("finalC" + assessmentTypeID);
+                nextInputField.focus();
+                nextInputField.setSelectionRange(0, nextInputField.value.length);
+                break;
+            default:
+                break;
+        }
+    },
     'blur .course-edit-fields-blur': function () {
 
         let target = event.target;
@@ -646,29 +736,8 @@ Template.assessments.events({
         form.click();
     },
     'click .rename-assessment': function () {
-        var id = event.target.id;
-        var assessmentId = id.slice(0, id.indexOf("?LmUtGwN?"));
-        var assessmentName = id.slice(id.indexOf("?LmUtGwN?") + 9, id.length);
-        var element = document.getElementsByName("collHead" + assessmentId);
+        renameAssessmentEvent();
 
-        element[0].click();
-        Session.set('selectedAssessment', { assessmentId: "assessmentId", assessmentName: "assessmentName" });
-        //store assessmentId and assessmentName in Session Variable
-        Session.set('selectedAssessment', { assessmentId: assessmentId, assessmentName: assessmentName });
-
-        //open modal
-        $('#renameAssessmentModal').modal({
-            dismissible: true,
-            complete: function () {
-                clearValidation(document.getElementById("renameAssessmentModalForm"));
-                document.getElementById("renameAssessmentModalForm").reset();
-            }
-        }
-        );
-        $('#renameAssessmentModal').modal('open');
-        setTimeout(function(){
-            Materialize.updateTextFields();
-        }, 10)
     },
     'keyup .finalAssessmentInput': function () {
         if (event.keyCode === 13) { //if enter is hit

@@ -16,6 +16,28 @@ function arrayOfStudentIds() {
   return arrayofStudentIds
 };
 
+function updateColorsInGradebook() {
+  return new Promise(function (resolve, reject) {
+    updateGradebookColors();
+    resolve();
+  })
+}
+
+function gradebookCourseTabClickEvent() {
+  var updateCheck = Session.get("gradebookUpdated");
+
+  if (updateCheck) {
+    document.getElementById("preloader").style = "";
+    setTimeout(function () {
+      updateColorsInGradebook().then(function () {
+        $("#main_table").tableHeadFixer({ "left": 1, 'head': true });
+      });
+      document.getElementById("preloader").style = "display: none";
+      Session.set("gradebookUpdated", false);
+    }, 1000);
+  }
+}
+
 function findOldStudentGradeValue(studentId, assessmentId, category, ownerId, courseId) {
   var students = Students.findOne({ ownerId: ownerId, courseId: courseId }).students;
   var oldValue = 0;
@@ -93,14 +115,25 @@ Template.courseTabsTitles.onRendered(function () {
 Template.courseTabsTitles.events({
   'click #gradeBookCourseTab': function () {
     //check if a change has been made first by referring to Session Variable
-    var updateCheck = Session.get("gradebookUpdated");
-    if (updateCheck) {
-      updateGradebookColors();
-      Session.set("gradebookUpdated", false);
+    gradebookCourseTabClickEvent();    
+  },
+  'click #courseSettingsTabId': function () {
+    var settingsScreen = Session.get('settingScreenText');
+    if (settingsScreen == "General Settings") {
+      document.getElementById('generalSettings-CancelButton').click();
+    } else if (settingsScreen == "Category Weightings") {
+      document.getElementById("categoryWeighting-cancelButton").click();
+    } else if (settingsScreen == "Assessments") {
+      document.getElementById('assignmentSettings-cancelButton').click();
+    } 
+  },
+  'click #studentReportsTabId': function () {
+    $('#studentReportsDropdown').material_select();
+    if( Session.get("currentSelectedStudentID") == "0" ){
+      let listedStudents = document.getElementById("slide-out-studentReport").children;
+      if (listedStudents.length != 0){
+        document.getElementById("slide-out-studentReport").children[0].children[0].click();
+      }
     }
-    setTimeout(function() {
-      $("#main_table").tableHeadFixer({ "left": 1, 'head': true });
-    }, 10);
-
   }
-})
+});

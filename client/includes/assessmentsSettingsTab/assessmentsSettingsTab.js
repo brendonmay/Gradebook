@@ -75,7 +75,7 @@ function clearPageValidation() {
 function doneEditing() { //works
     let editButtonElement = document.getElementById("edit-button");
     let saveButtonElement = document.getElementById("assessments-save-button");
-    let cancelButtonElement = document.getElementById("cancel-button");
+    let cancelButtonElement = document.getElementById("assignmentSettings-cancelButton");
 
     let addFinalAssessmentType = document.getElementById('finalAddAssessment');
     let addCourseAssessmentType = document.getElementById('courseAddAssessment');
@@ -319,7 +319,6 @@ Template.assessmentsTab.helpers({
         const courseworkAssessmentTypes = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseworkAssessmentTypes;
         return courseworkAssessmentTypes
     },
-
     finalAssessmentTypes: function () {
         let currentCourseId = Session.get('courseId');
         const finalAssessmentTypes = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).finalAssessmentTypes;
@@ -392,7 +391,7 @@ Template.assessmentsTab.events({
     'click .edit-button': function () { //working
         let editButtonElement = document.getElementById("edit-button");
         let saveButtonElement = document.getElementById("assessments-save-button");
-        let cancelButtonElement = document.getElementById("cancel-button");
+        let cancelButtonElement = document.getElementById("assignmentSettings-cancelButton");
 
         let addFinalAssessmentType = document.getElementById('finalAddAssessment');
         let addCourseAssessmentType = document.getElementById('courseAddAssessment');
@@ -520,6 +519,8 @@ Template.assessmentsTab.events({
         Meteor.call('courseInformation.updateFinalWeight', currentCourseId, newFinalWeight);
 
         //doneEditing
+        Session.set('courseworkWeight', newCourseWorkWeight);
+        Session.set('finalWeight', newFinalWeight);
         doneEditing();
         clearPageValidation();
     },

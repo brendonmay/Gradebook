@@ -15,7 +15,7 @@
       {{> sideNav}}
     </div>
     <div id="main-content-area">
-      <header>
+      <header id="headerForNav">
         {{> nav}}
       </header>
       <main>
@@ -30,7 +30,7 @@
   {{> addCourse}} {{> deleteCourse}} {{> addAssessmentType}} {{> deleteCourseworkAssessmentType}} {{>deleteFinalAssessmentType}}
   {{> login}} {{> register}} {{> createAssessment}} {{> deleteCourseworkAssessment}} {{> assignFinal}} {{> addStudents}}
   {{> deleteStudent}} {{> editStudent}} {{> renameAssessment}}
-  
+
   <!--Scripts Here-->
   <script>
     // Initialize collapsible
@@ -39,15 +39,6 @@
       $('.modal').modal();
       $(".dropdown-button").dropdown();
       $('select').material_select();
-      $('.datepicker').pickadate({
-        selectMonths: false, // Creates a dropdown to control month
-        selectYears: 15, // Creates a dropdown of 15 years to control year,
-        today: 'Today',
-        clear: 'Clear',
-        close: 'Ok',
-        container: 'body',
-        closeOnSelect: false // Close upon selecting a date,
-      });
     });
   </script>
   <script>

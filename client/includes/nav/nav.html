@@ -1,5 +1,5 @@
 <!--Navbar Structure-->
-<template name="nav">
+<template name="nav" id="mainNavId">
     <nav class="main-nav fixed">
         <div class="nav-wrapper">
             <div class="nav-container-content">
@@ -11,11 +11,17 @@
                 <a href="#" class="left-align left">GradeBook</a>
                 <ul id="nav-mobile" class="right">
                     <!-- Modal Trigger -->
+                    {{turnOffMainLoader}}
                     {{#if currentUser}}
-                        <li><a class="waves-effect waves-grey btn modal-trigger blue-grey darken-1" href="#addModal">Add Course</a></li>
-                        <li><a class="dropdown-button" href="#emailDropdownList" data-beloworigin="true" data-activates="emailDropdownList">{{currentEmail}}<i class="material-icons right">arrow_drop_down</i></a></li>
-                        {{> emailDropdown}}
-                    {{else}}
+                    <li>
+                        <a class="waves-effect waves-grey btn modal-trigger blue-grey darken-1" href="#addModal">Add Course</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-button" data-beloworigin="true" data-activates="emailDropdownList">{{currentEmail}}
+                            <i class="material-icons right">arrow_drop_down</i>
+                        </a>
+                    </li>
+                    {{> emailDropdown}} {{else}}
                     <li class="nav-item">
                         <a class="waves-effect waves-green btn modal-trigger green darken-1" href="#loginModal">Login</a>
                     </li>

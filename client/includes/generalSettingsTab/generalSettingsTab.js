@@ -23,6 +23,29 @@ function getYearsArray() {
     return yearOptions
 }
 
+function ifNewCourseYear(activeElements) {
+    return new Promise(function (resolve, reject) {
+        for (i = 0; i < activeElements.length; i++) {
+            var activeElement = activeElements[i];
+            if (activeElement.classList.contains('course-dropdown')) {
+                console.log("found the element thats highlighted: " + activeElements[i]);
+                activeElements[i].classList.remove("active");
+                activeElements[i].classList.remove("green");
+                i = activeElements.length;
+            }
+        }
+        resolve();
+    })
+}
+
+function clickNewCourseYear(newCourseYear) {
+    return new Promise(function (resolve, reject) {
+        document.getElementById(newCourseYear).click();
+        console.log("clicked newCourseDropdownYear")
+        resolve();
+    })
+}
+
 function clearPageValidation() {
     var pageForm = document.getElementById('generalSettingsFormID');
     clearValidation(pageForm);
@@ -86,7 +109,8 @@ Template.generalSettingsTab.helpers({
 
 Template.generalSettingsTab.events({
     'click .edit-general-settings': function () {
-        $('select').material_select();
+        $('#generalSettings-courseYear').material_select();        
+        
         $('input#input_text, textarea#textarea1').characterCounter();
 
         let editButtonElement = document.getElementById("generalSettings-EditButton");
@@ -106,73 +130,94 @@ Template.generalSettingsTab.events({
 
     },
     'submit .generalSettingsForm': function () {
-        let saveButtonElement = document.getElementById("generalSettings-SaveButton");
-        let editButtonElement = document.getElementById("generalSettings-EditButton");
-        let cancelButtonElement = document.getElementById("generalSettings-CancelButton");
-
-        let newCourseName = document.getElementById("generalSettingsCourseName").value;
         let newCourseYear = document.getElementById("generalSettings-courseYear").value;
         let oldCourseYear = Session.get('courseYear');
 
-        let courseName = document.getElementById("generalSettingsCourseName");
-        let courseYearText = document.getElementById("yearTextId");
-        let courseYearDropdown = document.getElementById("yearDropdownId");
+        let promiseToDoGeneralSettingsWork = new Promise(function (resolve, reject) {
+            let saveButtonElement = document.getElementById("generalSettings-SaveButton");
+            let editButtonElement = document.getElementById("generalSettings-EditButton");
+            let cancelButtonElement = document.getElementById("generalSettings-CancelButton");
 
-        editButtonElement.classList.remove("hide");
-        saveButtonElement.classList.add("hide");
-        cancelButtonElement.classList.add("hide");
-        courseYearText.classList.remove("hide");
-        courseYearDropdown.classList.add("hide");
-        courseName.disabled = true;
+            let newCourseName = document.getElementById("generalSettingsCourseName").value;
 
-        const currentCourseId = Session.get('courseId');
+            let courseName = document.getElementById("generalSettingsCourseName");
+            let courseYearText = document.getElementById("yearTextId");
+            let courseYearDropdown = document.getElementById("yearDropdownId");
 
-        var courseInfo = Courses.find({ ownerId: Meteor.userId() }, { _id: 0, ownerId: 0 });
-        var courseObj = [];
+            editButtonElement.classList.remove("hide");
+            saveButtonElement.classList.add("hide");
+            cancelButtonElement.classList.add("hide");
+            courseYearText.classList.remove("hide");
+            courseYearDropdown.classList.add("hide");
+            courseName.disabled = true;
 
-        courseInfo.forEach(
-            function (doc) {
-                const docLength = doc.courses.length;
-                let courses = doc.courses;
-                for (var i = 0; i < docLength; i++) {
-                    if (courses[i].courseId == currentCourseId) {
-                        const newCourseInfo = {
-                            courseId: currentCourseId,
-                            courseName: newCourseName,
-                            courseYear: newCourseYear
-                        };
-                        courseObj.push(newCourseInfo);
-                    }
-                    else {
-                        courseObj.push(courses[i]);
+            const currentCourseId = Session.get('courseId');
+
+            var courseInfo = Courses.find({ ownerId: Meteor.userId() }, { _id: 0, ownerId: 0 });
+            var courseObj = [];
+
+            courseInfo.forEach(
+                function (doc) {
+                    const docLength = doc.courses.length;
+                    let courses = doc.courses;
+                    for (var i = 0; i < docLength; i++) {
+                        if (courses[i].courseId == currentCourseId) {
+                            const newCourseInfo = {
+                                courseId: currentCourseId,
+                                courseName: newCourseName,
+                                courseYear: newCourseYear
+                            };
+                            courseObj.push(newCourseInfo);
+                        }
+                        else {
+                            courseObj.push(courses[i]);
+                        }
                     }
                 }
-            }
-        );
-        Session.set('courseName', newCourseName);
-        Session.set('courseYear', newCourseYear);
+            );
+            Session.set('courseName', newCourseName);
+            Session.set('courseYear', newCourseYear);
 
-        Meteor.call('courses.updateCourseNameAndYear', currentCourseId, courseObj);
+            Meteor.call('courses.updateCourseNameAndYear', currentCourseId, courseObj);
 
-        clearPageValidation();
+            clearPageValidation();
+
+            resolve();
+        });
 
         //highlight correct course after changing year
-
-        var activeElements = document.getElementsByClassName("active");
-        if (oldCourseYear != newCourseYear) {
-            var courseId = Session.get('courseId');
+        promiseToDoGeneralSettingsWork.then(function () {
+            var activeElements = document.getElementsByClassName("active");
+            var activeElement
             for (i = 0; i < activeElements.length; i++) {
-                activeElements[0].classList.remove("active");
-                activeElements[0].classList.remove("green");
+                var activeElement = activeElements[i];
+                if (activeElement.classList.contains('course-dropdown')) {
+                    //console.log("found the element thats highlighted: " + activeElements[i].id);
+                    // activeElements[i].classList.remove("active");
+                    // activeElements[i].classList.remove("green");
+                    i = activeElements.length;
+                }
             }
-            setTimeout(function () {
-                document.getElementById(newCourseYear).click();
+
+            if (oldCourseYear != newCourseYear) {
+                document.getElementById("preloaderSideNav").style = "";
+                activeElement.classList.remove("active");
+                activeElement.classList.remove("green");
+
                 setTimeout(function () {
-                    document.getElementById(courseId).parentElement.classList.add("active");
-                    document.getElementById(courseId).parentElement.classList.add("green");
-                }, 10);
-            }, 5);
-        }
+                    // ifNewCourseYear(activeElements).then(function () {
+                    clickNewCourseYear(newCourseYear).then(function () {
+                        setTimeout(function () {
+                            var courseId = Session.get('courseId');
+                            document.getElementById(courseId).parentElement.classList.add("active");
+                            document.getElementById(courseId).parentElement.classList.add("green");
+                            document.getElementById("preloaderSideNav").style = "display:none";
+                        }, 1000);
+                    });
+                    // });
+                }, 1000);
+            }
+        });
         return false;
     },
     'click .cancel-general-settings': function () {

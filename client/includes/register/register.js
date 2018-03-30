@@ -57,6 +57,7 @@ Template.register.events({
             password: password
         });
 
+        document.getElementById("preloader").style = "";
         var registerForm = document.getElementById("registerForm");
         registerForm.reset();
         clearValidation(registerForm);

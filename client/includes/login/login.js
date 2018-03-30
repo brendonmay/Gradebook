@@ -39,14 +39,16 @@ Template.login.events({
                 }
             } else {
                 //no error on login, so user Logs in fine
-                document.getElementById("preloader").style = "";
                 removeLoginError();
 
                 var loginForm = document.getElementById('loginForm');
                 loginForm.reset();
                 clearValidation(loginForm);
-
+                
                 $('#loginModal').modal('close');
+                
+                document.getElementById("preloader").style = "";
+                console.log("preloader launched");
             }
         });
     },
@@ -56,7 +58,7 @@ Template.login.events({
         var registerForm = document.getElementById("registerForm");
         loginForm.reset();
         registerForm.reset();
-        clearValidation(loginForm);        
+        clearValidation(loginForm);
         clearValidation(registerForm);
 
         $('#registerModal').modal('open');

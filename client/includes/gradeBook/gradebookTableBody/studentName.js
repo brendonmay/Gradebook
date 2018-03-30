@@ -147,7 +147,7 @@ function insertGrade() {
                         if (error) {
                             console.log("error 2")
                         }
-                        Meteor.call('calculatedgrades.updateAssessmentTypeGrade', Meteor.userId(), courseId, studentId, percGrade, category, assessmentTypeId, newGrade, function(error, result){
+                        Meteor.call('calculatedgrades.updateAssessmentTypeGrade', Meteor.userId(), courseId, studentId, percGrade, category, assessmentTypeId, newGrade, function (error, result) {
                             if (error) {
                                 console.log("error 7")
                             }
@@ -163,7 +163,7 @@ function insertGrade() {
                         if (error) {
                             console.log("error 3")
                         }
-                        Meteor.call('calculatedgrades.updateAssessmentTypeGrade', Meteor.userId(), courseId, studentId, percGrade, category, assessmentTypeId, newGrade, function (error, result){
+                        Meteor.call('calculatedgrades.updateAssessmentTypeGrade', Meteor.userId(), courseId, studentId, percGrade, category, assessmentTypeId, newGrade, function (error, result) {
                             if (error) {
                                 console.log("error 6")
                             }
@@ -177,7 +177,7 @@ function insertGrade() {
                 if (grade != "N/A") {
                     var percGrade = (grade / outOf) * 100;
                     percGrade = Number(percGrade.toFixed(2));
-                    Meteor.call('calculatedgrades.updateFinalAssessmentGrade', Meteor.userId(), courseId, assessmentId, category, percGrade, studentId, function(error, result){
+                    Meteor.call('calculatedgrades.updateFinalAssessmentGrade', Meteor.userId(), courseId, assessmentId, category, percGrade, studentId, function (error, result) {
                         if (error) {
                             console.log("error 5")
                         }
@@ -186,7 +186,7 @@ function insertGrade() {
                     });
                 }
                 else {
-                    Meteor.call('calculatedgrades.updateFinalAssessmentGrade', Meteor.userId(), courseId, assessmentId, category, grade, studentId, function(error, result){
+                    Meteor.call('calculatedgrades.updateFinalAssessmentGrade', Meteor.userId(), courseId, assessmentId, category, grade, studentId, function (error, result) {
                         if (error) {
                             console.log("error 4")
                         }
@@ -739,6 +739,22 @@ function checkValidationOfInput(inputID) {
     }
 }
 
+// Template.studentRowTemplate.onRendered(function () {
+//     var self = this;
+//     this.autorun(function () {
+//         // Template.currentData();
+//         console.log("change in studentRow");
+//         // setTimeout(function () {
+//         //     updateColorsInGradebook().then(function () {
+//         //         updateTableHeadFixer().then(function () {
+//         //             Session.set('gradebookUpdated', false);
+//         //             document.getElementById("preloader").style = "display: none";
+//         //         });
+//         //     });
+//         // }, 1000);
+//     });
+// });
+
 Template.studentName.helpers({
     getStudents: function () {
         let sortedStudentArray = generateSortedStudentArray();
@@ -839,7 +855,7 @@ Template.studentName.events({
                                     //check it isnt the last student
                                     if (i == (sortedStudentObjects.length - 1)) {
                                         //console.log("last student");
-                                        
+
                                         insertGrade();
                                         return false
                                     }

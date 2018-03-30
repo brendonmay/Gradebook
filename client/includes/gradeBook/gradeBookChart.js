@@ -191,14 +191,6 @@ function createAssessmentModalComplete() {
 
         if (updated) {
             document.getElementById("preloader").style = "";
-
-            setTimeout(function () {
-                updateColorsInGradebook().then(function () {
-                    updateTableHeadFixer();
-                });
-                document.getElementById("preloader").style = "display: none";
-                Session.set('gradebookUpdated', true);
-            }, 1000);
         }
     })
 }
@@ -217,13 +209,6 @@ function assignFinalEvalComplete() {
 
         if (updated) {
             document.getElementById("preloader").style = "";
-            setTimeout(function () {
-                updateColorsInGradebook().then(function () {
-                    updateTableHeadFixer();
-                });
-                document.getElementById("preloader").style = "display: none";
-                Session.set('gradebookUpdated', true);
-            }, 1000);
         }
     })
 }
@@ -266,7 +251,12 @@ Template.gradeBookChart.helpers({
 });
 
 Template.gradeBookChart.onRendered(function () {
-    // $("#main_table").tableHeadFixer({ "left": 1, 'head': true });
+    updateColorsInGradebook().then(function () {
+        updateTableHeadFixer().then(function () {
+            Session.set('gradebookUpdated', false);
+            document.getElementById("preloader").style = "display: none";
+        });
+    });
 });
 
 Template.gradeBookChart.events({

@@ -52,8 +52,12 @@ function closeAssignFinalModal() {
 Template.assignFinal.helpers({ //make sure that this only returns assessments that have not been assigned yet
     getAssessmentTypes: function () {
         let currentCourseId = Session.get('courseId');
-        let finalAssessmentTypes = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).finalAssessmentTypes;
-        var finalAssessmentTypeObjects = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).finalAssessmentTypes;
+        let finalAssessments = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId });
+        if (!finalAssessments || !finalAssessments.finalAssessmentTypes) return;
+        let finalAssessmentTypes = finalAssessments.finalAssessmentTypes;
+        finalAssessments = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId });
+        if (!finalAssessments || !finalAssessments.finalAssessmentTypes) return;
+        var finalAssessmentTypeObjects = finalAssessments.finalAssessmentTypes;
         var unassignedFinalEvaluationIds = [];
         var arrayOfEvaluationsToReturn = [];
 

@@ -51,8 +51,11 @@ function closeCreateAssessmentModal() {
 Template.createAssessment.helpers({
     getAssessmentTypes: function () {
         let currentCourseId = Session.get('courseId');
-        let courseworkAssessmentTypes = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseworkAssessmentTypes;
-        return courseworkAssessmentTypes
+        let courseWeighting = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId });
+        if (courseWeighting && courseWeighting.courseworkAssessmentTypes) {
+            let courseworkAssessmentTypes = courseWeighting.courseworkAssessmentTypes;
+            return courseworkAssessmentTypes
+        }
     }
 });
 

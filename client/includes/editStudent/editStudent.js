@@ -9,29 +9,42 @@ function clearFormValidation() {
 }
 
 Template.editStudent.helpers({
-    getFirstName: function(){
-        return Session.get('selectedStudent').firstName;
+    getFirstName: function () {
+        var selectedStudent = Session.get('selectedStudent');
+        if (selectedStudent) {
+            return Session.get('selectedStudent').firstName;
+        }
     },
-    getLastName: function(){
-        return Session.get('selectedStudent').lastName;
+    getLastName: function () {
+        var selectedStudent = Session.get('selectedStudent');
+        if (selectedStudent) {
+            return Session.get('selectedStudent').lastName;
+        }
     },
-    populateNameFields: function() {
-        document.getElementById('editStudentFirstName').value = Session.get('selectedStudent').firstName;
-        document.getElementById('editStudentLastName').value = Session.get('selectedStudent').lastName;
+    populateNameFields: function () {
+        var selectedStudent = Session.get('selectedStudent');
+        if (selectedStudent) {
+            if (document.getElementById('editStudentFirstName')) {
+                document.getElementById('editStudentFirstName').value = Session.get('selectedStudent').firstName;
+            }
+            if (document.getElementById('editStudentLastName')) {
+                document.getElementById('editStudentLastName').value = Session.get('selectedStudent').lastName;
+            }
+        }
         return "";
     }
 });
 
 Template.editStudent.events({
-    'submit #editStudentsModalForm': function(){
+    'submit #editStudentsModalForm': function () {
         let firstName = document.getElementById('editStudentFirstName').value;
         let lastName = document.getElementById('editStudentLastName').value;
         let studentId = Session.get('selectedStudent').studentId;
         let courseId = Session.get('courseId');
 
-        var studentsDocument = Students.findOne({ownerId: Meteor.userId, courseId: courseId}).students;
-        for (i = 0; i < studentsDocument.length; i++){
-            if (studentsDocument[i].studentId == studentId){
+        var studentsDocument = Students.findOne({ ownerId: Meteor.userId, courseId: courseId }).students;
+        for (i = 0; i < studentsDocument.length; i++) {
+            if (studentsDocument[i].studentId == studentId) {
                 studentsDocument[i].studentFirstName = firstName;
                 studentsDocument[i].studentLastName = lastName;
                 break;
@@ -44,7 +57,7 @@ Template.editStudent.events({
         $('#addStudentsModal').modal('open');
         return false;
     },
-    'click #save-changes-edit-student': function(){
+    'click #save-changes-edit-student': function () {
         document.getElementById("submit-edit-student").click();
         return false;
     },
@@ -53,7 +66,7 @@ Template.editStudent.events({
 Template.editStudent.onRendered(function () {
     $.validator.addMethod('containsIllegalCharacters', (input) => {
         const illegalCharacters = /[,<.>/?;:'"{}|`~!@#$%^&*()_+=\]\[\\1234567890]/g;
-        return !(input.match(illegalCharacters)); 
+        return !(input.match(illegalCharacters));
     });
     $("#editStudentsModalForm").validate({
         errorClass: 'invalid',

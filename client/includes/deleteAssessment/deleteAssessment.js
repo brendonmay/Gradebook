@@ -14,14 +14,17 @@ Template.deleteCourseworkAssessment.helpers({
         if (removeAssessmentObj) {
             const assessmentTypeId = removeAssessmentObj.assessmentTypeId;
             const assessmentId = removeAssessmentObj.assessmentId;
+            let assessments = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId });
+            if (assessments && assessments.courseAssessmentTypes) {
 
-            let assessmentTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseAssessmentTypes;
-            for (var i = 0; i < assessmentTypes.length; i++) {
-                if (assessmentTypes[i].assessmentTypeId == assessmentTypeId) {
-                    const assessments = assessmentTypes[i].assessments;
-                    for (var j = 0; j < assessments.length; j++) {
-                        if (assessments[j].assessmentId == assessmentId) {
-                            return assessments[j].assessmentName;
+                let assessmentTypes = assessments.courseAssessmentTypes;
+                for (var i = 0; i < assessmentTypes.length; i++) {
+                    if (assessmentTypes[i].assessmentTypeId == assessmentTypeId) {
+                        const assessments = assessmentTypes[i].assessments;
+                        for (var j = 0; j < assessments.length; j++) {
+                            if (assessments[j].assessmentId == assessmentId) {
+                                return assessments[j].assessmentName;
+                            }
                         }
                     }
                 }

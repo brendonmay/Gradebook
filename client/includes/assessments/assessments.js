@@ -235,7 +235,7 @@ function renameAssessmentEvent() {
     //open modal
     $('#renameAssessmentModal').modal({
         dismissible: true,
-        ready: function(modal, trigger){
+        ready: function (modal, trigger) {
             Materialize.updateTextFields();
         },
         complete: function () {
@@ -653,6 +653,68 @@ Template.assessments.events({
         Meteor.call('assessments.updateFinalAssessments', currentCourseId, finalAssessmentTypes);
         updateFinalAssessments(finalAssessmentTypes, assessmentTypeId, markK, markA, markT, markC, newDate)
         Session.set("gradebookUpdated", true);
+    },
+    'focus .course-edit-fields-blur': function () {
+        let target = event.target;
+        let formId = target.id;
+        let assessmentTypeID = formId.substring("courseX".length, formId.length);
+        let currentField = formId.substring("course".length, "courseX".length);
+
+        switch (currentField) {
+            case "K":
+                var nextInputField = document.getElementById("courseK" + assessmentTypeID);
+                nextInputField.focus();
+                nextInputField.setSelectionRange(0, nextInputField.value.length);
+                break;
+            case "A":
+                var nextInputField = document.getElementById("courseA" + assessmentTypeID);
+                nextInputField.focus();
+                nextInputField.setSelectionRange(0, nextInputField.value.length);
+                break;
+            case "T":
+                var nextInputField = document.getElementById("courseT" + assessmentTypeID);
+                nextInputField.focus();
+                nextInputField.setSelectionRange(0, nextInputField.value.length);
+                break;
+            case "C":
+                var nextInputField = document.getElementById("courseC" + assessmentTypeID);
+                nextInputField.focus();
+                nextInputField.setSelectionRange(0, nextInputField.value.length);
+                break;
+            default:
+                break;
+        }
+    },
+    'focus .final-blur-class': function () {
+        let target = event.target;
+        let formId = target.id;
+        let assessmentTypeID = formId.substring("finalX".length, formId.length);
+        let currentField = formId.substring("final".length, "finalX".length);
+
+        switch (currentField) {
+            case "K":
+                var nextInputField = document.getElementById("finalK" + assessmentTypeID);
+                nextInputField.focus();
+                nextInputField.setSelectionRange(0, nextInputField.value.length);
+                break;
+            case "A":
+                var nextInputField = document.getElementById("finalA" + assessmentTypeID);
+                nextInputField.focus();
+                nextInputField.setSelectionRange(0, nextInputField.value.length);
+                break;
+            case "T":
+                var nextInputField = document.getElementById("finalT" + assessmentTypeID);
+                nextInputField.focus();
+                nextInputField.setSelectionRange(0, nextInputField.value.length);
+                break;
+            case "C":
+                var nextInputField = document.getElementById("finalC" + assessmentTypeID);
+                nextInputField.focus();
+                nextInputField.setSelectionRange(0, nextInputField.value.length);
+                break;
+            default:
+                break;
+        }
     },
     'blur .course-edit-fields-blur': function () {
 

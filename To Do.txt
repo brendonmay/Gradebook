@@ -7,14 +7,10 @@
 
 -Functionality
 	- When you create a new course in the most recent year relative to the other courses you have, and its the first course of that year, upon creation, the new course will be highlighted in the sidenav, but the mainview wont update.
-	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.
-	- if weight of an assessment is 0%, when you put grades for it in the markbook (and nothing else) the calculated grade becomes NaN%.
 	- When you delete an assessment, update the assessmentTypeGrade 
 	- When you delete an assessment update category grades in calculatedGrades
 	- when you delete an assessmentTYpe, updated category grades in calculated grades
 	- if you add an assessment and you have no students, preloader hangs indefinitely
-	- if weight of assessment type is 0, and you only have grades in that assessmenttype, category grade value for that category becomes null.
-
 
 Scaling
 	- https://medium.freecodecamp.org/scaling-meteor-a-year-on-26ee37588e4b

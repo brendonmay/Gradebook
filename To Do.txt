@@ -12,6 +12,7 @@
 	- When you delete an assessment, update the assessmentTypeGrade 
 	- When you delete an assessment update category grades in calculatedGrades
 	- when you delete an assessmentTYpe, updated category grades in calculated grades
+	- if you add an assessment and you have no students, preloader hangs indefinitely
 	- if weight of assessment type is 0, and you only have grades in that assessmenttype, category grade value for that category becomes null.
 
 

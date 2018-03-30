@@ -110,7 +110,7 @@ function getCalculatedGrade(assessmentId, studentId) {
                 A: getGradeString(AGrade.toFixed(2)),
                 T: getGradeString(TGrade.toFixed(2)),
                 C: getGradeString(CGrade.toFixed(2)),
-                Grade: getGradeString(getGradeForAssessment(currentGradeObj[i]).toFixed(2))
+                Grade: getGradeString(getGradeForAssessment(currentGradeObj[i]))
             };
             break;
         }
@@ -1404,13 +1404,13 @@ function getGradeForAssessment(gradeObj) {
     if (isNaN(a)) a = "N/A"
     if (isNaN(t)) t = "N/A"
     if (isNaN(c)) c = "N/A"
-    var weightedAverage = Number(getWeightedAverage(k, a, t, c, WeightK, WeightA, WeightT, WeightC)) / 100;
+    var weightedAverage = Number(getWeightedAverage(k, a, t, c, WeightK, WeightA, WeightT, WeightC));
 
-    if (isNaN(weightedAverage)){
+    if (weightedAverage && isNaN(weightedAverage)){
         weightedAverage = "N/A"
     }
 
-    return weightedAverage;
+    return (weightedAverage / 100).toFixed(2);
 
 }
 
@@ -1487,13 +1487,15 @@ function getCourseOverviewInformation() {
         if (grade.TGrade == (-1).toFixed(2)) grade.TGrade = "N/A"
         if (grade.CGrade == (-1).toFixed(2)) grade.CGrade = "N/A"
 
+        var finalGrade = getGradeForAssessment(grade);
+
         courseOverViewTableInfo.push({
             assessmentTypeName: assessmentTypeIds[i].assessmentType,
             K: getGradeString(KGrade),
             A: getGradeString(AGrade),
             T: getGradeString(TGrade),
             C: getGradeString(CGrade),
-            Grade: getGradeString(getGradeForAssessment(grade).toFixed(2))
+            Grade: getGradeString(finalGrade)
         });
     }
     return courseOverViewTableInfo;

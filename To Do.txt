@@ -11,12 +11,8 @@
 	- If you hit tab multiple times in gradebook (past the end of the row), datepicker pops up (fix via display: none)
 	- in student reports, table in assessmenttype shouldnt have any rows if there's no assessments of that type
 	- In assessment tab, when you click an input to make a change, highlight the whole input.
-	- When you delete an assessment, update the assessmentTypeGrade 
-	- When you delete an assessment update category grades in calculatedGrades
 	- when you delete an assessmentTYpe, updated category grades in calculated grades
 	- if you add an assessment and you have no students, preloader hangs indefinitely
-	- if weight of assessment type is 0, and you only have grades in that assessmenttype, category grade value for that category becomes null.
-
 
 Scaling
 	- https://medium.freecodecamp.org/scaling-meteor-a-year-on-26ee37588e4b

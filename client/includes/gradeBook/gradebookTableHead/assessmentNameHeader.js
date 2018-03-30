@@ -268,12 +268,12 @@ function deleteCourseWorkModalComplete(assessmentTypeId, assessmentId) {
 
         document.getElementById("preloader").style = "";
 
-        // setTimeout(function () {
-        //     updateColorsInGradebook().then(function () {
-        //         updateTableHeadFixer();
-        //     });
-        //     document.getElementById("preloader").style = "display: none";
-        // }, 1000);
+        setTimeout(function () {
+            updateColorsInGradebook().then(function () {
+                updateTableHeadFixer();
+            });
+            document.getElementById("preloader").style = "display: none";
+        }, 1000);
     }
     let removeAssessmentObj = Session.get("removeAssessmentObj");
     removeAssessmentObj.removeCourse = "";
@@ -298,19 +298,19 @@ Template.topRow.onRendered(function () {
     });
 });
 
-Template.topCategories.onRendered(function(){
-    var self = this;
-    this.autorun(function () {
-        // Template.currentData();
-        console.log("topCategories re-rendered");
-        // setGradebookColors();
-        // $("#main_table").tableHeadFixer({ "left": 1, 'head': true });
-        // Session.set('gradebookUpdated', false);
-        setTimeout(function(){
-            document.getElementById("preloader").style = "display: none";
-        }, 1000);
-    });
-});
+// Template.topCategories.onRendered(function(){
+//     var self = this;
+//     this.autorun(function () {
+//         // Template.currentData();
+//         console.log("topCategories re-rendered");
+//         // setGradebookColors();
+//         // $("#main_table").tableHeadFixer({ "left": 1, 'head': true });
+//         // Session.set('gradebookUpdated', false);
+//         setTimeout(function(){
+//             document.getElementById("preloader").style = "display: none";
+//         }, 1000);
+//     });
+// });
 
 Template.assessmentNameHeader.helpers({
     getAssessmentNames: function () {
@@ -378,13 +378,22 @@ Template.assessmentNameHeader.events({
             var removeAssessmentObj = {
                 assessmentTypeId: assessmentTypeId,
                 assessmentId: assessmentId,
-                removeCourse: ""
+                removeCourse: "",
+                inAssessments: false
             };
             Session.set("removeAssessmentObj", removeAssessmentObj);
 
             $('.delete-courseworkAssessment-modal').modal({
                 complete: function () {
-                    deleteCourseWorkModalComplete(assessmentTypeId, assessmentId);
+                    //deleteCourseWorkModalComplete(assessmentTypeId, assessmentId);
+                    setTimeout(function () {
+                        updateColorsInGradebook().then(function () {
+                            updateTableHeadFixer().then(function () {
+                                Session.set('gradebookUpdated', false);
+                                document.getElementById("preloader").style = "display: none";
+                            });
+                        });
+                    }, 1000);
                 }
             });
             $('#deleteCourseworkAssessmentModal').modal('open');

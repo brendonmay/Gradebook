@@ -12,6 +12,7 @@
 	- in student reports, table in assessmenttype shouldnt have any rows if there's no assessments of that type
 	- if weight of an assessment is 0%, when you put grades for it in the markbook (and nothing else) the calculated grade becomes NaN%.
 	- In assessment tab, when you click an input to make a change, highlight the whole input.
+	- When you delete an assessment, update the assessmentTypeGrade and category grades in calculatedGrades
 
 Scaling
 	- https://medium.freecodecamp.org/scaling-meteor-a-year-on-26ee37588e4b

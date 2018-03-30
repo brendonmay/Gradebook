@@ -190,6 +190,16 @@ Template.assignFinal.events({
 });
 
 Template.assignFinal.onRendered(function () {
+    $('.datepicker').pickadate({
+    selectMonths: false, // Creates a dropdown to control month
+    selectYears: 15, // Creates a dropdown of 15 years to control year,
+    today: 'Today',
+    clear: 'Clear',
+    close: 'Ok',
+    container: '#assignFinalModal',
+    closeOnSelect: false // Close upon selecting a date,
+  });
+
     $('.assignFinalModal').modal({
         dismissible: true, // Modal can be dismissed by clicking outside of the modal
         complete: function () {

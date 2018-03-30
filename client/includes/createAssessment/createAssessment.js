@@ -214,6 +214,15 @@ Template.createAssessment.events({
 });
 
 Template.createAssessment.onRendered(function () {
+    $('.datepicker').pickadate({
+        selectMonths: true, // Creates a dropdown to control month
+        selectYears: 15, // Creates a dropdown of 15 years to control year,
+        today: 'Today',
+        clear: 'Clear',
+        close: 'Ok',
+        container: '#createAssessmentModal',
+        closeOnSelect: false // Close upon selecting a date,
+    });
     $.validator.addMethod('isInteger', (input) => {
         return (input == "N/A" || Math.floor(input) == input);
     });

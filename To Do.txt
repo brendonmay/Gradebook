@@ -5,7 +5,6 @@
 	- If you have no students, show a different page in student reports
 
 -Functionality
-	- When you create a new course in the most recent year relative to the other courses you have, and its the first course of that year, upon creation, the new course will be highlighted in the sidenav, but the mainview wont update.
 	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.
 	- when you edit assessmentType weighting, adjust categoryGrades in calculatedgrades
 	- when you delete an assessmentType, update categoryGrades in calculated grades

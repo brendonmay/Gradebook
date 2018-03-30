@@ -8,7 +8,7 @@
                 </a>
                 <div class="collapsible-body">
                     <ul class="sections">
-                        {{#each courses courseYear}}
+                        {{#each courses courseYear}} 
                         <li class="course-dropdown" id="sideNav{{courseId}}">
                             <a href="#!" id={{courseId}} name={{courseYear}}>{{courseName}}</a>
                         </li>
@@ -16,6 +16,7 @@
                     </ul>
                 </div>
             </li>
+            {{highlightCorrectCourse}}
             {{/each}}
         </ul>
     </li>

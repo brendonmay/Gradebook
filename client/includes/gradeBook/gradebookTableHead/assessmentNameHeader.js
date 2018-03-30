@@ -285,7 +285,7 @@ function deleteCourseWorkModalComplete(assessmentTypeId, assessmentId) {
 Template.topRow.onRendered(function () {
     var self = this;
     this.autorun(function () {
-        Template.currentData();
+        //Template.currentData();
         console.log("change in topRow");
         setTimeout(function () {
             updateColorsInGradebook().then(function () {
@@ -298,17 +298,19 @@ Template.topRow.onRendered(function () {
     });
 });
 
-// Template.topCategories.onRendered(function(){
-//     var self = this;
-//     this.autorun(function () {
-//         Template.currentData();
-//         console.log("topCategories re-rendered");
-//         setGradebookColors();
-//         $("#main_table").tableHeadFixer({ "left": 1, 'head': true });
-//         Session.set('gradebookUpdated', false);
-//         document.getElementById("preloader").style = "display: none";
-//     });
-// });
+Template.topCategories.onRendered(function(){
+    var self = this;
+    this.autorun(function () {
+        // Template.currentData();
+        console.log("topCategories re-rendered");
+        // setGradebookColors();
+        // $("#main_table").tableHeadFixer({ "left": 1, 'head': true });
+        // Session.set('gradebookUpdated', false);
+        setTimeout(function(){
+            document.getElementById("preloader").style = "display: none";
+        }, 1000);
+    });
+});
 
 Template.assessmentNameHeader.helpers({
     getAssessmentNames: function () {

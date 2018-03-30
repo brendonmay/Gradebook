@@ -21,9 +21,6 @@ Scaling
 
 Replace setTimeOut (try Blaze.remove() and Blaze.render(), and then Template.onRendered will re-trigger each time):
 	- when you change courseyear
-	- when you select a new course in the sidenav, the table main row and column dont float and gradebook colors dont update (I think I fixed this)
-	- assign final and create new assessment in gradebook
-	- after deleting an assessment directly in gradebook, colors arent properly updating
 
 -------------
 -Figure out why I can't add script with src includes/globalFunctions/clearValidation.js 

@@ -498,7 +498,8 @@ Template.assessments.events({
         var removeAssessmentObj = {
             assessmentTypeId: assessmentTypeId,
             assessmentId: assessmentId,
-            removeCourse: ""
+            removeCourse: "",
+            inAssessments: true
         };
         Session.set("removeAssessmentObj", removeAssessmentObj);
         document.getElementById(assessmentId).click();
@@ -522,8 +523,9 @@ Template.assessments.events({
                     }
                     Meteor.call('assessments.updateAssessments', currentCourseId, courseAssessmentsTypes);
                     Meteor.call('students.deleteAssessment', Meteor.userId(), currentCourseId, assessmentId);
+                    Meteor.call('calculatedgrades.deleteAssessment', Meteor.userId(), Session.get('courseId'), removeAssessmentObj.assessmentId);
                 }
-                let removeAssessmentObj = Session.get("removeAssessmentObj");
+                var removeAssessmentObj = Session.get("removeAssessmentObj");
                 removeAssessmentObj.removeCourse = "";
                 Session.set("removeAssessmentObj", removeAssessmentObj);
                 $('#deleteCourseworkAssessmentModal').modal('close');

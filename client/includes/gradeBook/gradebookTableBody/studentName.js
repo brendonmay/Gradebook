@@ -657,6 +657,9 @@ function calculateAsessmentTypeGrades(ownerId, courseId, organizedStudentGrades)
 
         //Current Overall Grade for AssessmentType
         var weightedAverage = getWeightedAverage(KassessmentTypeGrade, AassessmentTypeGrade, TassessmentTypeGrade, CassessmentTypeGrade, WeightK, WeightA, WeightT, WeightC);
+        if (isNaN(weightedAverage)){
+            weightedAverage = "N/A"
+        }
         var assessmentTypeWeighting = 0;
 
         //AssessmentTypeWeight for Course
@@ -782,12 +785,16 @@ Template.studentName.helpers({
 
         var finalGrade = getWeightedAverage(K, A, T, C, WeightK, WeightA, WeightT, WeightC)
 
+        if (isNaN(finalGrade)){
+            finalGrade = "N/A"
+        }
+
         if (finalGrade != "N/A") {
             return (finalGrade / 100).toFixed(2) + "%";
         }
-        else {
-            return "N/A"
-        }
+        
+        return "N/A"
+        
     },
     getStudentGradesForAssessments: function (studentId) {
         let courseId = Session.get('courseId');

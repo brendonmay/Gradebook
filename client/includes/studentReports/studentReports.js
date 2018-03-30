@@ -386,6 +386,9 @@ function calculateAsessmentTypeGrades(ownerId, courseId, organizedStudentGrades)
 
         //Current Overall Grade for AssessmentType
         var weightedAverage = getWeightedAverage(KassessmentTypeGrade, AassessmentTypeGrade, TassessmentTypeGrade, CassessmentTypeGrade, WeightK, WeightA, WeightT, WeightC);
+        if (isNaN(weightedAverage)){
+            weightedAverage = "N/A";
+        }
         var assessmentTypeWeighting = 0;
 
         //AssessmentTypeWeight for Course
@@ -1396,7 +1399,13 @@ function getGradeForAssessment(gradeObj) {
     if (isNaN(a)) a = "N/A"
     if (isNaN(t)) t = "N/A"
     if (isNaN(c)) c = "N/A"
-    return Number(getWeightedAverage(k, a, t, c, WeightK, WeightA, WeightT, WeightC)) / 100;
+    var weightedAverage = Number(getWeightedAverage(k, a, t, c, WeightK, WeightA, WeightT, WeightC)) / 100;
+
+    if (isNaN(weightedAverage)){
+        weightedAverage = "N/A"
+    }
+
+    return weightedAverage;
 
 }
 
@@ -1565,7 +1574,7 @@ Template.studentReports.helpers({
 
         var classAverage = getWeightedAverage(K, A, T, C, WeightK, WeightA, WeightT, WeightC);
 
-        if (classAverage == "N/A") {
+        if (isNaN(classAverage)) {
             return "N/A"
         }
         else {
@@ -1630,7 +1639,7 @@ Template.studentReports.helpers({
 
         var finalGrade = getWeightedAverage(K, A, T, C, WeightK, WeightA, WeightT, WeightC)
 
-        if (finalGrade != "N/A") {
+        if (!isNaN(finalGrade)) {
             return (finalGrade / 100).toFixed(2) + "%";
         }
         else {
@@ -1745,7 +1754,7 @@ Template.studentReports.helpers({
         }
 
         var weightedGrade = getWeightedAverage(K, A, T, C, WeightK, WeightA, WeightT, WeightC)
-        if (weightedGrade == "N/A") {
+        if (isNaN(weightedGrade)) {
             return "N/A"
         }
         return Number((weightedGrade / 100).toFixed(2)) + "%"
@@ -1778,7 +1787,7 @@ Template.studentReports.helpers({
         }
 
         var weightedGrade = getWeightedAverage(K, A, T, C, WeightK, WeightA, WeightT, WeightC)
-        if (weightedGrade == "N/A") {
+        if (isNaN(weightedGrade)) {
             return "N/A"
         }
         return Number((weightedGrade / 100).toFixed(2)) + "%"

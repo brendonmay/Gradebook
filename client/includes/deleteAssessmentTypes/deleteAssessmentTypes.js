@@ -105,6 +105,7 @@ Template.deleteCourseworkAssessmentType.helpers({
 Template.deleteCourseworkAssessmentType.events({
     'click .yes-delete-modal': function () {
         //create new array of assessmentType objects excluding the selected one
+        document.getElementById("preloader").style = "";
         let newcourseworkAssessmentTypes = [];
         let currentCourseId = Session.get('courseId');
         let selectedAssessmentTypeId = getAssessmentTypeId();
@@ -168,6 +169,7 @@ Template.deleteFinalAssessmentType.helpers({
 Template.deleteFinalAssessmentType.events({
     'click .yes-delete-modal': function () {
         //create new array of assessmentType objects excluding the selected one
+        document.getElementById("preloader").style = "";
         let newfinalAssessmentTypes = [];
         let currentCourseId = Session.get('courseId');
         let selectedAssessmentTypeId = getAssessmentTypeId();

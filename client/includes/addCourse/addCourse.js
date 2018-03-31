@@ -20,7 +20,7 @@ Template.addCourse.events({
         const course = target.courseName.value;
         const year = document.getElementById("courseYear").value;
 
-        if (course.length <= 15) 
+        if (course.length <= 15) {
 
             if (Courses.findOne({ ownerId: Meteor.userId() }) == null) {
                 Meteor.call('courses.createFirstCourse', course, year);
@@ -34,11 +34,11 @@ Template.addCourse.events({
                         const lastCourseId = doc.courses[docLength - 1].courseId;
                         newCourseId = lastCourseId + 1;
                     });
-                let currentCourses = Courses.findOne({ ownerId: Meteor.userId() }, { _id: 0, ownerId: 0 }).courses;  
+                let currentCourses = Courses.findOne({ ownerId: Meteor.userId() }, { _id: 0, ownerId: 0 }).courses;
                 const newCourse = { courseId: newCourseId, courseName: course, courseYear: year };
 
                 currentCourses[newCourseId - 1] = newCourse;
-                for (var i = 0; i < currentCourses.length; i++) { 
+                for (var i = 0; i < currentCourses.length; i++) {
                     if (currentCourses[i] == null) {
                         currentCourses.splice(i, 1);
                         i--;
@@ -53,11 +53,11 @@ Template.addCourse.events({
             $('#addModal').modal('close');
         }
     },
-    'click .addCourseButton': function(){
+    'click .addCourseButton': function () {
         document.getElementById('submitaddCourseForm').click();
         return false
     },
-    'click .addCourseCancel': function() {
+    'click .addCourseCancel': function () {
         closeAddCourseModal();
         $('#addModal').modal('close');
     }
@@ -81,11 +81,11 @@ Template.addCourse.onRendered(function () {
         $('input#addCourseNameModal, textarea#textarea1').characterCounter();
     });
     $('.addCourseModal').modal({
-        dismissible: true, 
-        complete: function() { 
+        dismissible: true,
+        complete: function () {
             closeAddCourseModal();
-        } 
-      }
+        }
+    }
     );
     $("#addCourseModalForm").validate({
         errorClass: 'invalid',

@@ -742,22 +742,6 @@ function checkValidationOfInput(inputID) {
     }
 }
 
-// Template.studentRowTemplate.onRendered(function () {
-//     var self = this;
-//     this.autorun(function () {
-//         // Template.currentData();
-//         console.log("change in studentRow");
-//         // setTimeout(function () {
-//         //     updateColorsInGradebook().then(function () {
-//         //         updateTableHeadFixer().then(function () {
-//         //             Session.set('gradebookUpdated', false);
-//         //             document.getElementById("preloader").style = "display: none";
-//         //         });
-//         //     });
-//         // }, 1000);
-//     });
-// });
-
 Template.studentName.helpers({
     getStudents: function () {
         let sortedStudentArray = generateSortedStudentArray();

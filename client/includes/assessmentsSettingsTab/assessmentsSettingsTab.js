@@ -72,7 +72,7 @@ function clearPageValidation() {
     }
 }
 
-function doneEditing() { 
+function doneEditing() {
     let editButtonElement = document.getElementById("edit-button");
     let saveButtonElement = document.getElementById("assessments-save-button");
     let cancelButtonElement = document.getElementById("assignmentSettings-cancelButton");
@@ -414,7 +414,7 @@ Template.assessmentsTab.onRendered(function () {
 });
 
 Template.assessmentsTab.events({
-    'click .delete-courseworkAssessmentType': function () { 
+    'click .delete-courseworkAssessmentType': function () {
         target = event.target;
         assessmentTypeId = target.parentElement.id;
         assessmentTypeName = target.parentElement.name;
@@ -432,12 +432,13 @@ Template.assessmentsTab.events({
 
             Session.set('selectedAssessmentType', sessionObject);
             $('#deleteCourseworkAssessmentTypeModal').modal({
-                dismissible: true, 
-                complete: function() { 
-                    //here
-                } 
-              }
-            );
+                dismissible: true,
+                complete: function () {
+                    setTimeout(function(){
+                        document.getElementById("preloader").style = "display: none";
+                    }, 500);
+                }
+            });
             $('#deleteCourseworkAssessmentTypeModal').modal('open');
         }
     },
@@ -455,10 +456,18 @@ Template.assessmentsTab.events({
             };
 
             Session.set('selectedAssessmentType', sessionObject);
+            $('#deleteFinalAssessmentTypeModal').modal({
+                dismissible: true,
+                complete: function () {
+                    setTimeout(function(){
+                        document.getElementById("preloader").style = "display: none";
+                    }, 500);
+                }
+            });
             $('#deleteFinalAssessmentTypeModal').modal('open');
         }
     },
-    'click .edit-button': function () { 
+    'click .edit-button': function () {
         let editButtonElement = document.getElementById("edit-button");
         let saveButtonElement = document.getElementById("assessments-save-button");
         let cancelButtonElement = document.getElementById("assignmentSettings-cancelButton");
@@ -546,11 +555,12 @@ Template.assessmentsTab.events({
         courseWeight.removeAttribute('disabled');
         addValidationRulesOnInputs();
     },
-    'click .cancel-button': function () { 
+    'click .cancel-button': function () {
         doneEditing();
         clearPageValidation();
     },
-    'submit .assessmentsTabForm': function () { 
+    'submit .assessmentsTabForm': function () {
+        document.getElementById("preloader").style = "";
         const currentCourseId = Session.get('courseId');
         const target = event.target;
 
@@ -588,12 +598,40 @@ Template.assessmentsTab.events({
         Meteor.call('courseInformation.updateCourseworkWeight', currentCourseId, newCourseWorkWeight);
         Meteor.call('courseInformation.updateFinalWeight', currentCourseId, newFinalWeight);
 
+        //update calculated grades categoryGrades for each student
+        var studentsArray = CalculatedGrades.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).students;
+        for (var q = 0; q < studentsArray.length; q++) {
+            var studentId = studentsArray[q].studentId;
+            if (studentsArray[q].categoryGrades.KGrade) {
+                var newOverallCategoryGradeK = determineOverallCategoryGrade(Meteor.userId(), currentCourseId, studentId, "K");
+                Meteor.call('calculatedgrades.updateOverallCategoryGrade', Meteor.userId(), currentCourseId, studentId, "K", newOverallCategoryGradeK);
+            }
+
+            if (studentsArray[q].categoryGrades.AGrade) {
+                var newOverallCategoryGradeA = determineOverallCategoryGrade(Meteor.userId(), currentCourseId, studentId, "A");
+                Meteor.call('calculatedgrades.updateOverallCategoryGrade', Meteor.userId(), currentCourseId, studentId, "A", newOverallCategoryGradeA);
+            }
+
+            if (studentsArray[q].categoryGrades.TGrade) {
+                var newOverallCategoryGradeT = determineOverallCategoryGrade(Meteor.userId(), currentCourseId, studentId, "T");
+                Meteor.call('calculatedgrades.updateOverallCategoryGrade', Meteor.userId(), currentCourseId, studentId, "T", newOverallCategoryGradeT);
+            }
+
+            if (studentsArray[q].categoryGrades.CGrade) {
+                var newOverallCategoryGradeC = determineOverallCategoryGrade(Meteor.userId(), currentCourseId, studentId, "C");
+                Meteor.call('calculatedgrades.updateOverallCategoryGrade', Meteor.userId(), currentCourseId, studentId, "C", newOverallCategoryGradeC);
+            }
+        }
+
         //doneEditing
         Session.set('courseworkWeight', newCourseWorkWeight);
         Session.set('finalWeight', newFinalWeight);
 
         doneEditing();
         clearPageValidation();
+        setTimeout(function(){
+            document.getElementById("preloader").style = "display: none";
+        }, 500);
     },
     'click #addCourseworkAssessmentType': function () {
         $('#addCourseWork').modal({

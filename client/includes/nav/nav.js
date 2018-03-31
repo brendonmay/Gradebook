@@ -23,8 +23,8 @@ Template.nav.helpers({
     return account.emails[0].address;
   },
   turnOffMainLoader: function() {
-    if (document.getElementById("preloader") != null) {
-      document.getElementById("preloader").style = "display: none";
+    if (document.getElementById("preloader-full") != null) {
+      document.getElementById("preloader-full").style = "display: none";
     }
   }
 });
@@ -44,10 +44,16 @@ Template.nav.events({
   'click .logout': function () {
     event.preventDefault();
 
+    document.getElementById("preloader-full").style = "";
+
     var view1 = Blaze.getView(document.getElementById('loginViewId1'));
     Blaze.remove(view1);
+
     var view2 = Blaze.getView(document.getElementById('loginViewId2'));
     Blaze.remove(view2);
+
+    // var view3 = Blaze.getView(document.getElementById('loginViewId3'));
+    // Blaze.remove(view3);
 
     Blaze.render(Template.nav, document.getElementById('headerForNav'));
 

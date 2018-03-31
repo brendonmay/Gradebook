@@ -6,22 +6,14 @@
 
 -Functionality
 	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.
-	- when you edit assessmentType weighting, adjust categoryGrades in calculatedgrades
 	- add print student reports functionality
 
 Scaling
 	- https://medium.freecodecamp.org/scaling-meteor-a-year-on-26ee37588e4b
 	- MongoDB indexes are super important. 
-	- Disconnect users when they’ve just left their tab open; It’s so simple to do and saves precious resources.
-
-Replace setTimeOut (try Blaze.remove() and Blaze.render(), and then Template.onRendered will re-trigger each time):
-	- when you change courseyear
 
 Preloader:
 	- Initial page load
-	- logging in
-	- loggging out
-	- maybe after deleting assessmentType and editting assessmentType weightings?
 
 -------------
 -Figure out why I can't add script with src includes/globalFunctions/clearValidation.js 

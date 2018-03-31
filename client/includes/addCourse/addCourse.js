@@ -26,13 +26,7 @@ Template.addCourse.events({
         const course = target.courseName.value;
         const year = document.getElementById("courseYear").value;
 
-        //check that courseName <= 20 characters
-        if (course.length > 15) {
-            //console.log("courseName too long. Try again.")
-        }
-        else {
-            //check if user has ever created a course
-            //if user has not created a course,
+        if (course.length <= 15) {
 
             if (Courses.findOne({ ownerId: Meteor.userId() }) == null) {
                 Meteor.call('courses.createFirstCourse', course, year);
@@ -47,19 +41,12 @@ Template.addCourse.events({
                         const lastCourseId = doc.courses[docLength - 1].courseId;
                         newCourseId = lastCourseId + 1;
                     });
-
-                //insert new course into collection
-
-                //determine courses they currently have
-                let currentCourses = Courses.findOne({ ownerId: Meteor.userId() }, { _id: 0, ownerId: 0 }).courses; //array of course objects    
-
-                //create a new course object to be inserted
+                let currentCourses = Courses.findOne({ ownerId: Meteor.userId() }, { _id: 0, ownerId: 0 }).courses;
                 const newCourse = { courseId: newCourseId, courseName: course, courseYear: year };
 
                 //create updated array of course objects
                 currentCourses[newCourseId - 1] = newCourse;
-
-                for (var i = 0; i < currentCourses.length; i++) { //error checking for null value
+                for (var i = 0; i < currentCourses.length; i++) {
                     if (currentCourses[i] == null) {
                         currentCourses.splice(i, 1);
                         i--;
@@ -68,19 +55,18 @@ Template.addCourse.events({
                 Meteor.call('courses.addNewCourse', currentCourses, newCourseId);
                 Meteor.call('courseInformation.defaultSettings', newCourseId);
             }
-
-            //Clear form
-            target.courseName.value = "";
-
-            //Close Modal
-            $('#addModal').modal('close');
         }
+
+        target.courseName.value = "";
+
+        $('#addModal').modal('close');
+
     },
-    'click .addCourseButton': function(){
+    'click .addCourseButton': function () {
         document.getElementById('submitaddCourseForm').click();
         return false
     },
-    'click .addCourseCancel': function() {
+    'click .addCourseCancel': function () {
         closeAddCourseModal();
         $('#addModal').modal('close');
     }
@@ -104,11 +90,11 @@ Template.addCourse.onRendered(function () {
         $('input#addCourseNameModal, textarea#textarea1').characterCounter();
     });
     $('.addCourseModal').modal({
-        dismissible: true, 
-        complete: function() { 
+        dismissible: true,
+        complete: function () {
             closeAddCourseModal();
-        } 
-      }
+        }
+    }
     );
     $("#addCourseModalForm").validate({
         errorClass: 'invalid',

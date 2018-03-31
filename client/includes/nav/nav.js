@@ -22,12 +22,14 @@ Template.nav.helpers({
     let account = Meteor.users.findOne({ _id: Meteor.userId() });
     return account.emails[0].address;
   },
-  turnOffMainLoader: function() {
+  turnOffMainLoader: function () {
     if (document.getElementById("preloader") != null) {
       document.getElementById("preloader").style = "display: none";
     }
   }
 });
+
+
 
 Template.nav.events({
   'click .loginModal': function () {
@@ -53,4 +55,16 @@ Template.nav.events({
 
     Meteor.logout();
   },
+
+  // 'click #printPDF': function () {
+  //   // Blaze.saveAsPDF(Template.studentReports, {
+  //   //   filename: "report.pdf", // optional, default is "document.pdf
+  //   //   x: 0, // optional, left starting position on resulting PDF, default is 4 units
+  //   //   y: 0, // optional, top starting position on resulting PDF, default is 4 units
+  //   //   orientation: "landscape", // optional, "landscape" or "portrait" (default)
+  //   //   // format: "letter" // optional, see Page Formats, default is "a4"
+  //   // });
+  //   return xepOnline.Formatter.Format('studentReportsPrint', {render:'download',filename:'studentReport'});
+
+  // }
 });

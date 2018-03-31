@@ -1,0 +1,17 @@
+.chrome-icon{
+    height: 60%!important;
+    width: 60%!important;
+    padding-right:0!important;
+}
+
+.inlineP{
+    margin-top: 6.5px!important;
+}
+
+.nopadright{
+    padding-right: 0!important
+}
+
+.nopadleft{
+    padding-left: 0!important
+}

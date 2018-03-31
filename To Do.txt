@@ -7,10 +7,14 @@
 -Functionality
 	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.
 	- add print student reports functionality
-
+	
 Scaling
 	- https://medium.freecodecamp.org/scaling-meteor-a-year-on-26ee37588e4b
 	- MongoDB indexes are super important. 
+
+Rolling Deployment
+	- Deploy > 1 instance connected to same DB.
+	- Learn how to backup database.
 
 Preloader:
 	- Initial page load

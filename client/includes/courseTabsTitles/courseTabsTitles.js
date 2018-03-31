@@ -135,5 +135,14 @@ Template.courseTabsTitles.events({
         document.getElementById("slide-out-studentReport").children[0].children[0].click();
       }
     }
+    else{
+      let listedStudents = document.getElementById("slide-out-studentReport").children;
+      for (var i = 0; i < listedStudents.length; i++){
+        if (document.getElementById("slide-out-studentReport").children[i].children[0].classList.contains("active")){
+          document.getElementById("slide-out-studentReport").children[i].children[0].click();
+          i = listedStudents.length;
+        }
+      }
+    }
   }
 });

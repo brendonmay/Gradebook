@@ -158,13 +158,6 @@ function sectionsClickEventComplete() {
     sectionsClickEvent().then(function () {
         if (Session.get('gradebookUpdated') == true) {
             document.getElementById("preloader").style = "";
-            // setTimeout(function () {
-            //     updateColorsInGradebook().then(function () {
-            //         updateTableHeadFixer();
-            //     });
-            //     document.getElementById("preloader").style = "display: none";
-            //     Session.set('gradebookUpdated', false);
-            // }, 1000);
             if (document.getElementById('gradeBookChartId')) {
                 var view = Blaze.getView(document.getElementById('gradeBookChartId'));
                 Blaze.remove(view);

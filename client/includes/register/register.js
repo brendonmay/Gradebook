@@ -50,14 +50,16 @@ Template.register.events({
     'submit .register-form': function (event) {
         event.preventDefault();
 
+        document.getElementById("preloader-full").style = "";
+
         var email = event.target.registerEmail.value;
         var password = event.target.registerPassword.value;
+
         Accounts.createUser({
             email: email,
             password: password
         });
 
-        document.getElementById("preloader").style = "";
         var registerForm = document.getElementById("registerForm");
         registerForm.reset();
         clearValidation(registerForm);

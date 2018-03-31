@@ -6,6 +6,41 @@ import jqueryValidation from 'jquery-validation';
 
 import '../../main.html';
 
+function highlightCorrectCourse(removePreloader) {
+    Tracker.afterFlush(function () {
+        var newCourseYear = Session.get('courseYear');
+        var currentCourseId = Session.get('courseId');
+        removeAllActiveAndGreen();
+        if (currentCourseId != 0 && document.getElementById("sideNav" + currentCourseId)) {
+            var currentSideNavCourse = document.getElementById("sideNav" + currentCourseId);
+            currentSideNavCourse.classList.add("active");
+            currentSideNavCourse.classList.add("green");
+        }
+        var courseYear = document.getElementById("" + newCourseYear);
+        if (courseYear && !courseYear.classList.contains("active")) {
+            courseYear.click();
+        }
+        if(removePreloader){
+            document.getElementById("preloaderSideNav").style = "display:none";
+        }
+    });
+}
+
+function removeAllActiveAndGreen() {
+    var allCoursesInDropdown = document.getElementsByClassName('course-dropdown');
+    if (allCoursesInDropdown) {
+        for (var i = 0; i < allCoursesInDropdown.length; i++) {
+            var course = allCoursesInDropdown[i];
+            if (course.classList.contains("active")) {
+                course.classList.remove("active");
+            }
+            if (course.classList.contains("green")) {
+                course.classList.remove("green");
+            }
+        }
+    }
+}
+
 function getYearsArray() {
     let currentYearRange = Session.get('courseYear');
     let largeYear = currentYearRange.slice(5, 9);
@@ -109,8 +144,8 @@ Template.generalSettingsTab.helpers({
 
 Template.generalSettingsTab.events({
     'click .edit-general-settings': function () {
-        $('#generalSettings-courseYear').material_select();        
-        
+        $('#generalSettings-courseYear').material_select();
+
         $('input#input_text, textarea#textarea1').characterCounter();
 
         let editButtonElement = document.getElementById("generalSettings-EditButton");
@@ -207,12 +242,13 @@ Template.generalSettingsTab.events({
                 setTimeout(function () {
                     // ifNewCourseYear(activeElements).then(function () {
                     clickNewCourseYear(newCourseYear).then(function () {
-                        setTimeout(function () {
-                            var courseId = Session.get('courseId');
-                            document.getElementById(courseId).parentElement.classList.add("active");
-                            document.getElementById(courseId).parentElement.classList.add("green");
-                            document.getElementById("preloaderSideNav").style = "display:none";
-                        }, 1000);
+                        highlightCorrectCourse(true);
+                        // setTimeout(function () {
+                        //     var courseId = Session.get('courseId');
+                        //     document.getElementById(courseId).parentElement.classList.add("active");
+                        //     document.getElementById(courseId).parentElement.classList.add("green");
+                        //     document.getElementById("preloaderSideNav").style = "display:none";
+                        // }, 1000);
                     });
                     // });
                 }, 1000);

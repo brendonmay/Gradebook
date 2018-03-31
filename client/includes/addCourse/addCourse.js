@@ -47,11 +47,12 @@ Template.addCourse.events({
                 Meteor.call('courses.addNewCourse', currentCourses, newCourseId);
                 Meteor.call('courseInformation.defaultSettings', newCourseId);
             }
-
-            target.courseName.value = "";
-
-            $('#addModal').modal('close');
         }
+
+        target.courseName.value = "";
+
+        $('#addModal').modal('close');
+
     },
     'click .addCourseButton': function () {
         document.getElementById('submitaddCourseForm').click();

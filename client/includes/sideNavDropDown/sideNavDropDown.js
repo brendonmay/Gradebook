@@ -165,7 +165,7 @@ function sectionsClickEventComplete() {
             //     document.getElementById("preloader").style = "display: none";
             //     Session.set('gradebookUpdated', false);
             // }, 1000);
-            if (document.getElementById('gradeBookChartId')){
+            if (document.getElementById('gradeBookChartId')) {
                 var view = Blaze.getView(document.getElementById('gradeBookChartId'));
                 Blaze.remove(view);
                 Blaze.render(Template.gradeBookChart, document.getElementById('gradeBookChartHolder'));
@@ -183,6 +183,21 @@ function resetStudentReportsSideNav() {
                 currentChild = currentChild.children[0];
                 currentChild.classList.remove('active');
                 currentChild.classList.remove('green');
+            }
+        }
+    }
+}
+
+function removeAllActiveAndGreen() {
+    var allCoursesInDropdown = document.getElementsByClassName('course-dropdown');
+    if (allCoursesInDropdown) {
+        for (var i = 0; i < allCoursesInDropdown.length; i++) {
+            var course = allCoursesInDropdown[i];
+            if (course.classList.contains("active")) {
+                course.classList.remove("active");
+            }
+            if (course.classList.contains("green")) {
+                course.classList.remove("green");
             }
         }
     }
@@ -253,6 +268,23 @@ Template.sideNavDropDown.helpers({
 
         return uniqueYears;
     },
+
+    highlightCorrectCourse: function () {
+        Tracker.afterFlush(function () {
+            var newCourseYear = Session.get('courseYear');
+            var currentCourseId = Session.get('courseId');
+            removeAllActiveAndGreen();
+            if (currentCourseId != 0 && document.getElementById("sideNav" + currentCourseId)) {
+                var currentSideNavCourse = document.getElementById("sideNav" + currentCourseId);
+                currentSideNavCourse.classList.add("active");
+                currentSideNavCourse.classList.add("green");
+            }
+            var courseYear = document.getElementById("" + newCourseYear);
+            if (courseYear && !courseYear.classList.contains("active")) {
+                courseYear.click();
+            }
+        });
+    }
 
 });
 

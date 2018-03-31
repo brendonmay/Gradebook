@@ -40,8 +40,8 @@ function ifNewCourseYear(activeElements) {
 
 function clickNewCourseYear(newCourseYear) {
     return new Promise(function (resolve, reject) {
-        document.getElementById(newCourseYear).click();
-        console.log("clicked newCourseDropdownYear")
+        // document.getElementById(newCourseYear).click();
+        // console.log("clicked newCourseDropdownYear")
         resolve();
     })
 }

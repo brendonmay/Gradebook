@@ -9,13 +9,11 @@ import jqueryValidation from 'jquery-validation';
 import '../../main.html';
 
 function closeAssignFinalModal() {
-    //clear the input fields
     document.getElementById("finalMustHaveOneErrorMessage").style.display = "none";
     var form = document.getElementById("assignFinalFormId");
     form.reset();
     clearValidation(form);
 
-    //uncheck the checkboxes
     let checkboxK = document.getElementById("finalCheckboxK");
     let checkboxA = document.getElementById("finalCheckboxA");
     let checkboxT = document.getElementById("finalCheckboxT");
@@ -34,7 +32,6 @@ function closeAssignFinalModal() {
         checkboxC.removeAttribute("checked");
     }
 
-    //disable inputs
     let inputMarkK = document.getElementById("inputFinalMarkK");
     let inputMarkA = document.getElementById("inputFinalMarkA");
     let inputMarkT = document.getElementById("inputFinalMarkT");
@@ -45,11 +42,10 @@ function closeAssignFinalModal() {
     inputMarkT.setAttribute('disabled', "disabled")
     inputMarkC.setAttribute('disabled', "disabled")
 
-    //close the modal
     $('#assignFinalModal').modal('close');
 }
 
-Template.assignFinal.helpers({ //make sure that this only returns assessments that have not been assigned yet
+Template.assignFinal.helpers({ 
     getAssessmentTypes: function () {
         let currentCourseId = Session.get('courseId');
         let finalAssessments = CourseWeighting.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId });
@@ -110,7 +106,6 @@ Template.assignFinal.events({
             document.getElementById("finalMustHaveOneErrorMessage").style.display = "none";
         }
 
-        //find assessmentTypeId
         var assessmentTypeId = "";
         for (i = 0; i < finalAssessmentTypes.length; i++) {
             if (finalAssessmentTypes[i].assessmentType == assessmentType) {
@@ -134,7 +129,6 @@ Template.assignFinal.events({
             assessmentDate = "N/A"
         }
 
-        //create new finalAssessmentTypes array for Assessments Collection.
         for (i = 0; i < assessmentObjects.length; i++) {
             if (assessmentObjects[i].assessmentTypeId == assessmentTypeId) {
                 assessmentObjects[i].K = markK;
@@ -144,16 +138,10 @@ Template.assignFinal.events({
                 assessmentObjects[i].Date = assessmentDate;
             }
         }
-
-        //update the Assessments Collection
         Meteor.call('assessments.updateFinalAssessments', currentCourseId, assessmentObjects);
-
-        //update Students Collection
         Meteor.call('students.addNewAssessment', Meteor.userId(), currentCourseId, assessmentTypeId);
-
         Session.set("gradebookUpdated", true);
 
-        //clean up and close modal
         closeAssignFinalModal();
     },
     'click .final-check-box': function () {

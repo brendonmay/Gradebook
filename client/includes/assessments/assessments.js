@@ -7,9 +7,9 @@ import { Assessments } from '../../../lib/collections.js';
 
 import '../../main.html';
 
-const requiredText = "Must contain a positive number or N/A."; //"Please fill in the required fields.";
-const isIntegerText = "Must contain a positive number or N/A."; // "A selected category's mark must be an integer.";
-const isPositiveText = "Must contain a positive number or N/A."; //"A selected category's mark must be greater than 0.";
+const requiredText = "Must contain a positive number or N/A.";
+const isIntegerText = "Must contain a positive number or N/A.";
+const isPositiveText = "Must contain a positive number or N/A.";
 
 function canAssignFinalEvaluation() {
     let currentCourseId = Session.get('courseId');
@@ -18,7 +18,6 @@ function canAssignFinalEvaluation() {
     var unassignedFinalEvaluationIds = [];
     var arrayOfEvaluationsToReturn = [];
 
-    //check which final assessment Type Ids have not already been assigned
     for (i = 0; i < finalAssessmentTypeObjects.length; i++) {
         if (finalAssessmentTypeObjects[i].K == "N/A" && finalAssessmentTypeObjects[i].A == "N/A" && finalAssessmentTypeObjects[i].T == "N/A" && finalAssessmentTypeObjects[i].C == "N/A") {
             let unassignedAssessmentTypeId = finalAssessmentTypeObjects[i].assessmentTypeId;
@@ -26,11 +25,9 @@ function canAssignFinalEvaluation() {
         }
     }
 
-    //We now have all the Ids of the unassigned final assessments. We must find their names
     for (i = 0; i < unassignedFinalEvaluationIds.length; i++) {
         for (z = 0; z < finalAssessmentTypes.length; z++) {
             if (unassignedFinalEvaluationIds[i] == finalAssessmentTypes[z].assessmentTypeId) {
-                //console.log(finalAssessmentTypes[z].assessmentType + " is the name of assessmentTypeId: " + unassignedFinalEvaluationIds[i]);
                 var assessmentName = finalAssessmentTypes[z].assessmentType;
                 var unassignedEvaluation = { assessmentType: assessmentName };
                 arrayOfEvaluationsToReturn[arrayOfEvaluationsToReturn.length] = unassignedEvaluation;
@@ -535,27 +532,23 @@ Template.assessments.events({
     },
     'click .collapsible-header': function () {
         $('.datepicker').pickadate({
-            selectMonths: true, // Creates a dropdown to control month
-            selectYears: 15, // Creates a dropdown of 15 years to control year,
+            selectMonths: true,
+            selectYears: 15,
             today: 'Today',
             clear: 'Clear',
             close: 'Ok',
             container: '#datepicker-container',
-            closeOnSelect: false // Close upon selecting a date,
+            closeOnSelect: false
         });
         $('.collapsible').collapsible();
     },
     'submit .edit-courseassessment-form': function () {
-        //determine which form has been changed 
         let target = event.target;
         let formId = target.id;
 
-        //assign all the new values to variables
         let assessmentId = formId.substring(4);
         let assessmentTypeId = assessmentId.substring(0, assessmentId.indexOf('-'));
         let currentCourseId = Session.get('courseId');
-
-        //console.log("assessmentTypeId: " + assessmentTypeId + ". AssessmentId: " + assessmentId)
 
         let dateId = "courseDate" + assessmentId;
         let kId = "courseK" + assessmentId;
@@ -573,7 +566,6 @@ Template.assessments.events({
             newDate = "N/A"
         }
 
-        //check that each variable is of the correct type/format
         if (!areMarkFieldsValid(markK, markA, markT, markC)) {
             var errorElement = document.getElementById("markFieldInvalid" + assessmentId);
             errorElement.style.display = "";
@@ -720,7 +712,6 @@ Template.assessments.events({
 
         let target = event.target;
         let formId = target.id;
-        //assign all the new values to variables
         let assessmentId = formId.substring(7);
 
         var form = document.getElementById("formSubmit" + assessmentId);
@@ -729,7 +720,6 @@ Template.assessments.events({
     'blur .final-blur-class': function () {
         let target = event.target;
         let formId = target.id;
-        //assign all the new values to variables
         let assessmentTypeId = formId.substring(6);
 
         var form = document.getElementById("formSubmit" + assessmentTypeId);
@@ -740,7 +730,7 @@ Template.assessments.events({
 
     },
     'keyup .finalAssessmentInput': function () {
-        if (event.keyCode === 13) { //if enter is hit
+        if (event.keyCode === 13) { 
             let target = event.target;
             let formId = target.id;
             let assessmentTypeID = formId.substring("finalX".length, formId.length);
@@ -772,7 +762,7 @@ Template.assessments.events({
         }
     },
     'keyup .courseAssessmentInput': function () {
-        if (event.keyCode === 13) { //if enter is hit
+        if (event.keyCode === 13) { 
             let target = event.target;
             let formId = target.id;
             let assessmentTypeID = formId.substring("courseX".length, formId.length);

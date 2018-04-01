@@ -142,30 +142,3 @@ input {
 .jquery-validation-valid {
   border-bottom: 1px solid #4caf50 !important;
 }
-
-.homeView{
-  /* position: relative;
-  background-color: red;
-
-  overflow-y: auto;
-  overflow-x: hidden;
-
-  height: 80vh;
-  width: 60vw; */
-
-
-  /* flex: 1 0 auto;
-  background-color:red; */
-
-  position:relative;
-  height: 100%;
-  width: 100%;
-
-}
-
-.main-slider{
-  position:relative!important;
-  width: 80%;
-  left: 10%;
-
-}

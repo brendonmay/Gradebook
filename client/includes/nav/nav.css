@@ -14,4 +14,14 @@
 .nav-container-content{
     padding-left: 8em;
     padding-right: 12em;
+    position: relative;
+    max-height: 100%;
+}
+
+.logo{
+    position:relative!important;
+    bottom: 5.8em!important;
+    right: 5.8em!important;
+    height: 0!important;
+    
 }

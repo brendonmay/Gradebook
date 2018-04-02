@@ -10,13 +10,14 @@ Template.courseTabsContent.onRendered(function () {
   $('input#input_text, textarea#textarea1').characterCounter();
   $('select').material_select();
   $('.collapsible').collapsible();
+
   // $('.datepicker').pickadate({
   //   selectMonths: false, // Creates a dropdown to control month
   //   selectYears: 15, // Creates a dropdown of 15 years to control year,
   //   today: 'Today',
   //   clear: 'Clear',
   //   close: 'Ok',
-  //   container: 'body',
+  //   container: '#modalsWithDatePicker',
   //   closeOnSelect: false // Close upon selecting a date,
   // });
 })

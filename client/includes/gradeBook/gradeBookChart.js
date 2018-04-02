@@ -267,10 +267,12 @@ Template.gradeBookChart.events({
     'click .assignFinalEvalButtonGradeBook': function () {
         //check if you have no more evaluations to assign
         if (canAssignFinalEvaluation() == true) {
+            document.getElementById("modalsWithDatePicker").style = "";
             $('#assignFinalModal').modal({
                 dismissible: true,
                 complete: function () {
                     assignFinalEvalComplete();
+                    document.getElementById("modalsWithDatePicker").style = "display: none";
                 }
             });
             $('#assignFinalModal').modal('open');
@@ -281,10 +283,12 @@ Template.gradeBookChart.events({
         }
     },
     'click .createAssessmentButtonGradeBook': function () {
+        document.getElementById("modalsWithDatePicker").style = "";
         $('#createAssessmentModal').modal({
             dismissible: true,
             complete: function () {
                 createAssessmentModalComplete();
+                document.getElementById("modalsWithDatePicker").style = "display: none";
             }
         });
         $('#createAssessmentModal').modal('open');

@@ -392,6 +392,7 @@ Template.assessments.events({
     'click .assignFinalEvalButton': function () {
         //check if you have no more evaluations to assign
         if (canAssignFinalEvaluation() == true) {
+            document.getElementById("modalsWithDatePicker").style = "";
             $('#assignFinalModal').modal({
                 dismissible: true,
                 complete: function () {
@@ -425,6 +426,7 @@ Template.assessments.events({
                         document.getElementById("inputFinalMarkC-error").remove();
                     }
                     beginValidation();
+                    document.getElementById("modalsWithDatePicker").style = "display: none";
                 }
             });
             $('#assignFinalModal').modal('open');
@@ -435,6 +437,7 @@ Template.assessments.events({
         }
     },
     'click .createAssessmentButton': function () {
+        document.getElementById("modalsWithDatePicker").style = "";
         $('#createAssessmentModal').modal({
             dismissible: true,
             complete: function () {
@@ -471,6 +474,7 @@ Template.assessments.events({
                 if (document.getElementById('createNewAssessment-error')) {
                     document.getElementById('createNewAssessment-error').remove();
                 }
+                document.getElementById("modalsWithDatePicker").style = "display: none";
             }
         });
         $('#createAssessmentModal').modal('open');
@@ -531,13 +535,14 @@ Template.assessments.events({
         $('#deleteCourseworkAssessmentModal').modal('open');
     },
     'click .collapsible-header': function () {
+        document.getElementById("modalsWithDatePicker").style = "";
         $('.datepicker').pickadate({
             selectMonths: true,
             selectYears: 15,
             today: 'Today',
             clear: 'Clear',
             close: 'Ok',
-            container: 'body',
+            container: '#modalsWithDatePicker',
             closeOnSelect: false
         });
         $('.collapsible').collapsible();

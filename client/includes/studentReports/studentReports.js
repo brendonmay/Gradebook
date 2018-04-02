@@ -1827,5 +1827,11 @@ Template.studentReports.helpers({
         else {
             return grade + "%"
         }
+    },
+    hasStudents: function(){
+        var ownerId = Meteor.userId();
+        var courseId = Session.get('courseId');
+        var students = Students.findOne({ownerId, courseId}).students;
+        return students.length > 1
     }
 });

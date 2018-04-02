@@ -537,7 +537,7 @@ Template.assessments.events({
             today: 'Today',
             clear: 'Clear',
             close: 'Ok',
-            container: '#datepicker-container',
+            container: 'body',
             closeOnSelect: false
         });
         $('.collapsible').collapsible();

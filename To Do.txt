@@ -1,13 +1,12 @@
 Styling
-	- Properly center the suggestion to use chrome
+	- Properly center the suggestion to use chrome (or put in footer)
 	- make sure site functions decently in internet explorer
+	- footer
+	- feedback modal
 
 Bugs
 	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.
-	- if you log in, then log out, the card breaks on main page.
-	- in assessments tab, if you change the mark out of for any category, when you hit enter 2 toasts appear.
-	- if you tab multiple times in gradebook or assessments tab, datepicker will open. Need to hide it with display: none
-	- in assessment Tab, once u change the date and the datepicker closes, it should save to DB
+	- in assessments tab, if you change the mark out of for any category, when you hit enter 2 toasts appear. (only occurs on deployment, doesnt happen on Communication input)
 
 New Functionality
 	- Email verification on signup
@@ -17,12 +16,13 @@ New Functionality
 	- think of structure to allow administrators to view marks for the school
 	
 Scaling
-	- https://medium.freecodecamp.org/scaling-meteor-a-year-on-26ee37588e4b
 	- MongoDB indexes are super important. 
 
 Rolling Deployment
 	- Deploy > 1 instance connected to same DB.
 	- Learn how to backup database.
+	- Look into Meteor Up + Digital Ocean combo
+	- Look into MongoDB Atlas as opposed to MLab
 
 Preloader:
 	- Initial page load

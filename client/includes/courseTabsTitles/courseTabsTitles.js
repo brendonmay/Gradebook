@@ -115,7 +115,8 @@ Template.courseTabsTitles.onRendered(function () {
 Template.courseTabsTitles.events({
   'click #gradeBookCourseTab': function () {
     //check if a change has been made first by referring to Session Variable
-    gradebookCourseTabClickEvent();    
+    gradebookCourseTabClickEvent();
+    document.getElementById("modalsWithDatePicker").style = "display: none";
   },
   'click #courseSettingsTabId': function () {
     var settingsScreen = Session.get('settingScreenText');
@@ -125,24 +126,27 @@ Template.courseTabsTitles.events({
       document.getElementById("categoryWeighting-cancelButton").click();
     } else if (settingsScreen == "Assessments") {
       document.getElementById('assignmentSettings-cancelButton').click();
-    } 
+    }
   },
   'click #studentReportsTabId': function () {
     $('#studentReportsDropdown').material_select();
-    if( Session.get("currentSelectedStudentID") == "0" ){
+    if (Session.get("currentSelectedStudentID") == "0") {
       let listedStudents = document.getElementById("slide-out-studentReport").children;
-      if (listedStudents.length != 0){
+      if (listedStudents.length != 0) {
         document.getElementById("slide-out-studentReport").children[0].children[0].click();
       }
     }
-    else{
+    else {
       let listedStudents = document.getElementById("slide-out-studentReport").children;
-      for (var i = 0; i < listedStudents.length; i++){
-        if (document.getElementById("slide-out-studentReport").children[i].children[0].classList.contains("active")){
+      for (var i = 0; i < listedStudents.length; i++) {
+        if (document.getElementById("slide-out-studentReport").children[i].children[0].classList.contains("active")) {
           document.getElementById("slide-out-studentReport").children[i].children[0].click();
           i = listedStudents.length;
         }
       }
     }
+  },
+  'click #assessmentsTabId': function () {
+    document.getElementById("modalsWithDatePicker").style = "";
   }
 });

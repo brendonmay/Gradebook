@@ -4,7 +4,6 @@ Styling
 
 Bugs
 	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.
-	- if you log in, then log out, the card breaks on main page.
 	- in assessments tab, if you change the mark out of for any category, when you hit enter 2 toasts appear.
 	- if you tab multiple times in gradebook or assessments tab, datepicker will open. Need to hide it with display: none
 	- in assessment Tab, once u change the date and the datepicker closes, it should save to DB

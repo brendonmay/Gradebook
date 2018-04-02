@@ -6,7 +6,7 @@ Styling
 
 Bugs
 	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.
-	- in assessments tab, if you change the mark out of for any category, when you hit enter 2 toasts appear.
+	- in assessments tab, if you change the mark out of for any category, when you hit enter 2 toasts appear. (only occurs on deployment, doesnt happen on Communication input)
 	- in assessment Tab, once u change the date and the datepicker closes, it should save to DB
 
 New Functionality

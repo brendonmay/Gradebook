@@ -220,7 +220,7 @@ Template.createAssessment.onRendered(function () {
         today: 'Today',
         clear: 'Clear',
         close: 'Ok',
-        container: '#createAssessmentModal',
+        container: 'body',
         closeOnSelect: false // Close upon selecting a date,
     });
     $.validator.addMethod('isInteger', (input) => {
@@ -229,12 +229,12 @@ Template.createAssessment.onRendered(function () {
     $.validator.addMethod('isPositive', (input) => {
         return (input > 0 && input != "");
     });
-    $('.createAssessmentModal').modal({
-        dismissible: true, // Modal can be dismissed by clicking outside of the modal
-        complete: function () {
-            closeCreateAssessmentModal();
-        }
-    });
+    // $('.createAssessmentModal').modal({
+    //     dismissible: true, // Modal can be dismissed by clicking outside of the modal
+    //     complete: function () {
+    //         closeCreateAssessmentModal();
+    //     }
+    // });
     $("#createAssessmentFormId").validate({
         errorClass: 'invalid',
         validClass: 'jquery-validation-valid',

@@ -1,16 +1,20 @@
--Styling
-	- "Thanks for signing in! Add a course to get started!
-	- "Welcome Back! Select a course to get started!"
-	- Gradebook display when you have no students
-	- If you have no students, show a different page in student reports
+Styling
+	- Properly center the suggestion to use chrome
+	- make sure site functions decently in internet explorer
 
--Functionality
+Bugs
 	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.
-	- add print student reports functionality
-	- Email verification on signup?
+	- if you log in, then log out, the card breaks on main page.
+	- in assessments tab, if you change the mark out of for any category, when you hit enter 2 toasts appear.
+	- if you tab multiple times in gradebook or assessments tab, datepicker will open. Need to hide it with display: none
+	- in assessment Tab, once u change the date and the datepicker closes, it should save to DB
+
+New Functionality
+	- Email verification on signup
 	- Reset password functionality
-	- get @ontariogradebook.com email working
 	- allow ability to delete final evaluation directly from gradebook (doesnt delete the assessmentType, just "un-assigns" it)
+	- add print student reports functionality
+	- think of structure to allow administrators to view marks for the school
 	
 Scaling
 	- https://medium.freecodecamp.org/scaling-meteor-a-year-on-26ee37588e4b

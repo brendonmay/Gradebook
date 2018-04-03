@@ -65,6 +65,7 @@ Template.register.events({
         clearValidation(registerForm);
 
         $('#registerModal').modal('close');
+        $('#emailVerificationModal').modal('open');
     }
 })
 

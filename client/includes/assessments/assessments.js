@@ -389,6 +389,23 @@ Template.assessments.helpers({
 });
 
 Template.assessments.events({
+    'click .unAssignBadge': function () {
+        var id = event.target.id;
+        var assessmentTypeId = id.slice(id.indexOf("?") + 1, id.length);
+        var headerId = assessmentTypeId + "?dropdownId";
+
+        document.getElementById(headerId).click();
+
+        var removeAssessmentObj = {
+            assessmentTypeId,
+            removeCourse: "",
+            inAssessments: true
+        };
+
+        Session.set("removeAssessmentObj", removeAssessmentObj);
+
+        $('#unAssignFinalModal').modal('open');
+    },
     'click .assignFinalEvalButton': function () {
         //check if you have no more evaluations to assign
         if (canAssignFinalEvaluation() == true) {

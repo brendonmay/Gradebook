@@ -11,6 +11,59 @@
 </head>
 
 <body>
+  <div class="preloader-background-full" id="preloader-full" style="display:none">
+    <div class="preloader-wrapper big active">
+      <div class="spinner-layer spinner-blue">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+          <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer spinner-red">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+          <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer spinner-yellow">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+          <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer spinner-green">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+          <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   <div id="site-content">
     <div id="side-nav-section">
       {{> sideNav}}
@@ -28,9 +81,13 @@
     </div>
   </div>
 
+  <div id="modalsWithDatePicker" style="display:none">
+    {{> assignFinal}} {{> createAssessment}}
+  </div>
+
   {{> addCourse}} {{> deleteCourse}} {{> addAssessmentType}} {{> deleteCourseworkAssessmentType}} {{>deleteFinalAssessmentType}}
-  {{> login}} {{> register}} {{> createAssessment}} {{> deleteCourseworkAssessment}} {{> assignFinal}} {{> addStudents}}
-  {{> deleteStudent}} {{> editStudent}} {{> renameAssessment}} {{> feedback}}
+  {{> login}} {{> register}} {{> deleteCourseworkAssessment}} {{> addStudents}} {{> deleteStudent}} {{> editStudent}} {{>
+  renameAssessment}} {{> feedback}} {{> unAssignFinal}} {{> emailVerificationPopup}}
 
   <!--Scripts Here-->
   <script>
@@ -40,6 +97,15 @@
       $('.modal').modal();
       $(".dropdown-button").dropdown();
       $('select').material_select();
+      $('.datepicker').pickadate({
+        selectMonths: true, // Creates a dropdown to control month
+        selectYears: 15, // Creates a dropdown of 15 years to control year,
+        today: 'Today',
+        clear: 'Clear',
+        close: 'Ok',
+        container: '#modalsWithDatePicker',
+        closeOnSelect: false // Close upon selecting a date,
+      });
     });
   </script>
   <script>

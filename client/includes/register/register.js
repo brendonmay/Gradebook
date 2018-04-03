@@ -52,17 +52,24 @@ Template.register.events({
 
         var email = event.target.registerEmail.value;
         var password = event.target.registerPassword.value;
+
         Accounts.createUser({
             email: email,
             password: password
         });
 
-        document.getElementById("preloader").style = "";
         var registerForm = document.getElementById("registerForm");
         registerForm.reset();
         clearValidation(registerForm);
 
-        $('#registerModal').modal('close');
+        
+        $('#emailVerificationModal').modal({
+            complete: function () {
+                document.getElementById("preloader-full").style = "display: none;";
+                $('#registerModal').modal('close');
+            }
+        });
+        $('#emailVerificationModal').modal('open');
     }
 })
 

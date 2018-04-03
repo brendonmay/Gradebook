@@ -13,15 +13,9 @@ function closeAddCourseModal() {
 }
 
 Template.addCourse.events({
-    //type of event is a submit, the element is a form with class add-form, when its called run a function
     'submit .add-form': function () {
-
-        //after form is submitted, this will update the Users document in the collection to include the newly registered course
-
-        //prevent from being submitted into another file
         event.preventDefault();
 
-        //Get input value
         const target = event.target;
         const course = target.courseName.value;
         const year = document.getElementById("courseYear").value;
@@ -33,7 +27,6 @@ Template.addCourse.events({
             }
             else {
                 var teacherInfo = Courses.find({ ownerId: Meteor.userId() }, { _id: 0, ownerId: 0 });
-                //first determine courseID, previous courseId + 1
                 let newCourseId = 0;
                 teacherInfo.forEach(
                     function (doc) {
@@ -44,7 +37,6 @@ Template.addCourse.events({
                 let currentCourses = Courses.findOne({ ownerId: Meteor.userId() }, { _id: 0, ownerId: 0 }).courses;
                 const newCourse = { courseId: newCourseId, courseName: course, courseYear: year };
 
-                //create updated array of course objects
                 currentCourses[newCourseId - 1] = newCourse;
                 for (var i = 0; i < currentCourses.length; i++) {
                     if (currentCourses[i] == null) {

@@ -1,0 +1,34 @@
+.chrome-icon{
+    height: 60%!important;
+    width: 60%!important;
+    padding-right:0!important;
+}
+
+.nopadright{
+    padding-right: 0!important
+}
+
+.nopadleft{
+    padding-left: 0!important
+}
+
+.relative-img{
+    position:relative!important;
+}
+
+.card-content{
+    padding-top: 12px!important;
+}
+
+.card-title{
+    padding-left: .9em!important;
+    margin-top: .9em !important;
+}
+
+.no-mar-btm{
+    margin-bottom:0!important;
+}
+
+.arrow{
+    margin-top: 5em!important;
+}

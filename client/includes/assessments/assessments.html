@@ -29,7 +29,7 @@
                                                 <li class="row collection-item assessments-collapsible-nested item-height">
                                                     <h6 class="col s11 offset-s1 assessment-field-display">Date:
                                                         <div class="inline input-field input-margin-bottom-fix assessment-input">
-                                                            <input class="center-align datepicker datepickerspecial" type="text"  id="courseDate{{assessmentId}}" value={{Date}}>
+                                                            <input class="center-align datepicker datepickerspecial datePickerCourse" type="text"  id="courseDate{{assessmentId}}" value={{Date}}>
                                                         </div>
                                                     </h6>
                                                 </li>
@@ -61,7 +61,7 @@
                                                 <li class="row collection-item assessments-collapsible-nested item-height">
                                                     <h6 class="col s11 offset-s1 assessment-field-display">Communication:
                                                         <div class="inline input-field input-margin-bottom-fix assessment-input">
-                                                            <input class="center-align editable-assessment-fields course-edit-fields-blur c" name="NameCoursesC{{assessmentId}}" id="courseC{{assessmentId}}" value={{C}} data-error=".courseC{{assessmentId}}Error">
+                                                            <input class="courseAssessmentInput center-align editable-assessment-fields course-edit-fields-blur c" name="NameCoursesC{{assessmentId}}" id="courseC{{assessmentId}}" value={{C}} data-error=".courseC{{assessmentId}}Error">
                                                         </div>
                                                         <div class="courses-assessments-error courseC{{assessmentId}}Error"></div>                                                        
                                                     </h6>
@@ -93,7 +93,7 @@
             {{#each finalAssessmentTypes}}
             <li>
                 <div class="collapsible-header" id="{{assessmentTypeId}}?dropdownId">
-                    <i class="material-icons">arrow_drop_down</i>{{assessmentType}}</div>
+                    <i class="material-icons">arrow_drop_down</i>{{assessmentType}}{{#if hasFinalAssessments assessmentTypeId}}<span id="unAssignBadge?{{assessmentTypeId}}" class="new badge blue-grey unAssignBadge" data-badge-caption="Unassign"></span>{{/if}}</div>
                 <div class="collapsible-body assessments-collapsible">
                     <div class="row finalAssessmentsRow">
                         <div class="col s12 m12">
@@ -103,7 +103,7 @@
                                     <li class="row collection-item assessments-collapsible-nested">
                                         <h6 class="col s11 offset-s1 assessment-field-display">Date:
                                             <div class="inline input-field input-margin-bottom-fix assessment-input">
-                                                <input class="center-align datepicker datepickerspecial" type="text" id="finalDate{{assessmentTypeId}}" value={{Date}}>
+                                                <input class="center-align datepicker datepickerspecial datePickerFinal" type="text" id="finalDate{{assessmentTypeId}}" value={{Date}}>
                                             </div>
                                         </h6>
                                     </li>
@@ -134,7 +134,7 @@
                                     <li class="row collection-item assessments-collapsible-nested c-final-row">
                                         <h6 class="col s11 offset-s1 assessment-field-display">Communication:
                                             <div class="inline input-field input-margin-bottom-fix assessment-input">
-                                                <input class="center-align editable-assessment-fields final-blur-class c-final" name="NameFinalC{{assessmentTypeId}}" data-error=".finalC{{assessmentTypeId}}" id="finalC{{assessmentTypeId}}" value={{C}}>
+                                                <input class="finalAssessmentInput center-align editable-assessment-fields final-blur-class c-final" name="NameFinalC{{assessmentTypeId}}" data-error=".finalC{{assessmentTypeId}}" id="finalC{{assessmentTypeId}}" value={{C}}>
                                             </div>
                                             <div class="courses-assessments-error finalC{{assessmentTypeId}}"></div>
                                         </h6>

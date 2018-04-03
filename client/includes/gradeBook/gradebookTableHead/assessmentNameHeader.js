@@ -246,42 +246,6 @@ function updateTableHeadFixer() {
     })
 }
 
-function deleteCourseWorkModalComplete(assessmentTypeId, assessmentId) {
-    if (Session.get('removeAssessmentObj').removeCourse == "yes") {
-        var currentCourseId = Session.get('courseId');
-        var courseAssessmentsTypes = Assessments.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).courseAssessmentTypes;
-        for (var i = 0; i < courseAssessmentsTypes.length; i++) {
-            if (courseAssessmentsTypes[i].assessmentTypeId == assessmentTypeId) {
-                let assessmentType = courseAssessmentsTypes[i].assessments;
-                for (var j = 0; j < assessmentType.length; j++) {
-                    if (assessmentType[j].assessmentId == assessmentId) {
-                        assessmentType.splice(j, 1);
-                        break;
-                    }
-                }
-                courseAssessmentsTypes[i].assessments = assessmentType;
-                break;
-            }
-        }
-        Meteor.call('assessments.updateAssessments', currentCourseId, courseAssessmentsTypes);
-        Meteor.call('students.deleteAssessment', Meteor.userId(), currentCourseId, assessmentId);
-
-        document.getElementById("preloader").style = "";
-
-        setTimeout(function () {
-            updateColorsInGradebook().then(function () {
-                updateTableHeadFixer();
-            });
-            document.getElementById("preloader").style = "display: none";
-        }, 1000);
-    }
-    let removeAssessmentObj = Session.get("removeAssessmentObj");
-    removeAssessmentObj.removeCourse = "";
-    Session.set("removeAssessmentObj", removeAssessmentObj);
-    $('#deleteCourseworkAssessmentModal').modal('close');
-
-}
-
 Template.topRow.onRendered(function () {
     var self = this;
     this.autorun(function () {
@@ -296,20 +260,6 @@ Template.topRow.onRendered(function () {
         }, 1000);
     });
 });
-
-// Template.topCategories.onRendered(function(){
-//     var self = this;
-//     this.autorun(function () {
-//         // Template.currentData();
-//         console.log("topCategories re-rendered");
-//         // setGradebookColors();
-//         // $("#main_table").tableHeadFixer({ "left": 1, 'head': true });
-//         // Session.set('gradebookUpdated', false);
-//         setTimeout(function(){
-//             document.getElementById("preloader").style = "display: none";
-//         }, 1000);
-//     });
-// });
 
 Template.assessmentNameHeader.helpers({
     getAssessmentNames: function () {
@@ -384,7 +334,6 @@ Template.assessmentNameHeader.events({
 
             $('.delete-courseworkAssessment-modal').modal({
                 complete: function () {
-                    //deleteCourseWorkModalComplete(assessmentTypeId, assessmentId);
                     setTimeout(function () {
                         updateColorsInGradebook().then(function () {
                             updateTableHeadFixer().then(function () {
@@ -399,11 +348,27 @@ Template.assessmentNameHeader.events({
         }
         //if deleting final evaluation
         else {
-            let courseSettings = document.getElementById("courseSettingsTabId");
-            courseSettings.click();
-            let assessmentSettings = document.getElementById("ASClick");
-            assessmentSettings.click();
-            Materialize.toast('You can delete Final Evaluations from this page.', 5000, 'amber darken-3');
+            var assessmentTypeId = assessmentId;
+            var removeAssessmentObj = {
+                assessmentTypeId,
+                removeCourse: "",
+                inAssessments: false
+            };
+            Session.set("removeAssessmentObj", removeAssessmentObj);
+
+            $('#unAssignFinalModal').modal({
+                complete: function () {
+                    setTimeout(function () {
+                        updateColorsInGradebook().then(function () {
+                            updateTableHeadFixer().then(function () {
+                                Session.set('gradebookUpdated', false);
+                                document.getElementById("preloader").style = "display: none";
+                            });
+                        });
+                    }, 1000);
+                }
+            });
+            $('#unAssignFinalModal').modal('open');
         }
     }
 });

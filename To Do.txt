@@ -1,27 +1,31 @@
--Styling
-	- "Thanks for signing in! Add a course to get started!
-	- "Welcome Back! Select a course to get started!"
-	- Gradebook display when you have no students
-	- If you have no students, show a different page in student reports
+Styling
+	- Properly center the suggestion to use chrome (or put in footer)
+	- make sure site functions decently in internet explorer
+	- footer
+	- feedback modal
 
--Functionality
+Bugs
 	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.
-	- when you edit assessmentType weighting, adjust categoryGrades in calculatedgrades
-	- when you delete an assessmentType, update categoryGrades in calculated grades
+	
+New Functionality
+	- Email verification on signup
+	- Reset password functionality
+	- allow ability to delete final evaluation directly from gradebook (doesnt delete the assessmentType, just "un-assigns" it)
 	- add print student reports functionality
-
+	- think of structure to allow administrators to view marks for the school
+	- think of way to implement subscription system
+	
 Scaling
-	- https://medium.freecodecamp.org/scaling-meteor-a-year-on-26ee37588e4b
 	- MongoDB indexes are super important. 
-	- Disconnect users when they’ve just left their tab open; It’s so simple to do and saves precious resources.
 
-Replace setTimeOut (try Blaze.remove() and Blaze.render(), and then Template.onRendered will re-trigger each time):
-	- when you change courseyear
+Rolling Deployment
+	- Deploy > 1 instance connected to same DB.
+	- Learn how to backup database.
+	- Look into Meteor Up + Digital Ocean combo
+	- Look into MongoDB Atlas as opposed to MLab
 
 Preloader:
 	- Initial page load
-	- logging in
-	- loggging out
 
 -------------
 -Figure out why I can't add script with src includes/globalFunctions/clearValidation.js 

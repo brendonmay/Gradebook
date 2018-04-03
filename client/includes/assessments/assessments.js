@@ -7,9 +7,9 @@ import { Assessments } from '../../../lib/collections.js';
 
 import '../../main.html';
 
-const requiredText = "Must contain a positive number or N/A."; //"Please fill in the required fields.";
-const isIntegerText = "Must contain a positive number or N/A."; // "A selected category's mark must be an integer.";
-const isPositiveText = "Must contain a positive number or N/A."; //"A selected category's mark must be greater than 0.";
+const requiredText = "Must contain a positive number or N/A.";
+const isIntegerText = "Must contain a positive number or N/A.";
+const isPositiveText = "Must contain a positive number or N/A.";
 
 function canAssignFinalEvaluation() {
     let currentCourseId = Session.get('courseId');
@@ -18,7 +18,6 @@ function canAssignFinalEvaluation() {
     var unassignedFinalEvaluationIds = [];
     var arrayOfEvaluationsToReturn = [];
 
-    //check which final assessment Type Ids have not already been assigned
     for (i = 0; i < finalAssessmentTypeObjects.length; i++) {
         if (finalAssessmentTypeObjects[i].K == "N/A" && finalAssessmentTypeObjects[i].A == "N/A" && finalAssessmentTypeObjects[i].T == "N/A" && finalAssessmentTypeObjects[i].C == "N/A") {
             let unassignedAssessmentTypeId = finalAssessmentTypeObjects[i].assessmentTypeId;
@@ -26,11 +25,9 @@ function canAssignFinalEvaluation() {
         }
     }
 
-    //We now have all the Ids of the unassigned final assessments. We must find their names
     for (i = 0; i < unassignedFinalEvaluationIds.length; i++) {
         for (z = 0; z < finalAssessmentTypes.length; z++) {
             if (unassignedFinalEvaluationIds[i] == finalAssessmentTypes[z].assessmentTypeId) {
-                //console.log(finalAssessmentTypes[z].assessmentType + " is the name of assessmentTypeId: " + unassignedFinalEvaluationIds[i]);
                 var assessmentName = finalAssessmentTypes[z].assessmentType;
                 var unassignedEvaluation = { assessmentType: assessmentName };
                 arrayOfEvaluationsToReturn[arrayOfEvaluationsToReturn.length] = unassignedEvaluation;
@@ -74,7 +71,7 @@ function updateAssessments(courseAssessmentTypes, assessmentTypeId, assessmentId
         }
     }
     if (fieldsChanged) {
-        Meteor.call('assessments.updateAssessments', currentCourseId, courseAssessmentTypes)
+        Meteor.call('assessments.updateAssessments', currentCourseId, courseAssessmentTypes);
 
         //at the end, push a message to the user saying the changes have been saved.
         Materialize.toast('Your changes to ' + courseName + ' have been saved', 3000, 'amber darken-3'); //make it so that toast includes assessment name
@@ -392,9 +389,27 @@ Template.assessments.helpers({
 });
 
 Template.assessments.events({
+    'click .unAssignBadge': function () {
+        var id = event.target.id;
+        var assessmentTypeId = id.slice(id.indexOf("?") + 1, id.length);
+        var headerId = assessmentTypeId + "?dropdownId";
+
+        document.getElementById(headerId).click();
+
+        var removeAssessmentObj = {
+            assessmentTypeId,
+            removeCourse: "",
+            inAssessments: true
+        };
+
+        Session.set("removeAssessmentObj", removeAssessmentObj);
+
+        $('#unAssignFinalModal').modal('open');
+    },
     'click .assignFinalEvalButton': function () {
         //check if you have no more evaluations to assign
         if (canAssignFinalEvaluation() == true) {
+            document.getElementById("modalsWithDatePicker").style = "";
             $('#assignFinalModal').modal({
                 dismissible: true,
                 complete: function () {
@@ -428,6 +443,7 @@ Template.assessments.events({
                         document.getElementById("inputFinalMarkC-error").remove();
                     }
                     beginValidation();
+                    document.getElementById("modalsWithDatePicker").style = "display: none";
                 }
             });
             $('#assignFinalModal').modal('open');
@@ -438,6 +454,7 @@ Template.assessments.events({
         }
     },
     'click .createAssessmentButton': function () {
+        document.getElementById("modalsWithDatePicker").style = "";
         $('#createAssessmentModal').modal({
             dismissible: true,
             complete: function () {
@@ -474,6 +491,7 @@ Template.assessments.events({
                 if (document.getElementById('createNewAssessment-error')) {
                     document.getElementById('createNewAssessment-error').remove();
                 }
+                document.getElementById("modalsWithDatePicker").style = "display: none";
             }
         });
         $('#createAssessmentModal').modal('open');
@@ -534,28 +552,42 @@ Template.assessments.events({
         $('#deleteCourseworkAssessmentModal').modal('open');
     },
     'click .collapsible-header': function () {
+        document.getElementById("modalsWithDatePicker").style = "";
         $('.datepicker').pickadate({
-            selectMonths: true, // Creates a dropdown to control month
-            selectYears: 15, // Creates a dropdown of 15 years to control year,
+            selectMonths: true,
+            selectYears: 15,
             today: 'Today',
             clear: 'Clear',
             close: 'Ok',
-            container: '#datepicker-container',
-            closeOnSelect: false // Close upon selecting a date,
+            container: '#modalsWithDatePicker',
+            closeOnSelect: false,
+            onClose: function () {
+                var assessmentId = Session.get('datePicker');
+                var form = document.getElementById("formSubmit" + assessmentId);
+                form.click();
+            }
         });
         $('.collapsible').collapsible();
     },
+    'focus .datePickerCourse': function () {
+        const id = event.target.id;
+
+        var assessmentId = id.slice(10, id.length);
+        Session.set('datePicker', assessmentId);
+    },
+    'focus .datePickerFinal': function () {
+        const id = event.target.id;
+
+        var assessmentId = id.slice(9, id.length);
+        Session.set('datePicker', assessmentId);
+    },
     'submit .edit-courseassessment-form': function () {
-        //determine which form has been changed 
         let target = event.target;
         let formId = target.id;
 
-        //assign all the new values to variables
         let assessmentId = formId.substring(4);
         let assessmentTypeId = assessmentId.substring(0, assessmentId.indexOf('-'));
         let currentCourseId = Session.get('courseId');
-
-        //console.log("assessmentTypeId: " + assessmentTypeId + ". AssessmentId: " + assessmentId)
 
         let dateId = "courseDate" + assessmentId;
         let kId = "courseK" + assessmentId;
@@ -573,7 +605,6 @@ Template.assessments.events({
             newDate = "N/A"
         }
 
-        //check that each variable is of the correct type/format
         if (!areMarkFieldsValid(markK, markA, markT, markC)) {
             var errorElement = document.getElementById("markFieldInvalid" + assessmentId);
             errorElement.style.display = "";
@@ -656,71 +687,19 @@ Template.assessments.events({
     },
     'focus .course-edit-fields-blur': function () {
         let target = event.target;
-        let formId = target.id;
-        let assessmentTypeID = formId.substring("courseX".length, formId.length);
-        let currentField = formId.substring("course".length, "courseX".length);
+        let id = target.id;
+        target.setSelectionRange(0, target.value.length);
 
-        switch (currentField) {
-            case "K":
-                var nextInputField = document.getElementById("courseK" + assessmentTypeID);
-                nextInputField.focus();
-                nextInputField.setSelectionRange(0, nextInputField.value.length);
-                break;
-            case "A":
-                var nextInputField = document.getElementById("courseA" + assessmentTypeID);
-                nextInputField.focus();
-                nextInputField.setSelectionRange(0, nextInputField.value.length);
-                break;
-            case "T":
-                var nextInputField = document.getElementById("courseT" + assessmentTypeID);
-                nextInputField.focus();
-                nextInputField.setSelectionRange(0, nextInputField.value.length);
-                break;
-            case "C":
-                var nextInputField = document.getElementById("courseC" + assessmentTypeID);
-                nextInputField.focus();
-                nextInputField.setSelectionRange(0, nextInputField.value.length);
-                break;
-            default:
-                break;
-        }
     },
     'focus .final-blur-class': function () {
         let target = event.target;
-        let formId = target.id;
-        let assessmentTypeID = formId.substring("finalX".length, formId.length);
-        let currentField = formId.substring("final".length, "finalX".length);
-
-        switch (currentField) {
-            case "K":
-                var nextInputField = document.getElementById("finalK" + assessmentTypeID);
-                nextInputField.focus();
-                nextInputField.setSelectionRange(0, nextInputField.value.length);
-                break;
-            case "A":
-                var nextInputField = document.getElementById("finalA" + assessmentTypeID);
-                nextInputField.focus();
-                nextInputField.setSelectionRange(0, nextInputField.value.length);
-                break;
-            case "T":
-                var nextInputField = document.getElementById("finalT" + assessmentTypeID);
-                nextInputField.focus();
-                nextInputField.setSelectionRange(0, nextInputField.value.length);
-                break;
-            case "C":
-                var nextInputField = document.getElementById("finalC" + assessmentTypeID);
-                nextInputField.focus();
-                nextInputField.setSelectionRange(0, nextInputField.value.length);
-                break;
-            default:
-                break;
-        }
+        let id = target.id;
+        target.setSelectionRange(0, target.value.length);
     },
     'blur .course-edit-fields-blur': function () {
 
         let target = event.target;
         let formId = target.id;
-        //assign all the new values to variables
         let assessmentId = formId.substring(7);
 
         var form = document.getElementById("formSubmit" + assessmentId);
@@ -729,7 +708,6 @@ Template.assessments.events({
     'blur .final-blur-class': function () {
         let target = event.target;
         let formId = target.id;
-        //assign all the new values to variables
         let assessmentTypeId = formId.substring(6);
 
         var form = document.getElementById("formSubmit" + assessmentTypeId);
@@ -739,8 +717,17 @@ Template.assessments.events({
         renameAssessmentEvent();
 
     },
+    'keydown .finalAssessmentInput': function () {
+        if (event.keyCode == 9) {
+            event.preventDefault();
+        }
+        if (event.keyCode == 13) {
+            event.preventDefault();
+        }
+    },
     'keyup .finalAssessmentInput': function () {
-        if (event.keyCode === 13) { //if enter is hit
+        if (event.keyCode == 9) {
+            event.preventDefault();
             let target = event.target;
             let formId = target.id;
             let assessmentTypeID = formId.substring("finalX".length, formId.length);
@@ -750,29 +737,62 @@ Template.assessments.events({
                 case "K":
                     var nextInputField = document.getElementById("finalA" + assessmentTypeID);
                     nextInputField.focus();
-                    nextInputField.setSelectionRange(0, nextInputField.value.length);
-                    break;
+                    return false
                 case "A":
                     var nextInputField = document.getElementById("finalT" + assessmentTypeID);
                     nextInputField.focus();
-                    nextInputField.setSelectionRange(0, nextInputField.value.length);
-                    break;
+                    return false
                 case "T":
                     var nextInputField = document.getElementById("finalC" + assessmentTypeID);
                     nextInputField.focus();
-                    nextInputField.setSelectionRange(0, nextInputField.value.length);
-                    break;
+                    return false
                 case "C":
-                    var form = document.getElementById("formSubmit" + assessmentTypeID);
-                    form.click();
-                    break;
+                    document.getElementById("formSubmit" + assessmentTypeID).click()
+                    return false
                 default:
-                    break;
+                    return false
             }
+        }
+        if (event.keyCode == 13) {
+            event.preventDefault();
+            let target = event.target;
+            let formId = target.id;
+            let assessmentTypeID = formId.substring("finalX".length, formId.length);
+            let currentField = formId.substring("final".length, "finalX".length);
+
+            switch (currentField) {
+                case "K":
+                    var nextInputField = document.getElementById("finalA" + assessmentTypeID);
+                    nextInputField.focus();
+                    return false
+                case "A":
+                    var nextInputField = document.getElementById("finalT" + assessmentTypeID);
+                    nextInputField.focus();
+                    return false
+                case "T":
+                    var nextInputField = document.getElementById("finalC" + assessmentTypeID);
+                    nextInputField.focus();
+                    return false
+                case "C":
+                    document.getElementById("formSubmit" + assessmentTypeID).click();
+                    return false
+                default:
+                    return false
+            }
+        }
+
+    },
+    'keydown .courseAssessmentInput': function () {
+        if (event.keyCode == 13) {
+            event.preventDefault();
+        }
+        if (event.keyCode == 9) {
+            event.preventDefault();
         }
     },
     'keyup .courseAssessmentInput': function () {
-        if (event.keyCode === 13) { //if enter is hit
+        if (event.keyCode == 13) {
+            event.preventDefault();
             let target = event.target;
             let formId = target.id;
             let assessmentTypeID = formId.substring("courseX".length, formId.length);
@@ -782,24 +802,47 @@ Template.assessments.events({
                 case "K":
                     var nextInputField = document.getElementById("courseA" + assessmentTypeID);
                     nextInputField.focus();
-                    nextInputField.setSelectionRange(0, nextInputField.value.length);
-                    break;
+                    return false
                 case "A":
                     var nextInputField = document.getElementById("courseT" + assessmentTypeID);
                     nextInputField.focus();
-                    nextInputField.setSelectionRange(0, nextInputField.value.length);
-                    break;
+                    return false
                 case "T":
                     var nextInputField = document.getElementById("courseC" + assessmentTypeID);
                     nextInputField.focus();
-                    nextInputField.setSelectionRange(0, nextInputField.value.length);
-                    break;
+                    return false
                 case "C":
-                    var form = document.getElementById("formSubmit" + assessmentTypeID);
-                    form.click();
-                    break;
+                    document.getElementById("formSubmit" + assessmentTypeID).click();
+                    return false
                 default:
-                    break;
+                    return false
+            }
+        }
+        if (event.keyCode == 9) {
+            event.preventDefault();
+            let target = event.target;
+            let formId = target.id;
+            let assessmentTypeID = formId.substring("courseX".length, formId.length);
+            let currentField = formId.substring("course".length, "courseX".length);
+
+            switch (currentField) {
+                case "K":
+                    var nextInputField = document.getElementById("courseA" + assessmentTypeID);
+                    nextInputField.focus();
+                    return false
+                case "A":
+                    var nextInputField = document.getElementById("courseT" + assessmentTypeID);
+                    nextInputField.focus();
+                    return false
+                case "T":
+                    var nextInputField = document.getElementById("courseC" + assessmentTypeID);
+                    nextInputField.focus();
+                    return false
+                case "C":
+                    document.getElementById("formSubmit" + assessmentTypeID).click()
+                    return false
+                default:
+                    return false
             }
         }
     }

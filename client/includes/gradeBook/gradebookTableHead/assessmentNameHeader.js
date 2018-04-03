@@ -249,7 +249,6 @@ function updateTableHeadFixer() {
 Template.topRow.onRendered(function () {
     var self = this;
     this.autorun(function () {
-        console.log("change detected");
         setTimeout(function () {
             updateColorsInGradebook().then(function () {
                 updateTableHeadFixer().then(function () {

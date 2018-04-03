@@ -6,14 +6,14 @@ Styling
 
 Bugs
 	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.
-	- in assessments tab, if you change the mark out of for any category, when you hit enter 2 toasts appear. (only occurs on deployment, doesnt happen on Communication input)
-
+	
 New Functionality
 	- Email verification on signup
 	- Reset password functionality
 	- allow ability to delete final evaluation directly from gradebook (doesnt delete the assessmentType, just "un-assigns" it)
 	- add print student reports functionality
 	- think of structure to allow administrators to view marks for the school
+	- think of way to implement subscription system
 	
 Scaling
 	- MongoDB indexes are super important. 

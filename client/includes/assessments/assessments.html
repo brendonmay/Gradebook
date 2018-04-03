@@ -93,7 +93,7 @@
             {{#each finalAssessmentTypes}}
             <li>
                 <div class="collapsible-header" id="{{assessmentTypeId}}?dropdownId">
-                    <i class="material-icons">arrow_drop_down</i>{{assessmentType}}</div>
+                    <i class="material-icons">arrow_drop_down</i>{{assessmentType}}{{#if hasFinalAssessments assessmentTypeId}}<span id="unAssignBadge?{{assessmentTypeId}}" class="new badge blue-grey unAssignBadge" data-badge-caption="Unassign"></span>{{/if}}</div>
                 <div class="collapsible-body assessments-collapsible">
                     <div class="row finalAssessmentsRow">
                         <div class="col s12 m12">

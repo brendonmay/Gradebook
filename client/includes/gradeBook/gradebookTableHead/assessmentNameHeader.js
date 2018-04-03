@@ -347,11 +347,27 @@ Template.assessmentNameHeader.events({
         }
         //if deleting final evaluation
         else {
-            let courseSettings = document.getElementById("courseSettingsTabId");
-            courseSettings.click();
-            let assessmentSettings = document.getElementById("ASClick");
-            assessmentSettings.click();
-            Materialize.toast('You can delete Final Evaluations from this page.', 5000, 'amber darken-3');
+            var assessmentTypeId = assessmentId;
+            var removeAssessmentObj = {
+                assessmentTypeId,
+                removeCourse: "",
+                inAssessments: false
+            };
+            Session.set("removeAssessmentObj", removeAssessmentObj);
+
+            $('#unAssignFinalModal').modal({
+                complete: function () {
+                    setTimeout(function () {
+                        updateColorsInGradebook().then(function () {
+                            updateTableHeadFixer().then(function () {
+                                Session.set('gradebookUpdated', false);
+                                document.getElementById("preloader").style = "display: none";
+                            });
+                        });
+                    }, 1000);
+                }
+            });
+            $('#unAssignFinalModal').modal('open');
         }
     }
 });

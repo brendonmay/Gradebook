@@ -5,3 +5,10 @@ Template.successfulLoginView.onRendered(function(){
     document.getElementById("preloader-full").style = "display: none";
     $('.slider').slider();
 });
+
+Template.successfulLoginView.events({
+    'click #subscription-link': function(){
+        console.log("clicked");
+        $('#paymentModalId').modal('open');
+    }
+})

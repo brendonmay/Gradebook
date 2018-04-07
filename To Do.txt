@@ -6,6 +6,7 @@ Styling
 
 Bugs
 	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.
+	- There seems to be a 15 character limit on renaming assessments in assessment tab. Is this correct?
 	
 New Functionality
 	- Email verification on signup

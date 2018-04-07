@@ -7,7 +7,7 @@ import '../../main.html';
 
 function resetPassword() {
     var token = Session.get('resetPasswordToken');
-    if (token) {
+    if (token != null) {
         const newPassword = document.getElementById('onResetPassword').value;
         Accounts.resetPassword(token, newPassword, function (error) {
             if (error) {

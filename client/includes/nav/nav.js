@@ -63,12 +63,12 @@ Template.nav.events({
   },
   'click .change-password-dropdown': function() {
       event.preventDefault();
-      ('#changePasswordModal').modal({
+      $('#changePasswordModal').modal({
         dismissable: true,
         complete: function() {
           //
         }
       });
-      ('#changePasswordModal').modal('open');
+      $('#changePasswordModal').modal('open');
   }
 });

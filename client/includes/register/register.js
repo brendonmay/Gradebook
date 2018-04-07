@@ -50,8 +50,6 @@ Template.register.events({
     'submit .register-form': function (event) {
         event.preventDefault();
 
-        document.getElementById("preloader-full").style = "";
-
         var email = event.target.registerEmail.value;
         var password = event.target.registerPassword.value;
 
@@ -64,7 +62,14 @@ Template.register.events({
         registerForm.reset();
         clearValidation(registerForm);
 
-        $('#registerModal').modal('close');
+        
+        $('#emailVerificationModal').modal({
+            complete: function () {
+                document.getElementById("preloader-full").style = "display: none;";
+                $('#registerModal').modal('close');
+            }
+        });
+        $('#emailVerificationModal').modal('open');
     }
 })
 

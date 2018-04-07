@@ -61,16 +61,14 @@ Template.nav.events({
 
     Meteor.logout();
   },
-
-  // 'click #printPDF': function () {
-  //   // Blaze.saveAsPDF(Template.studentReports, {
-  //   //   filename: "report.pdf", // optional, default is "document.pdf
-  //   //   x: 0, // optional, left starting position on resulting PDF, default is 4 units
-  //   //   y: 0, // optional, top starting position on resulting PDF, default is 4 units
-  //   //   orientation: "landscape", // optional, "landscape" or "portrait" (default)
-  //   //   // format: "letter" // optional, see Page Formats, default is "a4"
-  //   // });
-  //   return xepOnline.Formatter.Format('studentReportsPrint', {render:'download',filename:'studentReport'});
-
-  // }
+  'click .change-password-dropdown': function() {
+      event.preventDefault();
+      $('#changePasswordModal').modal({
+        dismissable: true,
+        complete: function() {
+          //
+        }
+      });
+      $('#changePasswordModal').modal('open');
+  }
 });

@@ -47,7 +47,7 @@ Template.login.events({
                 var loginForm = document.getElementById('loginForm');
                 loginForm.reset();
                 clearValidation(loginForm);
-                
+
                 $('#loginModal').modal('close');
             }
         });
@@ -75,6 +75,23 @@ Template.login.events({
         removeLoginError();
         //if cancel button is clicked, close the modal
         $('#loginModal').modal('close');
+    },
+    'click .resetPassword': function () {
+        var loginForm = document.getElementById('loginForm');
+        var registerForm = document.getElementById("registerForm");
+        loginForm.reset();
+        registerForm.reset();
+        clearValidation(loginForm);
+        clearValidation(registerForm);
+        $('#resetPasswordModal').modal({
+            dismissible: true,
+            complete: function () {
+                document.getElementById("reset-passed").style.display = "none";
+            }
+        });
+
+        $('#resetPasswordModal').modal('open');
+        removeLoginError();
     },
 })
 

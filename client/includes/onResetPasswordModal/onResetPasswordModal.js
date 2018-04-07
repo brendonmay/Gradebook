@@ -8,11 +8,16 @@ import '../../main.html';
 function resetPassword() {
     var token = Session.get('resetPasswordToken');
     if (token) {
-        const newPassword = document.getElementById('resetPassword').value;
+        const newPassword = document.getElementById('onResetPassword').value;
         Accounts.resetPassword(token, newPassword, function (error) {
             if (error) {
+                if (error.reason == "Token expired") {
+                    Materialize.toast('The link sent in the email has expired. Please try resetting your password again.');
+                } else {
                 //error message
-                Materialize.toast('There was an error resetting your password.');
+                    Materialize.toast('There was an error resetting your password.');
+                }
+                console.log(error);
             } else {
                 Materialize.toast('You have successfully reset your password');
                 Session.set('resetPasswordToken', null);
@@ -43,7 +48,7 @@ Template.onResetPasswordModal.onRendered(function () {
         return (input.match(numbers));
     });
 
-    $("#registerForm").validate({
+    $("#onResetPasswordModalForm").validate({
         errorClass: "invalid",
         validClass: "jquery-validation-valid",
         rules: {
@@ -82,6 +87,7 @@ Template.onResetPasswordModal.onRendered(function () {
             }
         }
     });
+    Session.set('onResetPasswordModalRendered', true);
 });
 
 

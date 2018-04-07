@@ -1,8 +1,8 @@
 Styling
-	- Properly center the suggestion to use chrome (or put in footer)
+	- verification email modal styling
 	- make sure site functions decently in internet explorer
-	- footer
-	- put feedback modal in the footer. Make sure on complete it clears the form.
+	- modify email templates for verify password
+
 
 Bugs
 	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.

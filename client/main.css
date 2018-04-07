@@ -97,10 +97,11 @@ input {
   margin-bottom: 20px !important;
 }
 .validation-red-text {
-  color: #d32f2f !important;
+  color: #ff5252 !important;
+  /* #ff5252 */
 }
 .input-field .div.error {
-  color: #d32f2f;
+  color: #ff5252;
 }
 input {
   margin-bottom: 0 !important;
@@ -109,7 +110,7 @@ input {
   margin-bottom: 20px !important;
 }
 .validation-red-text {
-  color: #d32f2f !important;
+  color: #ff5252 !important;
 }
 
 .material-icons, .icon-text {

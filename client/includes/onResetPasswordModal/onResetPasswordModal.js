@@ -28,9 +28,9 @@ function resetPassword() {
 
 Template.onResetPasswordModal.events({
 
-    'click #onResetPasswordSubmit': function () {
-        document.getElementById('onResetPasswordModalFormSubmitID').click();
-    },
+    // 'click #onResetPasswordSubmit': function () {
+    //     document.getElementById('onResetPasswordModalFormSubmitID').click();
+    // },
     'submit #onResetPasswordModalForm': function (event) {
         resetPassword();
         $('#onResetPasswordModal').modal('close');

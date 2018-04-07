@@ -5,13 +5,29 @@ import jqueryValidation from 'jquery-validation';
 import { Meteor } from "meteor/meteor";
 import '../../main.html';
 
+function resetPassword() {
+    var token = Session.get('resetPasswordToken');
+    if (token) {
+        const newPassword = document.getElementById('resetPassword').value;
+        Accounts.resetPassword(token, newPassword, function (error) {
+            if (error) {
+                //error message
+                Materialize.toast('There was an error resetting your password.');
+            } else {
+                Materialize.toast('You have successfully reset your password');
+                Session.set('resetPasswordToken', null);
+            }
+        });
+    }
+}
+
 Template.onResetPasswordModal.events({
 
     'click #onResetPasswordSubmit': function () {
         document.getElementById('onResetPasswordModalFormSubmitID').click();
-        $('#onResetPasswordModal').modal('close');
     },
     'submit #onResetPasswordModalForm': function (event) {
+        resetPassword();
         $('#onResetPasswordModal').modal('close');
     }
 })

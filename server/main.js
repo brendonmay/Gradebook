@@ -13,5 +13,4 @@ Meteor.startup(() => {
     privateKey: "12f6b57a5a035805835212056a210ee1"
   });
 
-  var checkout = require('../lib/routes/checkout');
 });

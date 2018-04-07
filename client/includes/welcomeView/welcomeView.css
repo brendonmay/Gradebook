@@ -1,7 +1,9 @@
 .chrome-icon{
-    height: 60%!important;
-    width: 60%!important;
+    height: 20px!important;
+    width: 20px!important;
     padding-right:0!important;
+    vertical-align: middle;
+    margin-bottom: .2em;
 }
 
 .nopadright{

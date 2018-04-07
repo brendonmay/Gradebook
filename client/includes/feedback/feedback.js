@@ -13,7 +13,13 @@ Template.feedback.onRendered(function () {
 });
 
 Template.feedback.events({
-    'submit #email_form': function() {
+    'submit #email_form': function () {
+        $('#feedbackModal').modal('close');
+    },
+    'click #submitFeedback': function () {
+        document.getElementById("submit_form").click();
+    },
+    'click #cancelFeedback': function () {
         $('#feedbackModal').modal('close');
     }
 });

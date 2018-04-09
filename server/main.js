@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { Mongo } from "meteor/mongo";
+import { CurrentDate } from "../lib/collections.js"
 
 Meteor.startup(() => {
   // code to run on server at startup
@@ -13,4 +14,40 @@ Meteor.startup(() => {
     privateKey: "12f6b57a5a035805835212056a210ee1"
   });
 
+  Meteor.publish('currentdate', function () {
+    var today = new Date();
+    var currentDate = CurrentDate.findOne();
+
+    if (currentDate != undefined) {
+      CurrentDate.update({},
+        { $set: { "date": today } }
+      );
+    }
+    else {
+      CurrentDate.insert({ date: today });
+    }
+
+    return CurrentDate.find({});
+  });
 });
+
+var onceEveryDay = new Cron(function () {
+
+  var today = new Date();
+  var currentDate = CurrentDate.findOne();
+
+  if (currentDate != undefined) {
+    CurrentDate.update({},
+      { $set: { "date": today } }
+    );
+  }
+  else {
+    CurrentDate.insert({ date: today });
+  }
+
+}, {
+    minute: 0,
+    hour: 0
+});
+
+onceEveryDay;

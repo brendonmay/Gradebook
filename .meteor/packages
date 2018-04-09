@@ -26,8 +26,7 @@ pac:jquery-floatthead
 jquery
 appworkshop:materialize
 chipcastledotcom:jspdf
-ongoworks:pdf
 mixmax:smart-disconnect
 random
 email
-iron:router
+chfritz:easycron

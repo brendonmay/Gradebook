@@ -8,7 +8,6 @@ Template.successfulLoginView.onRendered(function(){
 
 Template.successfulLoginView.events({
     'click #subscription-link': function(){
-        console.log("clicked");
         $('#paymentModalId').modal('open');
     }
 })

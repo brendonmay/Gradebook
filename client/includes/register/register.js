@@ -56,6 +56,8 @@ Template.register.events({
         Accounts.createUser({
             email: email,
             password: password
+        }, function() {
+            Meteor.call('giveUserFreeTrial', Meteor.userId());
         });
 
         var registerForm = document.getElementById("registerForm");

@@ -1,15 +1,15 @@
 #registerEmail-error {
     border-bottom: none !important; 
-    color: #d32f2f;
+    color: #ff5252;
     margin-bottom: 10px;
 }
 #registerPassword-error {
     border-bottom: none !important; 
-    color: #d32f2f;
+    color: #ff5252;
     margin-bottom: 10px;
 }
 #confirmPassword-error {
     border-bottom: none !important; 
-    color: #d32f2f;
+    color: #ff5252;
     margin-bottom: 10px;
 }

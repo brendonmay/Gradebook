@@ -386,7 +386,7 @@ function calculateAsessmentTypeGrades(ownerId, courseId, organizedStudentGrades)
 
         //Current Overall Grade for AssessmentType
         var weightedAverage = getWeightedAverage(KassessmentTypeGrade, AassessmentTypeGrade, TassessmentTypeGrade, CassessmentTypeGrade, WeightK, WeightA, WeightT, WeightC);
-        if (isNaN(weightedAverage)){
+        if (isNaN(weightedAverage)) {
             weightedAverage = "N/A";
         }
         var assessmentTypeWeighting = 0;
@@ -910,7 +910,7 @@ function getCourseEvalName(assessmentId) {
 }
 
 function drawAssessmentBreakdownBarGraph() {
-    if (!document.getElementById('assessmentBreakdownBarGraph')) return;    
+    if (!document.getElementById('assessmentBreakdownBarGraph')) return;
     //clear the contents of the div, in the event this function is called more than once.
     var assessmentTypeId = document.getElementById('studentReportsDropdown').value;
     var data = getStudentAssessmentTypeInfo(assessmentTypeId);
@@ -1051,7 +1051,7 @@ function drawCourseOverviewBreakdownBarGraph() {
             delete data[i].Grade;
         }
     }
-    if (data.length == 0) { 
+    if (data.length == 0) {
         data = [{
             assessmentTypeName: "Grade Breakdown"
         }];
@@ -1245,7 +1245,7 @@ function getWeightedAverage(K, A, T, C, WeightK, WeightA, WeightT, WeightC) {
 }
 
 function drawAssessmentTypeBarGraph() {
-    if (!document.getElementById('assessmentTypeBarGraph')) return;    
+    if (!document.getElementById('assessmentTypeBarGraph')) return;
     //clear the contents of the div, in the event this function is called more than once.
     var assessmentTypeId = document.getElementById("studentReportsDropdown").value;
     var assessmentTypeGrade = pullAssessmentTypeGradeFromCollection(assessmentTypeId);
@@ -1272,7 +1272,7 @@ function drawAssessmentTypeBarGraph() {
 }
 
 function drawFinalGradeBarGraph() {
-    if (!document.getElementById('assessmentTypeBarGraph')) return;    
+    if (!document.getElementById('assessmentTypeBarGraph')) return;
     //clear the contents of the div, in the event this function is called more than once.
     var studentsArray = CalculatedGrades.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') }).students;
     var studentId = Session.get("currentSelectedStudentID");
@@ -1406,7 +1406,7 @@ function getGradeForAssessment(gradeObj) {
     if (isNaN(c)) c = "N/A"
     var weightedAverage = Number(getWeightedAverage(k, a, t, c, WeightK, WeightA, WeightT, WeightC));
 
-    if (weightedAverage && isNaN(weightedAverage)){
+    if (weightedAverage && isNaN(weightedAverage)) {
         weightedAverage = "N/A"
     }
 
@@ -1828,10 +1828,10 @@ Template.studentReports.helpers({
             return grade + "%"
         }
     },
-    hasStudents: function(){
+    hasStudents: function () {
         var ownerId = Meteor.userId();
         var courseId = Session.get('courseId');
-        var students = Students.findOne({ownerId, courseId}).students;
+        var students = Students.findOne({ ownerId, courseId }).students;
         return students.length > 1
     }
 });

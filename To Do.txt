@@ -9,20 +9,12 @@ Bugs
 	- There seems to be a 15 character limit on renaming assessments in assessment tab. Is this correct?
 	
 New Functionality
-	- Email verification on signup
-	- Reset password functionality
+	- Email verification isnt working once clicked in email.
 	- add print student reports functionality
 	- think of structure to allow administrators to view marks for the school
-	- think of way to implement subscription system
 	
 Scaling
 	- MongoDB indexes are super important. 
-
-Rolling Deployment
-	- Deploy > 1 instance connected to same DB.
-	- Learn how to backup database.
-	- Look into Meteor Up + Digital Ocean combo
-	- Look into MongoDB Atlas as opposed to MLab
 
 Preloader:
 	- Initial page load

@@ -44,7 +44,7 @@ Template.resetPassword.events({
 })
 
 Template.resetPassword.onRendered(function () {
-    $.validator.addMethod('emailNotInUse', (input) => {
+    $.validator.addMethod('emailInUse', (input) => {
         var emailsArray = [];
         const userList = Meteor.users.find({});
         userList.forEach(
@@ -60,14 +60,14 @@ Template.resetPassword.onRendered(function () {
         rules: {
             userEmail: {
                 required: true,
-                emailNotInUse: true
+                emailInUse: true
             }
         },
         //For custom messages
         messages: {
             userEmail: {
                 required: "Enter your email",
-                emailNotInUse: "There is no account associated with this email"
+                emailInUse: "There is no account associated with this email"
             }
         },
         errorElement: 'div',

@@ -1,23 +1,34 @@
 Styling
 	- verification email modal styling
 	- make sure site functions decently in internet explorer
-	- modify email templates for verify password
-
+	- modify email templates for verify/reset password
 
 Bugs
 	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.
 	- There seems to be a 15 character limit on renaming assessments in assessment tab. Is this correct?
+	- Check to make sure that reset password and email verifications are fully working once fully implemented.
+	- make sure successfulLoginViews are both properly updated and hooked up to user database.
+	- Email verification isnt working once clicked in email.
+	- "you have yet to verify your email" - tell them to click link in email. Have option to-resend email.
+	- "getExpiryDate" helper function, update the expiry date by pulling from Meteor.users
+	- When you make a payment, when setting the expiration date, first check to see if they are expired. If expired, set it to 1 year from today, if not, set it to 1 year from the old expiration date.
+	- fix the repeated Id's in successfulLoginNoCourseView, change it to a class and adjust the click event.
 	
 New Functionality
-	- Email verification isnt working once clicked in email.
-	- add print student reports functionality
-	- think of structure to allow administrators to view marks for the school
+	- Add print student reports functionality (phantomjs?)
+	- Think of structure to allow administrators to view marks for the school
+	- Connect Paypal to Braintree
+	- Switch braintree sandbox over to proper account for deployment
+	- On account login, check to see if subscription is expired. If it is, lock the sideNav, change message in login-view.
+	- If you have 15 days or less remaining on your subscription, change the font color to red instead of green.
+	- Add an option to extend 
+	- Make it so that payments are auto-billed every year?
 	
 Scaling
 	- MongoDB indexes are super important. 
 
 Preloader:
-	- Initial page load
+	- Initial page load?
 
 -------------
 -Figure out why I can't add script with src includes/globalFunctions/clearValidation.js 

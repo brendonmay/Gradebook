@@ -13,7 +13,11 @@
                 </li>
                 {{#if isNotVerified}}
                 <li class="collection-item">
-                    <p class="fit-in-coll center" style="color:#ff5252">You have yet to verify your email.</p>
+                    <p class="fit-in-coll center" style="color:#ff5252">You haven't verified your email.
+                            <span style="color:#ff5252;"> Click the link in your email, or click </span>
+                            <a href="#!" class="resend-verification-email">here</a>
+                            <span style="color:#ff5252;"> to resend it.</span>
+                    </p>
                 </li>
                 {{/if}} {{#if onFreeTrial}} {{#if lessThanFifteenDays getExpiryDate}}
                 <li class="collection-item">

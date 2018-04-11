@@ -24,12 +24,19 @@ Template.successfulLoginView.helpers({
         return Meteor.users.findOne({ _id: Meteor.userId() }).emails[0].verified == false
     },
     onFreeTrial: function () {
-        return Meteor.users.findOne({ _id: Meteor.userId() }).subscribed.type == "free"
+        var user = Meteor.users.findOne({ _id: Meteor.userId() });
+        if (user && user.subscribed) {
+            return user.subscribed.type == "free"
+        }
     },
     getExpiryDate: function () {
         var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
         var currentDate = CurrentDate.findOne();
-        var today = currentDate.date;
+        if (currentDate) {
+            today = currentDate.date;
+          } else {
+            return;
+          }
         var expiryDate = Meteor.users.findOne({ _id: Meteor.userId() }).subscribed.expirationDate;
 
         var diffDays = Math.round((expiryDate.getTime() - today.getTime()) / (oneDay));

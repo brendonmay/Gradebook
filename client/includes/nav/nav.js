@@ -30,7 +30,12 @@ Template.nav.helpers({
   notExpired: function () {
     var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
     var currentDate = CurrentDate.findOne();
-    var today = currentDate.date;
+    var today;
+    if (currentDate) {
+      today = currentDate.date;
+    } else {
+      return;
+    }
     var expiryDate = Meteor.users.findOne({ _id: Meteor.userId() }).subscribed.expirationDate;
 
     var diffDays = Math.round((expiryDate.getTime() - today.getTime()) / (oneDay));

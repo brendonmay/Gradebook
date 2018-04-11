@@ -37,5 +37,10 @@ Template.successfulLoginNoCourseView.helpers({
 Template.successfulLoginNoCourseView.events({
     'click #subscription-link': function () {
         $('#paymentModalId').modal('open');
+    },
+    'click .resend-verification-email': function () {
+        Meteor.call('resendVerificationEmail', function () {
+            $('#emailVerificationModal').modal('open');
+        });
     }
 });

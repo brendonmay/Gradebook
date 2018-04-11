@@ -12,67 +12,62 @@
                     <h4 class="center" style="color: white">Notifications</h4>
                 </li>
                 {{#if isNotVerified}}
-                    <li class="collection-item">
-                        <p class="fit-in-coll center" style="color:#ff5252">You have yet to verify your email.</p>
-                    </li>
-                {{/if}} 
-
-                {{#if onFreeTrial}}
-                    {{#if lessThanFifteenDays getExpiryDate}}
-                        <li class="collection-item">
-                            <p class="fit-in-coll center">You are currently on your
-                                <span style="font-weight:bold">Free Trial. </span>
-                                <span style="color:#ff5252;">You have {{getExpiryDate}} days remaining.</span>
-                            </p>
-                        </li>
-                    {{else}}
-                        <li class="collection-item">
-                            <p class="fit-in-coll center">You are currently on your
-                                <span style="font-weight:bold">Free Trial. </span>
-                                <span style="color:#4caf50;">You have {{getExpiryDate}} days remaining.</span>
-                            </p>
-                        </li>
-                    {{/if}}
+                <li class="collection-item">
+                        <p class="fit-in-coll center" style="color:#ff5252">You haven't verified your email.
+                                <span style="color:#ff5252;"> Click the link in your email, or click </span>
+                                <a href="#!" class="resend-verification-email">here</a>
+                                <span style="color:#ff5252;"> to resend it.</span>
+                        </p>
+                </li>
+                {{/if}} {{#if onFreeTrial}} {{#if lessThanFifteenDays getExpiryDate}}
+                <li class="collection-item">
+                    <p class="fit-in-coll center">You are currently on your
+                        <span style="font-weight:bold">Free Trial. </span>
+                        <span style="color:#ff5252;">You have {{getExpiryDate}} days remaining.</span>
+                    </p>
+                </li>
                 {{else}}
-                    {{#if lessThanFifteenDays getExpiryDate}}
-                        <li class="collection-item">
-                            <p class="fit-in-coll center">You are currently a
-                                <span style="font-weight:bold">Paid Subscriber. </span>
-                                <span style="color:#ff5252;">You have {{getExpiryDate}} days remaining.</span>
-                            </p>
-                        </li>
-                    {{else}}
-                        <li class="collection-item">
-                            <p class="fit-in-coll center">You are currently a
-                                <span style="font-weight:bold">Paid Subscriber. </span>
-                                <span style="color:#4caf50;">You have {{getExpiryDate}} days remaining.</span>
-                            </p>
-                        </li>
-                    {{/if}}
-                {{/if}}
+                <li class="collection-item">
+                    <p class="fit-in-coll center">You are currently on your
+                        <span style="font-weight:bold">Free Trial. </span>
+                        <span style="color:#4caf50;">You have {{getExpiryDate}} days remaining.</span>
+                    </p>
+                </li>
+                {{/if}} {{else}} {{#if lessThanFifteenDays getExpiryDate}}
+                <li class="collection-item">
+                    <p class="fit-in-coll center">You are currently a
+                        <span style="font-weight:bold">Paid Subscriber. </span>
+                        <span style="color:#ff5252;">You have {{getExpiryDate}} days remaining.</span>
+                    </p>
+                </li>
+                {{else}}
+                <li class="collection-item">
+                    <p class="fit-in-coll center">You are currently a
+                        <span style="font-weight:bold">Paid Subscriber. </span>
+                        <span style="color:#4caf50;">You have {{getExpiryDate}} days remaining.</span>
+                    </p>
+                </li>
+                {{/if}} {{/if}}
             </ul>
         </div>
     </div>
-    <br> 
-    {{#if onFreeTrial}}
-        <div class="row">
-            <h5 class="condensed light center">Ready to Upgrade Your Account?</h5>
-            <h6 class="center">
-                <a href="#!" id="subscription-link">Click Here</a> to purchase a 1-year subscription.</h6>
-        </div>
+    <br> {{#if onFreeTrial}}
+    <div class="row">
+        <h5 class="condensed light center">Ready to Upgrade Your Account?</h5>
+        <h6 class="center">
+            <a href="#!" id="subscription-link">Click Here</a> to purchase a 1-year subscription.</h6>
+    </div>
+    {{else}} {{#if lessThanFifteenDays getExpiryDate}}
+    <div class="row">
+        <h5 class="condensed light center">Ready to Renew Your Subscription?</h5>
+        <h6 class="center">
+            <a href="#!" id="subscription-link">Click Here</a> to purchase a 1-year subscription.</h6>
+    </div>
     {{else}}
-        {{#if lessThanFifteenDays getExpiryDate}}
-            <div class="row">
-                <h5 class="condensed light center">Ready to Renew Your Subscription?</h5>
-                <h6 class="center">
-                    <a href="#!" id="subscription-link">Click Here</a> to purchase a 1-year subscription.</h6>
-            </div>
-        {{else}}
-            <div class="row">
-                <h5 class="condensed light center">Want to Extend Your Subscription?</h5>
-                <h6 class="center">
-                    <a href="#!" id="subscription-link">Click Here</a> to extend your subscription by one year.</h6>
-            </div>
-        {{/if}}
-    {{/if}}
+    <div class="row">
+        <h5 class="condensed light center">Want to Extend Your Subscription?</h5>
+        <h6 class="center">
+            <a href="#!" id="subscription-link">Click Here</a> to extend your subscription by one year.</h6>
+    </div>
+    {{/if}} {{/if}}
 </template>

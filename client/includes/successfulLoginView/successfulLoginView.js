@@ -11,6 +11,11 @@ Template.successfulLoginView.onRendered(function () {
 Template.successfulLoginView.events({
     'click #subscription-link': function () {
         $('#paymentModalId').modal('open');
+    },
+    'click .resend-verification-email': function () {
+        Meteor.call('resendVerificationEmail', function () {
+            $('#emailVerificationModal').modal('open');
+        });
     }
 })
 

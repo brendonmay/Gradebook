@@ -8,13 +8,10 @@ Styling
 	
 Bugs
 	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.
-	- Check to make sure that reset password and email verifications are fully working once fully implemented.
-	- Email verification isnt working once clicked in email.
-	- "you have yet to verify your email" - tell them to click link in email. Have option to-resend email.
 	- When you make a payment, when setting the expiration date, first check to see if they are expired. If expired, set it to 1 year from today, if not, set it to 1 year from the old expiration date.
 	- reset password modal, after you submit the form and the email is sent, disable/hide the reset button so they cant click it again.
 	- Remove "Click the "Add Course" button to Get Started" text when user's subscription has expired
-
+	- Console errors due to "Cannot read property 'date' of undefined" on page load 
 
 New Functionality
 	- Add print student reports functionality (phantomjs?)

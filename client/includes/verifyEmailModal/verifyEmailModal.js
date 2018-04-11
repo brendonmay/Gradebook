@@ -10,7 +10,7 @@ Template.verifyEmailModal.helpers({
         if (Session.get('verifyEmailSuccess')) {
             return "Thank you! Your email has been verified."
         } else {
-            return "There was an issue verifying your email. Please try again."
+            return "There was an issue verifying your email. If your account is not already verified, request that a new verification email be sent."
         }
 
     }

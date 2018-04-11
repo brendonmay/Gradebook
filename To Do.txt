@@ -1,19 +1,18 @@
 Styling
-	- verification email modal styling
-	- puchase subscription modal styling
 	- make sure site functions decently in internet explorer
 	- modify email templates for verify/reset password
-	- reset password modal, Your password must contain at least 1 number./Your password must be at least 7 characters./Your password must contain at least 1 upper case letter. (red), make all error messages red
-	- maybe change all toast colors to default color?
 	
 Bugs
 	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.
 	- Remove "Click the "Add Course" button to Get Started" text when user's subscription has expired
+	- Should the reset password token expire after its been used?
+	- If you try purchasing a subscription and input invalid information, then click submit payment, despite the payment not going through, the successful payment modal pops up
+	- Store the Braintree information in settings.json, dont include their actual values in the code.
 
 New Functionality
 	- Add print student reports functionality (phantomjs?)
 	- Think of structure to allow administrators to view marks for the school
-	- Connect Paypal to Braintree
+	- Connect Paypal to Braintree (will have to create a merchant paypal account)
 	- Switch braintree sandbox over to proper account for deployment
 	- Make it so that payments are auto-billed every year?
 	
@@ -21,12 +20,5 @@ Scaling
 	- MongoDB indexes are super important. 
 
 Preloader:
-	- Initial page load?
-
--------------
--Figure out why I can't add script with src includes/globalFunctions/clearValidation.js 
-
-
--Refresh student reports on current student when you come back to the reports tab
--Populate Student grade graph -> from collection and for table use getWeightedAverage or something 
+	- Initial page load
 

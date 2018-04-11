@@ -54,14 +54,24 @@
         <div class="center-label">
             <h5>My Courses</h5>
         </div>
-        {{#if currentUser}} {{#if hasNoCourses}}
-        <div class="paragraph">
-            <p>Thank you for logging in. You can now create a course.</p>
-        </div>
-        {{else}} {{> sideNavDropDown}} {{/if}} {{else}}
-        <div class="paragraph">
-            <p>Please login to begin creating courses.</p>
-        </div>
+        {{#if currentUser}} 
+            {{#if expired}}
+                <div class="paragraph">
+                    <p>You must <a href="#!" id="purchSubsc">purchase a subscription</a> to access your courses.</p>
+                </div>
+            {{else}}
+                {{#if hasNoCourses}}
+                <div class="paragraph">
+                    <p>Thank you for logging in. You can now create a course.</p>
+                </div>
+                {{else}} 
+                    {{> sideNavDropDown}} 
+                {{/if}} 
+            {{/if}}
+        {{else}}
+            <div class="paragraph">
+                <p>Please login to begin creating courses.</p>
+            </div>
         {{/if}}
     </ul>
 </template>

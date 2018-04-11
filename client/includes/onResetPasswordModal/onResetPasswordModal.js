@@ -12,14 +12,14 @@ function resetPassword() {
         Accounts.resetPassword(token, newPassword, function (error) {
             if (error) {
                 if (error.reason == "Token expired") {
-                    Materialize.toast('The link sent in the email has expired. Please try resetting your password again.');
+                    Materialize.toast('The link sent in the email has expired. Please try resetting your password again.', 3000, 'amber darken-3');
                 } else {
                 //error message
-                    Materialize.toast('There was an error resetting your password.');
+                    Materialize.toast('There was an error resetting your password.', 3000, 'amber darken-3');
                 }
                 console.log(error);
             } else {
-                Materialize.toast('You have successfully reset your password');
+                Materialize.toast('You have successfully reset your password', 3000, 'amber darken-3');
                 Session.set('resetPasswordToken', null);
             }
         });

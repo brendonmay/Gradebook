@@ -13,18 +13,26 @@ Template.successfulLoginNoCourseView.helpers({
         return Meteor.users.findOne({ _id: Meteor.userId() }).emails[0].verified == false
     },
     onFreeTrial: function () {
-        // return Meteor.users.findOne({ _id: Meteor.userId() }).subscribed[0].type == "free"
-        return false
+        var user = Meteor.users.findOne({ _id: Meteor.userId() });
+        if (user && user.subscribed) {
+            return user.subscribed.type == "free"
+        }
     },
     getExpiryDate: function () {
         var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
         var currentDate = CurrentDate.findOne();
-        var today = currentDate.date;
-        console.log("today: " + today);
-        var expiryDate = new Date(2018, 04, 11); //expiration Date (YYYY/MM/DD) where Jan = 00, Dec = 11. i.e month = month number-1
-        console.log("expiry: " + expiryDate);
+        if (currentDate) {
+            today = currentDate.date;
+          } else {
+            return;
+          }
+        var expiryDate = Meteor.users.findOne({ _id: Meteor.userId() }).subscribed.expirationDate;
 
-        var diffDays = Math.round(Math.abs((today.getTime() - expiryDate.getTime()) / (oneDay)));
+        var diffDays = Math.round((expiryDate.getTime() - today.getTime()) / (oneDay));
+
+        if ( diffDays < 0){
+            diffDays = 0
+        }
 
         return diffDays
     },
@@ -35,7 +43,11 @@ Template.successfulLoginNoCourseView.helpers({
 
 Template.successfulLoginNoCourseView.events({
     'click #subscription-link': function () {
-        console.log("clicked");
         $('#paymentModalId').modal('open');
+    },
+    'click .resend-verification-email': function () {
+        Meteor.call('resendVerificationEmail', function () {
+            $('#emailVerificationModal').modal('open');
+        });
     }
 });

@@ -28,6 +28,7 @@ Template.resetPassword.events({
                 console.log(error)
             } else {
                 document.getElementById("reset-passed").style.display = "";
+                document.getElementById('resetPassword').style.display = "none";
             }
             document.getElementById("preloader-full").style = "display: none;";
         });
@@ -38,6 +39,7 @@ Template.resetPassword.events({
         resetPasswordForm.reset();
         clearValidation(resetPasswordForm);
         document.getElementById("reset-passed").style.display = "none";
+        document.getElementById('resetPassword').style.display = "";
 
         $('#resetPasswordModal').modal('close');
     },

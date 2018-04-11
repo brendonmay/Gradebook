@@ -87,6 +87,7 @@ Template.login.events({
             dismissible: true,
             complete: function () {
                 document.getElementById("reset-passed").style.display = "none";
+                document.getElementById('resetPassword').style.display = "";
             }
         });
 

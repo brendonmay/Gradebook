@@ -62,13 +62,7 @@ Template.renameAssessment.onRendered(function () {
         validClass: 'jquery-validation-valid',
         rules: {
             renameAssessmentName: {
-                required: true,
-                maxlength: 15
-            }
-        },
-        messages: {
-            courseName: {
-                maxlength: "Course Names cannot exceed 15 characters"
+                required: true
             }
         },
         errorElement: 'div',

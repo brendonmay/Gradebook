@@ -1,6 +1,6 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
-import { Courses } from '../../../lib/collections.js';
+import { Courses, CurrentDate } from '../../../lib/collections.js';
 import { Accounts } from 'meteor/accounts-base';
 import { Meteor } from 'meteor/meteor';
 import { Blaze } from 'meteor/blaze';
@@ -22,9 +22,29 @@ Template.nav.helpers({
     let account = Meteor.users.findOne({ _id: Meteor.userId() });
     return account.emails[0].address;
   },
-  turnOffMainLoader: function() {
+  turnOffMainLoader: function () {
     if (document.getElementById("preloader-full") != null) {
       document.getElementById("preloader-full").style = "display: none";
+    }
+  },
+  notExpired: function () {
+    var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+    var currentDate = CurrentDate.findOne();
+    var today;
+    if (currentDate) {
+      today = currentDate.date;
+    } else {
+      return;
+    }
+    var expiryDate = Meteor.users.findOne({ _id: Meteor.userId() }).subscribed.expirationDate;
+
+    var diffDays = Math.round((expiryDate.getTime() - today.getTime()) / (oneDay));
+
+    if (diffDays <= 0) {
+      return false
+    }
+    else {
+      return true
     }
   }
 });
@@ -61,14 +81,14 @@ Template.nav.events({
 
     Meteor.logout();
   },
-  'click .change-password-dropdown': function() {
-      event.preventDefault();
-      $('#changePasswordModal').modal({
-        dismissable: true,
-        complete: function() {
-          //
-        }
-      });
-      $('#changePasswordModal').modal('open');
+  'click .change-password-dropdown': function () {
+    event.preventDefault();
+    $('#changePasswordModal').modal({
+      dismissable: true,
+      complete: function () {
+        //
+      }
+    });
+    $('#changePasswordModal').modal('open');
   }
 });

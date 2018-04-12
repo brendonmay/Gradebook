@@ -47,6 +47,9 @@ Template.successfulLoginView.helpers({
 
         return diffDays
     },
+    expired: function(diffDays){
+        return diffDays <= 0
+    },
     lessThanFifteenDays: function (diffDays) {
         return diffDays <= 15
     },

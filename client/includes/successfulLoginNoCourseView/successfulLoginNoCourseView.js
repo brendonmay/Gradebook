@@ -39,6 +39,9 @@ Template.successfulLoginNoCourseView.helpers({
     lessThanFifteenDays: function(diffDays){
         return diffDays <= 15
     },
+    expired: function(diffDays){
+        return diffDays <= 0
+    }
 });
 
 Template.successfulLoginNoCourseView.events({

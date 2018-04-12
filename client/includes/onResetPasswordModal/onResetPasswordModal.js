@@ -19,7 +19,7 @@ function resetPassword() {
                 }
                 console.log(error);
             } else {
-                Materialize.toast('You have successfully reset your password', 3000, 'amber darken-3');
+                Materialize.toast('You have successfully reset your password.', 3000, 'amber darken-3');
                 Session.set('resetPasswordToken', null);
             }
         });

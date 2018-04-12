@@ -29,6 +29,25 @@ Meteor.startup(() => {
 
     return CurrentDate.find({});
   });
+
+  Accounts.emailTemplates.from = "Ontario Gradebook <ontariogradebook@gmail.com>";
+  Accounts.emailTemplates.siteName = 'Ontario Gradebook';
+  Accounts.emailTemplates.verifyEmail = {
+    subject() {
+      return "Email Verification";
+    },
+    text(user, url) {
+      return `Hello,\n\nVerify your e-mail by following this link: ${url}\n\nRegards,\nOntario Gradebook Team`;
+    }
+  };
+  Accounts.emailTemplates.resetPassword = {
+    subject() {
+      return "Reset Your Password";
+    },
+    text(user, url) {
+      return `Hello,\n\nYou can reset your password by following this link: ${url}\n\nRegards,\nOntario Gradebook Team`;
+    }
+  };
 });
 
 var onceEveryDay = new Cron(function () {
@@ -48,6 +67,6 @@ var onceEveryDay = new Cron(function () {
 }, {
     minute: 0,
     hour: 0
-});
+  });
 
 onceEveryDay;

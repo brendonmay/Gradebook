@@ -2,7 +2,11 @@
     <br>
     <div class="row">
         <h3 class="condensed light center">Welcome Back to Ontario Gradebook</h3>
+        {{#if expired getExpiryDate}}
+        <h5 class="condensed light center">Your subscription has expired. Please extend your subscription to continue using Ontario Gradebook.</h5>
+        {{else}}
         <h5 class="condensed light center">Select a Course from the Side Navigation on the Left to Get Started</h5>
+        {{/if}}
     </div>
     <br>
     <div class="row">

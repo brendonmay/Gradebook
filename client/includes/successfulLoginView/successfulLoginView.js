@@ -2,6 +2,8 @@ import { Template } from 'meteor/templating';
 import { Meteor } from "meteor/meteor";
 import { CurrentDate } from "../../../lib/collections.js"
 
+Template.successfulLoginView.someReactiveVar = new ReactiveVar(false);
+
 Template.successfulLoginView.onRendered(function () {
     //document.getElementById("preloader-main").style = "display: none";
     document.getElementById("preloader-full").style = "display: none";
@@ -17,7 +19,7 @@ Template.successfulLoginView.events({
             $('#emailVerificationModal').modal('open');
         });
     }
-})
+});
 
 Template.successfulLoginView.helpers({
     isNotVerified: function () {
@@ -34,9 +36,9 @@ Template.successfulLoginView.helpers({
         var currentDate = CurrentDate.findOne();
         if (currentDate) {
             today = currentDate.date;
-          } else {
+        } else {
             return;
-          }
+        }
         var expiryDate = Meteor.users.findOne({ _id: Meteor.userId() }).subscribed.expirationDate;
 
         var diffDays = Math.round((expiryDate.getTime() - today.getTime()) / (oneDay));
@@ -47,7 +49,7 @@ Template.successfulLoginView.helpers({
 
         return diffDays
     },
-    expired: function(diffDays){
+    expired: function (diffDays) {
         return diffDays <= 0
     },
     lessThanFifteenDays: function (diffDays) {

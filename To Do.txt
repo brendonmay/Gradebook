@@ -6,7 +6,8 @@ Bugs
 	- Should the reset password token expire after its been used?
 	- If you try purchasing a subscription and input invalid information, then click submit payment, despite the payment not going through, the successful payment modal pops up (client). On the deployed app, this doesnt happen, but when a payment is successful, the modal isnt closing.
 	- Store the Braintree information in settings.json, dont include their actual values in the code.
-
+	- when you close the subscription modal, it should clear all the fields.
+	
 New Functionality
 	- Add print student reports functionality (phantomjs?)
 	- Think of structure to allow administrators to view marks for the school

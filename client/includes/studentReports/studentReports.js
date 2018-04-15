@@ -4,6 +4,7 @@ import { CalculatedGrades, Assessments, Students } from '../../../lib/collection
 import { CourseWeighting } from '../../../lib/collections.js';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Meteor } from 'meteor/meteor';
+import { html2canvas } from 'html2canvas';
 
 import '../../main.html';
 
@@ -1537,6 +1538,62 @@ Template.studentReports.events({
                 refreshAssessmentTypeGraphs();
             }
         }
+    },
+    'click #printStudentReports': function () {
+        html2canvas = require('html2canvas');
+
+        document.getElementById('tableStudentGrade').style.height = 'auto';
+        document.getElementById('graphStudentGrade').style.height = 'auto';
+        document.getElementById('tableClassGrade').style.height = 'auto';
+        document.getElementById('graphClassGrade').style.height = 'auto';
+        document.getElementById('graphStudentBreakdown').style.height = 'auto';
+        document.getElementById('studentAssessmentTable').style.height = 'auto';
+
+        var studentGradeTable;
+        var studentGradeGraph;
+        var classGradeTable;
+        var classGradeGraph;
+        var studentGradeBreakdownTable;
+        var studentGradeBreakdownGraph;
+
+        var doc = new jsPDF('p', 'mm');
+
+
+        html2canvas(document.querySelector("#tableStudentGrade")).then(function (canvas) {
+            studentGradeTable = canvas.toDataURL('image/jpeg');
+            doc.addImage(studentGradeTable, 5, 40, 50, 40);
+            html2canvas(document.querySelector("#graphStudentGrade")).then(function (canvas) {
+                studentGradeGraph = canvas.toDataURL('image/jpeg');
+                doc.addImage(studentGradeGraph, 55, 40, 50, 40);
+                html2canvas(document.querySelector("#tableClassGrade")).then(function (canvas) {
+                    studentGradeGraph = canvas.toDataURL('image/jpeg');
+                    doc.addImage(studentGradeGraph, 110, 40, 50, 40);
+                    html2canvas(document.querySelector("#graphClassGrade")).then(function (canvas) {
+                        studentGradeGraph = canvas.toDataURL('image/jpeg');
+                        doc.addImage(studentGradeGraph, 160, 40, 50, 40);
+                        html2canvas(document.querySelector("#graphStudentBreakdown")).then(function (canvas) {
+                            studentGradeBreakdownGraph = canvas.toDataURL('image/jpeg');
+                            doc.addImage(studentGradeBreakdownGraph, 5, 85, 200, 80);
+
+                            html2canvas(document.querySelector("#studentAssessmentTable")).then(function (canvas) {
+                                studentGradeBreakdownTable = canvas.toDataURL('image/jpeg');
+                                doc.addImage(studentGradeBreakdownTable, 5, 165, 200, canvas.height / 10);
+
+                                doc.save('sample-file.pdf');
+                                document.getElementById('tableStudentGrade').style.height = '';
+                                document.getElementById('graphStudentGrade').style.height = '';
+                                document.getElementById('tableClassGrade').style.height = '';
+                                document.getElementById('graphClassGrade').style.height = '';
+                                document.getElementById('graphStudentBreakdown').style.height = '';
+                                document.getElementById('studentAssessmentTable').style.height = '';
+
+                            });
+                        });
+                    });
+
+                });
+            });
+        });
     }
 });
 

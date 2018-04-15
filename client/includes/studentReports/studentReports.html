@@ -3,6 +3,7 @@
         <h4 class="light-blue lighten-4 settings-header">Student Reports</h4>
         {{#if hasStudents}}
         <h5 class="center marg-bottom-none">{{getStudentNameFirstLast}} ({{getFinalGrade}})</h5>
+        <a class="waves-effect waves-grey btn modal-trigger blue-grey darken-1" id="printStudentReports">Print</a>
         <div class="row modif-bot-mar">
             <div class="col input-field s4 offset-s4">
                 <select id="studentReportsDropdown">
@@ -14,7 +15,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col s3 graph-container-assessmentType">
+            <div id="tableStudentGrade" class="col s3 graph-container-assessmentType">
                 {{#if isCourseOverView}}
                 <ul class="collection collection-box">
                     <li class="collection-item collection-box-item">
@@ -59,13 +60,13 @@
                 </ul>
                 {{/if}}
             </div>
-            <div class="col s3 graph-container-assessmentType">
+            <div id="graphStudentGrade" class="col s3 graph-container-assessmentType">
                 <div class="assessmentTypeGraph-title center">
                     <u>Student Grade</u>
                 </div>
                 <div id="assessmentTypeBarGraph"></div>
             </div>
-            <div class="col s3 graph-container-assessmentType">
+            <div id="tableClassGrade" class="col s3 graph-container-assessmentType">
                 {{#if isCourseOverView}}
                 <ul class="collection collection-box">
                     <li class="collection-item collection-box-item">
@@ -110,14 +111,14 @@
                 </ul>
                 {{/if}}
             </div>
-            <div class="col s3 offset-s3 graph-container-assessmentType">
+            <div id="graphClassGrade" class="col s3 offset-s3 graph-container-assessmentType">
                 <div class="assessmentTypeGraph-title center">
                     <u>Class Average</u>
                 </div>
                 <div id="assessmentTypeClassBarGraph"></div>
             </div>
         </div>
-        <div class="row graph-container-assessments">
+        <div id="graphStudentBreakdown" class="row graph-container-assessments">
             <div class="assessmentsGraph-title center">
                 <u>Student Grade Breakdown</u>
             </div>
@@ -126,7 +127,7 @@
         <br>
         <br>
 
-        <table class="striped centered">
+        <table id="studentAssessmentTable" class="striped centered">
             <thead>
                 <tr>
                     <th class="bord-right-left-top Assessment-color">Assessment</th>

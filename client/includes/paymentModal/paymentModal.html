@@ -18,30 +18,19 @@
                     button.addEventListener('click', function () {
                         var currentUser = Meteor.users.findOne({ _id: Meteor.userId() });
                         var expirationDate = currentUser.subscribed.expirationDate;
-                        
                         var newExpirationDate
+
                         instance.requestPaymentMethod(function (requestPaymentMethodErr, payload) {
                             // When the user clicks on the 'Submit payment' button this code will send the
                             // encrypted payment information in a variable called a payment method nonce
                             Meteor.call('createPayment', payload, function () {
-                                document.getElementById("preloader").style = "";
-                                setTimeout(function () {
-                                    //dont initiate the following code until db is updated, i dont know when that exactly occurs, so I am using a setTimeout
-                                    currentUser = Meteor.users.findOne({ _id: Meteor.userId() });
-                                    newExpirationDate = currentUser.subscribed.expirationDate;
-                                
-                                    if (expirationDate.getFullYear() == newExpirationDate.getFullYear()) {
-                                        console.log("transaction did not go through");
-                                        document.getElementById("preloader").style = "display: none";
-                                        return false
-                                    }
-                                    if (currentUser.subscribed.type == "paid") {
-                                        console.log("transaction went through");
-                                        document.getElementById("preloader").style = "display: none";
-                                        $('#paymentModalId').modal('close');
-                                        $('#successfulPayment').modal('open');
-                                    }
-                                }, 3000);
+                                if (requestPaymentMethodErr){
+                                    return false
+                                }
+                                console.log("transaction went through");
+                                // document.getElementById("preloader-full").style = "display: none";
+                                $('#paymentModalId').modal('close');
+                                $('#successfulPayment').modal('open');
                             });
                         });
                     });

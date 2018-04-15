@@ -18,6 +18,14 @@ Template.successfulLoginView.events({
         Meteor.call('resendVerificationEmail', function () {
             $('#emailVerificationModal').modal('open');
         });
+    },
+    'click #feedbackLinkView': function () {
+        $('#feedbackModal').modal({
+            complete: function () {
+                document.getElementById("email_form").reset();
+            }
+        });
+        $('#feedbackModal').modal('open');
     }
 });
 

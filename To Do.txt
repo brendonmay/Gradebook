@@ -1,11 +1,10 @@
 Styling
 	- make sure site functions decently in internet explorer
-	- after you pay for a subscription, hide the option to extend membership
+	- add a register button beside the login button on homepage
 	
 Bugs
 	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.
 	- Should the reset password token expire after its been used?
-	- If you try purchasing a subscription and input invalid information, then click submit payment, despite the payment not going through, the successful payment modal pops up (client). On the deployed app, this doesnt happen, but when a payment is successful, the modal isnt closing.
 	- Store the Braintree information in settings.json, dont include their actual values in the code.
 	- when you close the subscription modal, it should clear all the fields.
 	
@@ -14,7 +13,6 @@ New Functionality
 	- Think of structure to allow administrators to view marks for the school
 	- Connect Paypal to Braintree (will have to create a merchant paypal account)
 	- Switch braintree sandbox over to proper account for deployment
-	- Make it so that payments are auto-billed every year?
 	
 Scaling
 	- MongoDB indexes are super important. 

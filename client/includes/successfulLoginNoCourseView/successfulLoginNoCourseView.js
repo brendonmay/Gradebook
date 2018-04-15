@@ -23,23 +23,23 @@ Template.successfulLoginNoCourseView.helpers({
         var currentDate = CurrentDate.findOne();
         if (currentDate) {
             today = currentDate.date;
-          } else {
+        } else {
             return;
-          }
+        }
         var expiryDate = Meteor.users.findOne({ _id: Meteor.userId() }).subscribed.expirationDate;
 
         var diffDays = Math.round((expiryDate.getTime() - today.getTime()) / (oneDay));
 
-        if ( diffDays < 0){
+        if (diffDays < 0) {
             diffDays = 0
         }
 
         return diffDays
     },
-    lessThanFifteenDays: function(diffDays){
+    lessThanFifteenDays: function (diffDays) {
         return diffDays <= 15
     },
-    expired: function(diffDays){
+    expired: function (diffDays) {
         return diffDays <= 0
     }
 });
@@ -52,5 +52,13 @@ Template.successfulLoginNoCourseView.events({
         Meteor.call('resendVerificationEmail', function () {
             $('#emailVerificationModal').modal('open');
         });
+    },
+    'click #feedbackLinkView': function () {
+        $('#feedbackModal').modal({
+            complete: function () {
+                document.getElementById("email_form").reset();
+            }
+        });
+        $('#feedbackModal').modal('open');
     }
 });

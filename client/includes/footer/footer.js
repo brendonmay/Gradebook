@@ -5,7 +5,7 @@ Template.footer.events({
     'click #feedbackLink': function(){
         $('#feedbackModal').modal({
             complete: function () {
-                document.getElementById("submit_form").reset();
+                document.getElementById("email_form").reset();
             }
         });
         $('#feedbackModal').modal('open');

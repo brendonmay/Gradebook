@@ -23,35 +23,38 @@
                             <span style="color:#ff5252;"> to resend it.</span>
                     </p>
                 </li>
-                {{/if}} {{#if onFreeTrial}} {{#if lessThanFifteenDays getExpiryDate}}
-                <li class="collection-item">
-                    <p class="fit-in-coll center">You are currently on your
-                        <span style="font-weight:bold">Free Trial. </span>
-                        <span style="color:#ff5252;">You have {{getExpiryDate}} days remaining.</span>
-                    </p>
-                </li>
+                {{/if}} 
+                {{#if onFreeTrial}} 
+                    {{#if lessThanFifteenDays getExpiryDate}}
+                        <li class="collection-item">
+                            <p class="fit-in-coll center">You are currently on your
+                                <span style="font-weight:bold">Free Trial. </span>
+                                <span style="color:#ff5252;">You have {{getExpiryDate}} days remaining.</span>
+                            </p>
+                        </li>
+                    {{else}}
+                        <li class="collection-item">
+                            <p class="fit-in-coll center">You are currently on your
+                                <span style="font-weight:bold">Free Trial. </span>
+                                <span style="color:#4caf50;">You have {{getExpiryDate}} days remaining.</span>
+                            </p>
+                        </li>
+                    {{/if}} 
                 {{else}}
-                <li class="collection-item">
-                    <p class="fit-in-coll center">You are currently on your
-                        <span style="font-weight:bold">Free Trial. </span>
-                        <span style="color:#4caf50;">You have {{getExpiryDate}} days remaining.</span>
-                    </p>
-                </li>
-                {{/if}} {{else}} {{#if lessThanFifteenDays getExpiryDate}}
-                <li class="collection-item">
-                    <p class="fit-in-coll center">You are currently a
-                        <span style="font-weight:bold">Paid Subscriber. </span>
-                        <span style="color:#ff5252;">You have {{getExpiryDate}} days remaining.</span>
-                    </p>
-                </li>
-                {{else}}
-                <li class="collection-item">
-                    <p class="fit-in-coll center">You are currently a
-                        <span style="font-weight:bold">Paid Subscriber. </span>
-                        <span style="color:#4caf50;">You have {{getExpiryDate}} days remaining.</span>
-                    </p>
-                </li>
-                {{/if}} {{/if}}
+                    {{#if expired getExpiryDate}}
+                        <li class="collection-item">
+                            <p class="fit-in-coll center">
+                                <span style="font-weight:bold; color:#ff5252">Your Paid Subscription Has Expired. </span>
+                            </p>
+                        </li>
+                    {{else}}
+                        <li class="collection-item">
+                            <p class="fit-in-coll center">You are currently a
+                                <span style="font-weight:bold; color:#4caf50">Paid Subscriber. </span>
+                            </p>
+                        </li>
+                    {{/if}}
+               {{/if}}
             </ul>
         </div>
     </div>
@@ -59,19 +62,18 @@
     <div class="row">
         <h5 class="condensed light center">Ready to Upgrade Your Account?</h5>
         <h6 class="center">
-            <a href="#!" id="subscription-link">Click Here</a> to purchase a 1-year subscription.</h6>
+            <a href="#!" id="subscription-link">Click Here</a> to enroll in a yearly subscription.</h6>
     </div>
-    {{else}} {{#if lessThanFifteenDays getExpiryDate}}
+    {{else}} {{#if expired getExpiryDate}}
     <div class="row">
         <h5 class="condensed light center">Ready to Renew Your Subscription?</h5>
         <h6 class="center">
-            <a href="#!" id="subscription-link">Click Here</a> to purchase a 1-year subscription.</h6>
+            <a href="#!" id="subscription-link">Click Here</a> to enroll in a yearly subscription.</h6>
     </div>
     {{else}}
     <div class="row">
-        <h5 class="condensed light center">Want to Extend Your Subscription?</h5>
-        <h6 class="center">
-            <a href="#!" id="subscription-link">Click Here</a> to extend your subscription by one year.</h6>
+        <h5 class="condensed light center">Have Any Feedback?</h5>
+        <h6 class="center">We would love to hear about your experience with Ontario Gradebook. Click <a href="#!" id="feedbackLinkView"><u>here</u></a> to leave us feedback.</h6>
     </div>
     {{/if}} {{/if}}
 </template>

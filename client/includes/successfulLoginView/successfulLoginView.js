@@ -2,6 +2,25 @@ import { Template } from 'meteor/templating';
 import { Meteor } from "meteor/meteor";
 import { CurrentDate } from "../../../lib/collections.js"
 
+function getExpiryDateCheck() {
+    var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+    var currentDate = CurrentDate.findOne();
+    if (currentDate) {
+        today = currentDate.date;
+    } else {
+        return;
+    }
+    var expiryDate = Meteor.users.findOne({ _id: Meteor.userId() }).subscribed.expirationDate;
+
+    var diffDays = Math.round((expiryDate.getTime() - today.getTime()) / (oneDay));
+
+    return diffDays
+}
+
+function expiredCheck(diffDays) {
+    return diffDays <= -1
+}
+
 Template.successfulLoginView.someReactiveVar = new ReactiveVar(false);
 
 Template.successfulLoginView.onRendered(function () {
@@ -60,7 +79,29 @@ Template.successfulLoginView.helpers({
     expired: function (diffDays) {
         return diffDays <= 0
     },
+    expiredPaid: function(){
+        return Meteor.users.findOne({ _id: Meteor.userId() }).subscribed.type == "expired"
+    },
     lessThanFifteenDays: function (diffDays) {
         return diffDays <= 15
     },
+    checkIfSubscribed: function () {
+        document.getElementById("blurredSideNav").style = "";
+        document.getElementById("preloader").style = "";
+        var currentUser = Meteor.users.findOne({ _id: Meteor.userId() }).subscribed;
+        if (currentUser.type == "paid") {
+            var expirationDate = currentUser.expirationDate;
+            var numberOfDaysRemaining = getExpiryDateCheck();
+            if (expiredCheck(numberOfDaysRemaining)) {
+                var customerId = currentUser.braintreeId;
+                var currentUser = Meteor.users.findOne({ _id: Meteor.userId() })
+                var userId = Meteor.userId();
+                Meteor.call('checkIfStillSubscribed', customerId, currentUser, userId);
+            }
+        }
+        setTimeout(function(){
+            document.getElementById("preloader").style = "display: none";
+            document.getElementById("blurredSideNav").style = "display: none";
+        }, 2000);
+    }
 })

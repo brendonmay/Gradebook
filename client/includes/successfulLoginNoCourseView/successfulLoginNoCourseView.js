@@ -112,6 +112,12 @@ Template.successfulLoginNoCourseView.helpers({
             document.getElementById("blurredSideNav").style = "display: none";
         }, 2000);
     },
+    notOnFreeTrial: function(){
+        var user = Meteor.users.findOne({ _id: Meteor.userId() });
+        if (user && user.subscribed) {
+            return user.subscribed.type != "free"
+        }
+    },
     canceled: function(){
         return Meteor.users.findOne({_id: Meteor.userId()}).subscribed.type == "canceled"
     }

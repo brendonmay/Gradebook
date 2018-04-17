@@ -59,7 +59,8 @@
                                 <span style="font-weight:bold; color:#ff5252">You have cancelled your subscription. </span>You have {{getExpiryDate}} days remaining.
                             </p>
                         </li>
-                    {{else}}
+                    {{/if}}
+                    {{#if notOnFreeTrial}}
                         <li class="collection-item">
                             <p class="fit-in-coll center">You are currently a
                                 <span style="font-weight:bold; color:#4caf50">Paid Subscriber. </span>

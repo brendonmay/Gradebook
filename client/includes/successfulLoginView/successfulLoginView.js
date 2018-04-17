@@ -58,6 +58,12 @@ Template.successfulLoginView.helpers({
             return user.subscribed.type == "free"
         }
     },
+    notOnFreeTrial: function(){
+        var user = Meteor.users.findOne({ _id: Meteor.userId() });
+        if (user && user.subscribed) {
+            return user.subscribed.type != "free"
+        }
+    },
     getExpiryDate: function () {
         var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
         var currentDate = CurrentDate.findOne();

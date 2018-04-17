@@ -66,19 +66,6 @@ Template.login.events({
                 loginForm.reset();
                 clearValidation(loginForm);
 
-                // var currentUser = Meteor.users.findOne({ _id: Meteor.userId() }).subscribed;
-                // if (currentUser.type == "paid") {
-                //     var expirationDate = currentUser.expirationDate;
-                //     var numberOfDaysRemaining = getExpiryDate();
-                //     if (expired(numberOfDaysRemaining)) {
-                //         var customerId = currentUser.braintreeId;
-                //         var currentUser = Meteor.users.findOne({ _id: Meteor.userId() })
-                //         var userId = Meteor.userId();
-                //         Meteor.call('checkIfStillSubscribed', customerId, currentUser, userId);
-                //     }
-
-                // }
-
                 $('#loginModal').modal('close');
             }
         });

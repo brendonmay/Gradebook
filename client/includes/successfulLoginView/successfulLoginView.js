@@ -61,7 +61,7 @@ Template.successfulLoginView.helpers({
     notOnFreeTrial: function(){
         var user = Meteor.users.findOne({ _id: Meteor.userId() });
         if (user && user.subscribed) {
-            return user.subscribed.type != "free"
+            return (user.subscribed.type != "free" && user.subscribed.type != "canceled")
         }
     },
     getExpiryDate: function () {

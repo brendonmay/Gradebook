@@ -4,7 +4,6 @@ import { Mongo } from "meteor/mongo";
 import { CurrentDate } from "../lib/collections.js"
 
 Meteor.startup(() => {
-  // code to run on server at startup
   var braintree = require("braintree");
 
   var gateway = braintree.connect({

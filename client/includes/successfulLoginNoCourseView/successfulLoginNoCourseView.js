@@ -64,25 +64,57 @@ Template.successfulLoginNoCourseView.helpers({
     expiredPaid: function () {
         return Meteor.users.findOne({ _id: Meteor.userId() }).subscribed.type == "expired"
     },
+    expiredFree: function () {
+        var accountType = Meteor.users.findOne({ _id: Meteor.userId() }).subscribed.type;
+        if (accountType == "free") {
+            var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+            var currentDate = CurrentDate.findOne();
+            if (currentDate) {
+                today = currentDate.date;
+            } else {
+                return;
+            }
+            var expiryDate = Meteor.users.findOne({ _id: Meteor.userId() }).subscribed.expirationDate;
+
+            var diffDays = Math.round((expiryDate.getTime() - today.getTime()) / (oneDay));
+
+            if (diffDays < 0) {
+                diffDays = 0
+            }
+
+            return diffDays == 0
+        }
+        return false
+    },
     checkIfSubscribed: function () {
         document.getElementById("blurredSideNav").style = "";
         document.getElementById("preloader").style = "";
+
+        var currentUserObj = Meteor.users.findOne({ _id: Meteor.userId() });
         var currentUser = Meteor.users.findOne({ _id: Meteor.userId() }).subscribed;
-        if (currentUser.type == "paid") {
+        var customerId = currentUser.braintreeId;
+        var userId = Meteor.userId();
+        
+        //check if user has canceled
+        if(currentUser.type == "paid"){
+            Meteor.call('checkIfCanceled', customerId, currentUserObj, userId);
+        }
+        if (currentUser.type == "paid" || currentUser.type == "canceled") {
+            //check if they have been autobilled after expiration
             var expirationDate = currentUser.expirationDate;
             var numberOfDaysRemaining = getExpiryDateCheck();
             if (expiredCheck(numberOfDaysRemaining)) {
-                var customerId = currentUser.braintreeId;
-                var currentUser = Meteor.users.findOne({ _id: Meteor.userId() })
-                var userId = Meteor.userId();
-                Meteor.call('checkIfStillSubscribed', customerId, currentUser, userId);
+                Meteor.call('checkIfStillSubscribed', customerId, currentUserObj, userId);
             }
         }
-        setTimeout(function(){
+        setTimeout(function () {
             document.getElementById("preloader").style = "display: none";
             document.getElementById("blurredSideNav").style = "display: none";
         }, 2000);
     },
+    canceled: function(){
+        return Meteor.users.findOne({_id: Meteor.userId()}).subscribed.type == "canceled"
+    }
 });
 
 Template.successfulLoginNoCourseView.events({

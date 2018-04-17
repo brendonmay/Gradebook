@@ -2,12 +2,14 @@
     {{checkIfSubscribed}}
     <br>
     <div class="row">
-        <h3 class="condensed light center">Welcome Back to Ontario Gradebook</h3>
+        <h3 class="condensed light center">Thanks for signing into Ontario Gradebook</h3>
         {{#if expiredPaid}}
         <h5 class="condensed light center">Your subscription has expired. Please extend your subscription to continue using Ontario Gradebook.</h5>
+        {{else}} {{#if expiredFree}}
+        <h5 class="condensed light center">Your Free Trial has expired. Please enroll in a yearly subscription to continue using Ontario Gradebook.</h5>
         {{else}}
-        <h5 class="condensed light center">Select a Course from the Side Navigation on the Left to Get Started</h5>
-        {{/if}}
+        <h5 class="condensed light center">Click the "Add Course" button to Get Started</h5>
+        {{/if}} {{/if}}
     </div>
     <br>
     <div class="row">
@@ -19,9 +21,9 @@
                 {{#if isNotVerified}}
                 <li class="collection-item">
                     <p class="fit-in-coll center" style="color:#ff5252">You haven't verified your email.
-                            <span style="color:#ff5252;"> Click the link in your email, or click </span>
-                            <a href="#!" class="resend-verification-email">here</a>
-                            <span style="color:#ff5252;"> to resend it.</span>
+                        <span style="color:#ff5252;"> Click the link in your email, or click </span>
+                        <a href="#!" class="resend-verification-email">here</a>
+                        <span style="color:#ff5252;"> to resend it.</span>
                     </p>
                 </li>
                 {{/if}} 
@@ -41,11 +43,18 @@
                             </p>
                         </li>
                     {{/if}} 
+                {{/if}} 
+                {{#if expiredPaid}}
+                    <li class="collection-item">
+                        <p class="fit-in-coll center">
+                            <span style="font-weight:bold; color:#ff5252">Your Paid Subscription Has Expired. </span>
+                        </p>
+                    </li>
                 {{else}}
-                    {{#if expiredPaid}}
+                    {{#if canceled}}
                         <li class="collection-item">
                             <p class="fit-in-coll center">
-                                <span style="font-weight:bold; color:#ff5252">Your Paid Subscription Has Expired. </span>
+                                <span style="font-weight:bold; color:#ff5252">You have cancelled your subscription. </span>You have {{getExpiryDate}} days remaining.
                             </p>
                         </li>
                     {{else}}
@@ -54,8 +63,8 @@
                                 <span style="font-weight:bold; color:#4caf50">Paid Subscriber. </span>
                             </p>
                         </li>
-                    {{/if}}
-               {{/if}}
+                    {{/if}} 
+                {{/if}} 
             </ul>
         </div>
     </div>
@@ -74,7 +83,10 @@
     {{else}}
     <div class="row">
         <h5 class="condensed light center">Have Any Feedback?</h5>
-        <h6 class="center">We would love to hear about your experience with Ontario Gradebook. Click <a href="#!" id="feedbackLinkView"><u>here</u></a> to leave us feedback.</h6>
+        <h6 class="center">We would love to hear about your experience with Ontario Gradebook. Click
+            <a href="#!" id="feedbackLinkView">
+                <u>here</u>
+            </a> to leave us feedback.</h6>
     </div>
     {{/if}} {{/if}}
 </template>

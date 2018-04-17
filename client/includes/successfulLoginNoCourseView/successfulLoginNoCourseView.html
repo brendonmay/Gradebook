@@ -4,9 +4,13 @@
     <div class="row">
         <h3 class="condensed light center">Thanks for signing into Ontario Gradebook</h3>
         {{#if expiredPaid}}
-        <h5 class="condensed light center">Your subscription has expired. Please extend your subscription to continue using Ontario Gradebook.</h5>
+            <h5 class="condensed light center">Your subscription has expired. Please extend your subscription to continue using Ontario Gradebook.</h5>
         {{else}}
-        <h5 class="condensed light center">Click the "Add Course" button to Get Started</h5>
+            {{#if expiredFree}}
+                <h5 class="condensed light center">Your Free Trial has expired. Please enroll in a yearly subscription to continue using Ontario Gradebook.</h5>
+            {{else}}
+                <h5 class="condensed light center">Click the "Add Course" button to Get Started</h5>
+            {{/if}}
         {{/if}}
     </div>
     <br>
@@ -24,33 +28,45 @@
                         <span style="color:#ff5252;"> to resend it.</span>
                     </p>
                 </li>
-                {{/if}} {{#if onFreeTrial}} {{#if lessThanFifteenDays getExpiryDate}}
-                <li class="collection-item">
-                    <p class="fit-in-coll center">You are currently on your
-                        <span style="font-weight:bold">Free Trial. </span>
-                        <span style="color:#ff5252;">You have {{getExpiryDate}} days remaining.</span>
-                    </p>
-                </li>
+                {{/if}} 
+                {{#if onFreeTrial}} 
+                    {{#if lessThanFifteenDays getExpiryDate}}
+                        <li class="collection-item">
+                            <p class="fit-in-coll center">You are currently on your
+                                <span style="font-weight:bold">Free Trial. </span>
+                                <span style="color:#ff5252;">You have {{getExpiryDate}} days remaining.</span>
+                            </p>
+                        </li>
+                    {{else}}
+                        <li class="collection-item">
+                            <p class="fit-in-coll center">You are currently on your
+                                <span style="font-weight:bold">Free Trial. </span>
+                                <span style="color:#4caf50;">You have {{getExpiryDate}} days remaining.</span>
+                            </p>
+                        </li>
+                    {{/if}} 
+                {{/if}} 
+                {{#if expiredPaid}}
+                    <li class="collection-item">
+                        <p class="fit-in-coll center">
+                            <span style="font-weight:bold; color:#ff5252">Your Paid Subscription Has Expired. </span>
+                        </p>
+                    </li>
                 {{else}}
-                <li class="collection-item">
-                    <p class="fit-in-coll center">You are currently on your
-                        <span style="font-weight:bold">Free Trial. </span>
-                        <span style="color:#4caf50;">You have {{getExpiryDate}} days remaining.</span>
-                    </p>
-                </li>
-                {{/if}} {{else}} {{#if expiredPaid}}
-                <li class="collection-item">
-                    <p class="fit-in-coll center">
-                        <span style="font-weight:bold; color:#ff5252">Your Paid Subscription Has Expired. </span>
-                    </p>
-                </li>
-                {{else}}
-                <li class="collection-item">
-                    <p class="fit-in-coll center">You are currently a
-                        <span style="font-weight:bold; color:#4caf50">Paid Subscriber. </span>
-                    </p>
-                </li>
-                {{/if}} {{/if}}
+                    {{#if canceled}}
+                        <li class="collection-item">
+                            <p class="fit-in-coll center">
+                                <span style="font-weight:bold; color:#ff5252">You have cancelled your subscription. </span>You have {{getExpiryDate}} days remaining.
+                            </p>
+                        </li>
+                    {{else}}
+                        <li class="collection-item">
+                            <p class="fit-in-coll center">You are currently a
+                                <span style="font-weight:bold; color:#4caf50">Paid Subscriber. </span>
+                            </p>
+                        </li>
+                    {{/if}} 
+                {{/if}} 
             </ul>
         </div>
     </div>

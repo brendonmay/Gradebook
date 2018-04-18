@@ -63,7 +63,7 @@ function ifNewCourseYear(activeElements) {
         for (i = 0; i < activeElements.length; i++) {
             var activeElement = activeElements[i];
             if (activeElement.classList.contains('course-dropdown')) {
-                console.log("found the element thats highlighted: " + activeElements[i]);
+                //console.log("found the element thats highlighted: " + activeElements[i]);
                 activeElements[i].classList.remove("active");
                 activeElements[i].classList.remove("green");
                 i = activeElements.length;

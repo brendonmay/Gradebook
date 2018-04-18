@@ -2,9 +2,7 @@ import { Template } from 'meteor/templating';
 
 Template.welcomeView.onRendered(function(){
     $('ul.tabs').tabs();
-    // setTimeout(function(){
     if (Meteor.loggingIn()) {
-        console.log("user is logging in");
         document.getElementById("blurredSideNav").style = "";
         document.getElementById("preloader").style = "";
     }

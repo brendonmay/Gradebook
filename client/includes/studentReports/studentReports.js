@@ -1325,7 +1325,7 @@ function drawAssessmentTypeClassBarGraph() {
         }
         data.assessmentType = assessmentName
     }
-    console.log(data)
+    //console.log(data)
     new Morris.Bar({
         // ID of the element in which to draw the chart.
         element: 'assessmentTypeClassBarGraph',
@@ -1349,7 +1349,7 @@ function drawOverallClassBarGraph() {
     if (!document.getElementById('assessmentTypeClassBarGraph')) return;
     //clear the contents of the div, in the event this function is called more than once.
     var data = getFinalCategoryGradesForClass();
-    console.log(data);
+    //console.log(data);
     new Morris.Bar({
         // ID of the element in which to draw the chart.
         element: 'assessmentTypeClassBarGraph',

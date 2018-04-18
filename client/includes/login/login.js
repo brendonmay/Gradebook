@@ -40,7 +40,9 @@ Template.login.events({
         var emailVar = template.find('#login-email').value;
         var passwordVar = template.find('#login-password').value;
 
-        document.getElementById("preloader-full").style = "";
+        //document.getElementById("preloader-full").style = "";
+        document.getElementById("blurredSideNav").style = "";
+        document.getElementById("preloader").style = "";
 
         Meteor.loginWithPassword(emailVar, passwordVar, function (error) {
             if (error) {
@@ -57,7 +59,9 @@ Template.login.events({
                     default:
                     //unidentified error 
                 }
-                document.getElementById("preloader-full").style = "display: none";
+                //document.getElementById("preloader-full").style = "display: none";
+                document.getElementById("blurredSideNav").style = "display: none";
+                document.getElementById("preloader").style = "display: none";
             } else {
                 //no error on login, so user Logs in fine
                 removeLoginError();

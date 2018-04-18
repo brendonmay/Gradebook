@@ -23,8 +23,11 @@ Template.nav.helpers({
     return account.emails[0].address;
   },
   turnOffMainLoader: function () {
-    if (document.getElementById("preloader-full") != null) {
-      document.getElementById("preloader-full").style = "display: none";
+    if (document.getElementById("blurredSideNav") != null && document.getElementById("preloader") != null) {
+      document.getElementById("blurredSideNav").style = "display: none";
+      document.getElementById("preloader").style = "display: none";
+    // if (document.getElementById("preloader-full") != null) {
+      //document.getElementById("preloader-full").style = "display: none";
     }
   },
   notExpired: function () {
@@ -66,7 +69,9 @@ Template.nav.events({
   'click .logout': function () {
     event.preventDefault();
 
-    document.getElementById("preloader-full").style = "";
+    //document.getElementById("preloader-full").style = "";
+    document.getElementById("blurredSideNav").style = "";
+    document.getElementById("preloader").style = "";
 
     var view1 = Blaze.getView(document.getElementById('loginViewId1'));
     Blaze.remove(view1);
@@ -78,6 +83,8 @@ Template.nav.events({
     // Blaze.remove(view3);
 
     Blaze.render(Template.nav, document.getElementById('headerForNav'));
+
+    Session.set('loggedOut', true);
 
     Meteor.logout();
   },

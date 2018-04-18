@@ -6,20 +6,18 @@ Styling
 	
 Bugs
 	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.
-	- Should the reset password token expire after its been used?
 	- Store the Braintree information in settings.json, dont include their actual values in the code.
 	- add jquery validation on first and last name in registration
 	
 New Functionality
 	Brendon
-		- add option to re-activate subscription if it's canceled.
-
 		- Connect Paypal to Braintree (will have to create a merchant paypal account)
 		- Switch braintree sandbox over to proper account for deployment
 		- Think of structure to allow administrators to view marks for the school
 	
 	Josh
 		- Add print student reports functionality
+		- Reset password token should expire after its been used
 
 Scaling
 	- MongoDB indexes are super important. 

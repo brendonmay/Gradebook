@@ -9,3 +9,9 @@ import '../../main.html';
 Template.emailDropdown.onRendered(function() {
     $(".dropdown-button").dropdown();
 });
+
+Template.emailDropdown.helpers({
+    paid: function(){
+        return Meteor.users.findOne({_id: Meteor.userId()}).subscribed.type == "paid"
+    }
+});

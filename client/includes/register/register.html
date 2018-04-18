@@ -6,6 +6,16 @@
             </div>
             <form class="add-form register-form col s12" onsubmit="return false" id="registerForm">
                 <div class="row input-field">
+                    <div class='input-field input-margin-bottom-fix col s6'>
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" name="firstName" class="required" data-error=".firstNameError">
+                        <div class="firstNameError"></div>
+                    </div>
+                    <div class='input-field input-margin-bottom-fix col s6'>
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" name="lastName" class="required" data-error=".lastNameError">
+                        <div class="lastNameError"></div>
+                    </div>
                     <div class='input-field input-margin-bottom-fix col s12'>
                         <label for="registerEmail">E-mail</label>
                         <input type="text" id="registerEmail" name="registerEmail" class="required" data-error=".emailError">
@@ -17,7 +27,7 @@
                         <div class="passwordError"></div>
                     </div>
                     <div class='input-field input-margin-bottom-fix col s12'>
-                        <label for="confirmPassword" >Confirm Password</label>
+                        <label for="confirmPassword">Confirm Password</label>
                         <input type="password" id="confirmPassword" name="confirmPassword" class="required" data-error=".confirmPasswordError">
                         <div class="confirmPasswordError"></div>
                     </div>

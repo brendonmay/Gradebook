@@ -90,5 +90,15 @@ Template.nav.events({
       }
     });
     $('#changePasswordModal').modal('open');
+  },
+  'click .cancel-sub-dropdown': function () {
+    event.preventDefault();
+    $('#cancelSubscriptionModal').modal({
+      dismissable: true,
+      complete: function () {
+        //
+      }
+    });
+    $('#cancelSubscriptionModal').modal('open');
   }
 });

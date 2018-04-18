@@ -1,20 +1,24 @@
 Styling
 	- make sure site functions decently in internet explorer
+	- change all preloader-full to 
+		document.getElementById("blurredSideNav").style = "";
+        document.getElementById("preloader").style = "";
 	
 Bugs
 	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.
-	- Should the reset password token expire after its been used?
 	- Store the Braintree information in settings.json, dont include their actual values in the code.
+	- add jquery validation on first and last name in registration
 	
 New Functionality
-	- Add option to cancel subscription
-	- Make it very clear that the payment is a subscription, that they will be auto-billed.
-	- Add print student reports functionality (phantomjs?)
-	- Think of structure to allow administrators to view marks for the school
-	- Connect Paypal to Braintree (will have to create a merchant paypal account)
-	- Switch braintree sandbox over to proper account for deployment
-	- on payment (or perhaps on registration), have them enter their full name? See how to adjust the dropin UI to include this?
+	Brendon
+		- Connect Paypal to Braintree (will have to create a merchant paypal account)
+		- Switch braintree sandbox over to proper account for deployment
+		- Think of structure to allow administrators to view marks for the school
 	
+	Josh
+		- Add print student reports functionality
+		- Reset password token should expire after its been used
+
 Scaling
 	- MongoDB indexes are super important. 
 

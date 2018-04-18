@@ -52,12 +52,14 @@ Template.register.events({
 
         var email = event.target.registerEmail.value;
         var password = event.target.registerPassword.value;
+        var firstName = event.target.firstName.value;
+        var lastName = event.target.lastName.value;
 
         Accounts.createUser({
             email: email,
             password: password
         }, function() {
-            Meteor.call('giveUserFreeTrial', Meteor.userId());
+            Meteor.call('giveUserFreeTrial', firstName, lastName);
         });
 
         var registerForm = document.getElementById("registerForm");

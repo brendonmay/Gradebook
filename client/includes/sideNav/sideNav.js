@@ -32,6 +32,28 @@ Template.sideNav.helpers({
   expired: function () {
     return Meteor.users.findOne({ _id: Meteor.userId() }).subscribed.type == "expired"
   },
+  expiredFree: function () {
+    var accountType = Meteor.users.findOne({ _id: Meteor.userId() }).subscribed.type;
+    if (accountType == "free") {
+      var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+      var currentDate = CurrentDate.findOne();
+      if (currentDate) {
+        today = currentDate.date;
+      } else {
+        return;
+      }
+      var expiryDate = Meteor.users.findOne({ _id: Meteor.userId() }).subscribed.expirationDate;
+
+      var diffDays = Math.round((expiryDate.getTime() - today.getTime()) / (oneDay));
+
+      if (diffDays < 0) {
+        diffDays = 0
+      }
+
+      return diffDays == 0
+    }
+    return false
+  },
 });
 
 Template.sideNav.events({

@@ -1,9 +1,18 @@
 import { Template } from 'meteor/templating';
 
 Template.welcomeView.onRendered(function(){
-    //document.getElementById("preloader-main").style = "display: none";
-    document.getElementById("preloader-full").style = "display: none";
     $('ul.tabs').tabs();
+    // setTimeout(function(){
+    if (Meteor.loggingIn()) {
+        console.log("user is logging in");
+        document.getElementById("blurredSideNav").style = "";
+        document.getElementById("preloader").style = "";
+    }
+    if(Session.get('loggedOut') == true){
+        document.getElementById("blurredSideNav").style = "display: none";
+        document.getElementById("preloader").style = "display: none";
+        Session.set('loggedOut', false);
+    }
 });
 
 Template.welcomeView.events({

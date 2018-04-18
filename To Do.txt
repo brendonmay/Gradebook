@@ -1,27 +1,21 @@
 Styling
 	- make sure site functions decently in internet explorer
-	- change all preloader-full to 
-		document.getElementById("blurredSideNav").style = "";
-        document.getElementById("preloader").style = "";
+	- include an icon in the tab on browser
 	
 Bugs
 	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.
 	- Store the Braintree information in settings.json, dont include their actual values in the code.
-	- add jquery validation on first and last name in registration
 	
 New Functionality
 	Brendon
 		- Connect Paypal to Braintree (will have to create a merchant paypal account)
 		- Switch braintree sandbox over to proper account for deployment
 		- Think of structure to allow administrators to view marks for the school
+		- Make it so they cant cancel subscription until 1 week after puchase?
 	
 	Josh
 		- Add print student reports functionality
 		- Reset password token should expire after its been used
 
 Scaling
-	- MongoDB indexes are super important. 
-
-Preloader:
-	- Initial page load
-
+	- MongoDB indexes are super important. (I believe this is handled via mLab)

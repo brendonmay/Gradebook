@@ -1503,6 +1503,7 @@ function getCourseOverviewInformation() {
 
 Template.studentReports.onCreated(function () {
     this.isCourseOverView = new ReactiveVar(true);
+    this.isFullMarkBreakdown = new ReactiveVar(false);
     this.getDropdownValue = new ReactiveVar("courseOverview");
 });
 
@@ -1513,6 +1514,9 @@ Template.studentReports.events({
     'click .studentSideNavElements': function (event, template) {
         if (template.isCourseOverView.get()) {
             refreshCourseOverviewGraphs();
+        } else if (template.isFullMarkBreakdown.get()){
+            //TODO:
+            //do some stuff here to refresh the page
         } else {
             refreshAssessmentTypeGraphs();
         }
@@ -1520,8 +1524,15 @@ Template.studentReports.events({
     'change #studentReportsDropdown': function (event, template) {
         if (document.getElementById('studentReportsDropdown').value == "courseOverview") {
             template.isCourseOverView.set(true);
+            template.isFullMarkBreakdown.set(false);
             template.getDropdownValue.set("courseOverview");
             refreshCourseOverviewGraphs();
+        } else if (document.getElementById('studentReportsDropdown').value == "fullMarkBreakdown") {
+            template.isCourseOverView.set(false);
+            template.isFullMarkBreakdown.set(true);
+            template.getDropdownValue.set("fullMarkBreakdown");
+            // TODO:
+            //refresh graphs here
         } else {
             template.isCourseOverView.set(false);
             template.getDropdownValue.set(document.getElementById('studentReportsDropdown').value);
@@ -1533,6 +1544,9 @@ Template.studentReports.events({
         if (Session.get('currentSelectedStudentId') != '0') {
             if (Template.instance().isCourseOverView.get()) {
                 refreshCourseOverviewGraphs();
+            } else if (Template.instance().isFullMarkBreakdown.get()) {
+                // TODO:
+                //refresh graphs here
             } else {
                 refreshAssessmentTypeGraphs();
             }
@@ -1801,6 +1815,9 @@ Template.studentReports.helpers({
     },
     isCourseOverView: function () {
         return Template.instance().isCourseOverView.get();
+    },
+    isFullMarkBreakdown: function() {
+        return Template.instance().isFullMarkBreakdown.get();
     },
     getAllAssessments: function () {
         return getAssessmentTypeArray();

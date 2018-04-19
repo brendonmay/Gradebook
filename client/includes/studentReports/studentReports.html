@@ -14,8 +14,90 @@
                 </select>
             </div>
         </div>
-        {{#if isFullMarkBreakdown}} 
-        this is where we add the new template 
+        {{#if isFullMarkBreakdown}}
+        <div class="row">
+            <div class="col s4 offset-s1">
+                <ul class="collection collection-box">
+                    <li class="collection-item collection-box-item mod-line-height">
+                        <p class="mar-top-bot-none-breakdown center collection-title-reports-breakdown">{{getStudentNameLastFirst}}</p>
+                    </li>
+                    <li class="collection-item collection-box-item mod-line-height">
+                        <p class="mar-top-bot-none-breakdown collection-K-reports-breakdown">Knowledge: {{getFinalCategoryGrade 'K'}}</p>
+                    </li>
+                    <li class="collection-item collection-box-item mod-line-height">
+                        <p class="mar-top-bot-none-breakdown collection-A-reports-breakdown">Application: {{getFinalCategoryGrade 'A'}}</p>
+                    </li>
+                    <li class="collection-item collection-box-item mod-line-height">
+                        <p class="mar-top-bot-none-breakdown collection-T-reports-breakdown">Thinking: {{getFinalCategoryGrade 'T'}}</p>
+                    </li>
+                    <li class="collection-item collection-box-item mod-line-height">
+                        <p class="mar-top-bot-none-breakdown collection-C-reports-breakdown">Communication: {{getFinalCategoryGrade 'C'}}</p>
+                    </li>
+                    <li class="collection-item collection-box-item mod-line-height">
+                        <p class="mar-top-bot-none-breakdown collection-title-reports-breakdown">Grade: {{getFinalGrade}}</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="col s4 offset-s2">
+                <ul class="collection collection-box">
+                    <li class="collection-item collection-box-item mod-line-height">
+                        <p class="mar-top-bot-none-breakdown center collection-title-reports">Class Average</p>
+                    </li>
+                    <li class="collection-item collection-box-item mod-line-height">
+                        <p class="mar-top-bot-none-breakdown collection-K-reports">Knowledge: {{getClassFinalCategories.K}}</p>
+                    </li>
+                    <li class="collection-item collection-box-item mod-line-height">
+                        <p class="mar-top-bot-none-breakdown collection-A-reports">Application: {{getClassFinalCategories.A}}</p>
+                    </li>
+                    <li class="collection-item collection-box-item mod-line-height">
+                        <p class="mar-top-bot-none-breakdown collection-T-reports">Thinking: {{getClassFinalCategories.T}}</p>
+                    </li>
+                    <li class="collection-item collection-box-item mod-line-height">
+                        <p class="mar-top-bot-none-breakdown collection-C-reports">Communication: {{getClassFinalCategories.C}}</p>
+                    </li>
+                    <li class="collection-item collection-box-item mod-line-height">
+                        <p class="mar-top-bot-none-breakdown collection-title-reports">Grade: {{getClassFinalAverage}}</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <table class="striped centered">
+                <thead>
+                    <tr>
+                        <th class="bord-right-left-top Assessment-color">Assessment</th>
+                        <th class="bord-right-top K-color">Knowledge</th>
+                        <th class="bord-right-top A-color">Application</th>
+                        <th class="bord-right-top T-color">Thinking</th>
+                        <th class="bord-right-top C-color">Communication</th>
+                        <th class="bord-right-top Grade-color">Grade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each getCourseOverviewTableInfoBreakdown}}
+                    <tr>
+                        <td class="bord-strong"><span class="rowHeader">{{assessmentTypeName}}</span></td>
+                        <td class="bord-strong"><span class="rowHeader">{{K}}</span></td>
+                        <td class="bord-strong"><span class="rowHeader">{{A}}</span></td>
+                        <td class="bord-strong"><span class="rowHeader">{{T}}</span></td>
+                        <td class="bord-strong"><span class="rowHeader">{{C}}</span></td>
+                        <td class="bord-strong"><span class="rowHeader">{{Grade}}</span></td>
+                    </tr>
+                    {{#each getAllAssignmentInformationFullBreakDown assessmentTypeName}}
+                    <tr>
+                        <td class="bord-left-right-bottom">{{assessmentName}}</td>
+                        <td class="bord-right-bottom">{{K}}</td>
+                        <td class="bord-right-bottom">{{A}}</td>
+                        <td class="bord-right-bottom">{{T}}</td>
+                        <td class="bord-right-bottom">{{C}}</td>
+                        <td class="bord-right-bottom">{{Grade}}</td>
+                    </tr>
+                    {{/each}}
+                    {{/each}} 
+                </tbody>
+            </table>
+        </div>
         {{else}}
         <div class="row">
             <div class="col s3 graph-container-assessmentType">

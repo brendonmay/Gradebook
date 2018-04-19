@@ -1637,18 +1637,25 @@ Template.studentReports.events({
             template.isCourseOverView.set(true);
             template.isFullMarkBreakdown.set(false);
             template.getDropdownValue.set("courseOverview");
-            refreshCourseOverviewGraphs();
+            Tracker.afterFlush(function() {
+                refreshCourseOverviewGraphs();
+            });
         } else if (document.getElementById('studentReportsDropdown').value == "fullMarkBreakdown") {
             template.isCourseOverView.set(false);
             template.isFullMarkBreakdown.set(true);
             template.getDropdownValue.set("fullMarkBreakdown");
             // TODO:
-            //refresh graphs here
+            //refresh graphs here: Might need this afterFlush call to refresh graphs
+            // Tracker.afterFlush(function() {
+            //     refreshCourseOverviewGraphs();
+            // });
         } else {
             template.isCourseOverView.set(false);
             template.isFullMarkBreakdown.set(false);
             template.getDropdownValue.set(document.getElementById('studentReportsDropdown').value);
-            refreshAssessmentTypeGraphs();
+            Tracker.afterFlush(function() {
+                refreshAssessmentTypeGraphs();
+            });
         }
 
     },

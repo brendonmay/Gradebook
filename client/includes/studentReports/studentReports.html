@@ -14,6 +14,9 @@
                 </select>
             </div>
         </div>
+        {{#if isFullMarkBreakdown}} 
+        this is where we add the new template 
+        {{else}}
         <div class="row">
             <div class="col s3 graph-container-assessmentType">
                 {{#if isCourseOverView}}
@@ -160,12 +163,13 @@
                 {{/each}} {{/if}}
             </tbody>
         </table>
-        {{else}}
+        {{/if}} {{else}}
         <br>
-            <h4 class="condensed light center">You Have No Students On Your Roster</h4>
-            <h6 class="condensed light center">Click the Gradebook Tab, then click "Manage Students" to add students to your student roster</h6>
+        <h4 class="condensed light center">You Have No Students On Your Roster</h4>
+        <h6 class="condensed light center">Click the Gradebook Tab, then click "Manage Students" to add students to your student roster</h6>
         {{/if}}
     </div>
+
     <div class="col s2 max-height">
         {{> studentReportsSideNav}}
     </div>

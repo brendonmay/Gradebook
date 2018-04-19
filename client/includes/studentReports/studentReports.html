@@ -15,7 +15,7 @@
             </div>
         </div>
         {{#if isFullMarkBreakdown}}
-        <div class="row">
+        <!-- <div class="row">
             <div class="col s4 offset-s1">
                 <ul class="collection collection-box">
                     <li class="collection-item collection-box-item mod-line-height">
@@ -61,17 +61,17 @@
                 </ul>
             </div>
         </div>
-        <br>
+        <br> -->
         <div class="row">
             <table class="striped centered">
                 <thead>
                     <tr>
-                        <th class="bord-right-left-top Assessment-color">Assessment</th>
-                        <th class="bord-right-top K-color">Knowledge</th>
-                        <th class="bord-right-top A-color">Application</th>
-                        <th class="bord-right-top T-color">Thinking</th>
-                        <th class="bord-right-top C-color">Communication</th>
-                        <th class="bord-right-top Grade-color">Grade</th>
+                        <th class="bord-right-left-top Assessment-color mod-pad-tableH">Assessment</th>
+                        <th class="bord-right-top K-color mod-pad-tableH">Knowledge</th>
+                        <th class="bord-right-top A-color mod-pad-tableH">Application</th>
+                        <th class="bord-right-top T-color mod-pad-tableH">Thinking</th>
+                        <th class="bord-right-top C-color mod-pad-tableH">Communication</th>
+                        <th class="bord-right-top Grade-color mod-pad-tableH">Grade</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -86,12 +86,12 @@
                     </tr>
                     {{#each getAllAssignmentInformationFullBreakDown assessmentTypeName}}
                     <tr>
-                        <td class="bord-left-right-bottom">{{assessmentName}}</td>
-                        <td class="bord-right-bottom">{{K}}</td>
-                        <td class="bord-right-bottom">{{A}}</td>
-                        <td class="bord-right-bottom">{{T}}</td>
-                        <td class="bord-right-bottom">{{C}}</td>
-                        <td class="bord-right-bottom">{{Grade}}</td>
+                        <td class="bord-left-right-bottom mod-pad-table">{{assessmentName}}</td>
+                        <td class="bord-right-bottom mod-pad-table">{{K}}</td>
+                        <td class="bord-right-bottom mod-pad-table">{{A}}</td>
+                        <td class="bord-right-bottom mod-pad-table">{{T}}</td>
+                        <td class="bord-right-bottom mod-pad-table">{{C}}</td>
+                        <td class="bord-right-bottom mod-pad-table">{{Grade}}</td>
                     </tr>
                     {{/each}}
                     {{/each}} 

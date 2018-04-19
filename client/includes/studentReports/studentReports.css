@@ -227,6 +227,16 @@
     border: 1px solid grey;
     background-color:#bdbdbd;
     /* color:white; */
+    padding-top: 7.5px !important;
+    padding-bottom: 7.5px !important;
+}
+.mod-pad-table{
+    padding-top: 7.5px !important;
+    padding-bottom: 7.5px !important;
+}
+.mod-pad-tableH{
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
 }
 
 .marg-bottom-none{

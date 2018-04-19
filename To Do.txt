@@ -4,7 +4,6 @@ Styling
 	
 Bugs
 	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.
-	- Quiz graph in top left, when you hover, grades arent rounded to 2 decimals
 	
 New Functionality
 	Brendon

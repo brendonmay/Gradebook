@@ -773,10 +773,10 @@ function pullAssessmentTypeGradeFromCollection(assessmentTypeId, forClass) {
                 }
             }
         }
-        var K = KTotal / KTotalStudents;
-        var A = ATotal / ATotalStudents;
-        var T = TTotal / TTotalStudents;
-        var C = CTotal / CTotalStudents;
+        var K = Number((KTotal / KTotalStudents).toFixed(2));
+        var A = Number((ATotal / ATotalStudents).toFixed(2));
+        var T = Number((TTotal / TTotalStudents).toFixed(2));
+        var C = Number((CTotal / CTotalStudents).toFixed(2));
 
         if (KTotalStudents == 0) {
             K = "N/A"
@@ -1325,7 +1325,7 @@ function drawAssessmentTypeClassBarGraph() {
         }
         data.assessmentType = assessmentName
     }
-    //console.log(data)
+    console.log(data)
     new Morris.Bar({
         // ID of the element in which to draw the chart.
         element: 'assessmentTypeClassBarGraph',

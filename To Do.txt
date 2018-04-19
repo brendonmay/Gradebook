@@ -4,12 +4,11 @@ Styling
 	
 Bugs
 	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.
-	- Store the Braintree information in settings.json, dont include their actual values in the code.
 	
 New Functionality
 	Brendon
 		- Connect Paypal to Braintree (will have to create a merchant paypal account)
-		- Switch braintree sandbox over to proper account for deployment
+		- Switch braintree sandbox over to proper account for deployment (You will need to change the environment in the gateway variables)
 		- Think of structure to allow administrators to view marks for the school
 		- Make it so they cant cancel subscription until 1 week after puchase?
 	

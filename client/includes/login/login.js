@@ -1,9 +1,10 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 import jqueryValidation from 'jquery-validation';
-// import { Accounts } from 'meteor/accounts-base'
+import { Accounts } from 'meteor/accounts-base'
 
 import '../../main.html';
+import { CurrentDate } from '../../../lib/collections';
 
 function showLoginErrorMessageText(reason) {
     var message = document.getElementById('login-failed');
@@ -12,6 +13,23 @@ function showLoginErrorMessageText(reason) {
 function removeLoginError() {
     var message = document.getElementById('login-failed');
     message.style.display = "none";
+}
+function getExpiryDate() {
+    var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+    var currentDate = CurrentDate.findOne();
+    if (currentDate) {
+        today = currentDate.date;
+    } else {
+        return;
+    }
+    var expiryDate = Meteor.users.findOne({ _id: Meteor.userId() }).subscribed.expirationDate;
+
+    var diffDays = Math.round((expiryDate.getTime() - today.getTime()) / (oneDay));
+
+    return diffDays
+}
+function expired(diffDays) {
+    return diffDays <= -1
 }
 
 Template.login.events({
@@ -22,7 +40,9 @@ Template.login.events({
         var emailVar = template.find('#login-email').value;
         var passwordVar = template.find('#login-password').value;
 
-        document.getElementById("preloader-full").style = "";
+        //document.getElementById("preloader-full").style = "";
+        document.getElementById("blurredSideNav").style = "";
+        document.getElementById("preloader").style = "";
 
         Meteor.loginWithPassword(emailVar, passwordVar, function (error) {
             if (error) {
@@ -39,7 +59,9 @@ Template.login.events({
                     default:
                     //unidentified error 
                 }
-                document.getElementById("preloader-full").style = "display: none";
+                //document.getElementById("preloader-full").style = "display: none";
+                document.getElementById("blurredSideNav").style = "display: none";
+                document.getElementById("preloader").style = "display: none";
             } else {
                 //no error on login, so user Logs in fine
                 removeLoginError();

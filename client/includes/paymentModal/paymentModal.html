@@ -2,6 +2,7 @@
     <div id="paymentModalId" class="modal">
         <div class="modal-content">
             <h4>Purchase Subscription</h4>
+            <p>By submitting payment, you will be subscribing to a yearly plan of $20/year. The subscription can be cancelled at any time by clicking your email in the top right corner of the website and selecting "Cancel Subscription".</p>
             <!-- Content Here -->
             <div id="dropin-wrapper">
                 <div id="checkout-message"></div>
@@ -16,16 +17,24 @@
                     container: '#dropin-container'
                 }, function (createErr, instance) {
                     button.addEventListener('click', function () {
+                        var currentUser = Meteor.users.findOne({ _id: Meteor.userId() });
+                        var expirationDate = currentUser.subscribed.expirationDate;
+                        var newExpirationDate
+                        document.getElementById("blurredSideNav").style = "";
+                        document.getElementById("preloader").style = "";
+
                         instance.requestPaymentMethod(function (requestPaymentMethodErr, payload) {
                             // When the user clicks on the 'Submit payment' button this code will send the
                             // encrypted payment information in a variable called a payment method nonce
                             Meteor.call('createPayment', payload, function () {
-                                var currentUser = Meteor.users.findOne({ _id: Meteor.userId() });
-                                console.log(currentUser);
-                                if (currentUser.subscribed.type == "paid") {
-                                     $('#paymentModalId').modal('close');
-                                     $('#successfulPayment').modal('open');
+                                if (requestPaymentMethodErr) {
+                                    return false
                                 }
+                                //console.log("transaction went through");
+                                $('#paymentModalId').modal('close');
+                                document.getElementById("blurredSideNav").style = "display: none";
+                                document.getElementById("preloader").style = "display: none";
+                                $('#successfulPayment').modal('open');
                             });
                         });
                     });

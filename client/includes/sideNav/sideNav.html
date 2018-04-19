@@ -1,5 +1,6 @@
 <template name="sideNav" class="sideNav">
     <ul id="slide-out-l" class="side-nav fixed side-nav-modify">
+        <div id="blurredSideNav" class="preloaderNav" style="display:none"></div>
         <div id="preloaderSideNav" class="preloaderNav" style="display:none">
             <div id="circle-location" class="preloader-wrapper active">
                 <div class="spinner-layer spinner-blue">
@@ -60,13 +61,19 @@
                     <p>You must <a href="#!" id="purchSubsc">purchase a subscription</a> to access your courses.</p>
                 </div>
             {{else}}
-                {{#if hasNoCourses}}
-                <div class="paragraph">
-                    <p>Thank you for logging in. You can now create a course.</p>
-                </div>
-                {{else}} 
-                    {{> sideNavDropDown}} 
-                {{/if}} 
+                {{#if expiredFree}}
+                    <div class="paragraph">
+                        <p>You must <a href="#!" id="purchSubsc">purchase a subscription</a> to access your courses.</p>
+                    </div>
+                {{else}}
+                    {{#if hasNoCourses}}
+                    <div class="paragraph">
+                        <p>Thank you for logging in. You can now create a course.</p>
+                    </div>
+                    {{else}} 
+                        {{> sideNavDropDown}} 
+                    {{/if}} 
+                {{/if}}
             {{/if}}
         {{else}}
             <div class="paragraph">

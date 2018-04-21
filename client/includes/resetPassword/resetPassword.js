@@ -21,7 +21,9 @@ Template.resetPassword.events({
 
         var emailVar = template.find('#resetPassword-email').value;
 
-        document.getElementById("preloader-full").style = "";
+        //document.getElementById("preloader-full").style = "";
+        document.getElementById("blurredSideNav").style = "";
+        document.getElementById("preloader").style = "";
 
         Meteor.call('sendResetPassword', emailVar, function (error, result) {
             if (error) {
@@ -30,7 +32,9 @@ Template.resetPassword.events({
                 document.getElementById("reset-passed").style.display = "";
                 document.getElementById('resetPassword').style.display = "none";
             }
-            document.getElementById("preloader-full").style = "display: none;";
+            //document.getElementById("preloader-full").style = "display: none;";
+            document.getElementById("blurredSideNav").style = "display: none";
+            document.getElementById("preloader").style = "display: none";
         });
     },
 

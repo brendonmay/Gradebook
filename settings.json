@@ -2,7 +2,8 @@
     "public": {
         "braintree": {
             "BT_PUBLIC_KEY": "r37t95f7qdbvn4ws",
-            "BT_MERCHANT_ID": "4swbx6vm2kn64w2p"
+            "BT_MERCHANT_ID": "4swbx6vm2kn64w2p",
+            "BT_PLAN_ID": "yearly-plan"
         }
     },
     "private": {

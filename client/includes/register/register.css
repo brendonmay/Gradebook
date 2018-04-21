@@ -13,3 +13,13 @@
     color: #ff5252;
     margin-bottom: 10px;
 }
+#firstName-error {
+    border-bottom: none !important; 
+    color: #ff5252;
+    margin-bottom: 10px;
+}
+#lastName-error {
+    border-bottom: none !important; 
+    color: #ff5252;
+    margin-bottom: 10px;
+}

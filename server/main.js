@@ -3,14 +3,19 @@ import { Accounts } from 'meteor/accounts-base';
 import { Mongo } from "meteor/mongo";
 import { CurrentDate } from "../lib/collections.js"
 
+BT_MERCHANT_ID = "4swbx6vm2kn64w2p";
+BT_PUBLIC_KEY = "r37t95f7qdbvn4ws";
+BT_PRIVATE_KEY = "12f6b57a5a035805835212056a210ee1";
+BT_PLAN_ID = "yearly-plan";
+
 Meteor.startup(() => {
   var braintree = require("braintree");
 
   var gateway = braintree.connect({
     environment: braintree.Environment.Sandbox,
-    merchantId: "4swbx6vm2kn64w2p",
-    publicKey: "r37t95f7qdbvn4ws",
-    privateKey: "12f6b57a5a035805835212056a210ee1"
+    merchantId: BT_MERCHANT_ID,
+    publicKey: BT_PUBLIC_KEY,
+    privateKey: BT_PRIVATE_KEY
   });
 
   Meteor.publish('currentdate', function () {

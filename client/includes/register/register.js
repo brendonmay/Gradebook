@@ -52,12 +52,14 @@ Template.register.events({
 
         var email = event.target.registerEmail.value;
         var password = event.target.registerPassword.value;
+        var firstName = event.target.firstName.value;
+        var lastName = event.target.lastName.value;
 
         Accounts.createUser({
             email: email,
             password: password
         }, function() {
-            Meteor.call('giveUserFreeTrial', Meteor.userId());
+            Meteor.call('giveUserFreeTrial', firstName, lastName);
         });
 
         var registerForm = document.getElementById("registerForm");
@@ -67,7 +69,9 @@ Template.register.events({
         
         $('#emailVerificationModal').modal({
             complete: function () {
-                document.getElementById("preloader-full").style = "display: none;";
+                // document.getElementById("preloader-full").style = "display: none;";
+                document.getElementById("blurredSideNav").style = "display: none";
+                document.getElementById("preloader").style = "display: none";
                 $('#registerModal').modal('close');
             }
         });
@@ -77,6 +81,10 @@ Template.register.events({
 
 
 Template.register.onRendered(function () {
+    $.validator.addMethod('containsIllegalCharacters', (input) => {
+        const illegalCharacters = /[,<.>/?;:'"{}|`~!@#$%^&*()_+=\]\[\\1234567890]/g;
+        return !(input.match(illegalCharacters));
+    });
     $.validator.addMethod('containsUppercase', (input) => {
         const uppercase = /[A-Z]/g;
         return (input.match(uppercase));
@@ -115,6 +123,14 @@ Template.register.onRendered(function () {
             confirmPassword: {
                 required: true,
                 equalTo: "#registerPassword"
+            },
+            lastName: {
+                required: true,
+                containsIllegalCharacters: true,
+            },
+            firstName: {
+                required: true,
+                containsIllegalCharacters: true,
             }
         },
         //For custom messages
@@ -134,6 +150,14 @@ Template.register.onRendered(function () {
             confirmPassword: {
                 required: "Re-enter your password.",
                 equalTo: "The passwords you entered do not match."
+            },
+            lastName: {
+                required: "Enter your last name.",
+                containsIllegalCharacters: "Names can only contain alphabet letters and dashes(-)."
+            },
+            firstName: {
+                required: "Enter your first name.",
+                containsIllegalCharacters: "Names can only contain alphabet letters and dashes(-)."
             }
         },
         errorElement: 'div',

@@ -1540,60 +1540,7 @@ Template.studentReports.events({
         }
     },
     'click #printStudentReports': function () {
-        html2canvas = require('html2canvas');
-
-        document.getElementById('tableStudentGrade').style.height = 'auto';
-        document.getElementById('graphStudentGrade').style.height = 'auto';
-        document.getElementById('tableClassGrade').style.height = 'auto';
-        document.getElementById('graphClassGrade').style.height = 'auto';
-        document.getElementById('graphStudentBreakdown').style.height = 'auto';
-        document.getElementById('studentAssessmentTable').style.height = 'auto';
-
-        var studentGradeTable;
-        var studentGradeGraph;
-        var classGradeTable;
-        var classGradeGraph;
-        var studentGradeBreakdownTable;
-        var studentGradeBreakdownGraph;
-
-        var doc = new jsPDF('p', 'mm');
-
-
-        html2canvas(document.querySelector("#tableStudentGrade")).then(function (canvas) {
-            studentGradeTable = canvas.toDataURL('image/jpeg');
-            doc.addImage(studentGradeTable, 5, 40, 50, 40);
-            html2canvas(document.querySelector("#graphStudentGrade")).then(function (canvas) {
-                studentGradeGraph = canvas.toDataURL('image/jpeg');
-                doc.addImage(studentGradeGraph, 55, 40, 50, 40);
-                html2canvas(document.querySelector("#tableClassGrade")).then(function (canvas) {
-                    studentGradeGraph = canvas.toDataURL('image/jpeg');
-                    doc.addImage(studentGradeGraph, 110, 40, 50, 40);
-                    html2canvas(document.querySelector("#graphClassGrade")).then(function (canvas) {
-                        studentGradeGraph = canvas.toDataURL('image/jpeg');
-                        doc.addImage(studentGradeGraph, 160, 40, 50, 40);
-                        html2canvas(document.querySelector("#graphStudentBreakdown")).then(function (canvas) {
-                            studentGradeBreakdownGraph = canvas.toDataURL('image/jpeg');
-                            doc.addImage(studentGradeBreakdownGraph, 5, 85, 200, 80);
-
-                            html2canvas(document.querySelector("#studentAssessmentTable")).then(function (canvas) {
-                                studentGradeBreakdownTable = canvas.toDataURL('image/jpeg');
-                                doc.addImage(studentGradeBreakdownTable, 5, 165, 200, canvas.height / 10);
-
-                                doc.save('sample-file.pdf');
-                                document.getElementById('tableStudentGrade').style.height = '';
-                                document.getElementById('graphStudentGrade').style.height = '';
-                                document.getElementById('tableClassGrade').style.height = '';
-                                document.getElementById('graphClassGrade').style.height = '';
-                                document.getElementById('graphStudentBreakdown').style.height = '';
-                                document.getElementById('studentAssessmentTable').style.height = '';
-
-                            });
-                        });
-                    });
-
-                });
-            });
-        });
+        printReports();
     }
 });
 
@@ -1892,3 +1839,80 @@ Template.studentReports.helpers({
         return students.length > 1
     }
 });
+
+
+async function printReports() {
+    html2canvas = require('html2canvas');
+
+    document.getElementById('tableStudentGrade').style.height = 'auto';
+    document.getElementById('graphStudentGrade').style.height = 'auto';
+    document.getElementById('tableClassGrade').style.height = 'auto';
+    document.getElementById('graphClassGrade').style.height = 'auto';
+    document.getElementById('graphStudentBreakdown').style.height = 'auto';
+    document.getElementById('studentAssessmentTable').style.height = 'auto';
+
+    var studentGradeTable;
+    var studentGradeGraph;
+    var classGradeTable;
+    var classGradeGraph;
+    var studentGradeBreakdownTable;
+    var studentGradeBreakdownGraph;
+
+    var doc = new jsPDF('p', 'mm');
+
+    var currentCourseId = Session.get('courseId');
+    var students = Students.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId });
+    if (!students.students || students.students.length == 1) { //take into account s-0
+        //prompt error
+        return;
+    } 
+
+
+    for (var i = 1; i < students.students.length; i++) {
+        var curStudent = students.students[i];
+        document.getElementById('studentDropDown-' + curStudent.studentId).click();
+        if (!Tracker.inFlush()) {
+            await Tracker.flush();
+        }
+
+        await html2canvas(document.querySelector("#tableStudentGrade")).then(async function (canvas) {
+            studentGradeTable = canvas.toDataURL('image/jpeg');
+            doc.addImage(studentGradeTable, 5, 40, 50, 60);
+            await html2canvas(document.querySelector("#graphStudentGrade")).then(async function (canvas) {
+                studentGradeGraph = canvas.toDataURL('image/jpeg');
+                doc.addImage(studentGradeGraph, 55, 40, 50, 60);
+                await html2canvas(document.querySelector("#tableClassGrade")).then(async function (canvas) {
+                    studentGradeGraph = canvas.toDataURL('image/jpeg');
+                    doc.addImage(studentGradeGraph, 110, 40, 50, 60);
+                    await html2canvas(document.querySelector("#graphClassGrade")).then(async function (canvas) {
+                        studentGradeGraph = canvas.toDataURL('image/jpeg');
+                        doc.addImage(studentGradeGraph, 160, 40, 50, 60);
+                        await html2canvas(document.querySelector("#graphStudentBreakdown")).then(async function (canvas) {
+                            studentGradeBreakdownGraph = canvas.toDataURL('image/jpeg');
+                            doc.addImage(studentGradeBreakdownGraph, 5, 105, 200, 80);
+
+                            await html2canvas(document.querySelector("#studentAssessmentTable")).then(async function (canvas) {
+                                studentGradeBreakdownTable = canvas.toDataURL('image/jpeg');
+                                doc.addImage(studentGradeBreakdownTable, 5, 185, 200, canvas.height / 10);
+                            });
+                        });
+                    });
+
+                });
+            });
+        });
+        if (i+1 == students.students.length) {
+            break;
+        }
+        doc.addPage();
+    }
+
+    document.getElementById('tableStudentGrade').style.height = '';
+    document.getElementById('graphStudentGrade').style.height = '';
+    document.getElementById('tableClassGrade').style.height = '';
+    document.getElementById('graphClassGrade').style.height = '';
+    document.getElementById('graphStudentBreakdown').style.height = '';
+    document.getElementById('studentAssessmentTable').style.height = '';
+
+    doc.save('sample-file.pdf');
+} 

@@ -1638,7 +1638,7 @@ Template.studentReports.events({
             template.isCourseOverView.set(true);
             template.isFullMarkBreakdown.set(false);
             template.getDropdownValue.set("courseOverview");
-            Tracker.afterFlush(function() {
+            Tracker.afterFlush(function () {
                 refreshCourseOverviewGraphs();
             });
         } else if (document.getElementById('studentReportsDropdown').value == "fullMarkBreakdown") {
@@ -1654,7 +1654,7 @@ Template.studentReports.events({
             template.isCourseOverView.set(false);
             template.isFullMarkBreakdown.set(false);
             template.getDropdownValue.set(document.getElementById('studentReportsDropdown').value);
-            Tracker.afterFlush(function() {
+            Tracker.afterFlush(function () {
                 refreshAssessmentTypeGraphs();
             });
         }
@@ -1672,9 +1672,16 @@ Template.studentReports.events({
             }
         }
     },
-    'click #printStudentReports': function () {
-        printReports();
-    }
+    'click #studentReports-printClass': function () {
+        printBreakdownReports();
+    },
+    'click #studentReports-printStudent': function () {
+        if (Template.instance().isFullMarkBreakdown.get()) {
+            printBreakdownReportForStudent();
+        } else {
+            printReports();
+        }
+    },
 });
 
 Template.studentReports.helpers({
@@ -1987,6 +1994,8 @@ Template.studentReports.helpers({
 
 
 async function printReports() {
+    document.getElementById("preloader").style = "";
+
     html2canvas = require('html2canvas');
 
     document.getElementById('tableStudentGrade').style.height = 'auto';
@@ -2005,12 +2014,58 @@ async function printReports() {
 
     var doc = new jsPDF('p', 'mm');
 
+    doc = setDocumentDefaults(doc);
+
+    await html2canvas(document.querySelector("#tableStudentGrade")).then(async function (canvas) {
+        studentGradeTable = canvas.toDataURL('image/jpeg');
+        doc.addImage(studentGradeTable, 5, 40, 50, 60);
+        await html2canvas(document.querySelector("#graphStudentGrade")).then(async function (canvas) {
+            studentGradeGraph = canvas.toDataURL('image/jpeg');
+            doc.addImage(studentGradeGraph, 55, 40, 50, 60);
+            await html2canvas(document.querySelector("#tableClassGrade")).then(async function (canvas) {
+                studentGradeGraph = canvas.toDataURL('image/jpeg');
+                doc.addImage(studentGradeGraph, 110, 40, 50, 60);
+                await html2canvas(document.querySelector("#graphClassGrade")).then(async function (canvas) {
+                    studentGradeGraph = canvas.toDataURL('image/jpeg');
+                    doc.addImage(studentGradeGraph, 160, 40, 50, 60);
+                    await html2canvas(document.querySelector("#graphStudentBreakdown")).then(async function (canvas) {
+                        studentGradeBreakdownGraph = canvas.toDataURL('image/jpeg');
+                        doc.addImage(studentGradeBreakdownGraph, 5, 105, 200, 80);
+
+                        await html2canvas(document.querySelector("#studentAssessmentTable")).then(async function (canvas) {
+                            studentGradeBreakdownTable = canvas.toDataURL('image/jpeg');
+                            doc.addImage(studentGradeBreakdownTable, 5, 185, 200, canvas.height / 10);
+                        });
+                    });
+                });
+
+            });
+        });
+    });
+
+    document.getElementById('tableStudentGrade').style.height = '';
+    document.getElementById('graphStudentGrade').style.height = '';
+    document.getElementById('tableClassGrade').style.height = '';
+    document.getElementById('graphClassGrade').style.height = '';
+    document.getElementById('graphStudentBreakdown').style.height = '';
+    document.getElementById('studentAssessmentTable').style.height = '';
+
+    document.getElementById("preloader").style.display = "none";
+
+    doc.save('sample-file.pdf');
+}
+
+async function printBreakdownReports() {
+    document.getElementById("preloader").style = "";
+    html2canvas = require('html2canvas');
+    var doc = new jsPDF('p', 'mm');
+
     var currentCourseId = Session.get('courseId');
     var students = Students.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId });
     if (!students.students || students.students.length == 1) { //take into account s-0
         //prompt error
         return;
-    } 
+    }
 
 
     for (var i = 1; i < students.students.length; i++) {
@@ -2020,44 +2075,107 @@ async function printReports() {
             await Tracker.flush();
         }
 
-        await html2canvas(document.querySelector("#tableStudentGrade")).then(async function (canvas) {
-            studentGradeTable = canvas.toDataURL('image/jpeg');
-            doc.addImage(studentGradeTable, 5, 40, 50, 60);
-            await html2canvas(document.querySelector("#graphStudentGrade")).then(async function (canvas) {
-                studentGradeGraph = canvas.toDataURL('image/jpeg');
-                doc.addImage(studentGradeGraph, 55, 40, 50, 60);
-                await html2canvas(document.querySelector("#tableClassGrade")).then(async function (canvas) {
-                    studentGradeGraph = canvas.toDataURL('image/jpeg');
-                    doc.addImage(studentGradeGraph, 110, 40, 50, 60);
-                    await html2canvas(document.querySelector("#graphClassGrade")).then(async function (canvas) {
-                        studentGradeGraph = canvas.toDataURL('image/jpeg');
-                        doc.addImage(studentGradeGraph, 160, 40, 50, 60);
-                        await html2canvas(document.querySelector("#graphStudentBreakdown")).then(async function (canvas) {
-                            studentGradeBreakdownGraph = canvas.toDataURL('image/jpeg');
-                            doc.addImage(studentGradeBreakdownGraph, 5, 105, 200, 80);
-
-                            await html2canvas(document.querySelector("#studentAssessmentTable")).then(async function (canvas) {
-                                studentGradeBreakdownTable = canvas.toDataURL('image/jpeg');
-                                doc.addImage(studentGradeBreakdownTable, 5, 185, 200, canvas.height / 10);
-                            });
-                        });
-                    });
-
+        doc = setDocumentDefaults(doc);
+        
+        await html2canvas(document.querySelector("#studentBreakdownTable")).then(async function (canvas) {
+            var studentGradeTable = canvas.toDataURL('image/jpeg');
+            if (canvas.height / 10 > 261) {
+                var oldFontSize = document.getElementById("studentBreakdownTable").style.fontSize;
+                document.getElementById("studentBreakdownTable").style.fontSize = "12px";
+                await html2canvas(document.querySelector("#studentBreakdownTable")).then(async function (canvas) {
+                    var studentGradeTable = canvas.toDataURL('image/jpeg');
+                    doc.addImage(studentGradeTable, 10, 20, 185, 260);
                 });
-            });
+                document.getElementById("studentBreakdownTable").style.fontSize = oldFontSize;
+            } else {
+                doc.addImage(studentGradeTable, 10, 20, 185, canvas.height / 10);
+            }
         });
-        if (i+1 == students.students.length) {
+        if (i + 1 == students.students.length) {
             break;
         }
         doc.addPage();
     }
+    document.getElementById("preloader").style.display = "none";
+    doc.save('courseBreakdown.pdf');
+}
 
-    document.getElementById('tableStudentGrade').style.height = '';
-    document.getElementById('graphStudentGrade').style.height = '';
-    document.getElementById('tableClassGrade').style.height = '';
-    document.getElementById('graphClassGrade').style.height = '';
-    document.getElementById('graphStudentBreakdown').style.height = '';
-    document.getElementById('studentAssessmentTable').style.height = '';
+async function printBreakdownReportForStudent() {
+    document.getElementById("preloader").style.display = "";
+    // document.getElementById("studentBreakdownTable").style.fontSize = "12px"
 
-    doc.save('sample-file.pdf');
-} 
+    html2canvas = require('html2canvas');
+    var doc = new jsPDF('p', 'mm');
+
+    doc = setDocumentDefaults(doc);
+    
+    await html2canvas(document.querySelector("#studentBreakdownTable")).then(async function (canvas) {
+        var studentGradeTable = canvas.toDataURL('image/jpeg');
+        if (canvas.height / 10 > 261) {
+            document.getElementById("studentBreakdownTable").style.fontSize = "12px";
+            await html2canvas(document.querySelector("#studentBreakdownTable")).then(async function (canvas) {
+                var studentGradeTable = canvas.toDataURL('image/jpeg');
+                doc.addImage(studentGradeTable, 10, 20, 185, 260);
+            });
+            document.getElementById("studentBreakdownTable").style.fontSize = "15px";
+        } else {
+            doc.addImage(studentGradeTable, 10, 20, 185, canvas.height / 10);
+        }
+    });
+
+    var ownerId = Meteor.userId();
+    var courseId = Session.get("courseId");
+    var studentId = Session.get('currentSelectedStudentID');
+    var studentName = getStudentNameFirstLast(studentId, ownerId, courseId);
+
+    document.getElementById("studentBreakdownTable").style.fontSize = "15px"
+    document.getElementById("preloader").style.display = "none";
+
+    doc.save('courseBreakdown-' + studentName + '.pdf');
+
+}
+
+function getStudentFullNameAndGrade() {
+    var ownerId = Meteor.userId();
+    var courseId = Session.get("courseId");
+    var studentId = Session.get('currentSelectedStudentID');
+    var studentName = getStudentNameFirstLast(studentId, ownerId, courseId);
+
+    var K = determineOverallCategoryGrade(Meteor.userId(), courseId, studentId, 'K');
+    var A = determineOverallCategoryGrade(Meteor.userId(), courseId, studentId, 'A');
+    var T = determineOverallCategoryGrade(Meteor.userId(), courseId, studentId, 'T');
+    var C = determineOverallCategoryGrade(Meteor.userId(), courseId, studentId, 'C');
+
+    var WeightK = Session.get('knowledgeWeight');
+    var WeightA = Session.get('applicationWeight');
+    var WeightT = Session.get('thinkingWeight');
+    var WeightC = Session.get('communicationWeight');
+
+    var finalGrade = getWeightedAverage(K, A, T, C, WeightK, WeightA, WeightT, WeightC)
+
+    if (!isNaN(finalGrade)) {
+        finalGrade = (finalGrade / 100).toFixed(2) + "%";
+    }
+    else {
+        finalGrade = "N/A"
+    }
+
+    return studentName + " (" + finalGrade + ")"
+}
+
+function setDocumentDefaults(doc) {
+    doc.setFontSize(16);
+    doc.setFontType("normal");
+    doc.text(75, 10, getStudentFullNameAndGrade());
+    doc.setFontSize(12);
+    doc.setFontType("italic");
+    let date = new Date().toDateString();
+    let teacherName = "J. Currie" //getTeacherName()
+    let className = "TestMath" //getClassName()
+    doc.text(15, 7, "Class: " + className);
+    doc.text(150, 7, "Teacher: " + teacherName); // + "Date:  " + date);
+    doc.text(150, 12, "Date:  " + date);
+    doc.text(20, 290, "Parent Signature: _________________________________");
+
+    return doc;
+}

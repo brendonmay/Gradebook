@@ -1,9 +1,33 @@
 <template name="studentReports">
     <div class="col s10 max-height-report-view" id="studentReportsPrint">
-        <h4 class="light-blue lighten-4 settings-header">Student Reports</h4>
+        <nav class="heighten-nav nav-padding-top">
+            <div class="nav-wrapper light-blue lighten-4">
+                <a href="#" class="left-align gradebook-header">Student Reports</a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    {{#if isFullMarkBreakdown}}
+                    <li>
+                        <a href="#!" id="studentReports-printClass">
+                            <p class="zero-top-pad grey-font-color">Print for Class</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#!" id="studentReports-printStudent">
+                            <p class="zero-top-pad grey-font-color">Print for Student</p>
+                        </a>
+                    </li>
+                    {{else}}
+                    <li>
+                        <a href="#!" id="studentReports-printStudent">
+                            <p class="zero-top-pad grey-font-color">Print for Student</p>
+                        </a>
+                    </li>
+                    {{/if}}
+                </ul>
+            </div>
+        </nav>
+        <!-- <h4 class="light-blue lighten-4 settings-header">Student Reports</h4> -->
         {{#if hasStudents}}
         <h5 class="center marg-bottom-none">{{getStudentNameFirstLast}} ({{getFinalGrade}})</h5>
-        <a class="waves-effect waves-grey btn modal-trigger blue-grey darken-1" id="printStudentReports">Print</a>
         <div class="row modif-bot-mar">
             <div class="col input-field s4 offset-s4">
                 <select id="studentReportsDropdown">
@@ -16,55 +40,8 @@
             </div>
         </div>
         {{#if isFullMarkBreakdown}}
-        <!-- <div class="row">
-            <div class="col s4 offset-s1">
-                <ul class="collection collection-box">
-                    <li class="collection-item collection-box-item mod-line-height">
-                        <p class="mar-top-bot-none-breakdown center collection-title-reports-breakdown">{{getStudentNameLastFirst}}</p>
-                    </li>
-                    <li class="collection-item collection-box-item mod-line-height">
-                        <p class="mar-top-bot-none-breakdown collection-K-reports-breakdown">Knowledge: {{getFinalCategoryGrade 'K'}}</p>
-                    </li>
-                    <li class="collection-item collection-box-item mod-line-height">
-                        <p class="mar-top-bot-none-breakdown collection-A-reports-breakdown">Application: {{getFinalCategoryGrade 'A'}}</p>
-                    </li>
-                    <li class="collection-item collection-box-item mod-line-height">
-                        <p class="mar-top-bot-none-breakdown collection-T-reports-breakdown">Thinking: {{getFinalCategoryGrade 'T'}}</p>
-                    </li>
-                    <li class="collection-item collection-box-item mod-line-height">
-                        <p class="mar-top-bot-none-breakdown collection-C-reports-breakdown">Communication: {{getFinalCategoryGrade 'C'}}</p>
-                    </li>
-                    <li class="collection-item collection-box-item mod-line-height">
-                        <p class="mar-top-bot-none-breakdown collection-title-reports-breakdown">Grade: {{getFinalGrade}}</p>
-                    </li>
-                </ul>
-            </div>
-            <div class="col s4 offset-s2">
-                <ul class="collection collection-box">
-                    <li class="collection-item collection-box-item mod-line-height">
-                        <p class="mar-top-bot-none-breakdown center collection-title-reports">Class Average</p>
-                    </li>
-                    <li class="collection-item collection-box-item mod-line-height">
-                        <p class="mar-top-bot-none-breakdown collection-K-reports">Knowledge: {{getClassFinalCategories.K}}</p>
-                    </li>
-                    <li class="collection-item collection-box-item mod-line-height">
-                        <p class="mar-top-bot-none-breakdown collection-A-reports">Application: {{getClassFinalCategories.A}}</p>
-                    </li>
-                    <li class="collection-item collection-box-item mod-line-height">
-                        <p class="mar-top-bot-none-breakdown collection-T-reports">Thinking: {{getClassFinalCategories.T}}</p>
-                    </li>
-                    <li class="collection-item collection-box-item mod-line-height">
-                        <p class="mar-top-bot-none-breakdown collection-C-reports">Communication: {{getClassFinalCategories.C}}</p>
-                    </li>
-                    <li class="collection-item collection-box-item mod-line-height">
-                        <p class="mar-top-bot-none-breakdown collection-title-reports">Grade: {{getClassFinalAverage}}</p>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <br> -->
         <div class="row">
-            <table class="striped centered">
+            <table id="studentBreakdownTable" class="striped centered">
                 <thead>
                     <tr>
                         <th class="bord-right-left-top Assessment-color mod-pad-tableH">Assessment</th>
@@ -78,12 +55,24 @@
                 <tbody>
                     {{#each getCourseOverviewTableInfoBreakdown}}
                     <tr>
-                        <td class="bord-strong"><span class="rowHeader">{{assessmentTypeName}}</span></td>
-                        <td class="bord-strong"><span class="rowHeader">{{K}}</span></td>
-                        <td class="bord-strong"><span class="rowHeader">{{A}}</span></td>
-                        <td class="bord-strong"><span class="rowHeader">{{T}}</span></td>
-                        <td class="bord-strong"><span class="rowHeader">{{C}}</span></td>
-                        <td class="bord-strong"><span class="rowHeader">{{Grade}}</span></td>
+                        <td class="bord-strong">
+                            <span class="rowHeader">{{assessmentTypeName}}</span>
+                        </td>
+                        <td class="bord-strong">
+                            <span class="rowHeader">{{K}}</span>
+                        </td>
+                        <td class="bord-strong">
+                            <span class="rowHeader">{{A}}</span>
+                        </td>
+                        <td class="bord-strong">
+                            <span class="rowHeader">{{T}}</span>
+                        </td>
+                        <td class="bord-strong">
+                            <span class="rowHeader">{{C}}</span>
+                        </td>
+                        <td class="bord-strong">
+                            <span class="rowHeader">{{Grade}}</span>
+                        </td>
                     </tr>
                     {{#each getAllAssignmentInformationFullBreakDown assessmentTypeName}}
                     <tr>
@@ -94,8 +83,7 @@
                         <td class="bord-right-bottom mod-pad-table">{{C}}</td>
                         <td class="bord-right-bottom mod-pad-table">{{Grade}}</td>
                     </tr>
-                    {{/each}}
-                    {{/each}} 
+                    {{/each}} {{/each}}
                 </tbody>
             </table>
         </div>

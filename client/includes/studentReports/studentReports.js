@@ -2056,10 +2056,6 @@ async function printReports() {
 }
 
 async function printBreakdownReports() {
-    document.getElementById("preloader").style = "";
-    html2canvas = require('html2canvas');
-    var doc = new jsPDF('p', 'mm');
-
     var currentCourseId = Session.get('courseId');
     var students = Students.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId });
     if (!students.students || students.students.length == 1) { //take into account s-0
@@ -2067,31 +2063,48 @@ async function printBreakdownReports() {
         return;
     }
 
+    document.getElementById("preloader").style.display = "";
 
-    for (var i = 1; i < students.students.length; i++) {
-        var curStudent = students.students[i];
+    var jsPDF = require('jspdf');
+    require('jspdf-autotable');
+    var doc = new jsPDF('p', 'pt');
+
+    for (var x = 1; x < students.students.length; x++) {
+        var curStudent = students.students[x];
         document.getElementById('studentDropDown-' + curStudent.studentId).click();
         if (!Tracker.inFlush()) {
             await Tracker.flush();
         }
 
-        doc = setDocumentDefaults(doc);
-        
-        await html2canvas(document.querySelector("#studentBreakdownTable")).then(async function (canvas) {
-            var studentGradeTable = canvas.toDataURL('image/jpeg');
-            if (canvas.height / 10 > 261) {
-                var oldFontSize = document.getElementById("studentBreakdownTable").style.fontSize;
-                document.getElementById("studentBreakdownTable").style.fontSize = "12px";
-                await html2canvas(document.querySelector("#studentBreakdownTable")).then(async function (canvas) {
-                    var studentGradeTable = canvas.toDataURL('image/jpeg');
-                    doc.addImage(studentGradeTable, 10, 20, 185, 260);
-                });
-                document.getElementById("studentBreakdownTable").style.fontSize = oldFontSize;
-            } else {
-                doc.addImage(studentGradeTable, 10, 20, 185, canvas.height / 10);
+        var columns = ["Assessments", "Knowledge", "Application", "Thinking", "Communication", "Grade"];
+        var rows = [];
+        var assessmentInfo = getCourseOverviewInformationMarkBreakDown();
+        for (var i = 0; i < assessmentInfo.length; i++) {
+            var newRow = [
+                assessmentInfo[i].assessmentTypeName,
+                assessmentInfo[i].K,
+                assessmentInfo[i].A,
+                assessmentInfo[i].T,
+                assessmentInfo[i].C,
+                assessmentInfo[i].Grade
+            ];
+            rows.push(newRow);
+            var actualAssessmentInfo = getStudentAssessmentTypeInfoWithName(assessmentInfo[i].assessmentTypeName)
+            for (var j = 0; j < actualAssessmentInfo.length; j++) {
+                var newRow = [
+                    actualAssessmentInfo[j].assessmentName,
+                    actualAssessmentInfo[j].K,
+                    actualAssessmentInfo[j].A,
+                    actualAssessmentInfo[j].T,
+                    actualAssessmentInfo[j].C,
+                    actualAssessmentInfo[j].Grade
+                ];
+                rows.push(newRow);
             }
-        });
-        if (i + 1 == students.students.length) {
+        }
+        console.log(rows);
+        doc.autoTable(columns, rows);
+        if (x + 1 == students.students.length) {
             break;
         }
         doc.addPage();
@@ -2102,37 +2115,10 @@ async function printBreakdownReports() {
 
 async function printBreakdownReportForStudent() {
     document.getElementById("preloader").style.display = "";
-    // document.getElementById("studentBreakdownTable").style.fontSize = "12px"
 
-    html2canvas = require('html2canvas');
-    var doc = new jsPDF('p', 'mm');
+    printStudentUsingTextOnly();
 
-    doc = setDocumentDefaults(doc);
-    
-    await html2canvas(document.querySelector("#studentBreakdownTable")).then(async function (canvas) {
-        var studentGradeTable = canvas.toDataURL('image/jpeg');
-        if (canvas.height / 10 > 261) {
-            document.getElementById("studentBreakdownTable").style.fontSize = "12px";
-            await html2canvas(document.querySelector("#studentBreakdownTable")).then(async function (canvas) {
-                var studentGradeTable = canvas.toDataURL('image/jpeg');
-                doc.addImage(studentGradeTable, 10, 20, 185, 260);
-            });
-            document.getElementById("studentBreakdownTable").style.fontSize = "15px";
-        } else {
-            doc.addImage(studentGradeTable, 10, 20, 185, canvas.height / 10);
-        }
-    });
-
-    var ownerId = Meteor.userId();
-    var courseId = Session.get("courseId");
-    var studentId = Session.get('currentSelectedStudentID');
-    var studentName = getStudentNameFirstLast(studentId, ownerId, courseId);
-
-    document.getElementById("studentBreakdownTable").style.fontSize = "15px"
     document.getElementById("preloader").style.display = "none";
-
-    doc.save('courseBreakdown-' + studentName + '.pdf');
-
 }
 
 function getStudentFullNameAndGrade() {
@@ -2163,6 +2149,62 @@ function getStudentFullNameAndGrade() {
     return studentName + " (" + finalGrade + ")"
 }
 
+function printStudentUsingTextOnly() {
+    var jsPDF = require('jspdf');
+    require('jspdf-autotable');
+    var doc = new jsPDF('p', 'pt');
+
+    var columns = ["Assessments", "Knowledge", "Application", "Thinking", "Communication", "Grade"];
+    var rows = [];
+    var assessmentInfo = getCourseOverviewInformationMarkBreakDown();
+    var assessmentIndexs = [0];
+    var index = 0;
+    for (var i = 0; i < assessmentInfo.length; i++) {
+        var newRow = [
+            assessmentInfo[i].assessmentTypeName,
+            assessmentInfo[i].K,
+            assessmentInfo[i].A,
+            assessmentInfo[i].T,
+            assessmentInfo[i].C,
+            assessmentInfo[i].Grade
+        ];
+        rows.push(newRow);
+        index++;
+        var actualAssessmentInfo = getStudentAssessmentTypeInfoWithName(assessmentInfo[i].assessmentTypeName)
+        for (var j = 0; j < actualAssessmentInfo.length; j++) {
+            var newRow = [
+                actualAssessmentInfo[j].assessmentName,
+                actualAssessmentInfo[j].K,
+                actualAssessmentInfo[j].A,
+                actualAssessmentInfo[j].T,
+                actualAssessmentInfo[j].C,
+                actualAssessmentInfo[j].Grade
+            ];
+            rows.push(newRow);
+            index++;
+        }
+        assessmentIndexs.push(index);
+    }
+    var doc = new jsPDF('p', 'pt');
+    doc.autoTable(columns, rows, {
+        createdCell: function (cell, data) {
+            console.log(data);
+            if (assessmentIndexs.includes(data.row.index)) {
+                doc.setFontSize(15);
+                doc.setFontType("bold");
+            }
+        }
+    });
+    // doc = setDocumentDefaults(doc);
+
+    var ownerId = Meteor.userId();
+    var courseId = Session.get("courseId");
+    var studentId = Session.get('currentSelectedStudentID');
+    var studentName = getStudentNameFirstLast(studentId, ownerId, courseId);
+
+    doc.save('courseBreakdown-' + studentName + '.pdf');
+}
+
 function setDocumentDefaults(doc) {
     doc.setFontSize(16);
     doc.setFontType("normal");
@@ -2179,3 +2221,26 @@ function setDocumentDefaults(doc) {
 
     return doc;
 }
+
+
+//this is how to use html2canvas and adjusting image and text size:
+//     html2canvas = require('html2canvas');
+// document.getElementById("studentBreakdownTable").style.width = "80%";
+//         document.getElementById("studentBreakdownTable").style.fontSize = "17px";
+
+//         await html2canvas(document.querySelector("#studentBreakdownTable")).then(async function (canvas) {
+//             var studentGradeTable = canvas.toDataURL('image/jpeg');
+//             var heightWidthRatio = canvas.height / canvas.width;
+//             var newHeight = 185 * 1.2 * heightWidthRatio;
+//             if (newHeight > 261) {
+//                 await html2canvas(document.querySelector("#studentBreakdownTable")).then(async function (canvas) {
+//                     var studentGradeTable = canvas.toDataURL('image/jpeg');
+//                     doc.addImage(studentGradeTable, 10, 20, 185, 260);
+//                 });
+//             } else {
+
+//                 doc.addImage(studentGradeTable, 10, 20, 185, newHeight);
+//             }
+//         });
+//         document.getElementById("studentBreakdownTable").style.fontSize = "15px";
+//         document.getElementById("studentBreakdownTable").style.width = "";

@@ -2100,19 +2100,19 @@ async function printBreakdownReports() {
                     actualAssessmentInfo[j].Grade
                 ];
                 rows.push(newRow);
-        // doc = setDocumentDefaults(doc);
-        
-        // await html2canvas(document.querySelector("#studentBreakdownTable")).then(async function (canvas) {
-        //     var studentGradeTable = canvas.toDataURL('image/jpeg');
-        //     if (canvas.height / 10 > 261) {
-        //         document.getElementById("studentBreakdownTable").style.fontSize = "12px";
-        //         await html2canvas(document.querySelector("#studentBreakdownTable")).then(async function (canvas) {
-        //             var studentGradeTable = canvas.toDataURL('image/jpeg');
-        //             doc.addImage(studentGradeTable, 13, 20, 185, 260);
-        //         });
-        //         document.getElementById("studentBreakdownTable").style.fontSize = "15px";
-        //     } else {
-        //         doc.addImage(studentGradeTable, 13, 20, 185, canvas.height / 10);
+                // doc = setDocumentDefaults(doc);
+
+                // await html2canvas(document.querySelector("#studentBreakdownTable")).then(async function (canvas) {
+                //     var studentGradeTable = canvas.toDataURL('image/jpeg');
+                //     if (canvas.height / 10 > 261) {
+                //         document.getElementById("studentBreakdownTable").style.fontSize = "12px";
+                //         await html2canvas(document.querySelector("#studentBreakdownTable")).then(async function (canvas) {
+                //             var studentGradeTable = canvas.toDataURL('image/jpeg');
+                //             doc.addImage(studentGradeTable, 13, 20, 185, 260);
+                //         });
+                //         document.getElementById("studentBreakdownTable").style.fontSize = "15px";
+                //     } else {
+                //         doc.addImage(studentGradeTable, 13, 20, 185, canvas.height / 10);
             }
         }
         console.log(rows);
@@ -2126,29 +2126,97 @@ async function printBreakdownReports() {
     doc.save('courseBreakdown.pdf');
 }
 
+var jsPDF = require('jspdf');
+require('jspdf-autotable');
+
 async function printBreakdownReportForStudent() {
     document.getElementById("preloader").style.display = "";
 
-    printStudentUsingTextOnly();
+    var columns = ["Assessments", "Knowledge", "Application", "Thinking", "Communication", "Grade"];
+    var rows = [];
+    var assessmentInfo = getCourseOverviewInformationMarkBreakDown();
+    var assessmentIndexs = [0];
+    var index = 0;
+    for (var i = 0; i < assessmentInfo.length; i++) {
+        // var newRow = [
+        //     assessmentInfo[i].assessmentTypeName,
+        //     assessmentInfo[i].K,
+        //     assessmentInfo[i].A,
+        //     assessmentInfo[i].T,
+        //     assessmentInfo[i].C,
+        //     assessmentInfo[i].Grade
+        // ];
+        // rows.push(newRow);
+        // index++;
+        var actualAssessmentInfo = getStudentAssessmentTypeInfoWithName(assessmentInfo[i].assessmentTypeName)
+        for (var j = 0; j < actualAssessmentInfo.length; j++) {
+            var newRow = [
+                actualAssessmentInfo[j].assessmentName,
+                actualAssessmentInfo[j].K,
+                actualAssessmentInfo[j].A,
+                actualAssessmentInfo[j].T,
+                actualAssessmentInfo[j].C,
+                actualAssessmentInfo[j].Grade
+            ];
+            rows.push(newRow);
+            index++;
+        }
+        assessmentIndexs.push(index);
+    }
 
-    // html2canvas = require('html2canvas');
-    // var doc = new jsPDF('p', 'mm');
-
-    // doc = setDocumentDefaults(doc);
+    var doc = new jsPDF('p', 'pt');
+    doc = setDocumentDefaults(doc);
     
-    // await html2canvas(document.querySelector("#studentBreakdownTable")).then(async function (canvas) {
-    //     var studentGradeTable = canvas.toDataURL('image/jpeg');
-    //     if (canvas.height / 10 > 261) {
-    //         document.getElementById("studentBreakdownTable").style.fontSize = "12px";
-    //         await html2canvas(document.querySelector("#studentBreakdownTable")).then(async function (canvas) {
-    //             var studentGradeTable = canvas.toDataURL('image/jpeg');
-    //             doc.addImage(studentGradeTable, 13, 20, 185, 260);
-    //         });
-    //         document.getElementById("studentBreakdownTable").style.fontSize = "15px";
-    //     } else {
-    //         doc.addImage(studentGradeTable, 13, 20, 185, canvas.height / 10);
-    //     }
-    // });
+    index = 0;
+    doc.autoTable(columns, rows, {
+        theme: 'grid',
+        startY: 60,
+        drawRow: function (row, data) {
+            doc.setFontStyle('bold');
+            doc.setFontSize(10);
+            if (assessmentIndexs.includes(row.index)) {
+                console.log(row); // x: 45, 143.35, 227.35, 312.81, 381.39, 494.89 
+                let currentAssessment = assessmentInfo[index];
+                index++;
+                doc.setTextColor(200, 0, 0);
+
+                doc.rect(data.settings.margin.left, row.y, data.table.width, 20, 'S');
+
+                doc.autoTableText(currentAssessment.assessmentTypeName, 45, row.y + 10, {
+                    halign: 'left',
+                    valign: 'middle'
+                });
+                doc.autoTableText(currentAssessment.K, 143.35, row.y + 10, {
+                    halign: 'left',
+                    valign: 'middle'
+                });
+                doc.autoTableText(currentAssessment.A, 227.35, row.y + 10, {
+                    halign: 'left',
+                    valign: 'middle'
+                });
+                doc.autoTableText(currentAssessment.T, 312.81, row.y + 10, {
+                    halign: 'left',
+                    valign: 'middle'
+                });
+                doc.autoTableText(currentAssessment.C, 381.39, row.y + 10, {
+                    halign: 'left',
+                    valign: 'middle'
+                });
+                doc.autoTableText(currentAssessment.Grade, 494.89, row.y + 10, {
+                    halign: 'left',
+                    valign: 'middle'
+                });
+                data.cursor.y += 20;
+            }
+        }
+    });
+
+    var ownerId = Meteor.userId();
+    var courseId = Session.get("courseId");
+    var studentId = Session.get('currentSelectedStudentID');
+    var studentName = getStudentNameFirstLast(studentId, ownerId, courseId);
+
+    doc.save('courseBreakdown-' + studentName + '.pdf');
 
     document.getElementById("preloader").style.display = "none";
 }
@@ -2183,25 +2251,25 @@ function getStudentFullNameAndGrade() {
 
 function printStudentUsingTextOnly() {
     var jsPDF = require('jspdf');
-    require('jspdf-autotable');
     var doc = new jsPDF('p', 'pt');
-
+    doc = setDocumentDefaults(doc);
+    require('jspdf-autotable');
     var columns = ["Assessments", "Knowledge", "Application", "Thinking", "Communication", "Grade"];
     var rows = [];
     var assessmentInfo = getCourseOverviewInformationMarkBreakDown();
     var assessmentIndexs = [0];
     var index = 0;
     for (var i = 0; i < assessmentInfo.length; i++) {
-        var newRow = [
-            assessmentInfo[i].assessmentTypeName,
-            assessmentInfo[i].K,
-            assessmentInfo[i].A,
-            assessmentInfo[i].T,
-            assessmentInfo[i].C,
-            assessmentInfo[i].Grade
-        ];
-        rows.push(newRow);
-        index++;
+        // var newRow = [
+        //     assessmentInfo[i].assessmentTypeName,
+        //     assessmentInfo[i].K,
+        //     assessmentInfo[i].A,
+        //     assessmentInfo[i].T,
+        //     assessmentInfo[i].C,
+        //     assessmentInfo[i].Grade
+        // ];
+        // rows.push(newRow);
+        // index++;
         var actualAssessmentInfo = getStudentAssessmentTypeInfoWithName(assessmentInfo[i].assessmentTypeName)
         for (var j = 0; j < actualAssessmentInfo.length; j++) {
             var newRow = [
@@ -2217,17 +2285,53 @@ function printStudentUsingTextOnly() {
         }
         assessmentIndexs.push(index);
     }
-    var doc = new jsPDF('p', 'pt');
+
+    // doc = setDocumentDefaults(doc);
+    index = 0;
     doc.autoTable(columns, rows, {
-        createdCell: function (cell, data) {
-            console.log(data);
-            if (assessmentIndexs.includes(data.row.index)) {
-                doc.setFontSize(15);
-                doc.setFontType("bold");
+        theme: 'grid',
+        startY: 40,
+        drawRow: function (row, data) {
+            doc.setFontStyle('bold');
+            doc.setFontSize(10);
+            if (assessmentIndexs.includes(row.index)) {
+                // console.log(row); // x: 45, 143.35, 227.35, 312.81, 381.39, 494.89 
+                let currentAssessment = assessmentInfo[index];
+                index++;
+                doc.setTextColor(200, 0, 0);
+
+                doc.rect(data.settings.margin.left, row.y, data.table.width, 20, 'S');
+
+                doc.autoTableText(currentAssessment.assessmentTypeName, 45, row.y + 10, {
+                    halign: 'left',
+                    valign: 'middle'
+                });
+                doc.autoTableText(currentAssessment.K, 143.35, row.y + 10, {
+                    halign: 'left',
+                    valign: 'middle'
+                });
+                doc.autoTableText(currentAssessment.A, 227.35, row.y + 10, {
+                    halign: 'left',
+                    valign: 'middle'
+                });
+                doc.autoTableText(currentAssessment.T, 312.81, row.y + 10, {
+                    halign: 'left',
+                    valign: 'middle'
+                });
+                doc.autoTableText(currentAssessment.C, 381.39, row.y + 10, {
+                    halign: 'left',
+                    valign: 'middle'
+                });
+                doc.autoTableText(currentAssessment.Grade, 494.89, row.y + 10, {
+                    halign: 'left',
+                    valign: 'middle'
+                });
+                data.cursor.y += 20;
             }
         }
     });
-    // doc = setDocumentDefaults(doc);
+
+    doc.myText("Parent Signature: _________________________________          Date: _________________________________", { align: "center" }, 0, 600);
 
     var ownerId = Meteor.userId();
     var courseId = Session.get("courseId");
@@ -2238,21 +2342,18 @@ function printStudentUsingTextOnly() {
 }
 
 function setDocumentDefaults(doc) {
+    
     doc.setFontSize(16);
     doc.setFontType("normal");
-    doc.myText(getStudentFullNameAndGrade(), {align: "center"}, 0, 10);
-    // doc.text(75, 10, getStudentFullNameAndGrade());
+    doc.myText(getStudentFullNameAndGrade(), { align: "center" }, 0, 15);
     doc.setFontSize(9);
     doc.setFontType("italic");
     let date = new Date().toDateString();
     let teacherName = "J. Currie"; //getTeacherName()
     let className = "test";// getCourseName();
-    // doc.text(15, 9, "Date:  " + date);    
-    // doc.text(15, 13, "Class: " + className);
 
-    doc.myText(className + " - " + teacherName,{align: "center"},0,15);
-    doc.myText("Parent Signature: _________________________________          Date: _________________________________",{align: "center"},0,290);
-    doc.myText(date ,{align: "right"},173,9);
+    doc.myText(className + " - " + teacherName, { align: "center" }, 0, 30);
+    doc.myText(date, { align: "right" }, 485, 10);
 
     return doc;
 }

@@ -12,6 +12,9 @@ function resetViewOnLogout() {
     Session.set('courseId', 0);
 }
 
+var jsPDF = require('jspdf');
+require('jspdf-autotable');
+
 (function(API){
     API.myText = function(txt, options, x, y) {
         options = options ||{};

@@ -1,6 +1,6 @@
 import { Template } from 'meteor/templating';
 import { Accounts } from 'meteor/accounts-base';
-import { CalculatedGrades, Assessments, Students } from '../../../lib/collections.js';
+import { CalculatedGrades, Assessments, Students, Users } from '../../../lib/collections.js';
 import { CourseWeighting } from '../../../lib/collections.js';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Meteor } from 'meteor/meteor';
@@ -2100,6 +2100,19 @@ async function printBreakdownReports() {
                     actualAssessmentInfo[j].Grade
                 ];
                 rows.push(newRow);
+        // doc = setDocumentDefaults(doc);
+        
+        // await html2canvas(document.querySelector("#studentBreakdownTable")).then(async function (canvas) {
+        //     var studentGradeTable = canvas.toDataURL('image/jpeg');
+        //     if (canvas.height / 10 > 261) {
+        //         document.getElementById("studentBreakdownTable").style.fontSize = "12px";
+        //         await html2canvas(document.querySelector("#studentBreakdownTable")).then(async function (canvas) {
+        //             var studentGradeTable = canvas.toDataURL('image/jpeg');
+        //             doc.addImage(studentGradeTable, 13, 20, 185, 260);
+        //         });
+        //         document.getElementById("studentBreakdownTable").style.fontSize = "15px";
+        //     } else {
+        //         doc.addImage(studentGradeTable, 13, 20, 185, canvas.height / 10);
             }
         }
         console.log(rows);
@@ -2117,6 +2130,25 @@ async function printBreakdownReportForStudent() {
     document.getElementById("preloader").style.display = "";
 
     printStudentUsingTextOnly();
+
+    // html2canvas = require('html2canvas');
+    // var doc = new jsPDF('p', 'mm');
+
+    // doc = setDocumentDefaults(doc);
+    
+    // await html2canvas(document.querySelector("#studentBreakdownTable")).then(async function (canvas) {
+    //     var studentGradeTable = canvas.toDataURL('image/jpeg');
+    //     if (canvas.height / 10 > 261) {
+    //         document.getElementById("studentBreakdownTable").style.fontSize = "12px";
+    //         await html2canvas(document.querySelector("#studentBreakdownTable")).then(async function (canvas) {
+    //             var studentGradeTable = canvas.toDataURL('image/jpeg');
+    //             doc.addImage(studentGradeTable, 13, 20, 185, 260);
+    //         });
+    //         document.getElementById("studentBreakdownTable").style.fontSize = "15px";
+    //     } else {
+    //         doc.addImage(studentGradeTable, 13, 20, 185, canvas.height / 10);
+    //     }
+    // });
 
     document.getElementById("preloader").style.display = "none";
 }
@@ -2208,18 +2240,36 @@ function printStudentUsingTextOnly() {
 function setDocumentDefaults(doc) {
     doc.setFontSize(16);
     doc.setFontType("normal");
-    doc.text(75, 10, getStudentFullNameAndGrade());
-    doc.setFontSize(12);
+    doc.myText(getStudentFullNameAndGrade(), {align: "center"}, 0, 10);
+    // doc.text(75, 10, getStudentFullNameAndGrade());
+    doc.setFontSize(9);
     doc.setFontType("italic");
     let date = new Date().toDateString();
-    let teacherName = "J. Currie" //getTeacherName()
-    let className = "TestMath" //getClassName()
-    doc.text(15, 7, "Class: " + className);
-    doc.text(150, 7, "Teacher: " + teacherName); // + "Date:  " + date);
-    doc.text(150, 12, "Date:  " + date);
-    doc.text(20, 290, "Parent Signature: _________________________________");
+    let teacherName = "J. Currie"; //getTeacherName()
+    let className = "test";// getCourseName();
+    // doc.text(15, 9, "Date:  " + date);    
+    // doc.text(15, 13, "Class: " + className);
+
+    doc.myText(className + " - " + teacherName,{align: "center"},0,15);
+    doc.myText("Parent Signature: _________________________________          Date: _________________________________",{align: "center"},0,290);
+    doc.myText(date ,{align: "right"},173,9);
 
     return doc;
+}
+
+function getTeacherName() {
+    let userInfo = Users.findOne({ _id: Meteor.userId() }).information;
+    return userInfo.firstName[0] + ". " + userInfo.lastName;
+}
+
+function getCourseName() {
+    let courseId = Session.get('courseId');
+    var courses = Courses.findOne({ ownerId: Meteor.userId() }).courses;
+    for (var i = 0; i < courses.length; i++) {
+        if (courseId == courses[i].courseId) {
+            return courses[i].courseName;
+        }
+    }
 }
 
 
@@ -2244,3 +2294,4 @@ function setDocumentDefaults(doc) {
 //         });
 //         document.getElementById("studentBreakdownTable").style.fontSize = "15px";
 //         document.getElementById("studentBreakdownTable").style.width = "";
+

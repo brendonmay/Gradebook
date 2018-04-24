@@ -13,7 +13,7 @@ New Functionality
 		- Make it so they cant cancel subscription until 1 week after puchase?
 	
 	Josh
-		- Add print student reports functionality
+		- Add print student reports functionality 
 		- Reset password token should expire after its been used
 
 Scaling

@@ -1,6 +1,6 @@
 import { Template } from 'meteor/templating';
 import { Accounts } from 'meteor/accounts-base';
-import { CalculatedGrades, Assessments, Students, Users } from '../../../lib/collections.js';
+import { CalculatedGrades, Assessments, Students, Courses } from '../../../lib/collections.js';
 import { CourseWeighting } from '../../../lib/collections.js';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Meteor } from 'meteor/meteor';
@@ -1676,11 +1676,7 @@ Template.studentReports.events({
         printBreakdownReports();
     },
     'click #studentReports-printStudent': function () {
-        if (Template.instance().isFullMarkBreakdown.get()) {
-            printBreakdownReportForStudent();
-        } else {
-            printReports();
-        }
+        printBreakdownReportForStudent();
     },
 });
 
@@ -2055,6 +2051,9 @@ async function printReports() {
     doc.save('sample-file.pdf');
 }
 
+var jsPDF = require('jspdf');
+require('jspdf-autotable');
+
 async function printBreakdownReports() {
     var currentCourseId = Session.get('courseId');
     var students = Students.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId });
@@ -2065,8 +2064,6 @@ async function printBreakdownReports() {
 
     document.getElementById("preloader").style.display = "";
 
-    var jsPDF = require('jspdf');
-    require('jspdf-autotable');
     var doc = new jsPDF('p', 'pt');
 
     for (var x = 1; x < students.students.length; x++) {
@@ -2079,6 +2076,8 @@ async function printBreakdownReports() {
         var columns = ["Assessments", "Knowledge", "Application", "Thinking", "Communication", "Grade"];
         var rows = [];
         var assessmentInfo = getCourseOverviewInformationMarkBreakDown();
+        var assessmentIndexs = [0];
+        var index = 0;
         for (var i = 0; i < assessmentInfo.length; i++) {
             var newRow = [
                 assessmentInfo[i].assessmentTypeName,
@@ -2089,6 +2088,7 @@ async function printBreakdownReports() {
                 assessmentInfo[i].Grade
             ];
             rows.push(newRow);
+            index++;
             var actualAssessmentInfo = getStudentAssessmentTypeInfoWithName(assessmentInfo[i].assessmentTypeName)
             for (var j = 0; j < actualAssessmentInfo.length; j++) {
                 var newRow = [
@@ -2100,34 +2100,62 @@ async function printBreakdownReports() {
                     actualAssessmentInfo[j].Grade
                 ];
                 rows.push(newRow);
-                // doc = setDocumentDefaults(doc);
-
-                // await html2canvas(document.querySelector("#studentBreakdownTable")).then(async function (canvas) {
-                //     var studentGradeTable = canvas.toDataURL('image/jpeg');
-                //     if (canvas.height / 10 > 261) {
-                //         document.getElementById("studentBreakdownTable").style.fontSize = "12px";
-                //         await html2canvas(document.querySelector("#studentBreakdownTable")).then(async function (canvas) {
-                //             var studentGradeTable = canvas.toDataURL('image/jpeg');
-                //             doc.addImage(studentGradeTable, 13, 20, 185, 260);
-                //         });
-                //         document.getElementById("studentBreakdownTable").style.fontSize = "15px";
-                //     } else {
-                //         doc.addImage(studentGradeTable, 13, 20, 185, canvas.height / 10);
+                index++;
             }
+            assessmentIndexs.push(index);
         }
-        console.log(rows);
-        doc.autoTable(columns, rows);
+
+        doc = setDocumentDefaults(doc);
+
+        index = 0;
+        let fontSize = getFontSizeBasedOnNumberOfRows(rows.length);
+
+        doc.autoTable(columns, rows, {
+            theme: 'grid',
+            headerStyles: {
+                fillColor: [0, 0, 0],
+                fontSize: 10,
+                fontColor: [255, 255, 255]
+            },
+            startY: 45,
+            alternateRowStyles: {
+                fillColor: [214, 214, 214]
+            },
+            columnStyles: {
+                Assessments: { columnWidth: 'auto' },
+                Knowledge: { columnWidth: 'auto' },
+                Application: { columnWidth: 'auto' },
+                Thinking: { columnWidth: 'auto' },
+                Communication: { columnWidth: 'auto' },
+                Grade: { columnWidth: 'auto' },
+            },
+            createdCell: function (cell, data) {
+                cell.styles.fontSize = fontSize;
+                if (assessmentIndexs.includes(data.row.index)) {
+                    cell.styles.fontStyle = 'bold';
+
+                    cell.styles.fillColor = [102, 102, 102];
+                    cell.styles.textColor = [255, 255, 255];
+                }
+            }
+        });
+
+
+        var ownerId = Meteor.userId();
+        var courseId = Session.get("courseId");
+        var studentId = Session.get('currentSelectedStudentID');
+        var studentName = getStudentNameFirstLast(studentId, ownerId, courseId);
+
+        doc.myText("Signature: _________________________________       Date: _________________________________", { align: "center" }, 0, 830);
+
         if (x + 1 == students.students.length) {
             break;
         }
         doc.addPage();
     }
     document.getElementById("preloader").style.display = "none";
-    doc.save('courseBreakdown.pdf');
+    doc.save(getCourseName() + '-courseBreakDown' + '.pdf');
 }
-
-var jsPDF = require('jspdf');
-require('jspdf-autotable');
 
 async function printBreakdownReportForStudent() {
     document.getElementById("preloader").style.display = "";
@@ -2138,16 +2166,16 @@ async function printBreakdownReportForStudent() {
     var assessmentIndexs = [0];
     var index = 0;
     for (var i = 0; i < assessmentInfo.length; i++) {
-        // var newRow = [
-        //     assessmentInfo[i].assessmentTypeName,
-        //     assessmentInfo[i].K,
-        //     assessmentInfo[i].A,
-        //     assessmentInfo[i].T,
-        //     assessmentInfo[i].C,
-        //     assessmentInfo[i].Grade
-        // ];
-        // rows.push(newRow);
-        // index++;
+        var newRow = [
+            assessmentInfo[i].assessmentTypeName,
+            assessmentInfo[i].K,
+            assessmentInfo[i].A,
+            assessmentInfo[i].T,
+            assessmentInfo[i].C,
+            assessmentInfo[i].Grade
+        ];
+        rows.push(newRow);
+        index++;
         var actualAssessmentInfo = getStudentAssessmentTypeInfoWithName(assessmentInfo[i].assessmentTypeName)
         for (var j = 0; j < actualAssessmentInfo.length; j++) {
             var newRow = [
@@ -2166,57 +2194,49 @@ async function printBreakdownReportForStudent() {
 
     var doc = new jsPDF('p', 'pt');
     doc = setDocumentDefaults(doc);
-    
+
     index = 0;
+    let fontSize = getFontSizeBasedOnNumberOfRows(rows.length);
+
     doc.autoTable(columns, rows, {
         theme: 'grid',
-        startY: 60,
-        drawRow: function (row, data) {
-            doc.setFontStyle('bold');
-            doc.setFontSize(10);
-            if (assessmentIndexs.includes(row.index)) {
-                console.log(row); // x: 45, 143.35, 227.35, 312.81, 381.39, 494.89 
-                let currentAssessment = assessmentInfo[index];
-                index++;
-                doc.setTextColor(200, 0, 0);
+        headerStyles: {
+            fillColor: [0, 0, 0],
+            fontSize: 10,
+            fontColor: [255, 255, 255]
+        },
+        startY: 45,
+        alternateRowStyles: {
+            fillColor: [214, 214, 214]
+        },
+        columnStyles: {
+            Assessments: { columnWidth: 'auto' },
+            Knowledge: { columnWidth: 'auto' },
+            Application: { columnWidth: 'auto' },
+            Thinking: { columnWidth: 'auto' },
+            Communication: { columnWidth: 'auto' },
+            Grade: { columnWidth: 'auto' },
+        },
+        createdCell: function (cell, data) {
+            cell.styles.fontSize = fontSize;
+            if (assessmentIndexs.includes(data.row.index)) {
+                cell.styles.fontStyle = 'bold';
 
-                doc.rect(data.settings.margin.left, row.y, data.table.width, 20, 'S');
-
-                doc.autoTableText(currentAssessment.assessmentTypeName, 45, row.y + 10, {
-                    halign: 'left',
-                    valign: 'middle'
-                });
-                doc.autoTableText(currentAssessment.K, 143.35, row.y + 10, {
-                    halign: 'left',
-                    valign: 'middle'
-                });
-                doc.autoTableText(currentAssessment.A, 227.35, row.y + 10, {
-                    halign: 'left',
-                    valign: 'middle'
-                });
-                doc.autoTableText(currentAssessment.T, 312.81, row.y + 10, {
-                    halign: 'left',
-                    valign: 'middle'
-                });
-                doc.autoTableText(currentAssessment.C, 381.39, row.y + 10, {
-                    halign: 'left',
-                    valign: 'middle'
-                });
-                doc.autoTableText(currentAssessment.Grade, 494.89, row.y + 10, {
-                    halign: 'left',
-                    valign: 'middle'
-                });
-                data.cursor.y += 20;
+                cell.styles.fillColor = [102, 102, 102];
+                cell.styles.textColor = [255, 255, 255];
             }
         }
     });
+
 
     var ownerId = Meteor.userId();
     var courseId = Session.get("courseId");
     var studentId = Session.get('currentSelectedStudentID');
     var studentName = getStudentNameFirstLast(studentId, ownerId, courseId);
 
-    doc.save('courseBreakdown-' + studentName + '.pdf');
+    doc.myText("Signature: _________________________________       Date: _________________________________", { align: "center" }, 0, 830);
+
+    doc.save(getCourseName() + '-' + studentName + '.pdf');
 
     document.getElementById("preloader").style.display = "none";
 }
@@ -2249,117 +2269,25 @@ function getStudentFullNameAndGrade() {
     return studentName + " (" + finalGrade + ")"
 }
 
-function printStudentUsingTextOnly() {
-    var jsPDF = require('jspdf');
-    var doc = new jsPDF('p', 'pt');
-    doc = setDocumentDefaults(doc);
-    require('jspdf-autotable');
-    var columns = ["Assessments", "Knowledge", "Application", "Thinking", "Communication", "Grade"];
-    var rows = [];
-    var assessmentInfo = getCourseOverviewInformationMarkBreakDown();
-    var assessmentIndexs = [0];
-    var index = 0;
-    for (var i = 0; i < assessmentInfo.length; i++) {
-        // var newRow = [
-        //     assessmentInfo[i].assessmentTypeName,
-        //     assessmentInfo[i].K,
-        //     assessmentInfo[i].A,
-        //     assessmentInfo[i].T,
-        //     assessmentInfo[i].C,
-        //     assessmentInfo[i].Grade
-        // ];
-        // rows.push(newRow);
-        // index++;
-        var actualAssessmentInfo = getStudentAssessmentTypeInfoWithName(assessmentInfo[i].assessmentTypeName)
-        for (var j = 0; j < actualAssessmentInfo.length; j++) {
-            var newRow = [
-                actualAssessmentInfo[j].assessmentName,
-                actualAssessmentInfo[j].K,
-                actualAssessmentInfo[j].A,
-                actualAssessmentInfo[j].T,
-                actualAssessmentInfo[j].C,
-                actualAssessmentInfo[j].Grade
-            ];
-            rows.push(newRow);
-            index++;
-        }
-        assessmentIndexs.push(index);
-    }
-
-    // doc = setDocumentDefaults(doc);
-    index = 0;
-    doc.autoTable(columns, rows, {
-        theme: 'grid',
-        startY: 40,
-        drawRow: function (row, data) {
-            doc.setFontStyle('bold');
-            doc.setFontSize(10);
-            if (assessmentIndexs.includes(row.index)) {
-                // console.log(row); // x: 45, 143.35, 227.35, 312.81, 381.39, 494.89 
-                let currentAssessment = assessmentInfo[index];
-                index++;
-                doc.setTextColor(200, 0, 0);
-
-                doc.rect(data.settings.margin.left, row.y, data.table.width, 20, 'S');
-
-                doc.autoTableText(currentAssessment.assessmentTypeName, 45, row.y + 10, {
-                    halign: 'left',
-                    valign: 'middle'
-                });
-                doc.autoTableText(currentAssessment.K, 143.35, row.y + 10, {
-                    halign: 'left',
-                    valign: 'middle'
-                });
-                doc.autoTableText(currentAssessment.A, 227.35, row.y + 10, {
-                    halign: 'left',
-                    valign: 'middle'
-                });
-                doc.autoTableText(currentAssessment.T, 312.81, row.y + 10, {
-                    halign: 'left',
-                    valign: 'middle'
-                });
-                doc.autoTableText(currentAssessment.C, 381.39, row.y + 10, {
-                    halign: 'left',
-                    valign: 'middle'
-                });
-                doc.autoTableText(currentAssessment.Grade, 494.89, row.y + 10, {
-                    halign: 'left',
-                    valign: 'middle'
-                });
-                data.cursor.y += 20;
-            }
-        }
-    });
-
-    doc.myText("Parent Signature: _________________________________          Date: _________________________________", { align: "center" }, 0, 600);
-
-    var ownerId = Meteor.userId();
-    var courseId = Session.get("courseId");
-    var studentId = Session.get('currentSelectedStudentID');
-    var studentName = getStudentNameFirstLast(studentId, ownerId, courseId);
-
-    doc.save('courseBreakdown-' + studentName + '.pdf');
-}
-
 function setDocumentDefaults(doc) {
-    
+
     doc.setFontSize(16);
     doc.setFontType("normal");
-    doc.myText(getStudentFullNameAndGrade(), { align: "center" }, 0, 15);
+    doc.myText(getStudentFullNameAndGrade(), { align: "center" }, 0, 20);
     doc.setFontSize(9);
     doc.setFontType("italic");
     let date = new Date().toDateString();
-    let teacherName = "J. Currie"; //getTeacherName()
-    let className = "test";// getCourseName();
+    let teacherName = getTeacherName()
+    let className = getCourseName();
 
-    doc.myText(className + " - " + teacherName, { align: "center" }, 0, 30);
-    doc.myText(date, { align: "right" }, 485, 10);
+    doc.myText(className + " - " + teacherName, { align: "center" }, 0, 35);
+    doc.myText(date, { align: "right" }, 485, 15);
 
     return doc;
 }
 
 function getTeacherName() {
-    let userInfo = Users.findOne({ _id: Meteor.userId() }).information;
+    let userInfo = Meteor.users.findOne({ _id: Meteor.userId() }).information;
     return userInfo.firstName[0] + ". " + userInfo.lastName;
 }
 
@@ -2373,26 +2301,18 @@ function getCourseName() {
     }
 }
 
-
-//this is how to use html2canvas and adjusting image and text size:
-//     html2canvas = require('html2canvas');
-// document.getElementById("studentBreakdownTable").style.width = "80%";
-//         document.getElementById("studentBreakdownTable").style.fontSize = "17px";
-
-//         await html2canvas(document.querySelector("#studentBreakdownTable")).then(async function (canvas) {
-//             var studentGradeTable = canvas.toDataURL('image/jpeg');
-//             var heightWidthRatio = canvas.height / canvas.width;
-//             var newHeight = 185 * 1.2 * heightWidthRatio;
-//             if (newHeight > 261) {
-//                 await html2canvas(document.querySelector("#studentBreakdownTable")).then(async function (canvas) {
-//                     var studentGradeTable = canvas.toDataURL('image/jpeg');
-//                     doc.addImage(studentGradeTable, 10, 20, 185, 260);
-//                 });
-//             } else {
-
-//                 doc.addImage(studentGradeTable, 10, 20, 185, newHeight);
-//             }
-//         });
-//         document.getElementById("studentBreakdownTable").style.fontSize = "15px";
-//         document.getElementById("studentBreakdownTable").style.width = "";
+function getFontSizeBasedOnNumberOfRows(numOfRows) {
+    console.log(numOfRows);
+    if (numOfRows <= 25) {
+        return '11'; // original cell height
+    } else if (numOfRows <= 30) {
+        return '10';
+    } else if (numOfRows <= 35) {
+        return '9';
+    } else if (numOfRows <= 40) {
+        return '7';
+    } else {
+        return '11';
+    }
+}
 

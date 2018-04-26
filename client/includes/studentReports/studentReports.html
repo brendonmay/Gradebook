@@ -4,24 +4,16 @@
             <div class="nav-wrapper light-blue lighten-4">
                 <a href="#" class="left-align gradebook-header">Student Reports</a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    {{#if isFullMarkBreakdown}}
                     <li>
                         <a href="#!" id="studentReports-printClass">
-                            <p class="zero-top-pad grey-font-color">Print for Class</p>
+                            <p class="zero-top-pad grey-font-color">Print Reports For Class</p>
                         </a>
                     </li>
                     <li>
                         <a href="#!" id="studentReports-printStudent">
-                            <p class="zero-top-pad grey-font-color">Print for Student</p>
+                            <p class="zero-top-pad grey-font-color">Print Report For Student</p>
                         </a>
                     </li>
-                    {{else}}
-                    <li>
-                        <a href="#!" id="studentReports-printStudent">
-                            <p class="zero-top-pad grey-font-color">Print for Student</p>
-                        </a>
-                    </li>
-                    {{/if}}
                 </ul>
             </div>
         </nav>

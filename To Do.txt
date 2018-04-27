@@ -1,19 +1,28 @@
 Styling
 	- make sure site functions decently in internet explorer
 	- include an icon in the tab on browser
+	- adjust styling if student has very long name
+	- fix the placement of the print buttons
+	- fix preloader when print button is clicked
 	
 Bugs
 	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.
 	
 New Functionality
 	Brendon
+		- Make it so they cant cancel subscription until 1 week after puchase?
+		- When you click edit icon in gradebook, modal pops up to edit, rather than being sent to assessments Tab
+		- when you click a student's name in gradebook, it should be directed to the course overview page in student reports.
+		
 		- Connect Paypal to Braintree (will have to create a merchant paypal account)
 		- Switch braintree sandbox over to proper account for deployment (You will need to change the environment in the gateway variables)
+		- Allow gradebook to work for elementary teachers (refer to report card template to see courses they take, change from percentages to levels)
 		- Think of structure to allow administrators to view marks for the school
-		- Make it so they cant cancel subscription until 1 week after puchase?
 	
 	Josh
 		- Reset password token should expire after its been used
+		- include the proper teacher name and course name in student reports
+		- make it so that the printed student reports file is named properly
 
 Scaling
 	- MongoDB indexes are super important. (I believe this is handled via mLab)

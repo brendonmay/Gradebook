@@ -2,7 +2,8 @@
     <div id="paymentModalId" class="modal">
         <div class="modal-content">
             <h4>Purchase Subscription</h4>
-            <p>By submitting payment, you will be subscribing to a yearly plan of $20/year. The subscription can be cancelled at any time by clicking your email in the top right corner of the website and selecting "Cancel Subscription".</p>
+            <p>By submitting payment, you will be subscribing to a yearly plan of $20/year. The subscription can be cancelled
+                at any time by clicking your email in the top right corner of the website and selecting "Cancel Subscription".</p>
             <!-- Content Here -->
             <div id="dropin-wrapper">
                 <div id="checkout-message"></div>
@@ -13,7 +14,7 @@
 
                 braintree.dropin.create({
                     // Insert your tokenization key here
-                    authorization: 'sandbox_9cc8pqzx_4swbx6vm2kn64w2p',
+                    authorization: 'sandbox_dg9q3kdg_4swbx6vm2kn64w2p',//'sandbox_9cc8pqzx_4swbx6vm2kn64w2p',
                     container: '#dropin-container'
                 }, function (createErr, instance) {
                     button.addEventListener('click', function () {
@@ -26,15 +27,33 @@
                         instance.requestPaymentMethod(function (requestPaymentMethodErr, payload) {
                             // When the user clicks on the 'Submit payment' button this code will send the
                             // encrypted payment information in a variable called a payment method nonce
-                            Meteor.call('createPayment', payload, function () {
-                                if (requestPaymentMethodErr) {
-                                    return false
+                            Meteor.call('createPayment', payload, function (err, response) {
+                                if (!err) {
+                                    if (requestPaymentMethodErr) {
+                                        console.log(requestPaymentMethodErr)
+                                        // return false
+                                    }
+                                    setTimeout(function () { //want to remove this timeout
+                                        var transactionFailed = Meteor.users.findOne({ _id: Meteor.userId() }).subscribed.transactionFailed
+                                        if (transactionFailed == true) {
+                                            //console.log("transaction did not go through");
+                                            $('#paymentModalId').modal('close');
+                                            document.getElementById("blurredSideNav").style = "display: none";
+                                            document.getElementById("preloader").style = "display: none";
+                                            $('#unsuccessfulPayment').modal('open');
+                                        }
+                                        if (transactionFailed == false) {
+                                            //console.log("transaction went through");
+                                            $('#paymentModalId').modal('close');
+                                            document.getElementById("blurredSideNav").style = "display: none";
+                                            document.getElementById("preloader").style = "display: none";
+                                            $('#successfulPayment').modal('open');
+                                        }
+                                    }, 2000);
                                 }
-                                //console.log("transaction went through");
-                                $('#paymentModalId').modal('close');
-                                document.getElementById("blurredSideNav").style = "display: none";
-                                document.getElementById("preloader").style = "display: none";
-                                $('#successfulPayment').modal('open');
+                                else{
+                                    console.log("an error has occured");
+                                }
                             });
                         });
                     });

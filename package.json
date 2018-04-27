@@ -12,6 +12,7 @@
     "express": "^4.16.3",
     "fibers": "^2.0.2",
     "floatthead": "^2.1.1",
+    "html2canvas": "^1.0.0-alpha.12",
     "jquery-validation": "^1.17.0",
     "meteor-node-stubs": "^0.3.2"
   }

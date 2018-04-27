@@ -33,23 +33,23 @@
                                         console.log(requestPaymentMethodErr)
                                         // return false
                                     }
-                                    // setTimeout(function () {
-                                    var transactionFailed = Meteor.users.findOne({ _id: Meteor.userId() }).subscribed.transactionFailed
-                                    if (transactionFailed == true) {
-                                        //console.log("transaction did not go through");
-                                        $('#paymentModalId').modal('close');
-                                        document.getElementById("blurredSideNav").style = "display: none";
-                                        document.getElementById("preloader").style = "display: none";
-                                        $('#unsuccessfulPayment').modal('open');
-                                    }
-                                    if (transactionFailed == false) {
-                                        //console.log("transaction went through");
-                                        $('#paymentModalId').modal('close');
-                                        document.getElementById("blurredSideNav").style = "display: none";
-                                        document.getElementById("preloader").style = "display: none";
-                                        $('#successfulPayment').modal('open');
-                                    }
-                                    // }, 2000);
+                                    setTimeout(function () { //want to remove this timeout
+                                        var transactionFailed = Meteor.users.findOne({ _id: Meteor.userId() }).subscribed.transactionFailed
+                                        if (transactionFailed == true) {
+                                            //console.log("transaction did not go through");
+                                            $('#paymentModalId').modal('close');
+                                            document.getElementById("blurredSideNav").style = "display: none";
+                                            document.getElementById("preloader").style = "display: none";
+                                            $('#unsuccessfulPayment').modal('open');
+                                        }
+                                        if (transactionFailed == false) {
+                                            //console.log("transaction went through");
+                                            $('#paymentModalId').modal('close');
+                                            document.getElementById("blurredSideNav").style = "display: none";
+                                            document.getElementById("preloader").style = "display: none";
+                                            $('#successfulPayment').modal('open');
+                                        }
+                                    }, 2000);
                                 }
                                 else{
                                     console.log("an error has occured");

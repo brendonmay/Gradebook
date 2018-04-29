@@ -34,10 +34,14 @@
                                         // return false
                                     }
                                     $('#paymentModalId').modal('close');
-                                    document.getElementById("blurredSideNav").style = "display: none";
-                                    document.getElementById("preloader").style = "display: none";
                                     Session.set('newPayment', "true");
-                                    $('#successfulPayment').modal('open');
+                                    $('#afterPaymentModal').modal({
+                                        dismissible: false,
+                                        complete: function () {
+                                            Meteor.call('refreshPaymentInformation');
+                                        }
+                                    });
+                                    $('#afterPaymentModal').modal('open');
                                 }
                                 else {
                                     console.log("an error has occured");

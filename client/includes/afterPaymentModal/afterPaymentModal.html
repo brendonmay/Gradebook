@@ -1,11 +1,13 @@
-<template name="successfulPayment">
-    <div id="successfulPayment" class="modal highestzindex">
+<template name="afterPaymentModal">
+    <div id="afterPaymentModal" class="modal highestzindex">
         <div class="modal-content">
             <h4>{{getModalHeaderText}}</h4>
-            <p>{{getModalBodyText}}</p>
+            <p>{{getModalBodyTextOne}}<b>{{getModalBodyTextTwo}}</b>{{getModalBodyTextThree}}</p>
         </div>
         <div class="modal-footer">
+            {{#if showCloseButton}}
             <button class="modal-action modal-close waves-effect waves-grey btn-flat">Close</button>
+            {{/if}}
         </div>
     </div>
 </template>

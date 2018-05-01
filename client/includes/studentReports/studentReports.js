@@ -15,6 +15,9 @@ function getStudentNameLastFirst(studentId, ownerId, courseId) {
             var firstName = studentsArray[i].studentFirstName;
             var lastName = studentsArray[i].studentLastName;
             var studentName = lastName + ", " + firstName;
+            if (studentName.length >= 20){
+                studentName = lastName + ", " + firstName[0] + "."
+            }
             return studentName
         }
     }

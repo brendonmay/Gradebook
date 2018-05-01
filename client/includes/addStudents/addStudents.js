@@ -95,10 +95,17 @@ function generateArrayOfStudentObjects(sortedStudentArray) {
     for (i = 0; i < sortedStudentArray.length; i++) {
         var studentName = sortedStudentArray[i].substr(0, sortedStudentArray[i].indexOf('?'));
         var studentId = sortedStudentArray[i].substr(sortedStudentArray[i].indexOf('?') + 1, sortedStudentArray[i].length);
+        if (studentName.length >= 20){
+            var shortStudentName = studentName.substring(0, studentName.indexOf(",") + 3) + ".";
+        }
+        else{
+            var shortStudentName = studentName;
+        }
         var studentObject = {
             studentName: studentName,
             studentId: studentId,
-            listNumber: i + 1
+            listNumber: i + 1,
+            shortStudentName
         }
         arrayOfStudentObjects[arrayOfStudentObjects.length] = studentObject;
     }

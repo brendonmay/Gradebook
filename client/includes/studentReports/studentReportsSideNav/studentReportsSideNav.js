@@ -34,6 +34,9 @@ function generateArrayOfStudentObjects(sortedStudentArray) {
         var lastName = studentName.substr(0, studentName.indexOf(',')) + ",";
         var firstName = studentName.substr(studentName.indexOf(',') + 2, studentName.length);
         var studentId = sortedStudentArray[i].substr(sortedStudentArray[i].indexOf('?') + 1, sortedStudentArray[i].length);
+        if (studentName.length >= 20){
+            studentName = lastName + " " + firstName[0] + "."
+        }
         var studentObject = {
             fullName: studentName,
             firstName: firstName,

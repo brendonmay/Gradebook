@@ -2,13 +2,22 @@
         <div id="cancelSubscriptionModal" class="modal cancel-subscription-modal">
             <div class="modal-content">
                 <h4>Cancel Subscription</h4>
-                <p>Are you sure you want to cancel your yearly subscription to Ontario Gradebook?</p>
+                {{#if canCancel}}
+                    <p>Are you sure you want to cancel your yearly subscription to Ontario Gradebook?</p>
+                {{else}}
+                    <p>You need to wait seven days after purchasing before you can cancel your subscription. Please try again on <b>{{cancelationDate}}</b>.</p>
+                {{/if}}
             </div>
             <div class="modal-footer">
-                <button id="cancelSub-yes" class="yes-delete-modal add-form modal-action modal-close waves-effect waves-grey btn-flat"
-                    type="submit">Yes</button>
-                <button id="cancelSub-no" class="no-delete-modal add-form modal-action modal-close waves-effect waves-grey btn-flat"
-                    type="submit">No</button>
+                {{#if canCancel}}
+                    <button id="cancelSub-yes" class="yes-delete-modal add-form modal-action modal-close waves-effect waves-grey btn-flat"
+                        type="submit">Yes</button>
+                    <button id="cancelSub-no" class="no-delete-modal add-form modal-action modal-close waves-effect waves-grey btn-flat"
+                        type="submit">No</button>
+                {{else}}
+                    <button id="cancelSub-cancel" class="cancel-delete-modal add-form modal-action modal-close waves-effect waves-grey btn-flat"
+                        type="submit">Close</button>
+                {{/if}}
             </div>
         </div>
     </template>

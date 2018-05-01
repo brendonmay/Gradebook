@@ -2095,7 +2095,7 @@ async function printBreakdownReports() {
     //document.getElementById("preloader-full").style.display = "none";
     document.getElementById("blurredSideNav").style = "display: none";
     document.getElementById("preloader").style = "display: none";
-    doc.save(getCourseName() + '-courseBreakDown' + '.pdf');
+    doc.save(getCourseName() + '_Full_Class_Report' + '.pdf');
 }
 
 async function printBreakdownReportForStudent() {
@@ -2180,7 +2180,7 @@ async function printBreakdownReportForStudent() {
 
     doc.myText("Signature: _________________________________       Date: _________________________________", { align: "center" }, 0, 830);
 
-    doc.save(getCourseName() + '-' + studentName + '.pdf');
+    doc.save(getCourseName() + '_' + studentName + '.pdf');
 
     //document.getElementById("preloader-full").style.display = "none";
     document.getElementById("blurredSideNav").style = "display: none";

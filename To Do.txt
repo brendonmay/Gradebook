@@ -17,7 +17,6 @@ New Functionality
 	
 	Josh
 		- Reset password token should expire after its been used
-		- make it so that the printed student reports file is named properly
 
 Scaling
 	- MongoDB indexes are super important. (I believe this is handled via mLab)

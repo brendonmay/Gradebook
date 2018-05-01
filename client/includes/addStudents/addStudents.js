@@ -96,7 +96,7 @@ function generateArrayOfStudentObjects(sortedStudentArray) {
         var studentName = sortedStudentArray[i].substr(0, sortedStudentArray[i].indexOf('?'));
         var studentId = sortedStudentArray[i].substr(sortedStudentArray[i].indexOf('?') + 1, sortedStudentArray[i].length);
         if (studentName.length >= 20){
-            var shortStudentName = studentName.substring(0, studentName.indexOf(",") + 3);
+            var shortStudentName = studentName.substring(0, studentName.indexOf(",") + 3) + ".";
         }
         else{
             var shortStudentName = studentName;

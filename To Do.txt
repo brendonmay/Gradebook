@@ -11,14 +11,12 @@ New Functionality
 		- When you click edit icon in gradebook, modal pops up to edit, rather than being sent to assessments Tab
 		- when you click a student's name in gradebook, it should be directed to the course overview page in student reports.
 		
-		- Connect Paypal to Braintree (will have to create a merchant paypal account)
 		- Switch braintree sandbox over to proper account for deployment (You will need to change the environment in the gateway variables)
 		- Allow gradebook to work for elementary teachers (refer to report card template to see courses they take, change from percentages to levels)
 		- Think of structure to allow administrators to view marks for the school
 	
 	Josh
 		- Reset password token should expire after its been used
-		- include the proper teacher name and course name in student reports
 		- make it so that the printed student reports file is named properly
 
 Scaling

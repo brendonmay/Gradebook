@@ -1999,7 +1999,9 @@ async function printBreakdownReports() {
         return;
     }
 
-    document.getElementById("preloader-full").style.display = "";
+    //document.getElementById("preloader-full").style.display = "";
+    document.getElementById("blurredSideNav").style = "";
+    document.getElementById("preloader").style = "";
 
     var doc = new jsPDF('p', 'pt');
 
@@ -2090,12 +2092,17 @@ async function printBreakdownReports() {
         }
         doc.addPage();
     }
-    document.getElementById("preloader-full").style.display = "none";
+    //document.getElementById("preloader-full").style.display = "none";
+    document.getElementById("blurredSideNav").style = "display: none";
+    document.getElementById("preloader").style = "display: none";
     doc.save(getCourseName() + '-courseBreakDown' + '.pdf');
 }
 
 async function printBreakdownReportForStudent() {
-    document.getElementById("preloader-full").style.display = "";
+    //document.getElementById("preloader-full").style.display = "";
+    document.getElementById("blurredSideNav").style = "";
+    document.getElementById("preloader").style = "";
+
 
     var columns = ["Assessments", "Knowledge", "Application", "Thinking", "Communication", "Grade"];
     var rows = [];
@@ -2175,7 +2182,9 @@ async function printBreakdownReportForStudent() {
 
     doc.save(getCourseName() + '-' + studentName + '.pdf');
 
-    document.getElementById("preloader-full").style.display = "none";
+    //document.getElementById("preloader-full").style.display = "none";
+    document.getElementById("blurredSideNav").style = "display: none";
+    document.getElementById("preloader").style = "display: none";
 }
 
 function getStudentFullNameAndGrade() {

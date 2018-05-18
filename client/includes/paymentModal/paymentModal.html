@@ -2,8 +2,9 @@
     <div id="paymentModalId" class="modal">
         <div class="modal-content">
             <h4>Purchase Subscription</h4>
-            <p>By submitting payment, you will be subscribing to a yearly plan of $20/year. This payment is non-refundable. The subscription can be cancelled
-                any time after 7 days of your purchase by clicking your email in the top right corner of the website and selecting "Cancel Subscription".</p>
+            <p>By submitting payment, you will be subscribing to a yearly plan of $20/year. This payment is non-refundable.
+                The subscription can be cancelled any time after 7 days of your purchase by clicking your email in the top
+                right corner of the website and selecting "Cancel Subscription".</p>
             <!-- Content Here -->
             <div id="dropin-wrapper">
                 <div id="checkout-message"></div>
@@ -14,39 +15,48 @@
 
                 braintree.dropin.create({
                     // Insert your tokenization key here
-                    authorization: 'sandbox_dg9q3kdg_4swbx6vm2kn64w2p',//'sandbox_9cc8pqzx_4swbx6vm2kn64w2p',
+                    authorization: 'production_jmmyygxf_jv8z45ggmk9rb9sr',
                     container: '#dropin-container'
                 }, function (createErr, instance) {
                     button.addEventListener('click', function () {
                         var currentUser = Meteor.users.findOne({ _id: Meteor.userId() });
                         var expirationDate = currentUser.subscribed.expirationDate;
                         var newExpirationDate
-                        document.getElementById("blurredSideNav").style = "";
-                        document.getElementById("preloader").style = "";
 
                         instance.requestPaymentMethod(function (requestPaymentMethodErr, payload) {
-                            // When the user clicks on the 'Submit payment' button this code will send the
-                            // encrypted payment information in a variable called a payment method nonce
-                            Meteor.call('createPayment', payload, function (err, response) {
-                                if (!err) {
-                                    if (requestPaymentMethodErr) {
-                                        console.log(requestPaymentMethodErr)
-                                        // return false
-                                    }
-                                    $('#paymentModalId').modal('close');
-                                    Session.set('newPayment', "true");
-                                    $('#afterPaymentModal').modal({
-                                        dismissible: false,
-                                        complete: function () {
-                                            Meteor.call('refreshPaymentInformation');
+                            if (requestPaymentMethodErr) {
+                                // No payment method is available.
+                                // An appropriate error will be shown in the UI.
+                                console.error(requestPaymentMethodErr);
+                                return;
+                            }
+                            else {
+                                // When the user clicks on the 'Submit payment' button this code will send the
+                                // encrypted payment information in a variable called a payment method nonce
+                                document.getElementById("blurredSideNav").style = "";
+                                document.getElementById("preloader").style = "";
+                                Meteor.call('createPayment', payload, function (err, response) {
+
+                                    if (!err) {
+                                        if (requestPaymentMethodErr) {
+                                            console.log(requestPaymentMethodErr)
+                                            // return false
                                         }
-                                    });
-                                    $('#afterPaymentModal').modal('open');
-                                }
-                                else {
-                                    console.log("an error has occured");
-                                }
-                            });
+                                        $('#paymentModalId').modal('close');
+                                        Session.set('newPayment', "true");
+                                        $('#afterPaymentModal').modal({
+                                            dismissible: false,
+                                            complete: function () {
+                                                Meteor.call('refreshPaymentInformation');
+                                            }
+                                        });
+                                        $('#afterPaymentModal').modal('open');
+                                    }
+                                    else {
+                                        console.log("an error has occured");
+                                    }
+                                });
+                            }
                         });
                     });
                 });

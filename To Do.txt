@@ -4,13 +4,13 @@ Styling
 	
 Bugs
 	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.
-	
+	- Add CVV to payment modal?
+
 New Functionality
 	Brendon
 		- When you click edit icon in gradebook, modal pops up to edit, rather than being sent to assessments Tab
 		- when you click a student's name in gradebook, it should be directed to the course overview page in student reports.
 		
-		- Switch braintree sandbox over to proper account for deployment (You will need to change the environment in the gateway variables)
 		- Allow gradebook to work for elementary teachers (refer to report card template to see courses they take, change from percentages to levels)
 		- Think of structure to allow administrators to view marks for the school
 	

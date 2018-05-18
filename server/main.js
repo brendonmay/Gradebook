@@ -3,16 +3,16 @@ import { Accounts } from 'meteor/accounts-base';
 import { Mongo } from "meteor/mongo";
 import { CurrentDate } from "../lib/collections.js"
 
-BT_MERCHANT_ID = "4swbx6vm2kn64w2p";
-BT_PUBLIC_KEY = "r37t95f7qdbvn4ws";
-BT_PRIVATE_KEY = "12f6b57a5a035805835212056a210ee1";
+BT_MERCHANT_ID = "jv8z45ggmk9rb9sr";
+BT_PUBLIC_KEY = "gwpt4xmr54dwmbdp";
+BT_PRIVATE_KEY = "e14785a406be20cbca6bde83f68e0a64";
 BT_PLAN_ID = "yearly-plan";
 
 Meteor.startup(() => {
   var braintree = require("braintree");
 
   var gateway = braintree.connect({
-    environment: braintree.Environment.Sandbox,
+    environment: braintree.Environment.Production,
     merchantId: BT_MERCHANT_ID,
     publicKey: BT_PUBLIC_KEY,
     privateKey: BT_PRIVATE_KEY

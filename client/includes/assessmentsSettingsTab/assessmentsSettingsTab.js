@@ -72,6 +72,73 @@ function clearPageValidation() {
     }
 }
 
+function determineOverallCategoryGrade(ownerId, courseId, studentId, category) {
+    var studentsArray = CalculatedGrades.findOne({ ownerId, courseId }).students;
+    var assessmentTypeGradesAndWeight = [];
+    var totalWeight = 0;
+
+    for (i = 0; i < studentsArray.length; i++) {
+        if (studentsArray[i].studentId == studentId) {
+            var currentGrades = studentsArray[i].currentGrades;
+            for (z = 0; z < currentGrades.length; z++) {
+                var assessmentTypeId = currentGrades[z].assessmentTypeId;
+                var assessmentTypeGrade = currentGrades[z].assessmentTypeGrade;
+
+                var assessedCategories = Object.keys(assessmentTypeGrade);
+                var categoryKey = category + "Grade";
+                var weight = 0;
+
+                if (assessedCategories.includes(categoryKey)) {
+                    var grade = assessmentTypeGrade[categoryKey];
+                    //find weight of assessmentTypeId
+                    if (assessmentTypeId[0] != "f") {
+                        var courseworkAssessmentTypes = CourseWeighting.findOne({ ownerId, courseId }).courseworkAssessmentTypes;
+                        for (w = 0; w < courseworkAssessmentTypes.length; w++) {
+                            if (courseworkAssessmentTypes[w].assessmentTypeId == assessmentTypeId) {
+                                weight = courseworkAssessmentTypes[w].assessmentWeight;
+                                w = courseworkAssessmentTypes.length;
+                            }
+                        }
+                    }
+                    else {
+                        var finalAssessmentTypes = CourseWeighting.findOne({ ownerId, courseId }).finalAssessmentTypes;
+                        for (w = 0; w < finalAssessmentTypes.length; w++) {
+                            if (finalAssessmentTypes[w].assessmentTypeId == assessmentTypeId) {
+                                weight = finalAssessmentTypes[w].assessmentWeight;
+                                w = finalAssessmentTypes.length;
+                            }
+                        }
+                    }
+                    var assessmentTypeObject = {
+                        assessmentTypeId,
+                        grade,
+                        weight
+                    }
+                    totalWeight = totalWeight + weight;
+                    assessmentTypeGradesAndWeight[assessmentTypeGradesAndWeight.length] = assessmentTypeObject;
+                }
+            }
+            i = studentsArray.length;
+        }
+    }
+
+    if (assessmentTypeGradesAndWeight.length == 0 || totalWeight == 0) {
+        return "N/A"
+    }
+
+    overallCategoryGrade = 0;
+
+    for (i = 0; i < assessmentTypeGradesAndWeight.length; i++) {
+        var grade = assessmentTypeGradesAndWeight[i].grade;
+        var weight = assessmentTypeGradesAndWeight[i].weight;
+        overallCategoryGrade = overallCategoryGrade + (grade * (weight / totalWeight));
+
+    }
+
+    overallCategoryGrade = Number(overallCategoryGrade.toFixed(2));
+    return overallCategoryGrade
+}
+
 function doneEditing() {
     let editButtonElement = document.getElementById("edit-button");
     let saveButtonElement = document.getElementById("assessments-save-button");
@@ -434,7 +501,7 @@ Template.assessmentsTab.events({
             $('#deleteCourseworkAssessmentTypeModal').modal({
                 dismissible: true,
                 complete: function () {
-                    setTimeout(function(){
+                    setTimeout(function () {
                         document.getElementById("preloader").style = "display: none";
                     }, 500);
                 }
@@ -459,7 +526,7 @@ Template.assessmentsTab.events({
             $('#deleteFinalAssessmentTypeModal').modal({
                 dismissible: true,
                 complete: function () {
-                    setTimeout(function(){
+                    setTimeout(function () {
                         document.getElementById("preloader").style = "display: none";
                     }, 500);
                 }
@@ -598,38 +665,38 @@ Template.assessmentsTab.events({
         Meteor.call('courseInformation.updateCourseworkWeight', currentCourseId, newCourseWorkWeight);
         Meteor.call('courseInformation.updateFinalWeight', currentCourseId, newFinalWeight);
 
-        //update calculated grades categoryGrades for each student
-        var studentsArray = CalculatedGrades.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).students;
-        for (var q = 0; q < studentsArray.length; q++) {
-            var studentId = studentsArray[q].studentId;
-            if (studentsArray[q].categoryGrades.KGrade) {
-                var newOverallCategoryGradeK = determineOverallCategoryGrade(Meteor.userId(), currentCourseId, studentId, "K");
-                Meteor.call('calculatedgrades.updateOverallCategoryGrade', Meteor.userId(), currentCourseId, studentId, "K", newOverallCategoryGradeK);
-            }
-
-            if (studentsArray[q].categoryGrades.AGrade) {
-                var newOverallCategoryGradeA = determineOverallCategoryGrade(Meteor.userId(), currentCourseId, studentId, "A");
-                Meteor.call('calculatedgrades.updateOverallCategoryGrade', Meteor.userId(), currentCourseId, studentId, "A", newOverallCategoryGradeA);
-            }
-
-            if (studentsArray[q].categoryGrades.TGrade) {
-                var newOverallCategoryGradeT = determineOverallCategoryGrade(Meteor.userId(), currentCourseId, studentId, "T");
-                Meteor.call('calculatedgrades.updateOverallCategoryGrade', Meteor.userId(), currentCourseId, studentId, "T", newOverallCategoryGradeT);
-            }
-
-            if (studentsArray[q].categoryGrades.CGrade) {
-                var newOverallCategoryGradeC = determineOverallCategoryGrade(Meteor.userId(), currentCourseId, studentId, "C");
-                Meteor.call('calculatedgrades.updateOverallCategoryGrade', Meteor.userId(), currentCourseId, studentId, "C", newOverallCategoryGradeC);
-            }
-        }
-
-        //doneEditing
         Session.set('courseworkWeight', newCourseWorkWeight);
         Session.set('finalWeight', newFinalWeight);
 
         doneEditing();
         clearPageValidation();
-        setTimeout(function(){
+
+        //update calculated grades categoryGrades for each student
+        setTimeout(function () {
+            var studentsArray = CalculatedGrades.findOne({ ownerId: Meteor.userId(), courseId: currentCourseId }).students;
+            for (var q = 0; q < studentsArray.length; q++) {
+                var studentId = studentsArray[q].studentId;
+                if (studentsArray[q].categoryGrades.KGrade) {
+                    var newOverallCategoryGradeK = determineOverallCategoryGrade(Meteor.userId(), currentCourseId, studentId, "K");
+                    console.log(newOverallCategoryGradeK + " is the new K Grade");
+                    Meteor.call('calculatedgrades.updateOverallCategoryGrade', Meteor.userId(), currentCourseId, studentId, "K", newOverallCategoryGradeK);
+                }
+
+                if (studentsArray[q].categoryGrades.AGrade) {
+                    var newOverallCategoryGradeA = determineOverallCategoryGrade(Meteor.userId(), currentCourseId, studentId, "A");
+                    Meteor.call('calculatedgrades.updateOverallCategoryGrade', Meteor.userId(), currentCourseId, studentId, "A", newOverallCategoryGradeA);
+                }
+
+                if (studentsArray[q].categoryGrades.TGrade) {
+                    var newOverallCategoryGradeT = determineOverallCategoryGrade(Meteor.userId(), currentCourseId, studentId, "T");
+                    Meteor.call('calculatedgrades.updateOverallCategoryGrade', Meteor.userId(), currentCourseId, studentId, "T", newOverallCategoryGradeT);
+                }
+
+                if (studentsArray[q].categoryGrades.CGrade) {
+                    var newOverallCategoryGradeC = determineOverallCategoryGrade(Meteor.userId(), currentCourseId, studentId, "C");
+                    Meteor.call('calculatedgrades.updateOverallCategoryGrade', Meteor.userId(), currentCourseId, studentId, "C", newOverallCategoryGradeC);
+                }
+            }
             document.getElementById("preloader").style = "display: none";
         }, 500);
     },
@@ -657,6 +724,5 @@ Template.assessmentsTab.events({
     },
     'click #assessments-save-button': function () {
         document.getElementById('assessmentSettingsTabSubmit').click();
-        return false;
     }
 });

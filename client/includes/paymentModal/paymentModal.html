@@ -18,6 +18,13 @@
                     authorization: 'production_jmmyygxf_jv8z45ggmk9rb9sr',
                     container: '#dropin-container'
                 }, function (createErr, instance) {
+                    if (createErr) {
+                        // An error in the create call is likely due to
+                        // incorrect configuration values or network issues.
+                        // An appropriate error will be shown in the UI.
+                        console.error(createErr);
+                        return;
+                    }
                     button.addEventListener('click', function () {
                         var currentUser = Meteor.users.findOne({ _id: Meteor.userId() });
                         var expirationDate = currentUser.subscribed.expirationDate;

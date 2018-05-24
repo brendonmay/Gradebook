@@ -19,7 +19,6 @@ shell-server@0.3.1            # Server-side component of the `meteor shell` comm
 
 fourseven:scss
 accounts-password
-meteortoys:allthings
 session
 thospaeth:floatthead
 pac:jquery-floatthead
@@ -31,3 +30,4 @@ random
 email
 chfritz:easycron
 patrickml:braintree
+meteortoys:allthings

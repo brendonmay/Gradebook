@@ -26,6 +26,15 @@ Template.successfulLoginNoCourseView.onRendered(function () {
     //document.getElementById("preloader-full").style = "display: none";
     document.getElementById("blurredSideNav").style = "display: none";
     document.getElementById("preloader").style = "display: none";
+
+    var newlyreg = Session.get('newlyRegistered');
+    if (newlyreg == "true") {
+        var firstName = Session.get("firstName");
+        var lastName = Session.get("lastName");
+        Meteor.call('giveUserFreeTrial', firstName, lastName);
+        Session.set('newlyRegistered', "false");
+    };
+
     $('.slider').slider();
 });
 
@@ -96,9 +105,9 @@ Template.successfulLoginNoCourseView.helpers({
         var currentUser = Meteor.users.findOne({ _id: Meteor.userId() }).subscribed;
         var customerId = currentUser.braintreeId;
         var userId = Meteor.userId();
-        
+
         //check if user has canceled
-        if(currentUser.type == "paid"){
+        if (currentUser.type == "paid") {
             Meteor.call('checkIfCanceled', customerId, currentUserObj, userId);
         }
         if (currentUser.type == "paid" || currentUser.type == "canceled") {
@@ -114,14 +123,14 @@ Template.successfulLoginNoCourseView.helpers({
             document.getElementById("blurredSideNav").style = "display: none";
         }, 2000);
     },
-    notOnFreeTrial: function(){
+    notOnFreeTrial: function () {
         var user = Meteor.users.findOne({ _id: Meteor.userId() });
         if (user && user.subscribed) {
             return (user.subscribed.type != "free" && user.subscribed.type != "canceled")
         }
     },
-    canceled: function(){
-        return Meteor.users.findOne({_id: Meteor.userId()}).subscribed.type == "canceled"
+    canceled: function () {
+        return Meteor.users.findOne({ _id: Meteor.userId() }).subscribed.type == "canceled"
     }
 });
 

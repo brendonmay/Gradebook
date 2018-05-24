@@ -20,7 +20,7 @@ Template.register.events({
         var registerForm = document.getElementById("registerForm");
         loginForm.reset();
         registerForm.reset();
-        clearValidation(loginForm);        
+        clearValidation(loginForm);
         clearValidation(registerForm);
         $('#registerModal').modal('close');
     },
@@ -30,7 +30,7 @@ Template.register.events({
         var registerForm = document.getElementById("registerForm");
         loginForm.reset();
         registerForm.reset();
-        clearValidation(loginForm);        
+        clearValidation(loginForm);
         clearValidation(registerForm);
 
         $('#registerModal').modal('close');
@@ -48,7 +48,7 @@ Template.register.events({
     },
 
     'submit .register-form': function (event) {
-        event.preventDefault();
+        //event.preventDefault();
 
         var email = event.target.registerEmail.value;
         var password = event.target.registerPassword.value;
@@ -58,24 +58,34 @@ Template.register.events({
         Accounts.createUser({
             email: email,
             password: password
-        }, function() {
-            Meteor.call('giveUserFreeTrial', firstName, lastName);
+        }, function(err){
+            if (err){
+                console.log("error: " + err)
+                console.log("error reason: " + err.reason);
+            }
+            else{
+                console.log("success creating user");
+            }
         });
+
+        Session.set('firstName', firstName);
+        Session.set('lastName', lastName);
+        Session.set('newlyRegistered', "true");
 
         var registerForm = document.getElementById("registerForm");
         registerForm.reset();
         clearValidation(registerForm);
 
-        
         $('#emailVerificationModal').modal({
             complete: function () {
-                // document.getElementById("preloader-full").style = "display: none;";
                 document.getElementById("blurredSideNav").style = "display: none";
                 document.getElementById("preloader").style = "display: none";
                 $('#registerModal').modal('close');
             }
         });
+
         $('#emailVerificationModal').modal('open');
+
     }
 })
 

@@ -55,22 +55,24 @@ Template.register.events({
         var firstName = event.target.firstName.value;
         var lastName = event.target.lastName.value;
 
-        Accounts.createUser({
-            email: email,
-            password: password
-        }, function(err){
-            if (err){
-                console.log("error: " + err)
-                console.log("error reason: " + err.reason);
-            }
-            else{
-                console.log("success creating user");
-            }
-        });
-
         Session.set('firstName', firstName);
         Session.set('lastName', lastName);
         Session.set('newlyRegistered', "true");
+
+        Accounts.createUser({
+            email: email,
+            password: password
+        }
+        // , function(error, result){
+        //     if (error){
+        //         console.log("error: " + error)
+        //         console.log("error reason: " + error.reason);
+        //     }
+        //     else{
+        //         console.log("success creating user");
+        //     }
+        // }
+        );
 
         var registerForm = document.getElementById("registerForm");
         registerForm.reset();

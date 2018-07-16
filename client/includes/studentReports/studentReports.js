@@ -97,9 +97,10 @@ function getStudentAssessmentTypeInfo(currentAssessmentTypeId) {
             } else {
                 studentAssessmentTypeGrades.push(grade);
             }
+            console.log("THIS: " + grade);
         }
     }
-    console.log(studentAssessmentTypeGrades);//use this
+    //console.log(studentAssessmentTypeGrades);//use this
     return studentAssessmentTypeGrades;
 }
 
@@ -133,10 +134,10 @@ function getCalculatedGrade(assessmentId, studentId) {
     for (var i = 0; i < currentGradeObj.length; i++) {
         var currGrade = currentGradeObj[i];
         if (currGrade.assessmentId == assessmentId) {
-            if (currGrade.KGrade && !isNaN(currGrade.KGrade)) KGrade = currGrade.KGrade;
-            if (currGrade.AGrade && !isNaN(currGrade.AGrade)) AGrade = currGrade.AGrade;
-            if (currGrade.TGrade && !isNaN(currGrade.TGrade)) TGrade = currGrade.TGrade;
-            if (currGrade.CGrade && !isNaN(currGrade.CGrade)) CGrade = currGrade.CGrade;
+            if (currGrade.KGrade && (!isNaN(currGrade.KGrade) || currGrade.KGrade == 0)) KGrade = currGrade.KGrade;
+            if (currGrade.AGrade && (!isNaN(currGrade.AGrade) || currGrade.AGrade == 0)) AGrade = currGrade.AGrade;
+            if (currGrade.TGrade && (!isNaN(currGrade.TGrade) || currGrade.TGrade == 0)) TGrade = currGrade.TGrade;
+            if (currGrade.CGrade && (!isNaN(currGrade.CGrade) || currGrade.CGrade == 0)) CGrade = currGrade.CGrade;
 
             assessmentGrades = {
                 assessmentName: getAssessmentName(assessmentId),
@@ -146,7 +147,7 @@ function getCalculatedGrade(assessmentId, studentId) {
                 C: getGradeString(CGrade.toFixed(2)),
                 Grade: getGradeString(getGradeForAssessment(currentGradeObj[i]))
             };
-            break;
+            var i = currentGradeObj.length;
         }
     }
     return assessmentGrades;
@@ -418,16 +419,16 @@ function calculateAsessmentTypeGrades(ownerId, courseId, organizedStudentGrades)
         var CassessmentTypeGrade = CSumOfStudentMarks / (CTotalMarks - CSumOfExcludedMarks);
 
         //if totalmarks == 0 we set it to N/A
-        if (isNaN(KassessmentTypeGrade)) {
+        if (isNaN(KassessmentTypeGrade && KassessmentTypeGrade != 0)) {
             KassessmentTypeGrade = "N/A"
         }
-        if (isNaN(AassessmentTypeGrade)) {
+        if (isNaN(AassessmentTypeGrade && AassessmentTypeGrade != 0)) {
             AassessmentTypeGrade = "N/A"
         }
-        if (isNaN(TassessmentTypeGrade)) {
+        if (isNaN(TassessmentTypeGrade && TassessmentTypeGrade != 0)) {
             TassessmentTypeGrade = "N/A"
         }
-        if (isNaN(CassessmentTypeGrade)) {
+        if (isNaN(CassessmentTypeGrade && CassessmentTypeGrade != 0)) {
             CassessmentTypeGrade = "N/A"
         }
 
@@ -438,7 +439,7 @@ function calculateAsessmentTypeGrades(ownerId, courseId, organizedStudentGrades)
 
         //Current Overall Grade for AssessmentType
         var weightedAverage = getWeightedAverage(KassessmentTypeGrade, AassessmentTypeGrade, TassessmentTypeGrade, CassessmentTypeGrade, WeightK, WeightA, WeightT, WeightC);
-        if (isNaN(weightedAverage)) {
+        if (isNaN(weightedAverage) && weightedAverage != 0) {
             weightedAverage = "N/A";
         }
         var assessmentTypeWeighting = 0;
@@ -650,16 +651,16 @@ function calculateCategoryFinalGrades(ownerId, courseId, organizedStudentGrades)
         var CassessmentTypeGrade = (CSumOfStudentMarks / (CTotalMarks - CSumOfExcludedMarks)) * 100;
 
         //if totalmarks == 0 we set it to N/A
-        if (isNaN(KassessmentTypeGrade)) {
+        if (isNaN(KassessmentTypeGrade) && KassessmentTypeGrade != 0) {
             KassessmentTypeGrade = "N/A"
         }
-        if (isNaN(AassessmentTypeGrade)) {
+        if (isNaN(AassessmentTypeGrade) && AassessmentTypeGrade != 0) {
             AassessmentTypeGrade = "N/A"
         }
-        if (isNaN(TassessmentTypeGrade)) {
+        if (isNaN(TassessmentTypeGrade) && TassessmentTypeGrade != 0) {
             TassessmentTypeGrade = "N/A"
         }
-        if (isNaN(CassessmentTypeGrade)) {
+        if (isNaN(CassessmentTypeGrade) && CassessmentTypeGrade != 0) {
             CassessmentTypeGrade = "N/A"
         }
 
@@ -1108,7 +1109,7 @@ function drawCourseOverviewBreakdownBarGraph() {
             assessmentTypeName: "Grade Breakdown"
         }];
     }
-    new Morris.Bar({
+    new Morris.Bar({ //fix this one not showing 0
         // ID of the element in which to draw the chart.
         element: 'assessmentBreakdownBarGraph',
         // data: [
@@ -1452,13 +1453,13 @@ function getGradeForAssessment(gradeObj) {
     var WeightA = Session.get('applicationWeight');
     var WeightT = Session.get('thinkingWeight');
     var WeightC = Session.get('communicationWeight');
-    if (isNaN(k)) k = "N/A"
-    if (isNaN(a)) a = "N/A"
-    if (isNaN(t)) t = "N/A"
-    if (isNaN(c)) c = "N/A"
+    if (isNaN(k) && k != 0) k = "N/A"
+    if (isNaN(a) && a != 0) a = "N/A"
+    if (isNaN(t) && t != 0) t = "N/A"
+    if (isNaN(c) && c != 0) c = "N/A"
     var weightedAverage = Number(getWeightedAverage(k, a, t, c, WeightK, WeightA, WeightT, WeightC));
 
-    if (weightedAverage && isNaN(weightedAverage)) {
+    if (weightedAverage && isNaN(weightedAverage) && weightedAverage != 0) {
         weightedAverage = "N/A"
     }
 
@@ -1468,7 +1469,12 @@ function getGradeForAssessment(gradeObj) {
 
 function getGradeString(grade) {
     if (isNaN(grade) || grade == null || grade == (-1).toFixed(2)) {
-        return "N/A"
+        if (grade == 0){
+            return 0.00 + "%";
+        }
+        else{
+            return "N/A"
+        }
     } else {
         return grade + "%";
     }
@@ -1513,15 +1519,15 @@ function getCourseOverviewInformationMarkBreakDown() {
                 for (var x = 0; x < currentStudentGrades.length; x++) {
                     if (currentATID == currentStudentGrades[x].assessmentTypeId) {
                         var assessmentTypeGrade = currentStudentGrades[x].assessmentTypeGrade;
-                        if (assessmentTypeGrade.KGrade && !isNaN(assessmentTypeGrade.KGrade)) KGrade += assessmentTypeGrade.KGrade + 1;
-                        if (assessmentTypeGrade.AGrade && !isNaN(assessmentTypeGrade.AGrade)) AGrade += assessmentTypeGrade.AGrade + 1;
-                        if (assessmentTypeGrade.TGrade && !isNaN(assessmentTypeGrade.TGrade)) TGrade += assessmentTypeGrade.TGrade + 1;
-                        if (assessmentTypeGrade.CGrade && !isNaN(assessmentTypeGrade.CGrade)) CGrade += assessmentTypeGrade.CGrade + 1;
+                        if (assessmentTypeGrade.KGrade && (!isNaN(assessmentTypeGrade.KGrade) || assessmentTypeGrade.KGrade == 0)) KGrade = assessmentTypeGrade.KGrade;
+                        if (assessmentTypeGrade.AGrade && (!isNaN(assessmentTypeGrade.AGrade) || assessmentTypeGrade.AGrade == 0)) AGrade = assessmentTypeGrade.AGrade;
+                        if (assessmentTypeGrade.TGrade && (!isNaN(assessmentTypeGrade.TGrade) || assessmentTypeGrade.TGrade == 0)) TGrade = assessmentTypeGrade.TGrade;
+                        if (assessmentTypeGrade.CGrade && (!isNaN(assessmentTypeGrade.CGrade) || assessmentTypeGrade.CGrade == 0)) CGrade = assessmentTypeGrade.CGrade;
 
-                        break;
+                        var x = currentStudentGrades.length;
                     }
                 }
-                break;
+                var j = studentGrades.length;;
             }
         }
         KGrade = KGrade.toFixed(2);
@@ -1574,15 +1580,15 @@ function getCourseOverviewInformation() {
                 for (var x = 0; x < currentStudentGrades.length; x++) {
                     if (currentATID == currentStudentGrades[x].assessmentTypeId) {
                         var assessmentTypeGrade = currentStudentGrades[x].assessmentTypeGrade;
-                        if (assessmentTypeGrade.KGrade && !isNaN(assessmentTypeGrade.KGrade)) KGrade += assessmentTypeGrade.KGrade + 1;
-                        if (assessmentTypeGrade.AGrade && !isNaN(assessmentTypeGrade.AGrade)) AGrade += assessmentTypeGrade.AGrade + 1;
-                        if (assessmentTypeGrade.TGrade && !isNaN(assessmentTypeGrade.TGrade)) TGrade += assessmentTypeGrade.TGrade + 1;
-                        if (assessmentTypeGrade.CGrade && !isNaN(assessmentTypeGrade.CGrade)) CGrade += assessmentTypeGrade.CGrade + 1;
+                        if (assessmentTypeGrade.KGrade && (!isNaN(assessmentTypeGrade.KGrade) || assessmentTypeGrade.KGrade == 0)) KGrade = assessmentTypeGrade.KGrade;
+                        if (assessmentTypeGrade.AGrade && (!isNaN(assessmentTypeGrade.AGrade) || assessmentTypeGrade.AGrade == 0)) AGrade = assessmentTypeGrade.AGrade;
+                        if (assessmentTypeGrade.TGrade && (!isNaN(assessmentTypeGrade.TGrade) || assessmentTypeGrade.TGrade == 0)) TGrade = assessmentTypeGrade.TGrade;
+                        if (assessmentTypeGrade.CGrade && (!isNaN(assessmentTypeGrade.CGrade) || assessmentTypeGrade.CGrade == 0)) CGrade = assessmentTypeGrade.CGrade;
 
-                        break;
+                        var x = currentStudentGrades.length;
                     }
                 }
-                break;
+                var j = studentGrades.length;
             }
         }
         KGrade = KGrade.toFixed(2);
@@ -1725,7 +1731,12 @@ Template.studentReports.helpers({
         var classAverage = getWeightedAverage(K, A, T, C, WeightK, WeightA, WeightT, WeightC);
 
         if (isNaN(classAverage)) {
-            return "N/A"
+            if (classAverage == 0){
+                return 0.00 + "%"
+            }
+            else{
+                return "N/A"
+            }
         }
         else {
             classAverage = Number((classAverage / 100).toFixed(2))
@@ -1789,8 +1800,13 @@ Template.studentReports.helpers({
 
         var finalGrade = getWeightedAverage(K, A, T, C, WeightK, WeightA, WeightT, WeightC)
 
-        if (!isNaN(finalGrade)) {
-            return (finalGrade / 100).toFixed(2) + "%";
+        if (!isNaN(finalGrade) || finalGrade == 0) {
+            if (finalGrade == 0){
+                return 0.00 + "%"
+            }
+            else{
+                return (finalGrade / 100).toFixed(2) + "%";
+            }
         }
         else {
             return "N/A"
@@ -1905,7 +1921,12 @@ Template.studentReports.helpers({
 
         var weightedGrade = getWeightedAverage(K, A, T, C, WeightK, WeightA, WeightT, WeightC)
         if (isNaN(weightedGrade)) {
-            return "N/A"
+            if (weightedGrade == 0){
+                return 0.00 + "%"
+            }
+            else{
+                return "N/A"
+            }
         }
         return Number((weightedGrade / 100).toFixed(2)) + "%"
     },
@@ -1938,7 +1959,12 @@ Template.studentReports.helpers({
 
         var weightedGrade = getWeightedAverage(K, A, T, C, WeightK, WeightA, WeightT, WeightC)
         if (isNaN(weightedGrade)) {
-            return "N/A"
+            if (weightedGrade == 0){
+                return 0.00 + "%"
+            }
+            else{
+                return "N/A"
+            }
         }
         return Number((weightedGrade / 100).toFixed(2)) + "%"
     },
@@ -2022,7 +2048,7 @@ async function printBreakdownReports() {
         var index = 0;
         for (var i = 0; i < assessmentInfo.length; i++) {
             var newRow = [
-                assessmentInfo[i].assessmentTypeName,
+                assessmentInfo[i].assessmentTypeName.slice(0, 37),
                 assessmentInfo[i].K,
                 assessmentInfo[i].A,
                 assessmentInfo[i].T,
@@ -2034,7 +2060,7 @@ async function printBreakdownReports() {
             var actualAssessmentInfo = getStudentAssessmentTypeInfoWithName(assessmentInfo[i].assessmentTypeName)
             for (var j = 0; j < actualAssessmentInfo.length; j++) {
                 var newRow = [
-                    actualAssessmentInfo[j].assessmentName,
+                    actualAssessmentInfo[j].assessmentName.slice(0, 37),
                     actualAssessmentInfo[j].K,
                     actualAssessmentInfo[j].A,
                     actualAssessmentInfo[j].T,
@@ -2114,7 +2140,7 @@ async function printBreakdownReportForStudent() {
     var index = 0;
     for (var i = 0; i < assessmentInfo.length; i++) {
         var newRow = [
-            assessmentInfo[i].assessmentTypeName,
+            assessmentInfo[i].assessmentTypeName.slice(0, 37),
             assessmentInfo[i].K,
             assessmentInfo[i].A,
             assessmentInfo[i].T,
@@ -2126,7 +2152,7 @@ async function printBreakdownReportForStudent() {
         var actualAssessmentInfo = getStudentAssessmentTypeInfoWithName(assessmentInfo[i].assessmentTypeName)
         for (var j = 0; j < actualAssessmentInfo.length; j++) {
             var newRow = [
-                actualAssessmentInfo[j].assessmentName,
+                actualAssessmentInfo[j].assessmentName.slice(0, 37),
                 actualAssessmentInfo[j].K,
                 actualAssessmentInfo[j].A,
                 actualAssessmentInfo[j].T,
@@ -2208,7 +2234,7 @@ function getStudentFullNameAndGrade() {
 
     var finalGrade = getWeightedAverage(K, A, T, C, WeightK, WeightA, WeightT, WeightC)
 
-    if (!isNaN(finalGrade)) {
+    if (!isNaN(finalGrade) || finalGrade == 0) {
         finalGrade = (finalGrade / 100).toFixed(2) + "%";
     }
     else {

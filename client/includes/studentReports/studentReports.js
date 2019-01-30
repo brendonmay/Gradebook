@@ -82,7 +82,6 @@ function getStudentAssessmentTypeInfo(currentAssessmentTypeId) {
     var studentAssessmentTypeGrades = [];
     for (var i = 0; i < currentStudentsGrade.length; i++) {
         var id = currentStudentsGrade[i].assessmentId;
-        console.log("id: " + id);
         if (id.split('-')[0] == currentAssessmentTypeId) {
             var grade = getCalculatedGrade(id, studentId); // {K, A, T, C} or null if NONE ****ISSUE HERE TURNING 0 into N/A****
             if (grade == null) {
@@ -98,8 +97,6 @@ function getStudentAssessmentTypeInfo(currentAssessmentTypeId) {
             } else {
                 studentAssessmentTypeGrades.push(grade);
             }
-            console.log("THIS K: " + grade.K);
-            console.log("THIS T: " + grade.A);
         }
     }
     //console.log(studentAssessmentTypeGrades);//use this
@@ -121,11 +118,9 @@ function getCalculatedGrade(assessmentId, studentId) {
         if (currentStudentGrades[i].assessmentTypeId == assessmentId.split('-')[0]) {
             if (assessmentId[0] == "c") {
                 currentGradeObj = currentStudentGrades[i].assessments;
-                console.log(currentGradeObj);
             } else {
                 currentGradeObj = [currentStudentGrades[i].assessmentTypeGrade];
                 currentGradeObj[0].assessmentId = assessmentId;
-                console.log(currentGradeObj);
             }
             break;
         }
@@ -1585,13 +1580,6 @@ function getCourseOverviewInformation() {
                 for (var x = 0; x < currentStudentGrades.length; x++) {
                     if (currentATID == currentStudentGrades[x].assessmentTypeId) {
                         var assessmentTypeGrade = currentStudentGrades[x].assessmentTypeGrade;
-                        // console.log(assessmentTypeGrade.KGrade);
-                        // console.log(assessmentTypeGrade.AGrade);
-                        // console.log(!isNaN(assessmentTypeGrade.KGrade));
-                        // console.log(assessmentTypeGrade.KGrade == 0);
-                        // console.log(assessmentTypeGrade.CGrade == null);
-                        // console.log(assessmentTypeGrade.KGrade == null);
-                        
 
                         if ((assessmentTypeGrade.KGrade!=null) && (!isNaN(assessmentTypeGrade.KGrade) || assessmentTypeGrade.KGrade == 0)){
                             KGrade = assessmentTypeGrade.KGrade;
@@ -1641,8 +1629,8 @@ function getCourseOverviewInformation() {
         });
     }
     // returns all info for overall assessmentType
-    console.log("Course Overview Student Breakdown");
-    console.log(courseOverViewTableInfo);
+    // console.log("Course Overview Student Breakdown");
+    // console.log(courseOverViewTableInfo);
    
     return courseOverViewTableInfo;
 }
@@ -1800,11 +1788,7 @@ Template.studentReports.helpers({
         if (!keys.includes("C")) {
             obj.C = "N/A"
         }
-        // console.log("Here are the marks for Student Grade");
-        // console.log(obj.K);
-        // console.log(obj.A);
-        // console.log(obj.T);
-        // console.log(obj.C);
+        
         return obj
     },
     getFinalGrade: function () {
@@ -2308,7 +2292,7 @@ function getCourseName() {
 }
 
 function getFontSizeBasedOnNumberOfRows(numOfRows) {
-    console.log(numOfRows);
+    // console.log(numOfRows);
     if (numOfRows <= 25) {
         return '11'; // original cell height
     } else if (numOfRows <= 30) {

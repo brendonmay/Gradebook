@@ -7,7 +7,6 @@ Styling
 Bugs
 ----------------------------------------------------------------------------------------------------
 	IMPORTANT BUGS THAT NEED TO BE FIXED
-	- If you delete an assessment where the student had 0% in that category, the mark of 0% isnt deleted and still affects the grade.
 	- If you change how much a category is worth on an assessment after a grade for that category has already been assigned, the grade doesn't adjust automatically.
 ----------------------------------------------------------------------------------------------------
 

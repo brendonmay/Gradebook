@@ -1,8 +1,20 @@
+
+
 Styling
 	- make sure site functions decently in internet explorer
 	- include an icon in the tab on browser
 	
 Bugs
+----------------------------------------------------------------------------------------------------
+	IMPORTANT BUGS THAT NEED TO BE FIXED
+	- If you input a grade of 0 many issues arise in the student reports page:
+		-Student Breakdown Graphs do not show a mark of zero when you highlight over them (- appears instead of 0). This only happens on Student Breakdown graphs, not the Student Grade or Class Average graphs.
+		-Student Breakdown tables do not display a 0 when it is given (KATC categories show N/A). Grade is calculated incorrectly due to the N/As. I believe this problem is tied directly to the Student Breakdown graph as I believe it uses the exact same data.
+		-Full Mark Breakdown table does not display a 0 when it is given, it instead shows N/A. The grade column does not calculate their final grade properly in this case, as it is not treating the N/As as zeroes.
+	- Final Exam and Culminating Task Student Breakdown Graph does not work, and table displays N/A for all entries
+	- If you change how much a category is worth on an assessment after a grade for that category has already been assigned, the grade doesn't adjust automatically.
+----------------------------------------------------------------------------------------------------
+
 	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.
 	- Add CVV to payment modal?
 

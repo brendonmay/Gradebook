@@ -35,7 +35,7 @@ function getStudentNameFirstLast(studentId, ownerId, courseId) {
     }
 }
 function getStudentAssessmentTypeInfoWithName(assessmentTypeName) {
-    var currentAssessmentTypeId = getAssessmentTypeId(assessmentTypeName)
+    var currentAssessmentTypeId = getAssessmentTypeId(assessmentTypeName);
     var studentId = Session.get("currentSelectedStudentID");
     const students = Students.findOne({ ownerId: Meteor.userId(), courseId: Session.get('courseId') }).students;
     var currentStudentsGrade;
@@ -60,7 +60,7 @@ function getStudentAssessmentTypeInfoWithName(assessmentTypeName) {
             }
         }
     }
-    console.log(studentAssessmentTypeGrades);//use this
+    //console.log(studentAssessmentTypeGrades);//use this
     return studentAssessmentTypeGrades;
 }
 
@@ -81,9 +81,10 @@ function getStudentAssessmentTypeInfo(currentAssessmentTypeId) {
     }
     var studentAssessmentTypeGrades = [];
     for (var i = 0; i < currentStudentsGrade.length; i++) {
-        var id = currentStudentsGrade[i].assessmentId
+        var id = currentStudentsGrade[i].assessmentId;
+        console.log("id: " + id);
         if (id.split('-')[0] == currentAssessmentTypeId) {
-            var grade = getCalculatedGrade(id, studentId); // {K, A, T, C} or null if NONE 
+            var grade = getCalculatedGrade(id, studentId); // {K, A, T, C} or null if NONE ****ISSUE HERE TURNING 0 into N/A****
             if (grade == null) {
                 var grade = {
                     assessmentName: getAssessmentName(id),
@@ -97,7 +98,8 @@ function getStudentAssessmentTypeInfo(currentAssessmentTypeId) {
             } else {
                 studentAssessmentTypeGrades.push(grade);
             }
-            console.log("THIS: " + grade);
+            console.log("THIS K: " + grade.K);
+            console.log("THIS T: " + grade.A);
         }
     }
     //console.log(studentAssessmentTypeGrades);//use this
@@ -119,8 +121,11 @@ function getCalculatedGrade(assessmentId, studentId) {
         if (currentStudentGrades[i].assessmentTypeId == assessmentId.split('-')[0]) {
             if (assessmentId[0] == "c") {
                 currentGradeObj = currentStudentGrades[i].assessments;
+                console.log(currentGradeObj);
             } else {
                 currentGradeObj = [currentStudentGrades[i].assessmentTypeGrade];
+                currentGradeObj[0].assessmentId = assessmentId;
+                console.log(currentGradeObj);
             }
             break;
         }
@@ -134,10 +139,10 @@ function getCalculatedGrade(assessmentId, studentId) {
     for (var i = 0; i < currentGradeObj.length; i++) {
         var currGrade = currentGradeObj[i];
         if (currGrade.assessmentId == assessmentId) {
-            if (currGrade.KGrade && (!isNaN(currGrade.KGrade) || currGrade.KGrade == 0)) KGrade = currGrade.KGrade;
-            if (currGrade.AGrade && (!isNaN(currGrade.AGrade) || currGrade.AGrade == 0)) AGrade = currGrade.AGrade;
-            if (currGrade.TGrade && (!isNaN(currGrade.TGrade) || currGrade.TGrade == 0)) TGrade = currGrade.TGrade;
-            if (currGrade.CGrade && (!isNaN(currGrade.CGrade) || currGrade.CGrade == 0)) CGrade = currGrade.CGrade;
+            if ((currGrade.KGrade!=null) && (!isNaN(currGrade.KGrade) || currGrade.KGrade == 0)) KGrade = currGrade.KGrade;
+            if ((currGrade.AGrade!=null) && (!isNaN(currGrade.AGrade) || currGrade.AGrade == 0)) AGrade = currGrade.AGrade;
+            if ((currGrade.TGrade!=null) && (!isNaN(currGrade.TGrade) || currGrade.TGrade == 0)) TGrade = currGrade.TGrade;
+            if ((currGrade.CGrade!=null) && (!isNaN(currGrade.CGrade) || currGrade.CGrade == 0)) CGrade = currGrade.CGrade;
 
             assessmentGrades = {
                 assessmentName: getAssessmentName(assessmentId),
@@ -1519,10 +1524,10 @@ function getCourseOverviewInformationMarkBreakDown() {
                 for (var x = 0; x < currentStudentGrades.length; x++) {
                     if (currentATID == currentStudentGrades[x].assessmentTypeId) {
                         var assessmentTypeGrade = currentStudentGrades[x].assessmentTypeGrade;
-                        if (assessmentTypeGrade.KGrade && (!isNaN(assessmentTypeGrade.KGrade) || assessmentTypeGrade.KGrade == 0)) KGrade = assessmentTypeGrade.KGrade;
-                        if (assessmentTypeGrade.AGrade && (!isNaN(assessmentTypeGrade.AGrade) || assessmentTypeGrade.AGrade == 0)) AGrade = assessmentTypeGrade.AGrade;
-                        if (assessmentTypeGrade.TGrade && (!isNaN(assessmentTypeGrade.TGrade) || assessmentTypeGrade.TGrade == 0)) TGrade = assessmentTypeGrade.TGrade;
-                        if (assessmentTypeGrade.CGrade && (!isNaN(assessmentTypeGrade.CGrade) || assessmentTypeGrade.CGrade == 0)) CGrade = assessmentTypeGrade.CGrade;
+                        if ((assessmentTypeGrade.KGrade!=null) && (!isNaN(assessmentTypeGrade.KGrade) || assessmentTypeGrade.KGrade == 0)) KGrade = assessmentTypeGrade.KGrade;
+                        if ((assessmentTypeGrade.AGrade!=null) && (!isNaN(assessmentTypeGrade.AGrade) || assessmentTypeGrade.AGrade == 0)) AGrade = assessmentTypeGrade.AGrade;
+                        if ((assessmentTypeGrade.TGrade!=null) && (!isNaN(assessmentTypeGrade.TGrade) || assessmentTypeGrade.TGrade == 0)) TGrade = assessmentTypeGrade.TGrade;
+                        if ((assessmentTypeGrade.CGrade!=null) && (!isNaN(assessmentTypeGrade.CGrade) || assessmentTypeGrade.CGrade == 0)) CGrade = assessmentTypeGrade.CGrade;
 
                         var x = currentStudentGrades.length;
                     }
@@ -1580,12 +1585,30 @@ function getCourseOverviewInformation() {
                 for (var x = 0; x < currentStudentGrades.length; x++) {
                     if (currentATID == currentStudentGrades[x].assessmentTypeId) {
                         var assessmentTypeGrade = currentStudentGrades[x].assessmentTypeGrade;
-                        if (assessmentTypeGrade.KGrade && (!isNaN(assessmentTypeGrade.KGrade) || assessmentTypeGrade.KGrade == 0)) KGrade = assessmentTypeGrade.KGrade;
-                        if (assessmentTypeGrade.AGrade && (!isNaN(assessmentTypeGrade.AGrade) || assessmentTypeGrade.AGrade == 0)) AGrade = assessmentTypeGrade.AGrade;
-                        if (assessmentTypeGrade.TGrade && (!isNaN(assessmentTypeGrade.TGrade) || assessmentTypeGrade.TGrade == 0)) TGrade = assessmentTypeGrade.TGrade;
-                        if (assessmentTypeGrade.CGrade && (!isNaN(assessmentTypeGrade.CGrade) || assessmentTypeGrade.CGrade == 0)) CGrade = assessmentTypeGrade.CGrade;
+                        // console.log(assessmentTypeGrade.KGrade);
+                        // console.log(assessmentTypeGrade.AGrade);
+                        // console.log(!isNaN(assessmentTypeGrade.KGrade));
+                        // console.log(assessmentTypeGrade.KGrade == 0);
+                        // console.log(assessmentTypeGrade.CGrade == null);
+                        // console.log(assessmentTypeGrade.KGrade == null);
+                        
+
+                        if ((assessmentTypeGrade.KGrade!=null) && (!isNaN(assessmentTypeGrade.KGrade) || assessmentTypeGrade.KGrade == 0)){
+                            KGrade = assessmentTypeGrade.KGrade;
+                        } 
+                        if ((assessmentTypeGrade.AGrade!=null) && (!isNaN(assessmentTypeGrade.AGrade) || assessmentTypeGrade.AGrade == 0)){
+                            AGrade = assessmentTypeGrade.AGrade;
+                        } 
+                        if ((assessmentTypeGrade.TGrade!=null) && (!isNaN(assessmentTypeGrade.TGrade) || assessmentTypeGrade.TGrade == 0)){
+                            TGrade = assessmentTypeGrade.TGrade;
+                        } 
+                        if ((assessmentTypeGrade.CGrade!=null) && (!isNaN(assessmentTypeGrade.CGrade) || assessmentTypeGrade.CGrade == 0)){
+                            CGrade = assessmentTypeGrade.CGrade;
+                        }
 
                         var x = currentStudentGrades.length;
+                        // console.log("KGrade should be 0 below");
+                        // console.log(KGrade);
                     }
                 }
                 var j = studentGrades.length;
@@ -1618,7 +1641,9 @@ function getCourseOverviewInformation() {
         });
     }
     // returns all info for overall assessmentType
-    //console.log(courseOverViewTableInfo);
+    console.log("Course Overview Student Breakdown");
+    console.log(courseOverViewTableInfo);
+   
     return courseOverViewTableInfo;
 }
 
@@ -1775,6 +1800,11 @@ Template.studentReports.helpers({
         if (!keys.includes("C")) {
             obj.C = "N/A"
         }
+        // console.log("Here are the marks for Student Grade");
+        // console.log(obj.K);
+        // console.log(obj.A);
+        // console.log(obj.T);
+        // console.log(obj.C);
         return obj
     },
     getFinalGrade: function () {
@@ -1978,6 +2008,7 @@ Template.studentReports.helpers({
         return getAssessmentTypeArray();
     },
     getAllAssignmentInformation: function () {
+        // console.log("Argument: " + Template.instance().getDropdownValue.get());
         return getStudentAssessmentTypeInfo(Template.instance().getDropdownValue.get());
     },
     getAllAssignmentInformationFullBreakDown: function (assessmentTypeName) {

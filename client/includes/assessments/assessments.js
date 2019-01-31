@@ -50,12 +50,35 @@ function updateAssessments(courseAssessmentTypes, assessmentTypeId, assessmentId
     let currentCourseId = Session.get('courseId');
     var courseName;
     var breakFromInside = false;
+    var modifiedCategory;
+    var categoryTotal;
+    var oldCategoryTotal;
     for (i = 0; i < courseAssessmentTypes.length; i++) {
         if (courseAssessmentTypes[i].assessmentTypeId == assessmentTypeId) {
             for (z = 0; z < courseAssessmentTypes[i].assessments.length; z++) {
                 if (courseAssessmentTypes[i].assessments[z].assessmentId == assessmentId) {
                     courseName = courseAssessmentTypes[i].assessments[z].assessmentName;
                     if (didFieldsChange(courseAssessmentTypes[i].assessments[z], markK, markA, markT, markC, newDate)) {
+                        
+                        modifiedCategory = whichFieldChanged(courseAssessmentTypes[i].assessments[z], markK, markA, markT, markC);
+                        //console.log(modifiedCategory + " was the category that was modified");
+                        if (modifiedCategory == "K"){
+                            categoryTotal = markK;
+                            oldCategoryTotal = courseAssessmentTypes[i].assessments[z].K;
+                        }
+                        if (modifiedCategory == "A"){
+                            categoryTotal = markA;
+                            oldCategoryTotal = courseAssessmentTypes[i].assessments[z].A;
+                        }
+                        if (modifiedCategory == "T"){
+                            categoryTotal = markT;
+                            oldCategoryTotal = courseAssessmentTypes[i].assessments[z].T;
+                        }
+                        if (modifiedCategory == "C"){
+                            categoryTotal = markC;
+                            oldCategoryTotal = courseAssessmentTypes[i].assessments[z].C;
+                        }
+
                         courseAssessmentTypes[i].assessments[z].K = markK;
                         courseAssessmentTypes[i].assessments[z].A = markA;
                         courseAssessmentTypes[i].assessments[z].T = markT;
@@ -71,8 +94,12 @@ function updateAssessments(courseAssessmentTypes, assessmentTypeId, assessmentId
         }
     }
     if (fieldsChanged) {
-        Meteor.call('assessments.updateAssessments', currentCourseId, courseAssessmentTypes);
+        var ownerId = Meteor.userId();
+        Meteor.call('assessments.updateAssessments', currentCourseId, courseAssessmentTypes); 
+        Meteor.call('calculatedgrades.modifiedCategoryAmount', ownerId, currentCourseId, assessmentId, modifiedCategory, categoryTotal, oldCategoryTotal);
 
+        //perhaps introduce a new Session variable indicating all of the assessments that have been modified with their corresponding categories
+        //Session.set("gradebookUpdated", true);
         //at the end, push a message to the user saying the changes have been saved.
         Materialize.toast('Your changes to ' + courseName + ' have been saved', 3000, 'amber darken-3'); //make it so that toast includes assessment name
     }
@@ -81,9 +108,35 @@ function updateAssessments(courseAssessmentTypes, assessmentTypeId, assessmentId
 function updateFinalAssessments(finalAssessmentTypes, assessmentTypeId, markK, markA, markT, markC, newDate) {
     var fieldsChanged = false;
     let currentCourseId = Session.get('courseId');
+    var modifiedCategory;
+    var categoryTotal;
+    var oldCategoryTotal;
     for (i = 0; i < finalAssessmentTypes.length; i++) {
         if (finalAssessmentTypes[i].assessmentTypeId == assessmentTypeId) {
             if (didFieldsChange(finalAssessmentTypes[i], markK, markA, markT, markC, newDate)) {
+                
+                modifiedCategory = whichFieldChanged(finalAssessmentTypes[i], markK, markA, markT, markC);
+                //console.log("modifiedCategory: " + modifiedCategory);
+
+                if (modifiedCategory == "K"){
+                    categoryTotal = markK;
+                    oldCategoryTotal = finalAssessmentTypes[i].K;
+                }
+                if (modifiedCategory == "A"){
+                    categoryTotal = markA;
+                    oldCategoryTotal = finalAssessmentTypes[i].A;
+                }
+                if (modifiedCategory == "T"){
+                    categoryTotal = markT;
+                    oldCategoryTotal = finalAssessmentTypes[i].T;
+                }
+                if (modifiedCategory == "C"){
+                    categoryTotal = markC;
+                    oldCategoryTotal = finalAssessmentTypes[i].C;
+                }
+                // console.log("categoryTotal: " + categoryTotal);
+                // console.log("oldCategoryTotal: " + oldCategoryTotal);
+                
                 finalAssessmentTypes[i].K = markK;
                 finalAssessmentTypes[i].A = markA;
                 finalAssessmentTypes[i].T = markT;
@@ -96,7 +149,11 @@ function updateFinalAssessments(finalAssessmentTypes, assessmentTypeId, markK, m
     }
     if (fieldsChanged) {
         var finalEvalName = getFinalEvalName(currentCourseId, assessmentTypeId);
-        Meteor.call('assessments.updateFinalAssessments', currentCourseId, finalAssessmentTypes)
+        var ownerId = Meteor.userId();
+
+        Meteor.call('assessments.updateFinalAssessments', currentCourseId, finalAssessmentTypes);
+        Meteor.call('calculatedgrades.modifiedCategoryAmount', ownerId, currentCourseId, assessmentTypeId, modifiedCategory, categoryTotal, oldCategoryTotal);
+
         Materialize.toast('Your changes to ' + finalEvalName + ' have been saved', 3000, 'amber darken-3'); //make it so that toast includes assessment name
     }
 }
@@ -116,6 +173,14 @@ function didFieldsChange(assessments, markK, markA, markT, markC, newDate) {
     if (assessments.T != markT) return true;
     if (assessments.C != markC) return true;
     if (assessments.Date != newDate) return true;
+    return false;
+}
+
+function whichFieldChanged(assessments, markK, markA, markT, markC) {
+    if (assessments.K != markK) return "K";
+    if (assessments.A != markA) return "A";
+    if (assessments.T != markT) return "T";
+    if (assessments.C != markC) return "C";
     return false;
 }
 

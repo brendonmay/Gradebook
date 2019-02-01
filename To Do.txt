@@ -8,6 +8,8 @@ Bugs
 ----------------------------------------------------------------------------------------------------
 	IMPORTANT BUGS THAT NEED TO BE FIXED
 	- Migrate from mLab to Atlas ASAP
+	- Gmail suspects suspicious activity when mail is sent via SMTP, I turned on 2-step verification and linked it to the STMP, hopefully that will fix the problem.
+	- If when you create an account, the account gets bugged because the user database doesnt include the full structure, it is because the STMP email is failing.
 ----------------------------------------------------------------------------------------------------
 
 	- After changing the courseyear of a course, when you edit to change it again, the displayed courseyear isnt the proper year.

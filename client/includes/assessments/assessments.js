@@ -1,7 +1,5 @@
 import { Template } from 'meteor/templating';
-import { ReactiveVar } from 'meteor/reactive-var';
-import { Courses } from '../../../lib/collections.js';
-import { Accounts } from 'meteor/accounts-base';
+import { Students } from 'meteor/accounts-base';
 import { CourseWeighting } from '../../../lib/collections.js';
 import { Assessments } from '../../../lib/collections.js';
 
@@ -95,9 +93,12 @@ function updateAssessments(courseAssessmentTypes, assessmentTypeId, assessmentId
     }
     if (fieldsChanged) {
         var ownerId = Meteor.userId();
+        if(categoryTotal == "N/A"){
+            //console.log("change noticied, new total is out of N/A");
+            Meteor.call('students.removeCategory', ownerId, currentCourseId, modifiedCategory, assessmentTypeId);
+        }
         Meteor.call('assessments.updateAssessments', currentCourseId, courseAssessmentTypes); 
         Meteor.call('calculatedgrades.modifiedCategoryAmount', ownerId, currentCourseId, assessmentId, modifiedCategory, categoryTotal, oldCategoryTotal);
-
         //perhaps introduce a new Session variable indicating all of the assessments that have been modified with their corresponding categories
         //Session.set("gradebookUpdated", true);
         //at the end, push a message to the user saying the changes have been saved.
@@ -151,8 +152,13 @@ function updateFinalAssessments(finalAssessmentTypes, assessmentTypeId, markK, m
         var finalEvalName = getFinalEvalName(currentCourseId, assessmentTypeId);
         var ownerId = Meteor.userId();
 
+        if(categoryTotal == "N/A"){
+            Meteor.call('students.removeCategory', ownerId, currentCourseId, modifiedCategory, assessmentTypeId);
+        }
+
         Meteor.call('assessments.updateFinalAssessments', currentCourseId, finalAssessmentTypes);
         Meteor.call('calculatedgrades.modifiedCategoryAmount', ownerId, currentCourseId, assessmentTypeId, modifiedCategory, categoryTotal, oldCategoryTotal);
+        
 
         Materialize.toast('Your changes to ' + finalEvalName + ' have been saved', 3000, 'amber darken-3'); //make it so that toast includes assessment name
     }

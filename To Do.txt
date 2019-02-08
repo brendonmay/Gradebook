@@ -2,12 +2,11 @@
 
 Styling
 	- make sure site functions decently in internet explorer
-	- include an icon in the tab on browser
 	
 Bugs
 ----------------------------------------------------------------------------------------------------
 	IMPORTANT BUGS THAT NEED TO BE FIXED
-	- Migrate from mLab to Atlas ASAP
+	- Make it so that calculated grade totals each category grade, not just averages every assessment.
 	- Gmail suspects suspicious activity when mail is sent via SMTP, I turned on 2-step verification and linked it to the STMP, hopefully that will fix the problem.
 	- If when you create an account, the account gets bugged because the user database doesnt include the full structure, it is because the STMP email is failing.
 ----------------------------------------------------------------------------------------------------

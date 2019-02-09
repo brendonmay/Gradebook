@@ -143,6 +143,7 @@ function insertGrade() {
                     var percGrade = (grade / outOf) * 100;
                     percGrade = Number(percGrade.toFixed(2));
                     var newGrade = determineAssessmentTypeGrade(Meteor.userId(), courseId, studentId, assessmentTypeId, category);
+                    //console.log("newgrade = " + newGrade);
                     Meteor.call('calculatedgrades.updateCourseAssessmentGrade', Meteor.userId(), courseId, assessmentId, percGrade, category, studentId, function (error, result) {
                         if (error) {
                             console.log("error 2")
@@ -391,21 +392,24 @@ function determineAssessmentTypeGrade(ownerId, courseId, studentId, assessmentTy
 
     assessmentGrades = [];
 
+    //Making changes to adjust how mark is calculated
     // var outOf = 0;
     // var totalStudentMarks = 0;
     // var exclusions = [];
 
-    for (i = 0; i < studentsArray.length; i++) {
+    for (var i = 0; i < studentsArray.length; i++) {
         if (studentsArray[i].studentId == studentId) {
             var grades = studentsArray[i].grades;
-            for (z = 0; z < grades.length; z++) {
+            for (var z = 0; z < grades.length; z++) {
                 var assessmentId = grades[z].assessmentId;
                 var checkAssessmentTypeId = assessmentId.slice(0, assessmentId.indexOf("-"));
                 if (checkAssessmentTypeId == assessmentTypeId) {
                     var studentMark = grades[z][category];
                     if (studentMark != "N/A") {
                         studentMark = Number(studentMark);
-                        //totalStudentMarks = totalStudentMarks + studentMark;
+                        //Making changes to adjust how mark is calculated
+                        // totalStudentMarks = totalStudentMarks + studentMark;
+
                         assessmentGradeObj = {};
                         assessmentGradeObj.assessmentId = assessmentId;
                         assessmentGradeObj.grade = Number(studentMark);
@@ -419,12 +423,12 @@ function determineAssessmentTypeGrade(ownerId, courseId, studentId, assessmentTy
             i = studentsArray.length;
         }
     }
-    for (r = 0; r < assessmentGrades.length; r++) {
+    for (var r = 0; r < assessmentGrades.length; r++) {
         var assessmentId = assessmentGrades[r].assessmentId;
-        for (i = 0; i < courseAssessmentTypes.length; i++) {
+        for (var i = 0; i < courseAssessmentTypes.length; i++) {
             if (courseAssessmentTypes[i].assessmentTypeId == assessmentTypeId) {
                 var assessments = courseAssessmentTypes[i].assessments;
-                for (z = 0; z < assessments.length; z++) {
+                for (var z = 0; z < assessments.length; z++) {
                     // if (assessments[z][category] != "N/A") {
                     //     if (!(exclusions.includes(assessments[z].assessmentId))) {
                     //         outOf = outOf + assessments[z][category];
@@ -440,20 +444,65 @@ function determineAssessmentTypeGrade(ownerId, courseId, studentId, assessmentTy
             }
         }
     }
-    var calculatedAssessmentGrades = 0;
-    var totalAssessments = assessmentGrades.length;
+    //var calculatedAssessmentGrades = 0;
+    //var totalAssessments = assessmentGrades.length;
 
-    for (i = 0; i < assessmentGrades.length; i++) {
+    //new
+    var countTrueScore = [];
+    //
+
+    for (var i = 0; i < assessmentGrades.length; i++) {
         var grade = assessmentGrades[i].grade;
         var outOf = assessmentGrades[i].outOf;
-        var calculatedGrade = Number(((grade / outOf) * 100).toFixed(2));
-        calculatedAssessmentGrades = calculatedAssessmentGrades + calculatedGrade;
+
+        //new
+        var coupledGrade = [grade, outOf];
+        countTrueScore[countTrueScore.length] = coupledGrade;
+        //
+
+        //var calculatedGrade = Number(((grade / outOf) * 100).toFixed(2));
+        //calculatedAssessmentGrades = calculatedAssessmentGrades + calculatedGrade;
     }
 
+    //new
+    var totalStudentScore = "N/A";
+    var totalOutOf = "N/A";
+    var studentHasScore = false;
+    var outOfHasScore = false;
+
+    for (var z = 0; z < countTrueScore.length; z++) {
+        if (countTrueScore[z][0] != "N/A") {
+            studentHasScore = true;
+            if (totalStudentScore != "N/A") {
+                totalStudentScore = totalStudentScore + countTrueScore[z][0];
+            }
+            else {
+                totalStudentScore = countTrueScore[z][0];
+            }
+        }
+        if (countTrueScore[z][1] != "N/A") {
+            outOfHasScore = true;
+            if (totalOutOf != "N/A") {
+                totalOutOf = totalOutOf + countTrueScore[z][1];
+            }
+            else {
+                totalOutOf = countTrueScore[z][1];
+            }
+        }
+
+    }
+
+    if (studentHasScore && outOfHasScore) {
+        var calculatedAssessmentTypeGradeNew = Number((totalStudentScore * 100 / totalOutOf).toFixed(2));
+    }
+    else {
+        var calculatedAssessmentTypeGradeNew = "N/A";
+    }
+    //
 
     // var calculatedAssessmentTypeGrade = Number(((totalStudentMarks / outOf) * 100).toFixed(2));
-    var calculatedAssessmentTypeGrade = Number((calculatedAssessmentGrades / totalAssessments).toFixed(2));
-    return calculatedAssessmentTypeGrade
+    //var calculatedAssessmentTypeGrade = Number((calculatedAssessmentGrades / totalAssessments).toFixed(2));
+    return calculatedAssessmentTypeGradeNew
 
 }
 
@@ -657,7 +706,7 @@ function calculateAsessmentTypeGrades(ownerId, courseId, organizedStudentGrades)
 
         //Current Overall Grade for AssessmentType
         var weightedAverage = getWeightedAverage(KassessmentTypeGrade, AassessmentTypeGrade, TassessmentTypeGrade, CassessmentTypeGrade, WeightK, WeightA, WeightT, WeightC);
-        if (isNaN(weightedAverage)){
+        if (isNaN(weightedAverage)) {
             weightedAverage = "N/A"
         }
         var assessmentTypeWeighting = 0;
@@ -769,16 +818,16 @@ Template.studentName.helpers({
 
         var finalGrade = getWeightedAverage(K, A, T, C, WeightK, WeightA, WeightT, WeightC)
 
-        if (isNaN(finalGrade)){
+        if (isNaN(finalGrade)) {
             finalGrade = "N/A"
         }
 
         if (finalGrade != "N/A") {
             return (finalGrade / 100).toFixed(2) + "%";
         }
-        
+
         return "N/A"
-        
+
     },
     getStudentGradesForAssessments: function (studentId) {
         let courseId = Session.get('courseId');

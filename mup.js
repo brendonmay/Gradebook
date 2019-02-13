@@ -3,9 +3,10 @@ module.exports = {
     one: {
       // TODO: set host address, username, and authentication method
       host: '159.203.17.199',
-      username: 'root',
-      // pem: './path/to/pem'
-      password: '#Ia2nddbb!'
+      username: 'brendon',
+      //for pem to work make sure you setup SSH on digital ocean server. If not set up, use password
+      //pem: '~/documents/Meteor/Gradebook/.ssh/id_rsa'
+      //password: '#Ia2nddbb!'
       // or neither for authenticate from ssh-agent
     }
   },
@@ -52,7 +53,7 @@ module.exports = {
   // Use the proxy to setup ssl or to route requests to the correct
   // app when there are several apps
 
-  proxy: { //IMPORTANT!!! MAKE SURE TO OPEN PORTS 80, 22, AND 443 ON THE SERVER
+  proxy: { //IMPORTANT!!! MAKE SURE TO OPEN PORTS 80, 22, AND 443 ON THE SERVER IF YOU ARE HAVING PROBLEMS
     domains: 'ontariogradebook.com,www.ontariogradebook.com,ontariogradebook.ca,www.ontariogradebook.ca',
 
     ssl: {

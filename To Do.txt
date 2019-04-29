@@ -19,18 +19,18 @@ New Functionality
 		- When you first register, state whether you are an elementary teacher (Grades 1-8) or Secondary Teacher (Grades 9-12)
 			- Add this information to the user collection
 		- If teacher is elementary, change "add course" button to "add class"
-			- When you add a class, select school year and grade you are teaching (run a check to see if you already have a class of that grade in the selected schoolyear).
+			- When you add a class, select school year and grade you are teaching, name the class (short character count), and ask if they teach in a catholic school.
 			- When you create a class for that specific grade, automatically create all of the courses they will need by referring to the report card templates.
 		- Add option in dropdown menu: "Account Settings". Here a modal appears to modify their name or change if they are an elementary or secondary teacher.
 		- On the login page, mention the teacher's name and what type of teacher they are. (e.g. Welcome Back Brendon May (Secondary Teacher)). Perhaps provide a hyperlink to Account Settings to change if its incorrect.
+		- 
 
 		Quality of Life Changes:
+		- Add "pulse" class to the add course button when they first sign up. Remove the class once theyve created their first course.
 		- When you click edit icon in gradebook, modal pops up to edit, rather than being sent to assessments Tab
 		- when you click a student's name in gradebook, it should be directed to the course overview page in student reports.
 		
 		Other Thoughts:
-		- Allow teachers to change their name/what type of teacher they are (1-8 or 9-12).
-		
 		- Think of structure to allow administrators to view marks for the school
 	
 	Josh

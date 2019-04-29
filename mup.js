@@ -5,7 +5,7 @@ module.exports = {
       host: '159.203.17.199',
       username: 'brendon',
       //for pem to work make sure you setup SSH on digital ocean server. If not set up, use password
-      //pem: '~/documents/Meteor/Gradebook/.ssh/id_rsa'
+      pem: '../Gradebook/.ssh/id_rsa'
       //password: '#Ia2nddbb!'
       // or neither for authenticate from ssh-agent
     }
@@ -25,7 +25,6 @@ module.exports = {
     },
 
     env: {
-      // TODO: Change to your app's url
       // If you are using ssl, it needs to start with https://
       ROOT_URL: 'https://ontariogradebook.com',
       MONGO_URL: 'mongodb://brendon:Masterbrendon1@ontariogradebook-shard-00-00-vujha.mongodb.net:27017,ontariogradebook-shard-00-01-vujha.mongodb.net:27017,ontariogradebook-shard-00-02-vujha.mongodb.net:27017/testdb?ssl=true&replicaSet=ontariogradebook-shard-0&authSource=admin',
